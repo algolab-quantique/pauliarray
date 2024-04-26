@@ -1,0 +1,17 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "pauliarray"
+authors = [
+    { name = "AlgoLab Quantique", email = "algolab-quantique@usherbrooke.ca" },
+]
+readme = "README.md"
+license = { file = "LICENSE" }
+classifiers = ["License :: OSI Approved :: Apache Software License"]
+dynamic = ["version", "description"]
+dependencies = ["numpy"]
+
+[project.urls]
+Home = "https://github.com/algolab-quantique/pauliarray.git"

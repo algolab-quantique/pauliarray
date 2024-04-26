@@ -1,0 +1,80 @@
+name: Build, run tests and deploy GitHub Pages
+run-name: Build triggered by commit "${{ github.event.head_commit.message }}" on branch "${{ github.ref_name }}"
+
+on: [push]
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+
+      - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "The name of your branch is ${{ github.ref }}."
+
+      - run: echo "Setting up python environnement 🐍"
+      - name: checkout repo content
+        uses: actions/checkout@v4 # checkout the repository content
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Python Packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install flit
+          pip install black
+          flit install --symlink --python `python -c "import sys; print(sys.executable)"`
+
+      - name: Execute Test Scripts # run tests
+        run: python -m unittest
+
+      - run: echo "📍 This job's status is ${{ job.status }}."
+
+      - name: Verify Black Format
+        run: black --check --line-length 120 .
+  documentation:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref_name == 'main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12" # install the python version needed
+      - name: Install dependencies
+        run: |
+          pip install sphinx sphinx_book_theme myst_parser
+      - name: Sphinx build
+        run: |
+          sphinx-apidoc -f -o documentation/source .
+          sphinx-build documentation/source documentation/build
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        if: ${{github.ref == 'refs/heads/main' }}
+        with:
+          publish_branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: documentation/build/
+          force_orphan: true
