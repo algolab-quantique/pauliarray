@@ -71,7 +71,9 @@ The same two :code:`WeightedPauliArray` can be composed in a outer product fashi
 
     w_i^{(1)}\hat{P}_i^{(1)} w_j^{(2)} \hat{P}_j^{(2)} = w_{ij}^{(4)} \hat{P}_{ij}^{(4)}.
 
-In PauliArray this can be acheive by making use of braodcasting by introducing new dimensions to the arrays with :code:`None`. See `Numpy's documentation <https://numpy.org/doc/stable/user/basics.indexing.html#dimensional-indexing-tools>`_ for more details.
+This results into a 2-dimensionnal :code:`WeightedPauliArray`.
+
+In PauliArray this can be acheived by making use of broadcasting by introducing new dimensions to the arrays with :code:`None`. See `Numpy's documentation <https://numpy.org/doc/stable/user/basics.indexing.html#dimensional-indexing-tools>`_ for more details.
 
 .. code:: python
 
@@ -86,13 +88,20 @@ In PauliArray this can be acheive by making use of braodcasting by introducing n
     (+6.0000 +0.0000j) IZ  (+0.0000 +8.0000j) YX
 
 
-This use of broadcasting 
-
+The composition of two :code:`Operator`  :math:`\hat{O}^{(1)} = \sum_{i} w_i^{(1)} \hat{P}_i^{(1)}` and :math:`\hat{O}^{(2)} = \sum_{j} w_j^{(2)} \hat{P}_j^{(2)}` involves such a 2-dimensionnal :code:`WeightedPauliArray`.
 
 .. math::
 
     \hat{O}^{(1)} \hat{O}^{(2)} = \sum_{i,j} w_i^{(1)} \hat{P}_i^{(1)} w_j^{(2)} \hat{P}_j^{(2)}
-    = \sum_k w_{k}^{(3)} \hat{P}_{k}^{(3)}
+    = \sum_{i,j} w_{ij}^{(3)} \hat{P}_{ij}^{(3)}
+
+However, it needs to be flatten (:math:`(i,j) \to k`) to represent an :code:`Operator`.
+
+PauliArray handles compositions of :code:`Operator` this way. It also combines the coefficients of repeated Pauli strings within the sum.
+
+.. math::
+
+    \hat{O}^{(1)} \hat{O}^{(2)} = \sum_k w_{k}^{(3)} \hat{P}_{k}^{(3)}
 
 .. code:: python
 
