@@ -2,7 +2,7 @@
 Operations
 ======================
 
-All the data structures of PauliArray can be acted on or combined using a set of operations.
+All the data structures of PauliArray can be acted on or combined using a set of operations. We give some examples using some data structures but most operations are available for all data structures. Also, while it is possible to infer expected behaviour for operations between different kinds of data structures, at the moment most operations involving two objects can only be performed between objects of the same data structure. This might change in the future.
 
 --------------------
 Indexing and Masking
@@ -122,6 +122,28 @@ PauliArray handles compositions of :code:`Operator` this way. It also combines t
 
 
 
+.. attention::
+
+    Composition, and all other operations based on composition, behaves a bit differently for the data structure :code:`PauliArray`. The composition of two Pauli strings produces a new Pauli string as well as a possible factor
+
+    .. math::
+
+        \hat{P}_1 \hat{P}_2 = (-i)^{f}\hat{P}_3
+        .
+
+    Therefore, the composition of two :code:`PauliArray` returns a :code:`PauliArray` and a :code:`numpy.ndarray[complex]`.
+
+    .. code:: python
+
+        from pauliarray import PauliArray
+
+        paulis_1 = PauliArray.from_labels(["IZ", "ZI"])
+        paulis_2 = PauliArray.from_labels(["ZZ", "XX"])
+
+        paulis_3, factors = paulis_1.compose(paulis_2)
+
+    This behavior extends to all :code:`PauliArray` methods and functions were such factors are produced.
+
 -----------
 Commutation
 -----------
@@ -150,7 +172,7 @@ is equal to :math:`0` and anticommute otherwise. Commutation can be assessed ele
 
     [ True False]
 
-Actual commutator can be computed element-wise between two arrays of Pauli strings
+Actual commutators can be computed element-wise between two arrays of Pauli strings
 
 .. math::
 
@@ -164,8 +186,16 @@ For efficiency, this operation can be reduced to a single composition
     
     [\hat{P}^{(1)}_i, \hat{P}^{(2)}_i] = 2c_i \hat{P}^{(1)}_i \hat{P}^{(2)}_i
     
-where :math:`c_i` is given by the equation :eq:`do_commute`.
+where :math:`c_i` is given by the equation :eq:`do_commute`. In practice, the result for commutating Pauli strings is set to :math:`0\hat{I}`.
 
+.. code:: python 
 
+    from pauliarray.pauli.weighted_pauli_array import WeightedPauliArray, commutator
 
-.. is $1$ if $[\hat{P}^{(1)}_i, \hat{P}^{(2)}_j] \neq 0$.
+    wpaulis_1 = WeightedPauliArray.from_labels_and_weights(["IZ", "ZI"], [1, 2])
+    wpaulis_2 = WeightedPauliArray.from_labels_and_weights(["ZZ", "XX"], [3, 4])
+
+    comm_wpaulis = commutator(wpaulis_1, wpaulis_2)
+
+    print(comm_wpaulis.inspect())
+
