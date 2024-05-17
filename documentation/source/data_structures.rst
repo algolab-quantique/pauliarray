@@ -14,7 +14,7 @@ where the exponentiation by a vector is to be interpreted as a tensor product
 
     \hat{Z}^{\mathbf{z}} \equiv  \bigotimes_{q=0}^{n-1} \hat{Z}^{z_q}
 
-with :math:`z_q` the :math:`q` th components of the bit string  :math:`\mathbf{z}`.
+with :math:`z_q` the :math:`q` th components of the bit string  :math:`\mathbf{z}`. The dot product :math:`\mathbf{z} \cdot \mathbf{x}` counts the number of :math:`\hat{Y}` operators so the factor :math:`(-i)^{\mathbf{z} \cdot \mathbf{x}}` compensates the factors coming from :math:`\hat{Z}\hat{X} = i\hat{Y}`.
 
 
 ----------

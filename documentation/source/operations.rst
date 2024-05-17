@@ -119,3 +119,53 @@ PauliArray handles compositions of :code:`Operator` this way. It also combines t
     Operator Sum of
     (+5.0000 +0.0000j) XI
     (+4.0000 +0.0000j) IZ
+
+
+
+-----------
+Commutation
+-----------
+
+Based on the encoding of Pauli strings with bit strings :math:`\mathbf{z}` and :math:`\mathbf{x}`, it's easy to show that Pauli strings :math:`\hat{P}^{(1)}` and :math:`\hat{P}^{(2)}` commute if
+
+.. math::
+    :name: do_commute
+
+    c = \mathbf{z}^{(1)} \cdot \mathbf{x}^{(2)} + \mathbf{x}^{(1)} \cdot \mathbf{z}^{(2)} \pmod{2}
+
+is equal to :math:`0` and anticommute otherwise. Commutation can be assessed element-wise using the :code:`commute_with` method.
+
+.. code:: python
+
+    from pauliarray import PauliArray
+
+    paulis_1 = PauliArray.from_labels(["IZ", "ZI"])
+    paulis_2 = PauliArray.from_labels(["ZZ", "XX"])
+
+    do_commute = paulis_1.commute_with(paulis_2)
+
+    print(do_commute)
+
+.. code::
+
+    [ True False]
+
+Actual commutator can be computed element-wise between two arrays of Pauli strings
+
+.. math::
+
+    [\hat{P}^{(1)}_i, \hat{P}^{(2)}_i] = \hat{P}^{(1)}_i \hat{P}^{(2)}_i - \hat{P}^{(2)}_i \hat{P}^{(1)}_i
+    .
+    
+
+For efficiency, this operation can be reduced to a single composition
+
+.. math::
+    
+    [\hat{P}^{(1)}_i, \hat{P}^{(2)}_i] = 2c_i \hat{P}^{(1)}_i \hat{P}^{(2)}_i
+    
+where :math:`c_i` is given by the equation :eq:`do_commute`.
+
+
+
+.. is $1$ if $[\hat{P}^{(1)}_i, \hat{P}^{(2)}_j] \neq 0$.
