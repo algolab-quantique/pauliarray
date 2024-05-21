@@ -56,7 +56,7 @@ A convenient initialization method using Pauli string labels is also available. 
     paulis = PauliArray.from_labels(["IIIX", "IIXZ", "IXZZ", "XZZZ"])
 
 
-Multi-dimensional :code:`PauliArray` are also supported. The following code creates a :code:`(4, 2)` 4-qubit :code:`PauliArray`.
+Multidimensional :code:`PauliArray` are also supported. The following code creates a :code:`(4, 2)` 4-qubit :code:`PauliArray`.
 
 .. code:: python
 
@@ -96,7 +96,7 @@ A :code:`WeightedPauliArray` is obtained by assigning a complex number to each P
 
     w_{ij\ldots k} \hat{P}_{ij\ldots k} .
 
-It can be initialized by providing a :code:`PauliArray` and a :code:`numpy.ndarray[complex]`. Both array should have the same shape or at leat be broadcastable.
+It can be initialized by providing a :code:`PauliArray` and a :code:`numpy.ndarray[complex]`. Both arrays should have the same shape or at leat be broadcastable.
 
 .. code:: python
 
@@ -138,7 +138,7 @@ OperatorArrayType1
 ------------------
 
 
-It is possible to define an array of operators by using a multi-dimensional :code:`WeightedPauliArray` and assigning its last dimension as the summation axis
+It is possible to define an array of operators by using a multidimensional :code:`WeightedPauliArray` and assigning its last dimension as the summation axis
 
 .. math::
 

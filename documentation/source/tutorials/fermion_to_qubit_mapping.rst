@@ -2,13 +2,13 @@
 Fermion to Qubit Mapping
 ========================
 
-In this tutorial we will see how to map a fermionic Hamiltonian to a qubit Hamiltonian using PauliArray. We will also make a comparaison with similar tools provided in qiskit and show that PauliArray accomplish the same task much faster.
+In this tutorial we will see how to map a fermionic Hamiltonian to a qubit Hamiltonian using PauliArray. We will also make a comparison with similar tools provided in Qiskit and show that PauliArray accomplish the same task much faster.
 
 ---------------------------------
-Fermionic Hamiltonian with qiskit
+Fermionic Hamiltonian with Qiskit
 ---------------------------------
 
-As a starting point we will use qiskit to generate the fermionic Hamiltonian (:code:`FermioncOp`) for the :math:`\text{N}_2` molecule.
+As a starting point, we will use Qiskit to generate the fermionic Hamiltonian (:code:`FermioncOp`) for the :math:`\text{N}_2` molecule.
 
 .. code:: python
 
@@ -27,10 +27,10 @@ As a starting point we will use qiskit to generate the fermionic Hamiltonian (:c
     second_q_hamiltonian = problem.hamiltonian.second_q_op()
 
 ---------------------------------
-Jordan Wigner Mapping with qiskit
+Jordan Wigner Mapping with Qiskit
 ---------------------------------
 
-Carrying out the mapping with qiskit is pretty straight forward. The result is a :code:`SparsePauliOp`. We can measure the time it takes to complete the process.
+Carrying out the mapping with Qiskit is pretty straight forward. The result is a :code:`SparsePauliOp`. We can measure the time it takes to complete the process.
 
 .. code:: python
 
@@ -53,17 +53,17 @@ Carrying out the mapping with qiskit is pretty straight forward. The result is a
     Number of qubits : 20
     Number of Pauli strings : 2951
 
-As a not so rigourous benchmark, it takes about 2.1 sec to an Apple M2 to complete the mapping for the :math:`\text{N}_2` molecule involving 20 qubits and 2951 Pauli strings.
+As a not so rigorous benchmark, it takes about 2.1 sec to an Apple M2 to complete the mapping for the :math:`\text{N}_2` molecule involving 20 qubits and 2951 Pauli strings.
 
 -------------------------------------
 Jordan Wigner Mapping with PauliArray
 -------------------------------------
 
-The process is pretty similar using PauliArray, except we need to convert the :code:`FermioncOp` into arguments compatible with the :code:`FermionMapping`. We also need to specify the number of qubits to initialise the :code:`JordanWigner` mapping. The result is a :code:`Operator`. 
+The process is pretty similar using PauliArray except we need to convert the :code:`FermioncOp` into arguments compatible with the :code:`FermionMapping`. We also need to specify the number of qubits to initialize the :code:`JordanWigner` mapping. The result is a :code:`Operator`. 
 
 .. code:: python
 
-    from pauliarray.interface.qiskit import extract_fermionic_op
+    from pauliarray.interface.Qiskit import extract_fermionic_op
     from pauliarray.mapping.fermion import JordanWigner
 
     num_spin_orbitals = second_q_hamiltonian.num_spin_orbitals
@@ -85,13 +85,13 @@ The process is pretty similar using PauliArray, except we need to convert the :c
     Number of qubits : 20
     Number of Pauli strings : 2951
 
-Again, the not so rigourous benchmarking shows that PauliArray completes the mapping in less than 0.15 sec, which is more than 10 times faster than qiskit.
+Again, the not so rigorous benchmarking shows that PauliArray completes the mapping in less than 0.15 sec, which is more than 10 times faster than Qiskit.
 
 We can check that both result are the same by converting the :code:`Operator` into a :code:`SparsePauliOp`. 
 
 .. code:: python
 
-    from pauliarray.interface.qiskit import operator_to_sparse_pauli
+    from pauliarray.interface.Qiskit import operator_to_sparse_pauli
 
     print(operator_to_sparse_pauli(pa_qubit_hamiltonien).sort() == qk_qubit_hamiltonian.sort())
 
@@ -103,7 +103,7 @@ We can check that both result are the same by converting the :code:`Operator` in
 General (Random) Mapping with PauliArray
 ----------------------------------------
 
-PauliArray allow to construct mapping for :math:`n` states by providing an invertible binary component :math:`n\times n` matrix. To show this, we will consider a smaller molecule :math:`LiH`.
+PauliArray allow for constructing mapping for :math:`n` states by providing an invertible binary component :math:`n\times n` matrix. To show this, we will consider a smaller molecule :math:`LiH`.
 
 .. code::
 
@@ -133,7 +133,7 @@ Let's construct such a matrix randomly.
 
 .. note::
 
-    Such a matrix with 1 on the diagonal, an upper triangle filled with 0, and a random lower triangle is garanteed to be invertible.
+    Such a matrix with 1 on the diagonal, an upper triangle filled with 0, and a random lower triangle is guaranteed to be invertible.
 
 .. code:: python
 
@@ -158,7 +158,7 @@ Let's construct such a matrix randomly.
      [1 0 0 1 1 0 1 0 0 0 1 0]
      [0 0 1 0 1 0 1 0 1 1 1 1]]
 
-To initialise the mapping, we only need to provide this matrix to :code:`FermionMapping`.
+To initialize the mapping, we only need to provide this matrix to :code:`FermionMapping`.
 
 .. code:: python
 
@@ -167,7 +167,7 @@ To initialise the mapping, we only need to provide this matrix to :code:`Fermion
     mapping = FermionMapping(mapping_matrix)
     pa_qubit_hamiltonien = mapping.assemble_qubit_hamiltonian_from_sparses(one_body_tuple, two_body_tuple)
 
-Finally, to validate that such mapping are valid, we can contruct two random mappings. Their respective mapping matrices should be different. Then we can use them to convert the fermionic Hamiltonian to two different qubit Hamiltonians. These two Hamiltonian are expressing the same operator but in different basis. Therefore, their eigenvalues should be equals. 
+Finally, to confirm that such mappings are valid, we can construct two random mappings. Their respective mapping matrices should be different. Then we can use them to convert the fermionic Hamiltonian to two different qubit Hamiltonians. These two Hamiltonian are expressing the same operator but in different basis. Therefore, their eigenvalues should be equals. 
 
 Let's check that this is true. This may take a while.
 

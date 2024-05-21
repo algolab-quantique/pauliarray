@@ -8,7 +8,7 @@ All the data structures of PauliArray can be acted on or combined using a set of
 Indexing and Masking
 --------------------
 
-Indexing and masking in PauliArray works similarly as in Numpy. For example, the following code shows how to access the two first Pauli strings of the second column of an PauliArray.
+Indexing and masking in PauliArray works similarly as in Numpy. For example, the following code shows how to access the first two Pauli strings of the second column of a PauliArray.
 
 .. code:: python
 
@@ -71,9 +71,9 @@ The same two :code:`WeightedPauliArray` can be composed in a outer product fashi
 
     w_i^{(1)}\hat{P}_i^{(1)} w_j^{(2)} \hat{P}_j^{(2)} = w_{ij}^{(4)} \hat{P}_{ij}^{(4)}.
 
-This results into a 2-dimensionnal :code:`WeightedPauliArray`.
+This results into a 2-dimensional :code:`WeightedPauliArray`.
 
-In PauliArray this can be acheived by making use of broadcasting by introducing new dimensions to the arrays with :code:`None`. See `Numpy's documentation <https://numpy.org/doc/stable/user/basics.indexing.html#dimensional-indexing-tools>`_ for more details.
+In PauliArray this can be achieved by making use of broadcasting by introducing new dimensions to the arrays with :code:`None`. See `Numpy's documentation <https://numpy.org/doc/stable/user/basics.indexing.html#dimensional-indexing-tools>`_ for more details.
 
 .. code:: python
 
@@ -88,14 +88,14 @@ In PauliArray this can be acheived by making use of broadcasting by introducing 
     (+6.0000 +0.0000j) IZ  (+0.0000 +8.0000j) YX
 
 
-The composition of two :code:`Operator`  :math:`\hat{O}^{(1)} = \sum_{i} w_i^{(1)} \hat{P}_i^{(1)}` and :math:`\hat{O}^{(2)} = \sum_{j} w_j^{(2)} \hat{P}_j^{(2)}` involves such a 2-dimensionnal :code:`WeightedPauliArray`.
+The composition of two :code:`Operator`  :math:`\hat{O}^{(1)} = \sum_{i} w_i^{(1)} \hat{P}_i^{(1)}` and :math:`\hat{O}^{(2)} = \sum_{j} w_j^{(2)} \hat{P}_j^{(2)}` involves such a 2-dimensional :code:`WeightedPauliArray`.
 
 .. math::
 
     \hat{O}^{(1)} \hat{O}^{(2)} = \sum_{i,j} w_i^{(1)} \hat{P}_i^{(1)} w_j^{(2)} \hat{P}_j^{(2)}
     = \sum_{i,j} w_{ij}^{(3)} \hat{P}_{ij}^{(3)}
 
-However, it needs to be flatten (:math:`(i,j) \to k`) to represent an :code:`Operator`.
+However, it needs to be flattened (:math:`(i,j) \to k`) to represent an :code:`Operator`.
 
 PauliArray handles compositions of :code:`Operator` this way. It also combines the coefficients of repeated Pauli strings within the sum.
 
@@ -124,7 +124,7 @@ PauliArray handles compositions of :code:`Operator` this way. It also combines t
 
 .. attention::
 
-    Composition, and all other operations based on composition, behaves a bit differently for the data structure :code:`PauliArray`. The composition of two Pauli strings produces a new Pauli string as well as a possible factor
+    Composition, and all other operations based on composition, behave a bit differently for the data structure :code:`PauliArray`. The composition of two Pauli strings produces a new Pauli string as well as a possible factor
 
     .. math::
 
@@ -142,7 +142,7 @@ PauliArray handles compositions of :code:`Operator` this way. It also combines t
 
         paulis_3, factors = paulis_1.compose(paulis_2)
 
-    This behavior extends to all :code:`PauliArray` methods and functions were such factors are produced.
+    This behaviour extends to all :code:`PauliArray` methods and functions were such factors are produced.
 
 -----------
 Commutation
