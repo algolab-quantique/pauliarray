@@ -59,11 +59,11 @@ As a not so rigorous benchmark, it takes about 2.1 sec to an Apple M2 to complet
 Jordan Wigner Mapping with PauliArray
 -------------------------------------
 
-The process is pretty similar using PauliArray except we need to convert the :code:`FermioncOp` into arguments compatible with the :code:`FermionMapping`. We also need to specify the number of qubits to initialize the :code:`JordanWigner` mapping. The result is a :code:`Operator`. 
+The process is pretty similar using PauliArray except we need to convert the :code:`FermioncOp` into arguments compatible with the :code:`FermionMapping`. We also need to specify the number of qubits to initialize the :code:`JordanWigner` mapping. The result is a :code:`Operator`.
 
 .. code:: python
 
-    from pauliarray.interface.Qiskit import extract_fermionic_op
+    from pauliarray.conversion.Qiskit import extract_fermionic_op
     from pauliarray.mapping.fermion import JordanWigner
 
     num_spin_orbitals = second_q_hamiltonian.num_spin_orbitals
@@ -87,11 +87,11 @@ The process is pretty similar using PauliArray except we need to convert the :co
 
 Again, the not so rigorous benchmarking shows that PauliArray completes the mapping in less than 0.15 sec, which is more than 10 times faster than Qiskit.
 
-We can check that both result are the same by converting the :code:`Operator` into a :code:`SparsePauliOp`. 
+We can check that both result are the same by converting the :code:`Operator` into a :code:`SparsePauliOp`.
 
 .. code:: python
 
-    from pauliarray.interface.Qiskit import operator_to_sparse_pauli
+    from pauliarray.conversion.Qiskit import operator_to_sparse_pauli
 
     print(operator_to_sparse_pauli(pa_qubit_hamiltonien).sort() == qk_qubit_hamiltonian.sort())
 
@@ -162,12 +162,12 @@ To initialize the mapping, we only need to provide this matrix to :code:`Fermion
 
 .. code:: python
 
-    from pauliarray.mapping.fermion import FermionMapping    
+    from pauliarray.mapping.fermion import FermionMapping
 
     mapping = FermionMapping(mapping_matrix)
     pa_qubit_hamiltonien = mapping.assemble_qubit_hamiltonian_from_sparses(one_body_tuple, two_body_tuple)
 
-Finally, to confirm that such mappings are valid, we can construct two random mappings. Their respective mapping matrices should be different. Then we can use them to convert the fermionic Hamiltonian to two different qubit Hamiltonians. These two Hamiltonian are expressing the same operator but in different basis. Therefore, their eigenvalues should be equals. 
+Finally, to confirm that such mappings are valid, we can construct two random mappings. Their respective mapping matrices should be different. Then we can use them to convert the fermionic Hamiltonian to two different qubit Hamiltonians. These two Hamiltonian are expressing the same operator but in different basis. Therefore, their eigenvalues should be equals.
 
 Let's check that this is true. This may take a while.
 
