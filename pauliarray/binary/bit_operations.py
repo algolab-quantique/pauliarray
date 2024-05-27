@@ -152,8 +152,12 @@ def row_echelon(bit_matrix: NDArray[np.bool_]) -> NDArray[np.bool_]:
 
 
 def kernel(bit_matrix: NDArray[np.bool_]) -> NDArray[np.bool_]:
-    """
-    Computes the Kernel of a binary matrix.
+    r"""
+    Computes the Kernel of a two dimensions NDArray[np.bool_].
+    The Kernel of a matrix A is a matrix which the columns are formed by the vectors x such that
+
+    .. math::
+        A x = 0.
 
     Args:
         bit_matrix (NDArray[np.bool_]): Input binary matrix.
@@ -183,7 +187,8 @@ def kernel(bit_matrix: NDArray[np.bool_]) -> NDArray[np.bool_]:
 
 def intersection_row_space(bit_matrix_1: NDArray[np.bool_], bit_matrix_2: NDArray[np.bool_]) -> NDArray[np.bool_]:
     """
-    Computes rows spanning the intersection subspace of two row spaces.
+    Given two matrices which rows are spanning two subspace, this fonction returns rows spanning the intersection
+    subspace.
 
     Args:
         bit_matrix_1 (NDArray[np.bool_]): First binary matrix.
@@ -209,7 +214,8 @@ def intersection_row_space(bit_matrix_1: NDArray[np.bool_], bit_matrix_2: NDArra
 
 def row_space(bits: NDArray[np.bool_]) -> NDArray[np.bool_]:
     """
-    Computes the row space of a binary matrix using Gauss-Jordan elimination.
+    Computes the row space of a binary matrix using Gauss-Jordan elimination and
+    removing the zero lines.
 
     Args:
         bits (NDArray[np.bool_]): Input binary matrix.

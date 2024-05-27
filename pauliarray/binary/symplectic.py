@@ -109,6 +109,7 @@ def is_isotropic(zx_strings: NDArray[np.bool_]) -> bool:
 
     Args:
         zx_strings (NDArray[np.bool_]): A list of zx_strings (2d-array of bools) defining a subspace.
+        Last dimension is along the length of the strings.
 
     Returns:
         bool: Wether or not input is isotropic

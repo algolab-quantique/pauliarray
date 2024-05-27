@@ -1,5 +1,5 @@
 from numbers import Number
-from typing import Any, Callable, List, Tuple, Union
+from typing import Any, Callable, List, Tuple, Union, Self
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
@@ -93,7 +93,7 @@ class OperatorArrayType2(object):
         """
         return len(self.shape)
 
-    def __getitem__(self, key) -> "OperatorArrayType2":
+    def __getitem__(self, key) -> Self:
         """
         Gets an item from the weights using the provided key.
 
@@ -105,7 +105,7 @@ class OperatorArrayType2(object):
         """
         return OperatorArrayType2(self.basis_paulis.copy(), self.weights[key])
 
-    def _mul(self, other: Union[Number, ArrayLike]) -> "OperatorArrayType2":
+    def _mul(self, other: Union[Number, ArrayLike]) -> Self:
         """
         Multiplies the weights by a number or an array.
 
@@ -120,7 +120,7 @@ class OperatorArrayType2(object):
 
         return NotImplemented
 
-    def reshape(self, shape: Tuple[int, ...]) -> "OperatorArrayType2":
+    def reshape(self, shape: Tuple[int, ...]) -> Self:
         """
         Returns a copy of self with a new shape.
 
@@ -132,7 +132,7 @@ class OperatorArrayType2(object):
         """
         return OperatorArrayType2(self.basis_paulis.copy(), self.weights.reshape(shape))
 
-    def flatten(self) -> "OperatorArrayType2":
+    def flatten(self) -> Self:
         """
         Returns a flattened copy of self.
 
@@ -142,7 +142,7 @@ class OperatorArrayType2(object):
         shape = (np.prod(self.shape),)
         return self.reshape(shape)
 
-    def squeeze(self) -> "OperatorArrayType2":
+    def squeeze(self) -> Self:
         """
         Returns an OperatorArray with axes of length one removed.
 
@@ -151,7 +151,7 @@ class OperatorArrayType2(object):
         """
         return OperatorArrayType2(self.basis_paulis.copy(), self.weights.squeeze())
 
-    def __mul__(self, other: Any):
+    def __mul__(self, other: Any) -> Self:
         """
         Multiplies the weights by a number.
 
@@ -166,7 +166,7 @@ class OperatorArrayType2(object):
 
         return NotImplemented
 
-    def __rmul__(self, other: Any):
+    def __rmul__(self, other: Any) -> Self:
         """
         Multiplies the weights by a number.
 
@@ -181,7 +181,7 @@ class OperatorArrayType2(object):
 
         return NotImplemented
 
-    def mul_weights(self, other: Union[Number, NDArray]) -> "OperatorArrayType2":
+    def mul_weights(self, other: Union[Number, NDArray]) -> Self:
         """
         Multiplies the weights by a number or an array.
 
@@ -210,7 +210,7 @@ class OperatorArrayType2(object):
 
         return NotImplemented
 
-    def compose_operator_array_type_2(self, other: "OperatorArrayType2") -> "OperatorArrayType2":
+    def compose_operator_array_type_2(self, other: Self) -> Self:
         """
         Composes the current operator with another OperatorArrayType2.
 
@@ -246,7 +246,7 @@ class OperatorArrayType2(object):
 
         return NotImplemented
 
-    def add_operator_array_type_2(self, other: "OperatorArrayType2") -> "OperatorArrayType2":
+    def add_operator_array_type_2(self, other: Self) -> Self:
         """
         Adds the current operator with another OperatorArrayType2.
 
@@ -265,7 +265,7 @@ class OperatorArrayType2(object):
 
         return new_operator_array
 
-    def filter_weights(self, filter_function: Callable) -> "OperatorArrayType2":
+    def filter_weights(self, filter_function: Callable) -> Self:
         """
         Filters the weights using a filter function.
 
@@ -282,7 +282,7 @@ class OperatorArrayType2(object):
 
         return OperatorArrayType2(self.basis_paulis.copy(), new_weights)
 
-    def remove_small_weights(self, threshold: float = 1e-12) -> "OperatorArrayType2":
+    def remove_small_weights(self, threshold: float = 1e-12) -> Self:
         """
         Removes weights that are smaller than a threshold.
 
@@ -294,7 +294,7 @@ class OperatorArrayType2(object):
         """
         return self.filter_weights(lambda weight: np.abs(weight) > threshold)
 
-    def remove_unused_basis_paulis(self):
+    def remove_unused_basis_paulis(self) -> Self:
         """
         Removes Paulis from the basis that are not used in any operator of the OperatorArray.
 
@@ -313,7 +313,7 @@ class OperatorArrayType2(object):
 
         return self
 
-    def combine_basis_paulis(self):
+    def combine_basis_paulis(self) -> Self:
         """
         Combines repeated Pauli operators in the basis and updates weights accordingly.
 
@@ -325,6 +325,7 @@ class OperatorArrayType2(object):
         if new_basis_paulis.size == self.basis_paulis.size:
             return self
 
+        # need to put the pauli_basis dimension first to use np.add.at
         new_weights_bw = np.zeros((new_basis_paulis.size,) + self.shape, dtype=complex)
         np.add.at(new_weights_bw, inverse, np.moveaxis(self.weights, -1, 0))
 
@@ -338,10 +339,10 @@ class OperatorArrayType2(object):
         Calculates the expectation values of the operators given the expectation values of the Pauli operators.
 
         Args:
-            paulis_expectation_values (NDArray[float]): Expectation values of the Pauli operators.
+            paulis_expectation_values (NDArray[float]): Expectation values of the input Paulis.
 
         Returns:
-            NDArray[float]: The expectation values of the operators.
+            NDArray[float]: The expectation values of the operators in operator array.
         """
         assert np.all(paulis_expectation_values.shape == self.paulis.shape)
 
@@ -354,7 +355,7 @@ class OperatorArrayType2(object):
         Calculates the covariances of the operators given the covariances of the Pauli operators.
 
         Args:
-            paulis_covariances (NDArray[float]): Covariances of the Pauli operators.
+            paulis_covariances (NDArray[float]): Covariances of the input Paulis.
 
         Returns:
             NDArray[float]: The covariances of the operators.
@@ -368,18 +369,25 @@ class OperatorArrayType2(object):
     @staticmethod
     def build_basis_paulis(operators: NDArray) -> Tuple[pa.PauliArray, NDArray[np.complex_]]:
         """
-        Builds the basis and the basis map for a given array of operators.
+        Builds the basis and the basis map.
+        The basis is a PauliArray that contains each of the Pauli strings appearing in the operators.
+        The basis map has the same shape as the OperatorArray and contains an array of indices that can be used to
+        construct the operator with relevant Pauli strings from the basis.
 
         Args:
             operators (NDArray): Array of operator objects.
 
         Returns:
-            Tuple[PauliArray, NDArray[np.complex_]]: A tuple containing the basis Pauli array and the weights array.
+            Tuple[PauliArray, NDArray[np.complex_]]: A tuple containing :
+                - A PauliArray : All the Pauli Strings present in the OperatorArray. Forms the basis.
+                - An NDArray: An array definining the operators of the OperatorArray using the indices as reference to
+            the basis.
         """
         for idx in np.ndindex(operators.shape):
             operators[idx].combine_repeated_terms(inplace=True)
 
         all_paulis = pa.concatenate([operators[idx].paulis for idx in np.ndindex(operators.shape)], 0)
+        # a list to know to which operator the pauli in all_paulis belongs
         operator_indices = np.concatenate(
             [
                 np.ones(operators[idx].num_terms, dtype=int) * operator_index
@@ -431,7 +439,7 @@ class OperatorArrayType2(object):
         return op.Operator.from_paulis_and_weights(self.basis_paulis, weights)
 
     @classmethod
-    def from_operator_ndarray(cls, operators: NDArray):
+    def from_operator_ndarray(cls, operators: NDArray) -> Self:
         """
         Constructs an OperatorArrayType2 instance from an array of operators.
 
@@ -446,7 +454,7 @@ class OperatorArrayType2(object):
         return cls(basis_paulis, weights)
 
     @classmethod
-    def from_operator_list(cls, operators: List[op.Operator]):
+    def from_operator_list(cls, operators: List[op.Operator]) -> Self:
         """
         Constructs an OperatorArrayType2 instance from a list of operators.
 
@@ -459,7 +467,7 @@ class OperatorArrayType2(object):
         return cls.from_operator_ndarray(np.array(operators, dtype=op.Operator))
 
     @classmethod
-    def from_operator(cls, operator: op.Operator):
+    def from_operator(cls, operator: op.Operator) -> Self:
         """
         Constructs an OperatorArrayType2 instance from a single operator.
 
@@ -472,7 +480,7 @@ class OperatorArrayType2(object):
         return cls.from_operator_ndarray(np.array([operator], dtype=op.Operator))
 
     @classmethod
-    def from_pauli_array(cls, paulis: pa.PauliArray):
+    def from_pauli_array(cls, paulis: pa.PauliArray) -> Self:
         """
         Constructs an OperatorArrayType2 instance from a Pauli array.
 
@@ -487,7 +495,21 @@ class OperatorArrayType2(object):
         return cls(weights, paulis.copy())
 
 
-def commutator(operators_1: OperatorArrayType2, operators_2: OperatorArrayType2) -> OperatorArrayType2:
+def commutator(operators_1: Self, operators_2: Self) -> Self:
+    r"""
+    Computes the commutator
+
+    .. math::
+        [A, B] = AB - BA
+
+    for pairs of operators from two operator arrays.
+
+    Args:
+        operators_1 (OperatorArrayType2): The first array of operators.
+        operators_2 (OperatorArrayType2): The second array of operators.
+    Returns:
+        OperatorArrayType2: An array of commutators of the input operator arrays.
+    """
     assert is_broadcastable(operators_1.shape, operators_2.shape)
 
     new_shape = broadcast_shape(operators_1.shape, operators_2.shape)
@@ -504,7 +526,17 @@ def commutator(operators_1: OperatorArrayType2, operators_2: OperatorArrayType2)
     return OperatorArrayType2(commutators, weights).combine_basis_paulis()
 
 
-def concatenate(operatorss: Tuple[OperatorArrayType2, ...], axis: int) -> OperatorArrayType2:
+def concatenate(operatorss: Tuple[Self, ...], axis: int) -> Self:
+    """
+    Concatenates multiple operator arrays along the specified axis.
+
+    Args:
+        operators (Tuple[OperatorArrayType2, ...]): A tuple of operator arrays to concatenate.
+        axis (int): The axis along which to concatenate the operator arrays.
+
+    Returns:
+        OperatorArrayType2: A new operator array resulting from the concatenation.
+    """
     assert is_concatenatable(operatorss, axis)
 
     new_pauli_basis = pa.concatenate(tuple(operators.basis_paulis for operators in operatorss), axis=axis)

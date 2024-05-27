@@ -60,7 +60,7 @@ class TestJordanWignerMapping(unittest.TestCase):
         # filename = "h2_mo_integrals_d_0750.npz"
         filename = "lih_mo_integrals_d_1600.npz"
 
-        file_path = os.path.join("data/integrals", filename)
+        file_path = os.path.join("tests/data/integrals", filename)
         npzfile = np.load(file_path)
         one_body = npzfile["one_body"]
 
@@ -76,7 +76,7 @@ class TestJordanWignerMapping(unittest.TestCase):
         # filename = "h2_mo_integrals_d_0750.npz"
         filename = "lih_mo_integrals_d_1600.npz"
 
-        file_path = os.path.join("data/integrals", filename)
+        file_path = os.path.join("tests/data/integrals", filename)
         npzfile = np.load(file_path)
         one_body = npzfile["one_body"]
 
@@ -96,7 +96,7 @@ class TestJordanWignerMapping(unittest.TestCase):
         filename = "lih_mo_integrals_d_1600.npz"
         # filename = "nh3_mo_integrals_costum.npz"
 
-        file_path = os.path.join("data/integrals", filename)
+        file_path = os.path.join("tests/data/integrals", filename)
         npzfile = np.load(file_path)
         two_body = npzfile["two_body"]
 
@@ -115,7 +115,7 @@ class TestJordanWignerMapping(unittest.TestCase):
 
         # filename = "c2h4_mo_integrals.npz"
 
-        file_path = os.path.join("data/integrals", filename)
+        file_path = os.path.join("tests/data/integrals", filename)
         npzfile = np.load(file_path)
         two_body = npzfile["two_body"]
 
@@ -137,7 +137,7 @@ class TestJordanWignerMapping(unittest.TestCase):
 
         # filename = "c2h4_mo_integrals.npz"
 
-        file_path = os.path.join("data/integrals", filename)
+        file_path = os.path.join("tests/data/integrals", filename)
 
         npzfile = np.load(file_path)
 

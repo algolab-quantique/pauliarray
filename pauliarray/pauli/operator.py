@@ -666,7 +666,7 @@ class Operator(object):
 
     def is_clifford(self) -> bool:
         """
-        Check if the Operator is a Clifford operator.
+        Check if the Operator is a Clifford operator. For an operator to be Clifford, it first needs to be unitary.
         # TODO : make sure this is robust
 
 
@@ -869,8 +869,13 @@ class Operator(object):
 
 
 def commutator(operator_1: Operator, operator_2: Operator) -> Operator:
-    """
-    Computes the commutator of two Operators.
+    r"""
+    Computes the commutator
+
+    .. math::
+        [A, B] = AB - BA
+
+    of two Operators.
 
     Args:
         operator_1 (Operator): The first Operator.
@@ -891,8 +896,13 @@ def commutator(operator_1: Operator, operator_2: Operator) -> Operator:
 
 
 def anticommutator(operator_1: Operator, operator_2: Operator) -> Operator:
-    """
-    Computes the anticommutator of two Operators.
+    r"""
+    Computes the anticommutator
+
+    .. math::
+        {A, B} = AB + BA
+
+    of two Operators.
 
     Args:
         operator_1 (Operator): The first Operator.
