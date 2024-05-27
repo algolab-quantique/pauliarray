@@ -67,10 +67,7 @@ The following pages contain PauliArray's API reference.
 
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 4
     :caption: API reference
-    :glob:
 
-    api_reference/*
-
-::::
+    api_reference/pauliarray
