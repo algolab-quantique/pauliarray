@@ -7,7 +7,7 @@ def bit_sum(bit_strings: "np.ndarray[np.bool]") -> int:
     Calculates the sum of booleans along the last axis of the input array.
 
     Args:
-        bit_strings ("np.ndarray[np.bool]"): Array of booleans .
+        bit_strings ("np.ndarray[np.bool]"): Array of booleans.
 
     Returns:
         int: Sum of bits along the last axis.
