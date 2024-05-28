@@ -31,6 +31,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.todo",
     "sphinx.ext.napoleon",
+    "sphinx_mdinclude",
 ]
 
 # Napoleon settings
@@ -54,7 +55,7 @@ exclude_patterns = []
 
 html_theme = "sphinx_book_theme"
 html_logo = "_branding/logo.svg"
-html_favicon = "_branding/logo.svg"
+html_favicon = "_branding/favicon.png"
 html_theme_options = {
     "repository_url": "https://github.com/algolab-quantique/pauliarray.git",
     "use_repository_button": True,

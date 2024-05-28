@@ -56,12 +56,12 @@ class Operator(object):
         return self._wpaulis
 
     @property
-    def weights(self) -> NDArray[np.complex_]:
+    def weights(self) -> "np.ndarray[np.complex]":
         """
         Returns the weights of the Pauli terms.
 
         Returns:
-            NDArray[np.complex_]: The weights.
+            "np.ndarray[np.complex]": The weights.
         """
         return self._wpaulis.weights
 
@@ -175,12 +175,12 @@ class Operator(object):
         new_wpaulis = wpa.WeightedPauliArray(self.wpaulis.paulis.copy(), np.conj(self.wpaulis.weights))
         return Operator(new_wpaulis)
 
-    def take_qubits(self, indices: Union[NDArray[np.int_], range, int]) -> "Operator":
+    def take_qubits(self, indices: Union["np.ndarray[np.int]", range, int]) -> "Operator":
         """
         Takes a subset of qubits.
 
         Args:
-            indices (Union[NDArray[np.int_], range, int]): Indices of the qubits to take.
+            indices (Union["np.ndarray[np.int]", range, int]): Indices of the qubits to take.
 
         Returns:
             Operator: The resulting Operator with the subset of qubits.
@@ -192,12 +192,12 @@ class Operator(object):
 
         return Operator(new_wpaulis)
 
-    def compress_qubits(self, condition: NDArray[np.bool_]) -> "Operator":
+    def compress_qubits(self, condition: "np.ndarray[np.bool]") -> "Operator":
         """
         Compresses the qubits based on the given condition.
 
         Args:
-            condition (NDArray[np.bool_]): Condition for compressing the qubits.
+            condition ("np.ndarray[np.bool]"): Condition for compressing the qubits.
 
         Returns:
             Operator: The resulting Operator with compressed qubits.
@@ -462,7 +462,9 @@ class Operator(object):
 
         return Operator.from_paulis_and_weights(new_paulis, new_weights)
 
-    def clifford_conjugate_pauli_array_old(self, other: pa.PauliArray) -> Tuple[pa.PauliArray, NDArray[np.complex_]]:
+    def clifford_conjugate_pauli_array_old(
+        self, other: pa.PauliArray
+    ) -> Tuple[pa.PauliArray, "np.ndarray[np.complex]"]:
         """
         Transform a PauliArray using self to perform a Clifford conjugate.
 
@@ -471,7 +473,7 @@ class Operator(object):
 
         Returns:
             pa.PauliArray: The transformed PauliArray
-            NDArray[np.complex_]: Residual coefficient
+            "np.ndarray[np.complex]": Residual coefficient
         """
 
         assert self.is_clifford()
@@ -513,7 +515,7 @@ class Operator(object):
 
         Returns:
             pa.PauliArray: The transformed PauliArray
-            NDArray[np.complex_]: Residual coefficient
+            "np.ndarray[np.complex]": Residual coefficient
         """
 
         assert self.is_clifford()
@@ -555,7 +557,7 @@ class Operator(object):
 
         return new_paulis.reshape(original_shape), factors.reshape(original_shape)
 
-    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float_]) -> np.complex_:
+    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float_]) -> "np.complex":
         """
         Returns the PauliArray expectation value given the expectation values of the Paulis. More useful for other classes, but still here for uniformity.
 
@@ -569,7 +571,7 @@ class Operator(object):
 
         return np.sum(wpaulis_expectation_values)
 
-    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float_]) -> np.complex_:
+    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float_]) -> "np.complex":
         """
         Returns the PauliArray expectation value given the expectation values of the Paulis.
 
@@ -677,12 +679,12 @@ class Operator(object):
 
         return bool(np.all(np.isclose(sq_amp, 1 / self.num_terms))) and self.is_unitary()
 
-    def trace(self) -> np.complex_:
+    def trace(self) -> "np.complex":
         """
         Returns the trace of the Operator.
 
         Returns:
-            np.complex_: The trace of the Operator.
+            "np.complex": The trace of the Operator.
         """
         paulis_traces = self.paulis.traces()
 

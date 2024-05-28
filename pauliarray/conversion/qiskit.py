@@ -112,7 +112,9 @@ def operator_array_from_sparse_pauli_list(sparse_paulis: List[SparsePauliOp]) ->
 
 def extract_fermionic_op(
     fermionic_op: FermionicOp,
-) -> tuple[tuple[list[NDArray[np.int_]], NDArray, list[list]], tuple[list[NDArray[np.int_]], NDArray, list[list]]]:
+) -> tuple[
+    tuple[list["np.ndarray[np.int]"], NDArray, list[list]], tuple[list["np.ndarray[np.int]"], NDArray, list[list]]
+]:
     """
     Extracts data from a Qiskit Nature FermionicOp to be used by PauliArray mapping.
 
@@ -120,10 +122,10 @@ def extract_fermionic_op(
         fermionic_op (FermionicOp): A FermionicOp object.
 
     Returns:
-        tuple[tuple[list[NDArray[np.int_]], NDArray, list[list]], tuple[list[NDArray[np.int_]], NDArray, list[list]]]:
+        tuple[tuple[list["np.ndarray[np.int]"], NDArray, list[list]], tuple[list["np.ndarray[np.int]"], NDArray, list[list]]]:
         Two tuples containing one-body and two-body terms.
             Each tuple consists of:
-            - list[NDArray[np.int_]]: Orbital indices for the terms.
+            - list["np.ndarray[np.int]"]: Orbital indices for the terms.
             - NDArray: Values of the terms.
             - list[list]: Signs of the terms.
     """

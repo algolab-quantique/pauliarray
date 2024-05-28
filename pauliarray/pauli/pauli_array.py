@@ -42,7 +42,7 @@ class PauliArray(object):
     Defines an array of Pauli strings.
     """
 
-    def __init__(self, z_strings: NDArray[np.bool_], x_strings: NDArray[np.bool_]):
+    def __init__(self, z_strings: "np.ndarray[np.bool]", x_strings: "np.ndarray[np.bool]"):
 
         z_strings = np.atleast_2d(z_strings)
         x_strings = np.atleast_2d(x_strings)
@@ -100,62 +100,62 @@ class PauliArray(object):
         return self
 
     @property
-    def x_strings(self) -> NDArray[np.bool_]:
+    def x_strings(self) -> "np.ndarray[np.bool]":
         """
         Returns the X bits.
 
         Returns:
-            NDArray[np.bool_]: The X bits.
+            "np.ndarray[np.bool]": The X bits.
         """
         return self._x_strings
 
     @property
-    def z_strings(self) -> NDArray[np.bool_]:
+    def z_strings(self) -> "np.ndarray[np.bool]":
         """
         Returns the Z bits.
 
         Returns:
-            NDArray[np.bool_]: The Z bits.
+            "np.ndarray[np.bool]": The Z bits.
         """
         return self._z_strings
 
     @property
-    def zx_strings(self) -> NDArray[np.bool_]:
+    def zx_strings(self) -> "np.ndarray[np.bool]":
         """
         Returns the combined Z and X bits.
 
         Returns:
-            NDArray[np.bool_]: The combined Z and X bits.
+            "np.ndarray[np.bool]": The combined Z and X bits.
         """
         return symplectic.merge_zx_strings(self._z_strings, self._x_strings)
 
     @property
-    def xz_strings(self) -> NDArray[np.bool_]:
+    def xz_strings(self) -> "np.ndarray[np.bool]":
         """
         Returns the combined X and Z bits.
 
         Returns:
-            NDArray[np.bool_]: The combined X and Z bits.
+            "np.ndarray[np.bool]": The combined X and Z bits.
         """
         return symplectic.merge_zx_strings(self._x_strings, self._z_strings)
 
     @property
-    def num_ids(self) -> NDArray[np.int_]:
+    def num_ids(self) -> "np.ndarray[np.int]":
         """
         Returns the number of identity operators.
 
         Returns:
-            NDArray[np.int_]: The number of identity operators.
+            "np.ndarray[np.int]": The number of identity operators.
         """
         return np.sum(~np.logical_or(self._z_strings, self._x_strings), axis=-1)
 
     @property
-    def num_non_ids(self) -> NDArray[np.int_]:
+    def num_non_ids(self) -> "np.ndarray[np.int]":
         """
         Returns the number of non-identity operators.
 
         Returns:
-            NDArray[np.int_]: The number of non-identity operators.
+            "np.ndarray[np.int]": The number of non-identity operators.
         """
         return np.sum(np.logical_or(self._z_strings, self._x_strings), axis=-1)
 
@@ -176,7 +176,7 @@ class PauliArray(object):
     def __str__(self):
         return f"PauliArray: num_qubits = {self.num_qubits}, shape = {self.shape}, ..."
 
-    def __eq__(self, other: "PauliArray") -> NDArray[np.bool_]:
+    def __eq__(self, other: "PauliArray") -> "np.ndarray[np.bool]":
         """
         Checks element-wise if the other PauliArray is equal.
 
@@ -184,7 +184,7 @@ class PauliArray(object):
             other (PauliArray): An other PauliArray. Must be broadcastable
 
         Returns:
-            NDArray[np.bool_]: _description_
+            "np.ndarray[np.bool]": _description_
         """
 
         return np.all(np.logical_and((self.z_strings == other.z_strings), (self.x_strings == other.x_strings)), axis=-1)
@@ -282,12 +282,12 @@ class PauliArray(object):
 
         return PauliArray(new_z_strings, new_x_strings)
 
-    def take_qubits(self, indices: Union[NDArray[np.int_], range, int], inplace: bool = True) -> "PauliArray":
+    def take_qubits(self, indices: Union["np.ndarray[np.int]", range, int], inplace: bool = True) -> "PauliArray":
         """
         Return the Pauli strings for a subset of qubits, ignoring the other. Using indices.
 
         Args:
-            indices (Union[NDArray[np.int_], range, int]): Index or array of indices of the qubits to return.
+            indices (Union["np.ndarray[np.int]", range, int]): Index or array of indices of the qubits to return.
             inplace (bool): Apply the changes to self if True. Return a modified copy if False.
 
         Returns:
@@ -305,12 +305,12 @@ class PauliArray(object):
 
         return PauliArray(new_z_strings, new_x_strings)
 
-    def compress_qubits(self, condition: NDArray[np.bool_], inplace: bool = True) -> "PauliArray":
+    def compress_qubits(self, condition: "np.ndarray[np.bool]", inplace: bool = True) -> "PauliArray":
         """
         Return the Pauli strings for a subset of qubits, ignoring the other. Using a mask.
 
         Args:
-            condition (NDArray[np.bool_]): Array that selects which qubit to keep. Must be on length equal to the number of qubits.
+            condition ("np.ndarray[np.bool]"): Array that selects which qubit to keep. Must be on length equal to the number of qubits.
             inplace (bool): Apply the changes to self if True. Return a modified copy if False.
 
         Returns:
@@ -354,7 +354,7 @@ class PauliArray(object):
 
         return NotImplemented
 
-    def compose_pauli_array(self, other: "PauliArray") -> Tuple["PauliArray", NDArray[np.complex_]]:
+    def compose_pauli_array(self, other: "PauliArray") -> Tuple["PauliArray", "np.ndarray[np.complex]"]:
         """
         Performs an element-wise composition with an other PauliArray.
 
@@ -363,7 +363,7 @@ class PauliArray(object):
 
         Returns:
             PauliArray: The result of the composition.
-            NDArray[np.complex_] : Phases resulting from the composition.
+            "np.ndarray[np.complex]" : Phases resulting from the composition.
         """
         assert self.num_qubits == other.num_qubits
         assert is_broadcastable(self.shape, other.shape)
@@ -463,7 +463,7 @@ class PauliArray(object):
         """
         return PauliArray(self.x_strings.copy(), self.z_strings.copy())
 
-    def commute_with(self, other: "PauliArray") -> NDArray[np.bool_]:
+    def commute_with(self, other: "PauliArray") -> "np.ndarray[np.bool]":
         """
         Returns True if the elements of PauliArray commutes with the elements of PauliArray passed as parameter,
         returns False otherwise.
@@ -472,12 +472,12 @@ class PauliArray(object):
             other (PauliArray): The PauliArray to check commutation with.
 
         Returns:
-            NDArray[np.bool_]: An array of bool set to true for commuting Pauli string, and false otherwise.
+            "np.ndarray[np.bool]": An array of bool set to true for commuting Pauli string, and false otherwise.
         """
 
         return ~np.mod(symplectic.dot(self.zx_strings, other.zx_strings), 2).astype(np.bool_)
 
-    def bitwise_commute_with(self, other: "PauliArray") -> NDArray[np.bool_]:
+    def bitwise_commute_with(self, other: "PauliArray") -> "np.ndarray[np.bool]":
         """
         Returns True if the elements of PauliArray commutes bitwise with the elements of
         PauliArray passed as parameter, returns False otherwise.
@@ -486,7 +486,7 @@ class PauliArray(object):
             other (PauliArray): The other PauliArray to verify bitwise commutation with.
 
         Returns:
-            NDArray[np.bool_]: An array of bool set to true for bitwise commuting Pauli string, and false otherwise.
+            "np.ndarray[np.bool]": An array of bool set to true for bitwise commuting Pauli string, and false otherwise.
         """
 
         ovlp_1 = self.z_strings * other.x_strings
@@ -499,7 +499,7 @@ class PauliArray(object):
         Return the traces of the Pauli Strings which are 2^n if Identity and 0 otherwise.
 
         Returns:
-            NDArray[np.int_]: Traces of the Pauli Strings
+            "np.ndarray[np.int]": Traces of the Pauli Strings
         """
 
         return 2**self.num_qubits * (self.num_ids == self.num_qubits)
@@ -521,7 +521,7 @@ class PauliArray(object):
 
         return generators
 
-    def generators_with_map(self) -> Tuple["PauliArray", NDArray[np.bool_]]:
+    def generators_with_map(self) -> Tuple["PauliArray", "np.ndarray[np.bool]"]:
         """
         Finds a set of linearly independant PauliString which can be multiplied together to generate every PauliStirng
         in self. Alse returns a matrix identifying which generators are involved in each PauliString in self.
@@ -558,7 +558,7 @@ class PauliArray(object):
         label_table = self.label_table_nd(self.to_labels())
         return f"PauliArray\n{label_table}"
 
-    def x(self, qubits: Union[int, List[int]], inplace: bool = True) -> Tuple["PauliArray", NDArray[np.complex_]]:
+    def x(self, qubits: Union[int, List[int]], inplace: bool = True) -> Tuple["PauliArray", "np.ndarray[np.complex]"]:
         """
         Performs a Clifford conjugaison by X on given qubits. This leaves the PauliStrings unchanged but produce phase
         factors -1 when an operator is Y or Z.
@@ -569,7 +569,7 @@ class PauliArray(object):
 
         Returns:
             PauliArray: The transformed PauliArray
-            NDArray[np.complex_]: The factors resulting from the transformation
+            "np.ndarray[np.complex]": The factors resulting from the transformation
         """
 
         if not inplace:
@@ -584,7 +584,7 @@ class PauliArray(object):
 
         return self, factors
 
-    def h(self, qubits: Union[int, List[int]], inplace: bool = True) -> Tuple["PauliArray", NDArray[np.complex_]]:
+    def h(self, qubits: Union[int, List[int]], inplace: bool = True) -> Tuple["PauliArray", "np.ndarray[np.complex]"]:
         """
         Performs a Clifford conjugaison by H on given qubits. This exchanges X for Z and vice-versa and Y into -Y.
 
@@ -594,7 +594,7 @@ class PauliArray(object):
 
         Returns:
             PauliArray: The transformed PauliArray
-            NDArray[np.complex_]: The factors resulting from the transformation
+            "np.ndarray[np.complex]": The factors resulting from the transformation
         """
 
         if not inplace:
@@ -614,7 +614,7 @@ class PauliArray(object):
 
         return self, factors
 
-    def s(self, qubits: Union[int, List[int]], inplace: bool = True) -> Tuple["PauliArray", NDArray[np.complex_]]:
+    def s(self, qubits: Union[int, List[int]], inplace: bool = True) -> Tuple["PauliArray", "np.ndarray[np.complex]"]:
         """
         Performs a Clifford conjugaison by S on given qubits. This exchanges X for Y and vice-versa with respective factors.
 
@@ -624,7 +624,7 @@ class PauliArray(object):
 
         Returns:
             PauliArray: The transformed PauliArray
-            NDArray[np.complex_]: The factors resulting from the transformation
+            "np.ndarray[np.complex]": The factors resulting from the transformation
         """
 
         if not inplace:
@@ -643,7 +643,7 @@ class PauliArray(object):
 
     def cx(
         self, control_qubits: Union[int, List[int]], target_qubits: Union[int, List[int]], inplace: bool = True
-    ) -> Tuple["PauliArray", NDArray[np.complex_]]:
+    ) -> Tuple["PauliArray", "np.ndarray[np.complex]"]:
         """
         Performs a Clifford conjugaison by CX on given qubits. The order of the CX is set by the order of the qubits.
 
@@ -654,7 +654,7 @@ class PauliArray(object):
 
         Returns:
             PauliArray: The transformed PauliArray
-            NDArray[np.complex_]: The factors resulting from the transformation
+            "np.ndarray[np.complex]": The factors resulting from the transformation
         """
 
         if not inplace:
@@ -681,7 +681,7 @@ class PauliArray(object):
 
     def cz(
         self, control_qubits: Union[int, List[int]], target_qubits: Union[int, List[int]], inplace: bool = True
-    ) -> Tuple["PauliArray", NDArray[np.complex_]]:
+    ) -> Tuple["PauliArray", "np.ndarray[np.complex]"]:
         """
         Performs a Clifford conjugaison by CZ on given qubits. The order of the CZ is set by the order of the qubits.
 
@@ -692,7 +692,7 @@ class PauliArray(object):
 
         Returns:
             PauliArray: The transformed PauliArray
-            NDArray[np.complex_]: The factors resulting from the transformation
+            "np.ndarray[np.complex]": The factors resulting from the transformation
         """
 
         if not inplace:
@@ -717,7 +717,7 @@ class PauliArray(object):
 
     def clifford_conjugate(
         self, clifford: "Operator", inplace: bool = True
-    ) -> Tuple["PauliArray", NDArray[np.complex_]]:
+    ) -> Tuple["PauliArray", "np.ndarray[np.complex]"]:
         """
         Performs a Clifford transformation.
 
@@ -727,7 +727,7 @@ class PauliArray(object):
 
         Returns:
             PauliArray: The transformed PauliArray
-            NDArray[np.complex_]: The factors resulting from the transformation
+            "np.ndarray[np.complex]": The factors resulting from the transformation
         """
 
         new_paulis, factors = clifford.clifford_conjugate_pauli_array_old(self)
@@ -766,7 +766,7 @@ class PauliArray(object):
 
         return paulis_covariances
 
-    def is_diagonal(self) -> NDArray[np.bool_]:
+    def is_diagonal(self) -> "np.ndarray[np.bool]":
         """
         Checks if the Pauli strings are diagonal i.e. if all Pauli strings are I or Z.
 
@@ -775,7 +775,7 @@ class PauliArray(object):
         """
         return ~np.any(self.x_strings, axis=-1)
 
-    def is_identity(self) -> NDArray[np.bool_]:
+    def is_identity(self) -> "np.ndarray[np.bool]":
         """
         Checks if the Pauli strings are identities i.e. if all Pauli strings are I.
 
@@ -784,12 +784,12 @@ class PauliArray(object):
         """
         return ~np.logical_or(np.any(self.x_strings, axis=-1), np.any(self.z_strings, axis=-1))
 
-    def to_labels(self) -> NDArray[np.str_]:
+    def to_labels(self) -> "np.ndarray[np.str]":
         """
         Returns the labels of all zx strings.
 
         Returns:
-            NDArray[np.str_]: An array containing the labels of all Pauli strings.
+            "np.ndarray[np.str]": An array containing the labels of all Pauli strings.
         """
         labels = np.zeros(self.shape, dtype=f"U{self.num_qubits}")
 
@@ -867,12 +867,12 @@ class PauliArray(object):
         return matrix
 
     @classmethod
-    def from_labels(cls, labels: Union[list[str], NDArray[np.str_]]) -> "PauliArray":
+    def from_labels(cls, labels: Union[list[str], "np.ndarray[np.str]"]) -> "PauliArray":
         """
         Creates a PauliArray from a labels using IXYZ.
 
         Args:
-            labels (Union[list[str], NDArray[np.str_]]): The list of labels.
+            labels (Union[list[str], "np.ndarray[np.str]"]): The list of labels.
 
         Returns:
             new_pauli_array (PauliArray): The PauliArray created from labels.
@@ -884,12 +884,12 @@ class PauliArray(object):
         return PauliArray(z_strings, x_strings)
 
     @classmethod
-    def from_zx_strings(cls, zx_strings: NDArray[np.bool_]) -> "PauliArray":
+    def from_zx_strings(cls, zx_strings: "np.ndarray[np.bool]") -> "PauliArray":
         """
         Create a PauliArray from zx strings.
 
         Args:
-            zx_strings (NDArray[np.bool_]): Array where the last dimension size is an even integers (twice the number of qubits.)
+            zx_strings ("np.ndarray[np.bool]"): Array where the last dimension size is an even integers (twice the number of qubits.)
 
         Returns:
             PauliArray: The created PauliArray .
@@ -946,17 +946,17 @@ class PauliArray(object):
 
     @staticmethod
     def labels_to_z_strings_x_strings(
-        labels: Union[list[str], NDArray[np.str_]]
-    ) -> Tuple[NDArray[np.bool_], NDArray[np.bool_]]:
+        labels: Union[list[str], "np.ndarray[np.str]"]
+    ) -> Tuple["np.ndarray[np.bool]", "np.ndarray[np.bool]"]:
         """
         Returns z strings and x strings created from labels.
 
         Args:
-            labels (Union[list[str], NDArray[np.str_]]): The list of labels.
+            labels (Union[list[str], "np.ndarray[np.str]"]): The list of labels.
 
         Returns:
-            NDArray[np.bool_] : The z strings
-            NDArray[np.bool_] : The x strings
+            "np.ndarray[np.bool]" : The z strings
+            "np.ndarray[np.bool]" : The x strings
         """
         labels = np.atleast_1d(np.array(labels, dtype=str))
 
@@ -972,7 +972,7 @@ class PauliArray(object):
         return z_strings, x_strings
 
     @staticmethod
-    def label_to_z_string_x_string(label: str) -> Tuple[NDArray[np.bool_], NDArray[np.bool_]]:
+    def label_to_z_string_x_string(label: str) -> Tuple["np.ndarray[np.bool]", "np.ndarray[np.bool]"]:
         """
         Returns the z and x strings corresponding to the label passed as parameter.
 
@@ -980,8 +980,8 @@ class PauliArray(object):
             label (str): The label to convert to z_string and x_string.
 
         Returns:
-            NDArray[np.bool_] : The z strings
-            NDArray[np.bool_] : The x strings
+            "np.ndarray[np.bool]" : The z strings
+            "np.ndarray[np.bool]" : The x strings
         """
         label = label.upper()
         n_bits = len(label)
@@ -995,13 +995,13 @@ class PauliArray(object):
         return z_string, x_string
 
     @staticmethod
-    def z_string_x_string_to_label(z_string: NDArray[np.bool_], x_string: NDArray[np.bool_]) -> str:
+    def z_string_x_string_to_label(z_string: "np.ndarray[np.bool]", x_string: "np.ndarray[np.bool]") -> str:
         """
         Converts a pair of z string and x string into a label (IXYZ).
 
         Args:
-            z_string (NDArray[np.bool_]): Single z string
-            x_string (NDArray[np.bool_]): Single x string
+            z_string ("np.ndarray[np.bool]"): Single z string
+            x_string ("np.ndarray[np.bool]"): Single x string
         Returns:
             str: Label from the zx strings
         """
@@ -1039,7 +1039,7 @@ class PauliArray(object):
         return "\n".join(slice_strs)
 
 
-def argsort(paulis: PauliArray, axis: int = -1) -> NDArray[np.int_]:
+def argsort(paulis: PauliArray, axis: int = -1) -> "np.ndarray[np.int]":
     """
     Return indices which sorts the Pauli Strings.
 
@@ -1100,7 +1100,7 @@ def expand_dims(paulis: PauliArray, axis: Union[int, Tuple[int, ...]]) -> "Pauli
     return PauliArray(new_z_strings, new_x_strings)
 
 
-def commutator(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArray, NDArray[np.complex_]]:
+def commutator(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArray, "np.ndarray[np.complex]"]:
     """
     Returns the commutator of the two PauliArray parameters.
 
@@ -1110,7 +1110,7 @@ def commutator(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArray, 
 
     Returns:
         PauliArray: PauliArray containing the Pauli strings of the commutators.
-        NDArray[np.complex_] : Coefficients of Pauli strings in returned PauliArray.
+        "np.ndarray[np.complex]" : Coefficients of Pauli strings in returned PauliArray.
     """
     assert is_broadcastable(paulis_1.shape, paulis_2.shape)
 
@@ -1125,7 +1125,7 @@ def commutator(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArray, 
     return commutators, coefs
 
 
-def commutator2(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArray, NDArray[np.complex_]]:
+def commutator2(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArray, "np.ndarray[np.complex]"]:
     """
     Returns the commutator of the two PauliArray parameters.
 
@@ -1135,7 +1135,7 @@ def commutator2(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArray,
 
     Returns:
         commutator_pauli_array (PauliArray): PauliArray containing the Pauli strings of the commutator.
-        coefficients (NDArray[np.complex_]) : Coefficients of Pauli strings in returned PauliArray.
+        coefficients ("np.ndarray[np.complex]") : Coefficients of Pauli strings in returned PauliArray.
     """
     assert is_broadcastable(paulis_1.shape, paulis_2.shape)
 
@@ -1163,7 +1163,7 @@ def commutator2(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArray,
     return commutators, coefs
 
 
-def anticommutator(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArray, NDArray[np.complex_]]:
+def anticommutator(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArray, "np.ndarray[np.complex]"]:
     """
     Returns the anticommutator of the two PauliArray parameters.
 
@@ -1173,7 +1173,7 @@ def anticommutator(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArr
 
     Returns:
         anticommutators_pauli_array (PauliArray): PauliArray containing the Pauli strings of the anticommutator.
-        coefficients (NDArray[np.complex_]) : Coefficients of Pauli strings in returned PauliArray.
+        coefficients ("np.ndarray[np.complex]") : Coefficients of Pauli strings in returned PauliArray.
     """
     assert is_broadcastable(paulis_1.shape, paulis_2.shape)
 
