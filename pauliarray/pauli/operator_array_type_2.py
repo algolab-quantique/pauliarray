@@ -10,13 +10,13 @@ from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable,
 
 
 class OperatorArrayType2(object):
-    def __init__(self, basis_paulis: pa.PauliArray, weights: NDArray[np.complex_]):
+    def __init__(self, basis_paulis: pa.PauliArray, weights: "np.ndarray[np.complex]"):
         """
         Initializes an OperatorArrayType2 object.
 
         Args:
             basis_paulis (pa.PauliArray): The basis Pauli arrays.
-            weights (NDArray[np.complex_]): The weights associated with the Pauli arrays.
+            weights ("np.ndarray[np.complex]"): The weights associated with the Pauli arrays.
         """
         assert basis_paulis.size == weights.shape[-1]
 
@@ -54,12 +54,12 @@ class OperatorArrayType2(object):
         return self._basis_paulis
 
     @property
-    def weights(self) -> NDArray[np.complex_]:
+    def weights(self) -> "np.ndarray[np.complex]":
         """
         Gets the weights associated with the basis Pauli arrays.
 
         Returns:
-            NDArray[np.complex_]: The weights.
+            "np.ndarray[np.complex]": The weights.
         """
         return self._weights
 
@@ -367,7 +367,7 @@ class OperatorArrayType2(object):
         return covariances
 
     @staticmethod
-    def build_basis_paulis(operators: NDArray) -> Tuple[pa.PauliArray, NDArray[np.complex_]]:
+    def build_basis_paulis(operators: NDArray) -> Tuple[pa.PauliArray, "np.ndarray[np.complex]"]:
         """
         Builds the basis and the basis map.
         The basis is a PauliArray that contains each of the Pauli strings appearing in the operators.
@@ -378,11 +378,11 @@ class OperatorArrayType2(object):
             operators (NDArray): Array of operator objects.
 
         Returns:
-            Tuple[PauliArray, NDArray[np.complex_]]: A tuple containing :
-                - A PauliArray : All the Pauli Strings present in the OperatorArray. Forms the basis.
-                - An NDArray: An array definining the operators of the OperatorArray using the indices as reference to
-            the basis.
+            PauliArray: All the Pauli Strings present in the OperatorArray. Forms the basis.
+            "np.ndarray[np.complex]": An array definining the operators of the OperatorArray using the indices as
+            reference to the basis.
         """
+
         for idx in np.ndindex(operators.shape):
             operators[idx].combine_repeated_terms(inplace=True)
 
@@ -426,7 +426,8 @@ class OperatorArrayType2(object):
         Sums the operators along the specified axis.
 
         Args:
-            axis (Union[Tuple[int, ...], None]): Axis or axes along which to sum the operators. If None, sums over all axes.
+            axis (Union[Tuple[int, ...], None]): Axis or axes along which to sum the operators. If None, sums over all
+            axes.
 
         Returns:
             op.Operator: The summed operator.

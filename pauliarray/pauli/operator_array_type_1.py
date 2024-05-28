@@ -63,7 +63,7 @@ class OperatorArrayType1(object):
         return self._wpaulis.paulis
 
     @property
-    def weights(self) -> NDArray[np.complex_]:
+    def weights(self) -> "np.ndarray[np.complex]":
         """Weights of the Pauli terms in the operator array."""
         return self._wpaulis.weights
 
@@ -83,7 +83,7 @@ class OperatorArrayType1(object):
         """
         return OperatorArrayType1(self._wpaulis[key])
 
-    def __eq__(self, other: Self) -> NDArray[np.bool_]:
+    def __eq__(self, other: Self) -> "np.ndarray[np.bool]":
         """
         Checks element-wise if the operators in the array are equal to the other.
 
@@ -91,7 +91,7 @@ class OperatorArrayType1(object):
             other (OperatorArrayType1): Another OperatorArrayType1. Must be broadcastable.
 
         Returns:
-            NDArray[np.bool_]: An array indicating where the operators are equal.
+            "np.ndarray[np.bool]": An array indicating where the operators are equal.
         """
         new_shape = broadcast_shape(self.shape, other.shape)
 
@@ -417,7 +417,7 @@ class OperatorArrayType1(object):
 
         return OperatorArrayType1(new_wpaulis)
 
-    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float_]) -> NDArray[np.complex_]:
+    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float_]) -> "np.ndarray[np.complex]":
         """
         Returns the Operator array expectation value given the expectation values of the Paulis.
 
@@ -432,7 +432,7 @@ class OperatorArrayType1(object):
 
         return np.sum(self.wpaulis.expectation_values_from_paulis(paulis_expectation_values), axis=-1)
 
-    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float_]) -> NDArray[np.complex_]:
+    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float_]) -> "np.ndarray[np.complex]":
         """
         Returns the Operator array covariances given the covariances of the Paulis.
 

@@ -13,7 +13,7 @@ if TYPE_CHECKING:
 
 
 class WeightedPauliArray(object):
-    def __init__(self, paulis: pa.PauliArray, weights: Union[NDArray[np.complex_], Number]):
+    def __init__(self, paulis: pa.PauliArray, weights: Union["np.ndarray[np.complex]", Number]):
 
         weights = np.atleast_1d(weights)
 
@@ -43,7 +43,7 @@ class WeightedPauliArray(object):
         return np.prod(self.shape)
 
     @property
-    def weights(self) -> NDArray[np.complex_]:
+    def weights(self) -> "np.ndarray[np.complex]":
         return self._weights
 
     @property
@@ -66,7 +66,7 @@ class WeightedPauliArray(object):
     def __str__(self):
         return f"WeightedPauliArray: num_qubits = {self.num_qubits}, shape = {str(self.shape)}, ..."
 
-    def __eq__(self, other: "WeightedPauliArray") -> NDArray[np.bool_]:
+    def __eq__(self, other: "WeightedPauliArray") -> "np.ndarray[np.bool]":
         """
         Checks element-wise if the other WeightedPauliArray is equal.
 
@@ -74,7 +74,7 @@ class WeightedPauliArray(object):
             other (WeightedPauliArray): An other WeightedPauliArray. Must be broadcastable
 
         Returns:
-            NDArray[np.bool_]: _description_
+            "np.ndarray[np.bool]": _description_
         """
         eq_paulis = self.paulis == other.paulis
         eq_weights = np.isclose(self.weights, other.weights)
@@ -187,7 +187,7 @@ class WeightedPauliArray(object):
 
         return WeightedPauliArray(new_paulis, new_weights)
 
-    def take_qubits(self, indices: Union[NDArray[np.int_], range, int]) -> "WeightedPauliArray":
+    def take_qubits(self, indices: Union["np.ndarray[np.int]", range, int]) -> "WeightedPauliArray":
         if isinstance(indices, int):
             indices = np.array([indices], dtype=int)
 
@@ -196,7 +196,7 @@ class WeightedPauliArray(object):
 
         return WeightedPauliArray(new_paulis, new_weights)
 
-    def compress_qubits(self, condition: NDArray[np.bool_]) -> "WeightedPauliArray":
+    def compress_qubits(self, condition: "np.ndarray[np.bool]") -> "WeightedPauliArray":
         new_weights = self.weights.copy()
         new_paulis = self.paulis.compress_qubits(condition)
 
@@ -248,10 +248,10 @@ class WeightedPauliArray(object):
 
         return OperatorArrayType1.from_weighted_pauli_array(new_wpaulis, -1)
 
-    def commute_with(self, other: "WeightedPauliArray") -> NDArray[np.bool_]:
+    def commute_with(self, other: "WeightedPauliArray") -> "np.ndarray[np.bool]":
         return self.paulis.commute_with(other.paulis)
 
-    def bitwise_commute_with(self, other: "WeightedPauliArray") -> NDArray[np.bool_]:
+    def bitwise_commute_with(self, other: "WeightedPauliArray") -> "np.ndarray[np.bool]":
         return self.paulis.bitwise_commute_with(other.paulis)
 
     def inspect(self) -> str:
@@ -395,7 +395,7 @@ class WeightedPauliArray(object):
 
         return WeightedPauliArray(new_paulis, new_weights)
 
-    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float_]) -> NDArray[np.complex_]:
+    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float_]) -> "np.ndarray[np.complex]":
         """
         Returns the WeightedPauliArray expectation value given the expectation values of the Paulis.
 
@@ -410,7 +410,7 @@ class WeightedPauliArray(object):
 
         return self.weights * paulis_expectation_values
 
-    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float_]) -> NDArray[np.complex_]:
+    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float_]) -> "np.ndarray[np.complex]":
         """
         Returns the WeightedPauliArray covariances given the covariances of the Paulis.
 
@@ -439,7 +439,7 @@ class WeightedPauliArray(object):
 
         self.update_weights(other.weights)
 
-    def is_diagonal(self) -> NDArray[np.bool_]:
+    def is_diagonal(self) -> "np.ndarray[np.bool]":
         """
         Checks if the Pauli strings are diagonal i.e. if all Pauli strings are I or Z.
 
@@ -507,9 +507,9 @@ class WeightedPauliArray(object):
     @classmethod
     def from_z_strings_and_x_strings_and_weights(
         cls,
-        z_strings: NDArray[np.bool_],
-        x_strings: NDArray[np.bool_],
-        weights: NDArray[np.complex_],
+        z_strings: "np.ndarray[np.bool]",
+        x_strings: "np.ndarray[np.bool]",
+        weights: "np.ndarray[np.complex]",
     ) -> "WeightedPauliArray":
 
         paulis = pa.PauliArray(z_strings, x_strings)

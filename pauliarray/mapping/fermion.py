@@ -16,29 +16,24 @@ class FermionMapping(object):
     Base class to represent a Fermion-to-qubit mapping.
 
     Attributes:
-    ----------
-    mapping_matrix : NDArray[np.bool_]
-        A boolean numpy array representing the mapping matrix.
-    name : str
-        A name identifier for the mapping (default is "mapping").
-    _mapping_matrix_inv : NDArray[np.bool_], optional
-        The inverse of the mapping matrix, initially None and computed on demand.
-    _heavyside_matrix : NDArray[np.bool_], optional
-        The Heavyside matrix, initially None and computed on demand.
-    _parity_matrix : NDArray[np.bool_], optional
-        The parity matrix, initially None and computed on demand.
+        mapping_matrix ("np.ndarray[np.bool]"): A boolean numpy array representing the mapping matrix.
+        name (str): A name identifier for the mapping (default is "mapping").
+        _mapping_matrix_inv ("np.ndarray[np.bool]", optional): The inverse of the mapping matrix, initially None
+        and computed on demand.
+        _heavyside_matrix ("np.ndarray[np.bool]", optional): The Heavyside matrix, initially None and computed
+        on demand.
+        _parity_matrix ("np.ndarray[np.bool]", optional): The parity matrix, initially None and computed on demand.
     """
 
-    def __init__(self, mapping_matrix: NDArray[np.bool_], name: str = "mapping"):
+    def __init__(self, mapping_matrix: "np.ndarray[np.bool]", name: str = "mapping"):
         """
         Constructs all the necessary attributes for the FermionMapping object.
 
-        Parameters:
-        ----------
-        mapping_matrix : NDArray[np.bool_]
-            A boolean numpy array representing the mapping matrix.
-        name : str, optional
-            A name identifier for the mapping (default is "mapping").
+        Args:
+            mapping_matrix : "np.ndarray[np.bool]"
+                A boolean numpy array representing the mapping matrix.
+            name : str, optional
+                A name identifier for the mapping (default is "mapping").
         """
         self.mapping_matrix = mapping_matrix
         self.name = name
@@ -53,9 +48,7 @@ class FermionMapping(object):
         Returns the number of qubits based on the shape of the mapping matrix.
 
         Returns:
-        -------
-        int
-            The number of qubits.
+            int: The number of qubits.
         """
         return self.mapping_matrix.shape[0]
 
@@ -65,9 +58,7 @@ class FermionMapping(object):
         Returns the inverse of the mapping matrix. Computes it if not already computed.
 
         Returns:
-        -------
-        NDArray[np.bool_]
-            The inverse of the mapping matrix.
+            "np.ndarray[np.bool]": The inverse of the mapping matrix.
         """
         if self._mapping_matrix_inv is None:
             self._mapping_matrix_inv = bitops.inv(self.mapping_matrix)
@@ -75,14 +66,12 @@ class FermionMapping(object):
         return self._mapping_matrix_inv
 
     @property
-    def heavyside_matrix(self) -> NDArray[np.bool_]:
+    def heavyside_matrix(self) -> "np.ndarray[np.bool]":
         """
         Returns the Heavyside matrix. Computes it if not already computed.
 
         Returns:
-        -------
-        NDArray[np.bool_]
-            The Heavyside matrix.
+            "np.ndarray[np.bool]": The Heavyside matrix.
         """
         if self._heavyside_matrix is None:
             self._heavyside_matrix = np.tri(self.num_qubits, k=-1, dtype=np.bool_)
@@ -90,14 +79,12 @@ class FermionMapping(object):
         return self._heavyside_matrix
 
     @property
-    def parity_matrix(self) -> NDArray[np.bool_]:
+    def parity_matrix(self) -> "np.ndarray[np.bool]":
         """
         Returns the parity matrix. Computes it if not already computed.
 
         Returns:
-        -------
-        NDArray[np.bool_]
-            The parity matrix.
+            "np.ndarray[np.bool]": The parity matrix.
         """
         if self._parity_matrix is None:
             self._parity_matrix = np.tri(self.num_qubits, dtype=np.bool_)
@@ -105,7 +92,7 @@ class FermionMapping(object):
         return self._parity_matrix
 
     def majoranas(self) -> Tuple[pa.PauliArray, pa.PauliArray]:
-        """
+        r"""
         In a fermion-to-qubit mapping, each creation/annihilation operator is a sum of two majorana operators,
 
         .. math::
@@ -175,14 +162,14 @@ class FermionMapping(object):
         return occupation_operators
 
     def assemble_qubit_hamiltonian_from_arrays(
-        self, one_body: NDArray[np.complex_], two_body: NDArray[np.complex_]
+        self, one_body: "np.ndarray[np.complex]", two_body: "np.ndarray[np.complex]"
     ) -> op.Operator:
         """
         Assemble the whole qubit Hamiltonian as an Operator using fermionic integrals given as arrays.
 
         Args:
-            one_body (NDArray[np.complex_]): The one-body fermionic integrals as a 2d array
-            two_body (NDArray[np.complex_]): The two-body fermionic integrals as a 4d array (in physicist order)
+            one_body ("np.ndarray[np.complex]"): The one-body fermionic integrals as a 2d array
+            two_body ("np.ndarray[np.complex]"): The two-body fermionic integrals as a 4d array (in physicist order)
 
         Returns:
             Operator: The qubit Hamiltonia
@@ -210,17 +197,19 @@ class FermionMapping(object):
 
     def one_body_operator_from_sparse(
         self,
-        locations: List[NDArray[np.int_]],
-        values: NDArray[np.complex_],
-        signs: Union[List[int], NDArray[np.int_], List[NDArray[np.int_]]] = (1, -1),
+        locations: List["np.ndarray[np.int]"],
+        values: "np.ndarray[np.complex]",
+        signs: Union[List[int], "np.ndarray[np.int]", List["np.ndarray[np.int]"]] = (1, -1),
     ) -> op.Operator:
         """
         Assemble a one body fermionic operator as an Operator using fermionic integrals given in sparse representations.
 
         Args:
-            locations (List[NDArray[np.int_]]): Pairs of orbital indices
-            values (NDArray[np.complex_]): Values of the integral for the pairs of orbitals
-            signs (List[int] or NDArray[np.int_] or List[NDArray[np.int_]]): Values +1 or -1 determining if the operators are creation or annihilation. Can be a list of two signs, or two arrays of sign. Default to [1,-1].
+            locations (List["np.ndarray[np.int]"]): Pairs of orbital indices
+            values ("np.ndarray[np.complex]"): Values of the integral for the pairs of orbitals
+            signs (List[int] or "np.ndarray[np.int]" or List["np.ndarray[np.int]"]): Values +1 or -1 determining if
+            the operators are creation or annihilation. Can be a list of two signs, or two arrays of sign.
+            Defaults to [1,-1].
 
         Returns:
             op.Operator: The qubit operator
@@ -259,17 +248,19 @@ class FermionMapping(object):
 
     def two_body_operator_from_sparse(
         self,
-        locations: List[NDArray[np.int_]],
-        values: NDArray[np.complex_],
-        signs: Union[List[int], NDArray[np.int_], List[NDArray[np.int_]]] = (1, 1, -1, -1),
+        locations: List["np.ndarray[np.int]"],
+        values: "np.ndarray[np.complex]",
+        signs: Union[List[int], "np.ndarray[np.int]", List["np.ndarray[np.int]"]] = (1, 1, -1, -1),
     ) -> op.Operator:
         """
         Assemble a two-body fermionic operator as an Operator using fermionic integrals given in sparse representations.
 
         Args:
-            locations (List[NDArray[np.int_]]): Quartet of orbital indices
-            values (NDArray[np.complex_]): Values of the integral for the quartets of orbitals
-            signs (List[int] or NDArray[np.int_] or List[NDArray[np.int_]]): Values +1 or -1 determining if the operators are creation or annihilation. Can be a list of two signs, or two arrays of sign. Default to [+1,+1,-1,-1].
+            locations (List["np.ndarray[np.int]"]): Quartet of orbital indices
+            values ("np.ndarray[np.complex]"): Values of the integral for the quartets of orbitals
+            signs (List[int] or "np.ndarray[np.int]" or List["np.ndarray[np.int]"]): Values +1 or -1 determining if
+            the operators are creation or annihilation. Can be a list of two signs, or two arrays of sign.
+            Defaults to [+1,+1,-1,-1].
 
         Returns:
             op.Operator: The qubit operator
@@ -310,24 +301,19 @@ class FermionMapping(object):
 
         return two_body_operator
 
-    def one_body_operator_from_array(self, one_body: NDArray[np.complex_]) -> op.Operator:
+    def one_body_operator_from_array(self, one_body: "np.ndarray[np.complex]") -> op.Operator:
         """
         Converts a one-body array to an operator object.
 
-        Parameters:
-        ----------
-        one_body : NDArray[np.complex_]
-            A complex numpy array representing the one-body operator.
+        Args:
+            one_body ("np.ndarray[np.complex]"): A complex numpy array representing the one-body operator.
 
         Returns:
-        -------
-        op.Operator
-            The corresponding operator object.
+            op.Operator: The corresponding operator object.
 
         Raises:
-        ------
-        AssertionError
-            If the input array is not 2-dimensional or if its dimensions do not match the number of qubits.
+            AssertionError. If the input array is not 2-dimensional or if its dimensions do not match the
+            number of qubits.
         """
         assert one_body.ndim == 2
         assert all([s == self.num_qubits for s in one_body.shape])
@@ -339,25 +325,19 @@ class FermionMapping(object):
 
         return self.one_body_operator_from_sparse(locations, values)
 
-    def two_body_operator_from_array(self, two_body: NDArray[np.complex_]) -> op.Operator:
+    def two_body_operator_from_array(self, two_body: "np.ndarray[np.complex]") -> op.Operator:
         """
         Converts a two-body array to an operator object.
 
         Parameters:
-        ----------
-        two_body : NDArray[np.complex_]
-            A complex numpy array representing the two-body operator.
+            two_body ("np.ndarray[np.complex]"): A complex numpy array representing the two-body operator.
 
         Returns:
-        -------
-        op.Operator
-            The corresponding operator object.
+            op.Operator: The corresponding operator object.
 
         Raises:
-        ------
-        AssertionError
-            If the input array's dimensions do not match the number of qubits or if it does not satisfy the
-            required symmetries.
+            AssertionError. If the input array's dimensions do not match the number of qubits or if it does not satisfy
+            the required symmetries.
         """
         assert all([s == self.num_qubits for s in two_body.shape])
 
@@ -377,9 +357,7 @@ class FermionMapping(object):
         Assembles an array of one-body operators.
 
         Returns:
-        -------
-        opa.OperatorArrayType1
-            An operator array of one-body operators.
+            opa.OperatorArrayType1: An operator array of one-body operators.
         """
         creation_operators, annihilation_operators = self.assemble_creation_annihilation_operators()
 
@@ -390,9 +368,7 @@ class FermionMapping(object):
         Assembles an array of two-body operators.
 
         Returns:
-        -------
-        opa.OperatorArrayType1
-            An operator array of two-body operators.
+            opa.OperatorArrayType1: An operator array of two-body operators.
         """
         creation_operators, annihilation_operators = self.assemble_creation_annihilation_operators()
         double_annihilation = annihilation_operators[:, None].compose_operator_array_type_1(
@@ -404,7 +380,7 @@ class FermionMapping(object):
 
         return tmp
 
-    def _flip_operators(self, i_orbitals: NDArray[np.int_], factors: NDArray[np.float_]) -> opa.OperatorArrayType1:
+    def _flip_operators(self, i_orbitals: "np.ndarray[np.int]", factors: NDArray[np.float_]) -> opa.OperatorArrayType1:
         r"""
         Constructs an OperatorArray with the :math:`\mu^\text{th}` flip operators acting on the orbitals :math:`i_\mu`
 
@@ -415,10 +391,11 @@ class FermionMapping(object):
 
         Args:
             i_orbitals (NDArray[int]): The indices of the orbital i the operator is acting on
-            factors (NDArray[float]): The factors (+1 or -1) defining if a creation or an annihilation operator is applied
+            factors (NDArray[float]): The factors (+1 or -1) defining if a creation or an annihilation operator is
+            applied.
 
         Returns:
-            OperatorArrayType1: The array of flip operators
+            OperatorArrayType1: The array of flip operators.
         """
 
         z_strings = self.mapping_matrix_inv[i_orbitals, :]
@@ -430,7 +407,7 @@ class FermionMapping(object):
         return z_operators.mul_weights(0.5 * factors).add_scalar(0.5)
 
     def _update_operators(
-        self, i_orbitals: NDArray[np.int_], j_orbitals: NDArray[np.int_], *args: Tuple[NDArray[np.int_]]
+        self, i_orbitals: "np.ndarray[np.int]", j_orbitals: "np.ndarray[np.int]", *args: Tuple["np.ndarray[np.int]"]
     ) -> opa.OperatorArrayType1:
         """
         Updates the operators based on the given orbitals, using the
@@ -439,9 +416,9 @@ class FermionMapping(object):
         used to create new Pauli operators.
 
         Args:
-            i_orbitals (NDArray[np.int_]): The first set of orbitals.
-            j_orbitals (NDArray[np.int_]): The second set of orbitals.
-            *args (Tuple[NDArray[np.int_]]): Additional sets of orbitals.
+            i_orbitals ("np.ndarray[np.int]"): The first set of orbitals.
+            j_orbitals ("np.ndarray[np.int]"): The second set of orbitals.
+            *args (Tuple["np.ndarray[np.int]"]): Additional sets of orbitals.
 
         Returns:
             opa.OperatorArrayType1: The updated operators as an OperatorArrayType1 object.
@@ -470,21 +447,24 @@ class FermionMapping(object):
 
         return update_operators
 
-    def _update_operators_2(self, i_orbitals: NDArray[np.int_], j_orbitals: NDArray[np.int_]) -> opa.OperatorArrayType1:
+    def _update_operators_2(
+        self, i_orbitals: "np.ndarray[np.int]", j_orbitals: "np.ndarray[np.int]"
+    ) -> opa.OperatorArrayType1:
         r"""
-        Constructs an OperatorArray with the :math:`\mu^\text{th}` main operators acting on the orbitals :math:`i_\mu` and :math:`j_\mu` in a one-body fermionic operator
+        Constructs an OperatorArray with the :math:`\mu^\text{th}` main operators acting on the orbitals :math:`i_\mu`
+        and :math:`j_\mu` in a one-body fermionic operator
 
         .. math::
 
-            \hat{U}^{(2)}_{\mu} = (-1)^{\theta_{i_\mu j_ \mu}} \hat{X}_q^{M_{qi_\mu} + M_{qj_\mu}}
+            \hat{U}^{(2)}_{\mu} = (-1)^{\theta_{i_\mu j_ \mu}} \hat{X}_q^{M_{qi_\mu} + M_{qj_\mu}}.
 
 
         Args:
-            i_orbitals (NDArray[int]): The indices of the orbital i the operator is acting on
-            j_orbitals (NDArray[int]): The indices of the orbital j the operator is acting on
+            i_orbitals (NDArray[int]): The indices of the orbital i the operator is acting on.
+            j_orbitals (NDArray[int]): The indices of the orbital j the operator is acting on.
 
         Returns:
-            OperatorArrayType1: The array of operators
+            OperatorArrayType1: The array of operators.
         """
 
         heavy_map_inv = bitops.matmul(self.heavyside_matrix, self.mapping_matrix_inv).astype(np.int8)
@@ -502,29 +482,32 @@ class FermionMapping(object):
 
     def _update_operators_4(
         self,
-        i_orbitals: NDArray[np.int_],
-        j_orbitals: NDArray[np.int_],
-        k_orbitals: NDArray[np.int_],
-        l_orbitals: NDArray[np.int_],
+        i_orbitals: "np.ndarray[np.int]",
+        j_orbitals: "np.ndarray[np.int]",
+        k_orbitals: "np.ndarray[np.int]",
+        l_orbitals: "np.ndarray[np.int]",
     ) -> opa.OperatorArrayType1:
         r"""
-        Constructs an OperatorArray with the :math:`\mu^\text{th}` main operators acting on the orbitals :math:`i_\mu`, :math:`j_\mu`, :math:`k_\mu` and :math:`l_\mu` in a two-body fermionic operator
+        Constructs an OperatorArray with the :math:`\mu^\text{th}` main operators acting on the orbitals
+        :math:`i_\mu`, :math:`j_\mu`, :math:`k_\mu` and :math:`l_\mu` in a two-body fermionic operator.
 
         .. math::
 
-            (-1)^{\theta_{ij} + \theta_{i_\mu k_\mu} + \theta_{i_\mu l_\mu} + \theta_{j_\mu k_\mu}  + \theta_{j_\mu l_\mu} + \theta_{k_\mu l_\mu}}
+            (-1)^{\theta_{ij} + \theta_{i_\mu k_\mu} + \theta_{i_\mu l_\mu} + \theta_{j_\mu k_\mu}  +
+                \theta_{j_\mu l_\mu} + \theta_{k_\mu l_\mu}}
                 \hat{X}_q^{M_{qi_\mu} + M_{qj_\mu} + M_{qk_\mu} + M_{ql_\mu}}
-                \hat{Z}_q^{(\theta_{i_\mu p} + \theta_{j_\mu p} + \theta_{k_\mu p} + \theta_{l_\mu p})[\mathsf{M}^{-1}]_{pq}}
+                \hat{Z}_q^{(\theta_{i_\mu p} + \theta_{j_\mu p} + \theta_{k_\mu p} +
+                \theta_{l_\mu p})[\mathsf{M}^{-1}]_{pq}}
 
 
         Args:
-            i_orbitals (NDArray[int]): The indices of the orbital i the operator is acting on
-            j_orbitals (NDArray[int]): The indices of the orbital j the operator is acting on
-            k_orbitals (NDArray[int]): The indices of the orbital k the operator is acting on
-            l_orbitals (NDArray[int]): The indices of the orbital l the operator is acting on
+            i_orbitals (NDArray[int]): The indices of the orbital i the operator is acting on.
+            j_orbitals (NDArray[int]): The indices of the orbital j the operator is acting on.
+            k_orbitals (NDArray[int]): The indices of the orbital k the operator is acting on.
+            l_orbitals (NDArray[int]): The indices of the orbital l the operator is acting on.
 
         Returns:
-            OperatorArrayType1: The array of operators
+            OperatorArrayType1: The array of operators.
         """
 
         heavy_map_inv = bitops.matmul(self.heavyside_matrix, self.mapping_matrix_inv).astype(np.int8)
@@ -554,22 +537,22 @@ class FermionMapping(object):
 
     @staticmethod
     def _flip_factors(
-        i_orbitals: NDArray[np.int_], j_orbitals: NDArray[np.int_], *args: Tuple[NDArray[np.int_]]
+        i_orbitals: "np.ndarray[np.int]", j_orbitals: "np.ndarray[np.int]", *args: Tuple["np.ndarray[np.int]"]
     ) -> NDArray[np.float_]:
         r"""
         Computes flip factors of the type
 
         .. math::
-            f_\mu = (-1)^{\delta_{i_\mu j_\mu} + \delta_{i_\mu k_\mu} + \ldots}
+            f_\mu = (-1)^{\delta_{i_\mu j_\mu} + \delta_{i_\mu k_\mu} + \ldots}.
 
 
         Args:
-            i_orbitals (NDArray[np.int_]): The indices of the orbital i the operator is acting on
-            j_orbitals (NDArray[np.int_]): The indices of the orbital i the operator is acting on
+            i_orbitals ("np.ndarray[np.int]"): The indices of the orbital i the operator is acting on.
+            j_orbitals ("np.ndarray[np.int]"): The indices of the orbital i the operator is acting on.
             etc...
 
         Returns:
-            NDArray[float]: The factors
+            NDArray[float]: The factors.
         """
 
         xs_orbitals = (j_orbitals,) + args
@@ -581,22 +564,22 @@ class FermionMapping(object):
         return factors
 
     def _update_factors(
-        self, i_orbitals: NDArray[np.int_], j_orbitals: NDArray[np.int_], *args: Tuple[NDArray[np.int_]]
+        self, i_orbitals: "np.ndarray[np.int]", j_orbitals: "np.ndarray[np.int]", *args: Tuple["np.ndarray[np.int]"]
     ) -> NDArray[np.float_]:
         r"""
         Computes update factors of the type
 
         .. math::
-            f_\mu = (-1)^{\theta_{i_\mu j_\mu} - \theta_{j_\mu i_\mu} + \ldots}
+            f_\mu = (-1)^{\theta_{i_\mu j_\mu} - \theta_{j_\mu i_\mu} + \ldots}.
 
 
         Args:
-            i_orbitals (NDArray[np.int_]): The indices of the orbital i the operator is acting on
-            j_orbitals (NDArray[np.int_]): The indices of the orbital i the operator is acting on
+            i_orbitals ("np.ndarray[np.int]"): The indices of the orbital i the operator is acting on.
+            j_orbitals ("np.ndarray[np.int]"): The indices of the orbital i the operator is acting on.
             etc...
 
         Returns:
-            NDArray[float]: The factors
+            NDArray[float]: The factors.
         """
 
         xs_orbitals = (
@@ -672,7 +655,7 @@ class BravyiKitaev(FermionMapping):
         """
         FermionMapping.__init__(self, self._build_bravyi_kitaev_mapping_matrix(num_qubits), "bravyi-kitaev")
 
-    def _build_bravyi_kitaev_mapping_matrix(self, num_qubits: int) -> NDArray[np.bool_]:
+    def _build_bravyi_kitaev_mapping_matrix(self, num_qubits: int) -> "np.ndarray[np.bool]":
         """
         Constructs the Bravyi-Kitaev mapping matrix for the given number of qubits.
 
@@ -680,7 +663,7 @@ class BravyiKitaev(FermionMapping):
             num_qubits (int): The number of qubits.
 
         Returns:
-            NDArray[np.bool_]: The Bravyi-Kitaev mapping matrix.
+            "np.ndarray[np.bool]": The Bravyi-Kitaev mapping matrix.
         """
         mapping_matrix = np.eye(num_qubits, dtype=np.bool_)
 

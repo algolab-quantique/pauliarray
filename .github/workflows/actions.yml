@@ -64,7 +64,11 @@ jobs:
           python-version: "3.12" # install the python version needed
       - name: Install dependencies
         run: |
-          pip install sphinx sphinx_book_theme myst_parser
+          python -m pip install --upgrade pip
+          pip install --user openfermion
+          pip install numpy qiskit qiskit_nature pennylane flit black
+          flit install --symlink --python `python -c "import sys; print(sys.executable)"`
+          pip install sphinx sphinx_book_theme myst_parser sphinx_mdinclude
       - name: Sphinx build
         run: |
           sphinx-apidoc -f -o documentation/source .

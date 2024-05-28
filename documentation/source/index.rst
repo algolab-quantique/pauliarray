@@ -18,18 +18,7 @@ This library has been developped as an **efficient manipulation toolbox** for Pa
 Installation
 =============
 
-To install PauliArray, you can use flit.
-
-.. important::
-    Support of installation with pip is a WIP.
-
-.. code-block:: bash
-    :linenos:
-
-    git clone https://github.com/algolab-quantique/pauliarray.git
-    cd pauliarray
-    flit install .
-
+.. mdinclude:: ../../README.md
 
 User Guides
 =============
