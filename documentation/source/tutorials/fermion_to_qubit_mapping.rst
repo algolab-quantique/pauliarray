@@ -41,11 +41,11 @@ Carrying out the mapping with Qiskit is pretty straight forward. The result is a
     t0 = time.time()
 
     mapper = JordanWignerMapper()
-    qk_qubit_hamiltonian = mapper.map(second_q_hamiltonian)
+    qk_jw_qubit_hamiltonian = mapper.map(second_q_hamiltonian)
 
     print(f"Qiskit : {time.time() - t0:.3f} sec")
-    print(f"Number of qubits : {qk_qubit_hamiltonian.num_qubits}")
-    print(f"Number of Pauli strings : {len(qk_qubit_hamiltonian)}")
+    print(f"Number of qubits : {qk_jw_qubit_hamiltonian.num_qubits}")
+    print(f"Number of Pauli strings : {len(qk_jw_qubit_hamiltonian)}")
 
 .. code::
 
@@ -73,11 +73,11 @@ The process is pretty similar using PauliArray except we need to convert the :co
     one_body_tuple, two_body_tuple = extract_fermionic_op(second_q_hamiltonian)
 
     mapping = JordanWigner(num_spin_orbitals)
-    pa_qubit_hamiltonien = mapping.assemble_qubit_hamiltonian_from_sparses(one_body_tuple, two_body_tuple)
+    pa_jw_qubit_hamiltonien = mapping.assemble_qubit_hamiltonian_from_sparses(one_body_tuple, two_body_tuple)
 
     print(f"PauliArray : {time.time() - t0:.3f} sec")
-    print(f"Number of qubits : {pa_qubit_hamiltonien.num_qubits}")
-    print(f"Number of Pauli strings : {pa_qubit_hamiltonien.num_terms}")
+    print(f"Number of qubits : {pa_jw_qubit_hamiltonien.num_qubits}")
+    print(f"Number of Pauli strings : {pa_jw_qubit_hamiltonien.num_terms}")
 
 .. code::
 
@@ -93,7 +93,7 @@ We can check that both result are the same by converting the :code:`Operator` in
 
     from pauliarray.interface.Qiskit import operator_to_sparse_pauli
 
-    print(operator_to_sparse_pauli(pa_qubit_hamiltonien).sort() == qk_qubit_hamiltonian.sort())
+    print(operator_to_sparse_pauli(pa_jw_qubit_hamiltonien).sort() == qk_jw_qubit_hamiltonian.sort())
 
 .. code::
 
@@ -103,7 +103,7 @@ We can check that both result are the same by converting the :code:`Operator` in
 General (Random) Mapping with PauliArray
 ----------------------------------------
 
-PauliArray allow for constructing mapping for :math:`n` states by providing an invertible binary component :math:`n\times n` matrix. To show this, we will consider a smaller molecule :math:`LiH`.
+PauliArray allow for constructing mapping for :math:`n` states by providing an invertible binary component :math:`n\times n` matrix. To show this, we will consider a smaller molecule :math:`\text{LiH}`.
 
 .. code::
 
@@ -158,43 +158,31 @@ Let's construct such a matrix randomly.
      [1 0 0 1 1 0 1 0 0 0 1 0]
      [0 0 1 0 1 0 1 0 1 1 1 1]]
 
-To initialize the mapping, we only need to provide this matrix to :code:`FermionMapping`.
+To initialize the mapping, we only need to provide this matrix to :code:`FermionMapping`. The mapping is then used in the same way as before to construct a qubit Hamiltonian.
 
 .. code:: python
 
     from pauliarray.mapping.fermion import FermionMapping    
 
     mapping = FermionMapping(mapping_matrix)
-    pa_qubit_hamiltonien = mapping.assemble_qubit_hamiltonian_from_sparses(one_body_tuple, two_body_tuple)
+    pa_rd_qubit_hamiltonien = mapping.assemble_qubit_hamiltonian_from_sparses(one_body_tuple, two_body_tuple)
 
-Finally, to confirm that such mappings are valid, we can construct two random mappings. Their respective mapping matrices should be different. Then we can use them to convert the fermionic Hamiltonian to two different qubit Hamiltonians. These two Hamiltonian are expressing the same operator but in different basis. Therefore, their eigenvalues should be equals. 
+Finally, to confirm that such a mapping is valid we can compare the qubit Hamiltonian it produces with the one we get from Jordan-Wigner mapping. These two Hamiltonians are expressing the same operator but in different basis. Therefore, their eigenvalues should be equals.
 
 Let's check that this is true. This may take a while.
 
 .. code:: python
 
-    mapping_matrix_1 = np.eye(num_spin_orbitals, dtype=int) + np.tril(
-    np.random.randint(0, 2, (num_spin_orbitals, num_spin_orbitals)), k=-1
-    )
-    mapping_matrix_2 = np.eye(num_spin_orbitals, dtype=int) + np.tril(
-        np.random.randint(0, 2, (num_spin_orbitals, num_spin_orbitals)), k=-1
-    )
+    jw_mapping = JordanWigner(num_spin_orbitals)
+    pa_jw_qubit_hamiltonien = rd_mapping.assemble_qubit_hamiltonian_from_sparses(one_body_tuple, two_body_tuple)
 
-    print(~np.all(mapping_matrix_1 == mapping_matrix_2))
+    eigvals_jw = np.linalg.eigvals(pa_jw_qubit_hamiltonien.to_matrix())
+    eigvals_rd = np.linalg.eigvals(pa_rd_qubit_hamiltonien.to_matrix())
 
-    mapping_1 = FermionMapping(mapping_matrix_1)
-    qubit_hamiltonien_1 = mapping_1.assemble_qubit_hamiltonian_from_sparses(one_body_tuple, two_body_tuple)
-    mapping_2 = FermionMapping(mapping_matrix_2)
-    qubit_hamiltonien_2 = mapping_2.assemble_qubit_hamiltonian_from_sparses(one_body_tuple, two_body_tuple)
-
-    eigvals_1 = np.linalg.eigvals(pa_qubit_hamiltonien.to_matrix())
-    eigvals_2 = np.linalg.eigvals(pa_qubit_hamiltonien.to_matrix())
-
-    print(np.all(np.sort(eigvals_1) == np.sort(eigvals_2)))
+    print(np.all(np.sort(eigvals_jw) == np.sort(eigvals_rd)))
 
 .. code::
 
-    True
     True
 
 .. Add description for BCS Hamiltonian.
