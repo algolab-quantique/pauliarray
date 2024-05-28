@@ -1,3 +1,9 @@
+# Add path for Autodoc Module
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath("../.."))
+
 # Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
@@ -9,7 +15,7 @@
 project = "PauliArray"
 copyright = "2024, Quantum AlgoLab"
 author = "Quantum AlgoLab"
-release = "0.0.0"
+release = "0.0.1"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -47,3 +53,17 @@ exclude_patterns = []
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = "sphinx_book_theme"
+html_logo = "_branding/logo.svg"
+html_favicon = "_branding/logo.svg"
+html_theme_options = {
+    "repository_url": "https://github.com/algolab-quantique/pauliarray.git",
+    "use_repository_button": True,
+    "use_issues_button": True,
+    "use_download_button": False,
+    "home_page_in_toc": True,
+}
+html_title = "PauliArray"
+
+
+## supress typing warnings
+nitpick_ignore = [("py:class", "type")]
