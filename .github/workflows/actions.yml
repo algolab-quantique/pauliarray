@@ -71,7 +71,7 @@ jobs:
           pip install sphinx sphinx_book_theme myst_parser sphinx_mdinclude
       - name: Sphinx build
         run: |
-          sphinx-apidoc -f -o documentation/source .
+          sphinx-apidoc -f -o documentation/source/api_reference .
           sphinx-build documentation/source documentation/build
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4

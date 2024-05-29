@@ -6,7 +6,7 @@ PauliArray is a fast and convenient tool to compute commutators between operator
 
 
 ---------------------------------
-The Ising Hamiltonian
+Ising Hamiltonian
 ---------------------------------
 
 The system we will be considering at is an ensemble of spins on a graph defined by the following edges.
@@ -28,10 +28,11 @@ We define an Hamiltonian such that pairs of spins (connected by an edge in :math
 
 .. math::
 
-    \hat{H}_\text{Ising} = \frac{1}{2} \sum_{i,j \in E} \hat{Z}_i \hat{Z}_j
-    .
+    \hat{H}_\text{Ising} = \frac{1}{2} \sum_{i,j \in E} \hat{Z}_i \hat{Z}_j = \frac{1}{2} \sum_{k} \hat{P}^{(I)}_k
 
-This kind of Hamiltonian is related to the MaxCut problem, often used as an example in the context of quantum combinatorial optimisation.
+which can also be expressed as a linear combinaison of Pauli strings :math:`\hat{P}^{(I)}_k`.
+
+This kind of Hamiltonian is related to the MaxCut problem, often used as an example in the context of quantum combinatorial optimization.
 
 With PauliArray, we can construct this Hamiltonian directly from the bit strings.
 
@@ -65,14 +66,14 @@ With PauliArray, we can construct this Hamiltonian directly from the bit strings
 
 
 ---------------------------------
-The Drive Hamiltonian
+Drive Hamiltonian
 ---------------------------------
 
-When trying to find the ground state of an Hamiltonian such as :math:`\hat{H}_\text{Ising}`, the quantum annealing method consist of starting in the ground state of an easily solvable Hamiltonian, also know as a drive Hamiltonian is certain context, such as
+When trying to find the ground state of a Hamiltonian such as :math:`\hat{H}_\text{Ising}`, the quantum annealing method consists of starting in the ground state of an easily solvable Hamiltonian, also known as a drive Hamiltonian in certain contexts, such as
 
 .. math::
 
-    \hat{H}_\text{Drive} = -\sum_{i} \hat{X}_i
+    \hat{H}_\text{Drive} = -\sum_{i} \hat{X}_i = - \sum_{k} \hat{P}^{(D)}_k
     .
 
 The ground state of this Hamltonian is :math:`\ket{+}^{\otimes n}`. This Hamiltonian can be constructed in the following way.
@@ -98,10 +99,15 @@ The ground state of this Hamltonian is :math:`\ket{+}^{\otimes n}`. This Hamilto
 
 
 ---------------------------------
-The Commutator
+Commutator
 ---------------------------------
 
+Each data structure comes with its own function to compute commutators. Here we use one to compute the commutator between :math:`\hat{H}_\text{Ising}` and :math:`\hat{H}_\text{Drive}`
 
+.. math::
+
+    [\hat{H}_\text{Ising}, \hat{H}_\text{Drive}]
+    .
 
 .. code:: python
 
@@ -114,25 +120,30 @@ The Commutator
 
     Operator
     Sum of
-    (+0.0000 -1.0000j) IIIZY
-    (+0.0000 -1.0000j) IIIYZ
-    (+0.0000 -1.0000j) IIZYI
-    (+0.0000 -1.0000j) IIYZI
-    (+0.0000 -1.0000j) IZYII
-    (+0.0000 -1.0000j) IYZII
-    (+0.0000 -1.0000j) ZYIII
-    (+0.0000 -1.0000j) YZIII
-    (+0.0000 -1.0000j) ZIIIY
-    (+0.0000 -1.0000j) YIIIZ
-    (+0.0000 -1.0000j) IIZIY
-    (+0.0000 -1.0000j) IIYIZ
+    (+1.0000 +0.0000j) IIIZY
+    (+1.0000 +0.0000j) IIIYZ
+    (+1.0000 +0.0000j) IIZYI
+    (+1.0000 +0.0000j) IIYZI
+    (+1.0000 +0.0000j) IZYII
+    (+1.0000 +0.0000j) IYZII
+    (+1.0000 +0.0000j) ZYIII
+    (+1.0000 +0.0000j) YZIII
+    (+1.0000 +0.0000j) ZIIIY
+    (+1.0000 +0.0000j) YIIIZ
+    (+1.0000 +0.0000j) IIZIY
+    (+1.0000 +0.0000j) IIYIZ
 
 
 ---------------------------------
-The Commutators (PauliArray)
+Individual Commutators 
 ---------------------------------
 
+PauliArray makes it easy to access all the individual commutators between the Pauli strings of :math:`\hat{H}_\text{Ising}` and :math:`\hat{H}_\text{Drive}`
 
+.. math::
+    
+    [\hat{H}_\text{Ising}, \hat{H}_\text{Drive}] = -\frac{1}{2} \sum_{k,l} [\hat{P}^{(I)}_k, \hat{P}^{(D)}_l]
+    .
 
 .. code:: python
 
