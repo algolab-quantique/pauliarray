@@ -4,19 +4,16 @@ Library PauliArray provides data structures to easily create and manipulate arra
 
 ## Installation
 
-We recommand using [flit](https://flit.pypa.io/en/stable/) to install PauliArray.
-
-### To use PauliArray
-
 Once you have downloaded/cloned the PauliArray repository, you can install from the directory containing the `pyproject.toml` file with the following command.
 
 ```
-flit install
+pip install .
 ```
 
 ### To devellop PauliArray
 
-If you plan to modify PauliArray it is more convenient to install using the symbolic link option.
+We recommand using [flit](https://flit.pypa.io/en/stable/) to install PauliArray if you plan to devellop it and to use its symbolic link option. Again, from the directory containing the `pyproject.toml` file with the following command.
+
 ```
 flit install --symlink
 ```
