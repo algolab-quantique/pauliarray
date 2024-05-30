@@ -12,7 +12,7 @@ This library has been developped as an **efficient manipulation toolbox** for Pa
 
 .. seealso::
     An indepth description and advantages showcase of PauliArray can be found in the PauliArray technical paper
-    available on the `ArXiv <https://arxiv.org>`_.
+    available on the `ArXiv <https://arxiv.org/abs/2405.19287>`_.
 
 
 Installation
