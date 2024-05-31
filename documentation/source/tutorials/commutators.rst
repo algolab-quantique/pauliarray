@@ -9,7 +9,7 @@ PauliArray is a fast and convenient tool to compute commutators between operator
 Ising Hamiltonian
 ---------------------------------
 
-The system we will be considering at is an ensemble of spins on a graph defined by the following edges.
+The system we will be considering is an ensemble of spins on a graph defined by the following edges.
 
 .. code:: python
 
