@@ -5,10 +5,11 @@ build-backend = "flit_core.buildapi"
 [project]
 name = "pauliarray"
 authors = [
-    { name = "AlgoLab Quantique", email = "algolab-quantique@usherbrooke.ca" },
+    {name = "Maxime Dion", email = "maxime.dion@usherbrooke.ca"},
+    {name = "Tania Belabbas", email = "tania.belabbas@usherbrooke.ca"},
 ]
 readme = "README.md"
-license = { file = "LICENSE" }
+license = {file = "LICENSE"}
 classifiers = ["License :: OSI Approved :: Apache Software License"]
 dynamic = ["version", "description"]
 dependencies = ["numpy"]

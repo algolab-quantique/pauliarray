@@ -456,7 +456,7 @@ class WeightedPauliArray(object):
             matrices (NDArray): An ndarray of shape self.shape + (n**2, n**2).
         """
 
-        return self.weights * self.paulis.to_matrices()
+        return self.weights[..., None, None] * self.paulis.to_matrices()
 
     @classmethod
     def new(cls, shape: Tuple[int, ...], num_qubits: int) -> "WeightedPauliArray":
