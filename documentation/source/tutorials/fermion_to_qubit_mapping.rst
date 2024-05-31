@@ -103,7 +103,7 @@ We can check that both result are the same by converting the :code:`Operator` in
 General (Random) Mapping with PauliArray
 ----------------------------------------
 
-PauliArray allow for constructing mapping for :math:`n` states by providing an invertible binary component :math:`n\times n` matrix. To show this, we will consider a smaller molecule :math:`\text{LiH}`.
+PauliArray allows for constructing mapping for :math:`n` states by providing an invertible binary component :math:`n\times n` matrix. To show this, we will consider a smaller molecule :math:`\text{LiH}`.
 
 .. code::
 
