@@ -2,7 +2,7 @@
 Fermion to Qubit Mapping
 ========================
 
-In this tutorial we will see how to map a fermionic Hamiltonian to a qubit Hamiltonian using PauliArray. We will also make a comparison with similar tools provided in Qiskit and show that PauliArray accomplish the same task much faster.
+In this tutorial we will see how to map a fermionic Hamiltonian to a qubit Hamiltonian using PauliArray. We will also make a comparison with similar tools provided in Qiskit and show that PauliArray accomplishes the same task much faster.
 
 ---------------------------------
 Fermionic Hamiltonian with Qiskit
