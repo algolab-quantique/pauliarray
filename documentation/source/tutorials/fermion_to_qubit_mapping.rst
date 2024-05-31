@@ -129,11 +129,7 @@ PauliArray allows for constructing mapping for :math:`n` states by providing an 
 
     num_spin_orbitals=12
 
-Let's construct such a matrix randomly.
-
-.. note::
-
-    Such a matrix with 1 on the diagonal, an upper triangle filled with 0, and a random lower triangle is guaranteed to be invertible.
+Let's construct such a matrix randomly. Noteworthy, such a matrix with 1 on the diagonal, an upper triangle filled with 0, and a random lower triangle is guaranteed to be invertible.
 
 .. code:: python
 
