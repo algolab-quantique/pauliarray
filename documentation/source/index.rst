@@ -18,7 +18,21 @@ This library has been developped as an **efficient manipulation toolbox** for Pa
 Installation
 =============
 
-.. mdinclude:: ../../README.md
+Once you have downloaded/cloned the PauliArray repository, you can install from the directory containing the :code:`pyproject.toml` file with the following command.
+
+.. code::
+
+    pip install .
+
+To devellop PauliArray
+----------------------
+
+We recommand using `flit <https://flit.pypa.io/en/stable/>`_ to install PauliArray if you plan to devellop it and to use its symbolic link option. Again, from the directory containing the :code:`pyproject.toml` file with the following command.
+
+.. code::
+
+    flit install --symlink
+
 
 User Guides
 =============
