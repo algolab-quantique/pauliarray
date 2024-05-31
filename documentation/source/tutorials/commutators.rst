@@ -2,7 +2,7 @@
 Commutators
 ========================
 
-PauliArray is a fast and convenient tool to compute commutators between operators. This tutorial look at this in the context of the adiabatic evolution applied to an Ising problem.
+PauliArray is a fast and convenient tool to compute commutators between operators. This tutorial looks at this in the context of the adiabatic evolution applied to an Ising problem.
 
 
 ---------------------------------
