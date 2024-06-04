@@ -1,5 +1,5 @@
 name: Build, run tests and deploy GitHub Pages
-run-name: Build triggered by commit "${{ github.event.head_commit.message }}" on branch "${{ github.ref_name }}"
+run-name: Build triggered by "${{github.event_name}}"
 
 on:
   push:
