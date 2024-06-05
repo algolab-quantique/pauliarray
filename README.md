@@ -14,7 +14,7 @@ pip install .
 
 ### Contribute to PauliArray
 
-To install PauliArray with the aim of editing or developping feature, we recommand using [flit](https://flit.pypa.io/en/stable/) to install PauliArray and to use its symbolic link option. Again, from the directory containing the `pyproject.toml` file, execute the following command
+To install PauliArray with the aim of editing or developping features, we recommand using [flit](https://flit.pypa.io/en/stable/) to install PauliArray and to use its symbolic link option. Again, from the directory containing the `pyproject.toml` file, execute the following command
 
 ```
 flit install --symlink
