@@ -1,5 +1,5 @@
 name: Build, run tests and deploy GitHub Pages
-run-name: Build triggered by "${{github.event.pull_request.user}}" for pull_request on branch main
+run-name: Build triggered by Pull Request ${{github.event.number}} on branch main
 
 on:
   pull_request:
