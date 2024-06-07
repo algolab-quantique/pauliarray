@@ -2,7 +2,7 @@
 Fermion to Qubit Mapping
 ========================
 
-In this tutorial we will see how to map a fermionic Hamiltonian to a qubit Hamiltonian using PauliArray. We will also make a comparison with similar tools provided in Qiskit and show that PauliArray accomplish the same task much faster.
+In this tutorial we will see how to map a fermionic Hamiltonian to a qubit Hamiltonian using PauliArray. We will also make a comparison with similar tools provided in Qiskit and show that PauliArray accomplishes the same task much faster.
 
 ---------------------------------
 Fermionic Hamiltonian with Qiskit
@@ -103,7 +103,7 @@ We can check that both result are the same by converting the :code:`Operator` in
 General (Random) Mapping with PauliArray
 ----------------------------------------
 
-PauliArray allow for constructing mapping for :math:`n` states by providing an invertible binary component :math:`n\times n` matrix. To show this, we will consider a smaller molecule :math:`\text{LiH}`.
+PauliArray allows for constructing mapping for :math:`n` states by providing an invertible binary component :math:`n\times n` matrix. To show this, we will consider a smaller molecule :math:`\text{LiH}`.
 
 .. code::
 
@@ -129,11 +129,7 @@ PauliArray allow for constructing mapping for :math:`n` states by providing an i
 
     num_spin_orbitals=12
 
-Let's construct such a matrix randomly.
-
-.. note::
-
-    Such a matrix with 1 on the diagonal, an upper triangle filled with 0, and a random lower triangle is guaranteed to be invertible.
+Let's construct such a matrix randomly. Noteworthy, such a matrix with 1 on the diagonal, an upper triangle filled with 0, and a random lower triangle is guaranteed to be invertible.
 
 .. code:: python
 

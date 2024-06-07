@@ -2,14 +2,14 @@
 Commutators
 ========================
 
-PauliArray is a fast and convenient tool to compute commutators between operators. This tutorial look at this in the context of the adiabatic evolution applied to an Ising problem.
+PauliArray is a fast and convenient tool to compute commutators between operators. This tutorial looks at this in the context of the adiabatic evolution applied to an Ising problem.
 
 
 ---------------------------------
 Ising Hamiltonian
 ---------------------------------
 
-The system we will be considering at is an ensemble of spins on a graph defined by the following edges.
+The system we will be considering is an ensemble of spins on a graph defined by the following edges.
 
 .. code:: python
 
