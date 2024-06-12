@@ -6,7 +6,7 @@ Welcome to PauliArray's documentation.
 
 .. important::
 
-    This documentation is under construction.
+    This documentation and library are under development. If you want to open an issue or contribute, feel free to do so through the `PauliArray repository <https://github.com/algolab-quantique/pauliarray>`_
 
 This library has been developped as an **efficient manipulation toolbox** for Pauli operators.
 
@@ -14,20 +14,19 @@ This library has been developped as an **efficient manipulation toolbox** for Pa
     An indepth description and advantages showcase of PauliArray can be found in the PauliArray technical paper
     available on the `ArXiv <https://arxiv.org/abs/2405.19287>`_.
 
-
 Installation
 =============
 
-Once you have downloaded/cloned the PauliArray repository, you can install from the directory containing the :code:`pyproject.toml` file with the following command.
+Once you have downloaded/cloned the PauliArray repository, you can install from the directory containing the `pyproject.toml` file with the following command
 
 .. code::
 
     pip install .
 
-To devellop PauliArray
+To develop PauliArray
 ----------------------
 
-We recommand using `flit <https://flit.pypa.io/en/stable/>`_ to install PauliArray if you plan to devellop it and to use its symbolic link option. Again, from the directory containing the :code:`pyproject.toml` file with the following command.
+To install PauliArray with the aim of editing or developping features, we recommand using [flit](https://flit.pypa.io/en/stable/) for the installation and to use its symbolic link option. Again, from the directory containing the `pyproject.toml` file, execute the following command
 
 .. code::
 
