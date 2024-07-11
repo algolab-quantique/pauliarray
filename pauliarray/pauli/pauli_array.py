@@ -255,6 +255,25 @@ class PauliArray(object):
 
         return PauliArray(new_z_strings, new_x_strings)
 
+    def partition(self, parts_flat_idx: List[NDArray[np.int_]]) -> List["PauliArray"]:
+        """
+        Returns a list of PauliArray
+
+        Args:
+            parts_flat_idx [List[NDArray[np.int_]]]: List of parts given in linear indices
+
+        Returns:
+            List[PauliArray]: Parts
+        """
+
+        flat_paulis = self.flatten()
+
+        parts = []
+        for part_flat_idx in parts_flat_idx:
+            parts.append(flat_paulis[part_flat_idx])
+
+        return parts
+
     def extract(self, condition: Union[NDArray, list]) -> "PauliArray":
         """
         Return the Pauli strings from the PauliArray object that satisfy some condition.
@@ -907,8 +926,8 @@ class PauliArray(object):
         Creates a new PauliArray of a given shape and number of qubits filled with identities.
 
         Args:
-            shape (_type_): The shape of new the PauliArray.
-            num_qubits (_type_): The number of qubits of the new PauliArray.
+            shape (Tuple[int, ...]): The shape of new the PauliArray.
+            num_qubits (int): The number of qubits of the new PauliArray.
 
         Returns:
             PauliArray: The created PauliArray .
@@ -931,8 +950,8 @@ class PauliArray(object):
         Creates a PauliArray of a given shape and number of qubits filled with random Pauli strings.
 
         Args:
-            shape (_type_): Shape of new PauliArray.
-            num_qubits (_type_): Number of qubits of new PauliArray.
+            shape (Tuple[int, ...]): Shape of new PauliArray.
+            num_qubits (int): Number of qubits of new PauliArray.
 
         Returns:
             new_PauliArray (PauliArray): The PauliArray created.
