@@ -1367,12 +1367,9 @@ def fast_flat_unique(
 
     assert paulis.ndim == 1
 
-    zx_strings = paulis.zx_strings
-    void_type_size = zx_strings.dtype.itemsize * 2 * paulis.num_qubits
-
-    zx_view = np.ascontiguousarray(zx_strings).view(np.dtype((np.void, void_type_size)))
-
-    _, index, inverse, counts = np.unique(zx_view, return_index=True, return_inverse=True, return_counts=True)
+    _, index, inverse, counts = bitops.fast_flat_unique_bit_string(
+        paulis.zx_strings, return_index=True, return_inverse=True, return_counts=True
+    )
 
     new_paulis = paulis[index]
 

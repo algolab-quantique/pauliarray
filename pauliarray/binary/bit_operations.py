@@ -1,3 +1,5 @@
+from typing import Tuple, Union
+
 import numpy as np
 from numpy.typing import NDArray
 
@@ -111,6 +113,59 @@ def strings_to_ints(bit_strings: "np.ndarray[np.bool]") -> "np.ndarray[np.int]":
     power_of_twos = 1 << np.arange(bit_strings.shape[-1])
 
     return bit_sum(bit_strings * power_of_twos)
+
+
+def fast_flat_unique_bit_string(
+    bit_strings: NDArray[np.bool_],
+    return_index: bool = False,
+    return_inverse: bool = False,
+    return_counts: bool = False,
+) -> Union[NDArray[np.bool_], Tuple[NDArray[np.bool_], NDArray]]:
+    """
+    Faster version of unique for bit string. Only works with flat a list of bit strings (2d array).
+    Directly uses numpy.unique.
+
+    Args:
+        bit_strings (PauliArray): List of bit strings. Must be 2d and the second dimension along the length of the bit strings.
+
+        return_index (bool, optional): If True, also return the indices of PauliArray (along the specified axis,
+            if provided, or in the flattened array) that result in the unique array. Defaults to False.
+
+        return_inverse (bool, optional): If True, also return the indices of the unique array
+            (for the specified axis, if provided) that can be used to reconstruct array. Defaults to False.
+
+        return_counts (bool, optional): If True, also return the number of times each unique item appears in array.
+            Defaults to False.
+
+    Returns:
+        NDArray: The unique bit strings
+        NDArray, optional: Index to get unique from the orginal PauliArray
+        NDArray, optional: Innverse to reconstrut the original PauliArray from unique
+        NDArray, optional: The number of each unique in the original PauliArray
+    """
+
+    assert bit_strings.ndim == 2
+
+    void_type_size = bit_strings.dtype.itemsize * bit_strings.shape[-1]
+
+    string_view = np.ascontiguousarray(bit_strings).view(np.dtype((np.void, void_type_size)))
+
+    _, index, inverse, counts = np.unique(string_view, return_index=True, return_inverse=True, return_counts=True)
+
+    new_bitstring = bit_strings[index, :]
+
+    out = (new_bitstring,)
+    if return_index:
+        out += (index,)
+    if return_inverse:
+        out += (inverse,)
+    if return_counts:
+        out += (counts,)
+
+    if len(out) == 1:
+        return out[0]
+
+    return out
 
 
 def row_echelon(bit_matrix: "np.ndarray[np.bool]") -> "np.ndarray[np.bool]":

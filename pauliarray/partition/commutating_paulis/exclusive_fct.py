@@ -12,7 +12,9 @@ class PauliObj(Protocol):
     paulis: pa.PauliArray
 
 
-def _commutation_adjacency_to_parts_idx_networkx(commutation_adjacency, strategy="largest_first") -> List[List[int]]:
+def _commutation_adjacency_to_exclusive_parts_idx_networkx(
+    commutation_adjacency, strategy="largest_first"
+) -> List[List[int]]:
     """
     Uses Networkx greedy_color to
 
@@ -23,11 +25,8 @@ def _commutation_adjacency_to_parts_idx_networkx(commutation_adjacency, strategy
     Returns:
         List[List[int]]: _description_
     """
-    edges = list(zip(*np.where(np.triu(~commutation_adjacency, k=1))))
 
-    graph = nx.Graph()
-    graph.add_nodes_from(range(commutation_adjacency.shape[0]))
-    graph.add_edges_from(edges)
+    graph = nx.from_numpy_array(~commutation_adjacency)
 
     coloring_dict = nx.greedy_color(graph, strategy=strategy)
 
@@ -40,10 +39,11 @@ def _commutation_adjacency_to_parts_idx_networkx(commutation_adjacency, strategy
 
 
 def partition_bitwise_commutating(
-    pauli_obj: PauliObj, commutation_adjacency_to_parts_idx: Callable = _commutation_adjacency_to_parts_idx_networkx
+    pauli_obj: PauliObj,
+    commutation_adjacency_to_parts_idx: Callable = _commutation_adjacency_to_exclusive_parts_idx_networkx,
 ) -> List[NDArray[np.int_]]:
     """
-    Builds a ExclusiveArrayPartition for a PauliArray based on bitwise commutation.
+    Partition a PauliArray based on bitwise commutation.
 
     Args:
         paulis (pa.PauliArray): _description_
@@ -61,10 +61,11 @@ def partition_bitwise_commutating(
 
 
 def partition_general_commutating(
-    pauli_obj: PauliObj, commutation_adjacency_to_parts_idx: Callable = _commutation_adjacency_to_parts_idx_networkx
+    pauli_obj: PauliObj,
+    commutation_adjacency_to_parts_idx: Callable = _commutation_adjacency_to_exclusive_parts_idx_networkx,
 ) -> List[NDArray[np.int_]]:
     """
-    Builds a ExclusiveArrayPartition for a PauliArray based on general commutation.
+    Partition a PauliArray based on general commutation.
 
     Args:
         paulis (PauliArray): _description_
@@ -78,3 +79,37 @@ def partition_general_commutating(
     commutation_adjacency = paulis[:, None].commute_with(paulis[None, :])
 
     return commutation_adjacency_to_parts_idx(commutation_adjacency)
+
+
+def partition_same_x(pauli_obj: PauliObj) -> List[NDArray[np.int_]]:
+    """
+    Builds a ExclusiveArrayPartition for a PauliArray based on the same X approach.
+
+    Args:
+        paulis (pa.PauliArray): _description_
+
+    Returns:
+        List[NDArray[np.int_]]: Parts given as linear indices
+    """
+    paulis = pauli_obj.paulis.flatten()
+
+    y_mask = np.logical_and(paulis.x_strings, paulis.z_strings)
+    y_parity = np.mod(np.sum(y_mask, axis=-1), 2)
+
+    x_and_y_parity_chains = np.concatenate((paulis.x_strings, y_parity[..., None]), axis=-1)
+
+    _, flat_inverse = bitops.fast_flat_unique_bit_string(x_and_y_parity_chains, return_inverse=True)
+
+    parts_idx = _part_idx_from_unique_inverse(flat_inverse)
+
+    return parts_idx
+
+
+def _part_idx_from_unique_inverse(inverse) -> List[List[int]]:
+    number_of_parts = max(inverse) + 1
+    all_indices = np.arange(len(inverse))
+    parts_idx = list()
+    for i_part in range(number_of_parts):
+        parts_idx.append(all_indices[inverse == i_part].tolist())
+
+    return parts_idx
