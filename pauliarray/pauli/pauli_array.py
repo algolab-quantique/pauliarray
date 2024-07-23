@@ -100,6 +100,12 @@ class PauliArray(object):
         return self
 
     @property
+    def wpaulis(self) -> "WeightedPauliArray":
+        from pauliarray.pauli.weighted_pauli_array import WeightedPauliArray
+
+        return WeightedPauliArray.from_paulis(self)
+
+    @property
     def x_strings(self) -> "np.ndarray[np.bool]":
         """
         Returns the X bits.
@@ -271,6 +277,25 @@ class PauliArray(object):
         parts = []
         for part_flat_idx in parts_flat_idx:
             parts.append(flat_paulis[part_flat_idx])
+
+        return parts
+
+    def weighted_partition(
+        self, parts_flat_idx: List[NDArray[np.int_]], parts_weight: NDArray[np.float_] = None
+    ) -> List["WeightedPauliArray"]:
+
+        if parts_weight is None:
+            parts_weight = np.ones(len(parts_flat_idx))
+
+        flat_wpaulis = self.wpaulis.flatten()
+
+        paulis_total_weighted = np.zeros(flat_wpaulis.size)
+        for part_flat_idx, part_weight in zip(parts_flat_idx, parts_weight):
+            paulis_total_weighted[part_flat_idx] += part_weight
+
+        parts = []
+        for part_flat_idx, part_weight in zip(parts_flat_idx, parts_weight):
+            parts.append(flat_wpaulis[part_flat_idx].mul_weights(parts_weight / paulis_total_weighted[part_flat_idx]))
 
         return parts
 

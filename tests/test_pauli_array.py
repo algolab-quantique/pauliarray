@@ -11,6 +11,14 @@ from pauliarray.utils.pauli_array_library import gen_complete_pauli_array_basis
 
 
 class TestPauliArray(unittest.TestCase):
+    def test_wpaulis(self):
+
+        paulis = pa.PauliArray.from_labels(["XX", "XY", "XZ", "YX", "YY", "YZ", "ZX", "ZY"])
+
+        wpaulis = paulis.wpaulis
+
+        self.assertIsInstance(wpaulis, wpa.WeightedPauliArray)
+
     def test_eq(self):
         paulis_1 = pa.PauliArray.from_labels(["XX", "XY", "XZ", "YX", "YY", "YZ", "ZX", "ZY"])
         paulis_2 = pa.PauliArray.from_labels(["XX", "XI", "XZ", "IX", "YY", "YI", "ZX", "IY"])

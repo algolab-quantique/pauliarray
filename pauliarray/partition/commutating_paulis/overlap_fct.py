@@ -8,7 +8,7 @@ import pauliarray.pauli.pauli_array as pa
 from pauliarray.binary import bit_operations as bitops
 
 
-class PauliObj(Protocol):
+class HasPaulis(Protocol):
     paulis: pa.PauliArray
 
 
@@ -32,7 +32,7 @@ def _commutation_adjacency_to_overlap_parts_idx_networkx(commutation_adjacency) 
 
 
 def partition_general_commutating(
-    pauli_obj: PauliObj,
+    pauli_obj: HasPaulis,
     commutation_adjacency_to_parts_idx: Callable = _commutation_adjacency_to_overlap_parts_idx_networkx,
 ) -> List[NDArray[np.int_]]:
     """

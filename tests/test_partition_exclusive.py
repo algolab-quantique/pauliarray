@@ -6,6 +6,7 @@ from pauliarray.partition.commutating_paulis.exclusive_fct import (
     partition_bitwise_commutating,
     partition_general_commutating,
     partition_same_x,
+    partition_same_x_plus_special,
 )
 from pauliarray.pauli.operator import Operator
 from pauliarray.pauli.pauli_array import PauliArray
@@ -40,6 +41,17 @@ class TestPartition(unittest.TestCase):
         paulis = PauliArray.random((10, 10), 5)
 
         parts_flat_idx = partition_same_x(paulis)
+
+        parts = paulis.partition(parts_flat_idx)
+
+        for part in parts:
+            self.assertTrue(np.all(part[:, None].commute_with(part[None, :])))
+
+    def test_partition_same_x_plus_special(self):
+
+        paulis = PauliArray.random((10, 10), 5)
+
+        parts_flat_idx = partition_same_x_plus_special(paulis)
 
         parts = paulis.partition(parts_flat_idx)
 

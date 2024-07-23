@@ -8,7 +8,7 @@ import pauliarray.pauli.pauli_array as pa
 from pauliarray.binary import bit_operations as bitops
 
 
-class PauliObj(Protocol):
+class HasPaulis(Protocol):
     paulis: pa.PauliArray
 
 
@@ -39,7 +39,7 @@ def _commutation_adjacency_to_exclusive_parts_idx_networkx(
 
 
 def partition_bitwise_commutating(
-    pauli_obj: PauliObj,
+    pauli_obj: HasPaulis,
     commutation_adjacency_to_parts_idx: Callable = _commutation_adjacency_to_exclusive_parts_idx_networkx,
 ) -> List[NDArray[np.int_]]:
     """
@@ -61,7 +61,7 @@ def partition_bitwise_commutating(
 
 
 def partition_general_commutating(
-    pauli_obj: PauliObj,
+    pauli_obj: HasPaulis,
     commutation_adjacency_to_parts_idx: Callable = _commutation_adjacency_to_exclusive_parts_idx_networkx,
 ) -> List[NDArray[np.int_]]:
     """
@@ -81,7 +81,7 @@ def partition_general_commutating(
     return commutation_adjacency_to_parts_idx(commutation_adjacency)
 
 
-def partition_same_x(pauli_obj: PauliObj) -> List[NDArray[np.int_]]:
+def partition_same_x(pauli_obj: HasPaulis) -> List[NDArray[np.int_]]:
     """
     Builds a ExclusiveArrayPartition for a PauliArray based on the same X approach.
 
@@ -101,6 +101,54 @@ def partition_same_x(pauli_obj: PauliObj) -> List[NDArray[np.int_]]:
     _, flat_inverse = bitops.fast_flat_unique_bit_string(x_and_y_parity_chains, return_inverse=True)
 
     parts_idx = _part_idx_from_unique_inverse(flat_inverse)
+
+    return parts_idx
+
+
+def partition_same_x_plus_special(
+    pauli_obj: HasPaulis,
+    commutation_adjacency_to_parts_idx: Callable = _commutation_adjacency_to_exclusive_parts_idx_networkx,
+) -> List[NDArray[np.int_]]:
+    """
+    Builds a ExclusiveArrayPartition for a PauliArray based on the same X approach. Then assemble commutating same x partitions into larger partition.
+
+    Args:
+        paulis (pa.PauliArray): _description_
+
+    Returns:
+        List[NDArray[np.int_]]: Parts given as linear indices
+    """
+
+    paulis = pauli_obj.paulis.flatten()
+
+    parts_idx_same_x = partition_same_x(paulis)
+
+    number_of_same_x_parts = len(parts_idx_same_x)
+
+    first_same_x_idx = [idx_in_part[0] for idx_in_part in parts_idx_same_x]
+    unique_x_strings = paulis[first_same_x_idx].x_strings
+    unique_x_paulis = pa.PauliArray(np.zeros(unique_x_strings.shape, dtype=bool), unique_x_strings)
+
+    do_commute_with_x = paulis[:, None].commute_with(unique_x_paulis[None, :])
+
+    comm_matrix = np.zeros((number_of_same_x_parts, number_of_same_x_parts), dtype=bool)
+    anti_matrix = np.zeros((number_of_same_x_parts, number_of_same_x_parts), dtype=bool)
+    for i, idx in enumerate(parts_idx_same_x):
+        comm_matrix[i, :] = np.all(do_commute_with_x[idx, :], axis=0)
+        anti_matrix[i, :] = np.all(~do_commute_with_x[idx, :], axis=0)
+
+    groups_commutation_adjacency = np.logical_or(
+        np.logical_and(comm_matrix, comm_matrix.T), np.logical_and(anti_matrix, anti_matrix.T)
+    )
+
+    commuting_groups_idx = commutation_adjacency_to_parts_idx(groups_commutation_adjacency)
+
+    parts_idx = list()
+    for commuting_group_idx in commuting_groups_idx:
+        part_idx = list()
+        for i in commuting_group_idx:
+            part_idx += parts_idx_same_x[i]
+        parts_idx.append(part_idx)
 
     return parts_idx
 
