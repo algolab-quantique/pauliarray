@@ -182,7 +182,7 @@ class TestPauliArray(unittest.TestCase):
 
         matrices = paulis_1.to_matrices()
 
-        expected_matricies = np.array(
+        expected_matrices = np.array(
             [
                 [
                     [0.0 + 0.0j, 1.0 + 0.0j, 0.0 + 0.0j, 0.0 + 0.0j],
@@ -199,7 +199,15 @@ class TestPauliArray(unittest.TestCase):
             ]
         )
 
-        self.assertTrue(np.all(matrices == expected_matricies))
+        for i in range(len(matrices)):
+            self.assertTrue(np.all(np.isclose(matrices[i], expected_matrices[i, :, :])))
+
+        matrices = paulis_1.to_matrices(sparse=True)
+
+        print(type(matrices[0]))
+
+        for i in range(len(matrices)):
+            self.assertTrue(np.all(np.isclose(matrices[i].toarray(), expected_matrices[i, :, :])))
 
     def test_x(self):
         paulis_basis = gen_complete_pauli_array_basis(1)

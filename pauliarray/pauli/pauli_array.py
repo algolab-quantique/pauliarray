@@ -6,8 +6,6 @@ from numpy.typing import NDArray
 
 from pauliarray.binary import bit_operations as bitops
 from pauliarray.binary import symplectic
-
-#
 from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable, is_concatenatable
 
 if TYPE_CHECKING:
@@ -15,6 +13,7 @@ if TYPE_CHECKING:
     from pauliarray.pauli.operator_array_type_1 import OperatorArrayType1
     from pauliarray.pauli.weighted_pauli_array import WeightedPauliArray
 
+from scipy.sparse import csr_array
 
 PAULI_LABELS = "IZXY"
 PAULI_TO_ZX_BITS = {
@@ -798,15 +797,13 @@ class PauliArray(object):
 
         return labels
 
-    def to_matrices(self) -> NDArray:
+    def to_matrices(self, sparse: bool = False) -> NDArray:
         """
         Returns the Pauli strings as a matrices.
 
         Returns:
-            matrices (NDArray): An ndarray of shape self.shape + (n**2, n**2).
+            matrices (NDArray[NDArray]): An ndarray of matrices.
         """
-        mat_shape = (2**self.num_qubits, 2**self.num_qubits)
-        matrices = np.zeros(self.shape + mat_shape, dtype=complex)
 
         z_ints = bitops.strings_to_ints(self.z_strings)
         x_ints = bitops.strings_to_ints(self.x_strings)
@@ -814,14 +811,19 @@ class PauliArray(object):
         phase_powers = np.mod(bitops.dot(self.z_strings, self.x_strings), 4)
         phases = np.choose(phase_powers, [1, -1j, -1, 1j])
 
-        for idx in np.ndindex(self.shape):
-            one_matrix = self.matrix_from_zx_ints(z_ints[idx], x_ints[idx], self.num_qubits)
-            matrices[idx] = one_matrix
+        if sparse:
+            matrices = np.empty(self.shape, dtype=csr_array)
+        else:
+            matrices = np.empty(self.shape, dtype=np.ndarray)
 
-        return phases[..., None, None] * matrices
+        for idx in np.ndindex(self.shape):
+            one_matrix = self.matrix_from_zx_ints(z_ints[idx], x_ints[idx], self.num_qubits, sparse=sparse)
+            matrices[idx] = phases[idx] * one_matrix
+
+        return matrices
 
     @staticmethod
-    def sparse_matrix_from_zx_ints(z_int: int, x_int: int, num_qubits: int) -> Tuple[NDArray, NDArray, NDArray]:
+    def matrix_elements_from_zx_ints(z_int: int, x_int: int, num_qubits: int) -> Tuple[NDArray, NDArray, NDArray]:
         """
         Builds the matrix representing the Pauli String encoded in a sparse notation.
 
@@ -839,12 +841,18 @@ class PauliArray(object):
 
         row_ind = np.arange(dim, dtype=np.uint)
         col_ind = np.bitwise_xor(row_ind, x_int)
-        matrix_elements = np.array([1 - 2 * (bin(i).count("1") % 2) for i in np.bitwise_and(row_ind, z_int)])
+
+        power_of_twos = 1 << np.arange(num_qubits, dtype=np.uint)
+        numbers_of_ones = np.sum(
+            np.bitwise_and(np.bitwise_and(row_ind, z_int)[:, None], power_of_twos[None, :]) > 0, axis=1
+        )
+
+        matrix_elements = 1 - 2 * np.mod(numbers_of_ones, 2)
 
         return row_ind, col_ind, matrix_elements
 
     @staticmethod
-    def matrix_from_zx_ints(z_int: int, x_int: int, num_qubits: int) -> NDArray:
+    def matrix_from_zx_ints(z_int: int, x_int: int, num_qubits: int, sparse: bool = False) -> NDArray:
         """
         Builds the matrix representing the Pauli String.
 
@@ -852,17 +860,21 @@ class PauliArray(object):
             z_int (int): Integer which binary representation defines the z part of a Pauli String.
             x_int (int): Integer which binary representation defines the x part of a Pauli String.
             num_qubits (int): Length of the Pauli String.
+            sparse (bool): If True, matrix is returned in the CSR format
 
         Returns:
             NDArray: The matrix reprensetating the Pauli String.
         """
-        row_ind, col_ind, matrix_elements = PauliArray.sparse_matrix_from_zx_ints(z_int, x_int, num_qubits)
+        row_ind, col_ind, matrix_elements = PauliArray.matrix_elements_from_zx_ints(z_int, x_int, num_qubits)
 
         dim = 2**num_qubits
         mat_shape = (dim, dim)
 
-        matrix = np.zeros(mat_shape, dtype=complex)
-        matrix[row_ind, col_ind] = matrix_elements
+        if sparse:
+            matrix = csr_array((matrix_elements, (row_ind, col_ind)), mat_shape)
+        else:
+            matrix = np.zeros(mat_shape, dtype=complex)
+            matrix[row_ind, col_ind] = matrix_elements
 
         return matrix
 

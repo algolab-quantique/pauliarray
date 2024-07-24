@@ -3,6 +3,7 @@ from typing import Any, List, Literal, Tuple, Union
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
+from scipy.sparse import lil_array
 
 import pauliarray.pauli.pauli_array as pa
 import pauliarray.pauli.weighted_pauli_array as wpa
@@ -724,9 +725,12 @@ class Operator(object):
         order = pa.argsort(self.paulis)
         self._wpaulis = self.wpaulis[order]
 
-    def to_matrix(self) -> NDArray:
+    def to_matrix(self, sparse: bool = False) -> NDArray:
         """
-        Converts the Operator into a (n**2, n**2) matrix.
+        Convert the Operator into a (n**2, n**2) matrix.
+
+        Args:
+            sparse (bool): If True, matrices are returned in the LIL format
 
         Returns:
             NDArray: The matrix representation of the Operator.
@@ -741,9 +745,13 @@ class Operator(object):
         phase_powers = np.mod(bitops.dot(self.paulis.z_strings, self.paulis.x_strings), 4)
         phases = np.choose(phase_powers, [1, -1j, -1, 1j])
 
-        matrix = np.zeros(mat_shape, dtype=complex)
+        if sparse:
+            matrix = lil_array(mat_shape, dtype=complex)
+        else:
+            matrix = np.zeros(mat_shape, dtype=complex)
+
         for idx in np.ndindex(self.wpaulis.shape):
-            row_ind, col_ind, matrix_elements = pa.PauliArray.sparse_matrix_from_zx_ints(
+            row_ind, col_ind, matrix_elements = pa.PauliArray.matrix_elements_from_zx_ints(
                 z_ints[idx], x_ints[idx], self.num_qubits
             )
             matrix[row_ind, col_ind] += self.weights[idx] * phases[idx] * matrix_elements

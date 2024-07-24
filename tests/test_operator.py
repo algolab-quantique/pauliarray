@@ -194,6 +194,14 @@ class TestOperator(unittest.TestCase):
 
         os.remove("operator.npz")
 
+    def test_to_matrix(self):
+
+        po = 0.5 * op.Operator.from_labels_and_weights(["II", "XI", "IZ", "XZ"], np.array([1, 1, 1, -1]))
+
+        expected_matrix = np.array([[1, 0, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0], [0, 1, 0, 0]])
+
+        self.assertTrue(np.all(np.isclose(po.to_matrix(sparse=True).toarray(), expected_matrix)))
+
 
 if __name__ == "__main__":
     unittest.main()

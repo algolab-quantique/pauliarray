@@ -108,6 +108,36 @@ class TestWeightedPauliArray(unittest.TestCase):
 
         os.remove("wpaulis.npz")
 
+    def test_to_matrices(self):
+        wpaulis_1 = wpa.WeightedPauliArray.from_labels_and_weights(["IX", "XX"], [2, 3])
+
+        matrices = wpaulis_1.to_matrices()
+
+        expected_matrices = np.array(
+            [
+                [
+                    [0.0 + 0.0j, 2.0 + 0.0j, 0.0 + 0.0j, 0.0 + 0.0j],
+                    [2.0 + 0.0j, 0.0 + 0.0j, 0.0 + 0.0j, 0.0 + 0.0j],
+                    [0.0 + 0.0j, 0.0 + 0.0j, 0.0 + 0.0j, 2.0 + 0.0j],
+                    [0.0 + 0.0j, 0.0 + 0.0j, 2.0 + 0.0j, 0.0 + 0.0j],
+                ],
+                [
+                    [0.0 + 0.0j, 0.0 + 0.0j, 0.0 + 0.0j, 3.0 + 0.0j],
+                    [0.0 + 0.0j, 0.0 + 0.0j, 3.0 + 0.0j, 0.0 + 0.0j],
+                    [0.0 + 0.0j, 3.0 + 0.0j, 0.0 + 0.0j, 0.0 + 0.0j],
+                    [3.0 + 0.0j, 0.0 + 0.0j, 0.0 + 0.0j, 0.0 + 0.0j],
+                ],
+            ]
+        )
+
+        for i in range(len(matrices)):
+            self.assertTrue(np.all(np.isclose(matrices[i], expected_matrices[i, :, :])))
+
+        matrices = wpaulis_1.to_matrices(sparse=True)
+
+        for i in range(len(matrices)):
+            self.assertTrue(np.all(np.isclose(matrices[i].toarray(), expected_matrices[i, :, :])))
+
 
 class TestWeightedPauliArrayFunc(unittest.TestCase):
     def test_concatenate(self):

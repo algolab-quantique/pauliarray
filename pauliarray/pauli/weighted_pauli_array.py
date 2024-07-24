@@ -448,15 +448,18 @@ class WeightedPauliArray(object):
         """
         return self._paulis.is_diagonal()
 
-    def to_matrices(self) -> NDArray:
+    def to_matrices(self, sparse: bool = False) -> NDArray:
         """
         Returns the WeightedPauliArray as a numpy matrix.
+
+        Args:
+            sparse (bool): If True, matrices are returned in the CSR format
 
         Returns:
             matrices (NDArray): An ndarray of shape self.shape + (n**2, n**2).
         """
 
-        return self.weights[..., None, None] * self.paulis.to_matrices()
+        return self.weights * self.paulis.to_matrices(sparse=sparse)
 
     @classmethod
     def new(cls, shape: Tuple[int, ...], num_qubits: int) -> "WeightedPauliArray":
