@@ -801,6 +801,9 @@ class PauliArray(object):
         """
         Returns the Pauli strings as a matrices.
 
+        Args:
+            sparse (bool): If True, matrices are returned in the CSR format
+
         Returns:
             matrices (NDArray[NDArray]): An ndarray of matrices.
         """
@@ -811,72 +814,66 @@ class PauliArray(object):
         phase_powers = np.mod(bitops.dot(self.z_strings, self.x_strings), 4)
         phases = np.choose(phase_powers, [1, -1j, -1, 1j])
 
+        dim = 2**self.num_qubits
+        mat_shape = (dim, dim)
+
         if sparse:
             matrices = np.empty(self.shape, dtype=csr_array)
         else:
             matrices = np.empty(self.shape, dtype=np.ndarray)
 
+        row_inds, col_inds, matrix_elements = PauliArray.matrix_elements_from_zx_ints(z_ints, x_ints, self.num_qubits)
+
         for idx in np.ndindex(self.shape):
-            one_matrix = self.matrix_from_zx_ints(z_ints[idx], x_ints[idx], self.num_qubits, sparse=sparse)
+
+            if sparse:
+                one_matrix = csr_array((matrix_elements[idx], (row_inds[idx], col_inds[idx])), mat_shape)
+            else:
+                one_matrix = np.zeros(mat_shape, dtype=complex)
+                one_matrix[row_inds[idx], col_inds[idx]] = matrix_elements[idx]
+
             matrices[idx] = phases[idx] * one_matrix
 
         return matrices
 
     @staticmethod
-    def matrix_elements_from_zx_ints(z_int: int, x_int: int, num_qubits: int) -> Tuple[NDArray, NDArray, NDArray]:
+    def matrix_elements_from_zx_ints(
+        z_ints: NDArray[np.int_], x_ints: NDArray[np.int_], num_qubits: int
+    ) -> Tuple[NDArray, NDArray, NDArray]:
         """
-        Builds the matrix representing the Pauli String encoded in a sparse notation.
+        Builds sparse reprensentations of multiples Pauli strings from z and x integers.
 
         Args:
-            z_int (int): Integer which binary representation defines the z part of a Pauli String.
-            x_int (int): Integer which binary representation defines the x part of a Pauli String.
+            z_ints (int): Integers which are binary representation defines the z part of a Pauli String.
+            x_ints (int): Integers which are binary representation defines the x part of a Pauli String.
             num_qubits (int): Length of the Pauli String.
 
         Returns:
-            row_ind (NDArray): The row indices of returned matrix elements.
-            col_ind (NDArray): The column indices of returned matrix elements.
-            matrix_elements (NDArray): The matrix elements.
+            row_inds (NDArray 2D): The row indices of returned matrix elements. The ith row defines the ith PauliString.
+            col_inds (NDArray): The column indices of returned matrix elements. The ith row defines the ith PauliString.
+            matrix_elements (NDArray): The matrix elements. The ith row defines the ith PauliString.
         """
         dim = 2**num_qubits
 
         row_ind = np.arange(dim, dtype=np.uint)
-        col_ind = np.bitwise_xor(row_ind, x_int)
+        ex_row_ind = np.expand_dims(row_ind, tuple(range(x_ints.ndim)))
+        row_inds = np.expand_dims(np.ones(x_ints.shape, dtype=np.uint), axis=-1) * ex_row_ind
+        col_inds = np.bitwise_xor(np.expand_dims(x_ints, axis=-1), ex_row_ind)
 
         power_of_twos = 1 << np.arange(num_qubits, dtype=np.uint)
+        ex_power_of_twos = np.expand_dims(power_of_twos, tuple(range(x_ints.ndim + 1)))
+
         numbers_of_ones = np.sum(
-            np.bitwise_and(np.bitwise_and(row_ind, z_int)[:, None], power_of_twos[None, :]) > 0, axis=1
+            np.bitwise_and(
+                np.expand_dims(np.bitwise_and(np.expand_dims(z_ints, axis=-1), ex_row_ind), axis=-1), ex_power_of_twos
+            )
+            > 0,
+            axis=-1,
         )
 
         matrix_elements = 1 - 2 * np.mod(numbers_of_ones, 2)
 
-        return row_ind, col_ind, matrix_elements
-
-    @staticmethod
-    def matrix_from_zx_ints(z_int: int, x_int: int, num_qubits: int, sparse: bool = False) -> NDArray:
-        """
-        Builds the matrix representing the Pauli String.
-
-        Args:
-            z_int (int): Integer which binary representation defines the z part of a Pauli String.
-            x_int (int): Integer which binary representation defines the x part of a Pauli String.
-            num_qubits (int): Length of the Pauli String.
-            sparse (bool): If True, matrix is returned in the CSR format
-
-        Returns:
-            NDArray: The matrix reprensetating the Pauli String.
-        """
-        row_ind, col_ind, matrix_elements = PauliArray.matrix_elements_from_zx_ints(z_int, x_int, num_qubits)
-
-        dim = 2**num_qubits
-        mat_shape = (dim, dim)
-
-        if sparse:
-            matrix = csr_array((matrix_elements, (row_ind, col_ind)), mat_shape)
-        else:
-            matrix = np.zeros(mat_shape, dtype=complex)
-            matrix[row_ind, col_ind] = matrix_elements
-
-        return matrix
+        return row_inds, col_inds, matrix_elements
 
     @classmethod
     def from_labels(cls, labels: Union[list[str], "np.ndarray[np.str]"]) -> "PauliArray":

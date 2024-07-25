@@ -354,25 +354,6 @@ class TestPauliArray(unittest.TestCase):
 
         self.assertTrue(np.all(labels == expected_labels))
 
-    def test_matrix_from_zx_ints(self):
-        paulis_1 = pa.PauliArray.from_labels("ZX")
-
-        z_int = bitops.strings_to_ints(paulis_1.z_strings)[0]
-        x_int = bitops.strings_to_ints(paulis_1.x_strings)[0]
-
-        matrix = pa.PauliArray.matrix_from_zx_ints(z_int, x_int, paulis_1.num_qubits)
-
-        expected_matrix = np.array(
-            [
-                [0.0 + 0.0j, 1.0 + 0.0j, 0.0 + 0.0j, 0.0 + 0.0j],
-                [1.0 + 0.0j, 0.0 + 0.0j, 0.0 + 0.0j, 0.0 + 0.0j],
-                [0.0 + 0.0j, 0.0 + 0.0j, 0.0 + 0.0j, -1.0 + 0.0j],
-                [0.0 + 0.0j, 0.0 + 0.0j, -1.0 + 0.0j, 0.0 + 0.0j],
-            ]
-        )
-
-        self.assertTrue(np.all(matrix == expected_matrix))
-
     def test_set_item(self):
         paulis_1 = pa.PauliArray.from_labels(
             [

@@ -108,7 +108,9 @@ def strings_to_ints(bit_strings: "np.ndarray[np.bool]") -> "np.ndarray[np.int]":
     Returns:
         "np.ndarray[np.int]": Integers obtained from input binary strings
     """
-    power_of_twos = 1 << np.arange(bit_strings.shape[-1])
+    num_qubits = bit_strings.shape[-1]
+
+    power_of_twos = 1 << np.arange(num_qubits, dtype=np.uint)
 
     return bit_sum(bit_strings * power_of_twos)
 

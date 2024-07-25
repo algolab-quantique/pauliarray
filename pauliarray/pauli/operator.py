@@ -3,7 +3,7 @@ from typing import Any, List, Literal, Tuple, Union
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
-from scipy.sparse import lil_array
+from scipy.sparse import csr_array
 
 import pauliarray.pauli.pauli_array as pa
 import pauliarray.pauli.weighted_pauli_array as wpa
@@ -739,22 +739,43 @@ class Operator(object):
 
         mat_shape = (2**self.num_qubits, 2**self.num_qubits)
 
+        power_of_twos = 1 << np.arange(self.num_qubits, dtype=np.uint)
+
+        # Converts pauli strings into pairs of integers
         z_ints = bitops.strings_to_ints(self.paulis.z_strings)
         x_ints = bitops.strings_to_ints(self.paulis.x_strings)
 
-        phase_powers = np.mod(bitops.dot(self.paulis.z_strings, self.paulis.x_strings), 4)
+        phase_powers = np.mod(
+            np.sum(np.bitwise_and(np.bitwise_and(z_ints, x_ints)[:, None], power_of_twos[None, :]) > 0, axis=-1), 4
+        )
         phases = np.choose(phase_powers, [1, -1j, -1, 1j])
 
+        # Get the column and row index and matrix elements for each matrix of each Pauli string
+        row_inds, col_inds, single_matrix_elements = pa.PauliArray.matrix_elements_from_zx_ints(
+            z_ints, x_ints, self.num_qubits
+        )
+
+        # Flattent to find unique col,row combinaison
+        flat_row_inds = row_inds.flatten()
+        flat_col_inds = col_inds.flatten()
+        flat_matrix_elements = ((phases * self.weights)[:, None] * single_matrix_elements).flatten()
+
+        flat_inds = np.ravel_multi_index((flat_col_inds, flat_row_inds), dims=mat_shape)
+
+        u_flat_inds, index, inverse = np.unique(flat_inds, return_index=True, return_inverse=True)
+
+        flat_u_matrix_elements = np.zeros(u_flat_inds.shape, dtype=complex)
+
+        np.add.at(flat_u_matrix_elements, inverse, flat_matrix_elements)
+
+        flat_u_row_inds = flat_row_inds[index]
+        flat_u_col_inds = flat_col_inds[index]
+
         if sparse:
-            matrix = lil_array(mat_shape, dtype=complex)
+            matrix = csr_array((flat_u_matrix_elements, (flat_u_row_inds, flat_u_col_inds)))
         else:
             matrix = np.zeros(mat_shape, dtype=complex)
-
-        for idx in np.ndindex(self.wpaulis.shape):
-            row_ind, col_ind, matrix_elements = pa.PauliArray.matrix_elements_from_zx_ints(
-                z_ints[idx], x_ints[idx], self.num_qubits
-            )
-            matrix[row_ind, col_ind] += self.weights[idx] * phases[idx] * matrix_elements
+            matrix[flat_u_row_inds, flat_u_col_inds] = flat_u_matrix_elements
 
         return matrix
 
