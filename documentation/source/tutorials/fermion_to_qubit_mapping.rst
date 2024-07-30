@@ -63,7 +63,7 @@ The process is pretty similar using PauliArray except we need to convert the :co
 
 .. code:: python
 
-    from pauliarray.conversion.Qiskit import extract_fermionic_op
+    from pauliarray.conversion.qiskit import extract_fermionic_op
     from pauliarray.mapping.fermion import JordanWigner
 
     num_spin_orbitals = second_q_hamiltonian.num_spin_orbitals
