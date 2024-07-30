@@ -1,5 +1,5 @@
 from numbers import Number
-from typing import TYPE_CHECKING, Any, List, Optional, Tuple, Union
+from typing import TYPE_CHECKING, Any, Callable, List, Optional, Tuple, Union
 
 import numpy as np
 from numpy.typing import NDArray
@@ -279,6 +279,21 @@ class PauliArray(object):
             parts.append(flat_paulis[part_flat_idx])
 
         return parts
+
+    def partition_with_fct(self, partition_fct: Callable) -> List["PauliArray"]:
+        """
+        Returns a list of PauliArray
+
+        Args:
+            partition_fct [Callable]: ...
+
+        Returns:
+            List[PauliArray]: Parts
+        """
+
+        parts_flat_idx = partition_fct(self.paulis)
+
+        return self.partition(parts_flat_idx)
 
     def weighted_partition(
         self, parts_flat_idx: List[NDArray[np.int_]], parts_weight: NDArray[np.float_]
