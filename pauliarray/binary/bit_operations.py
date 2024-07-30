@@ -97,7 +97,7 @@ def inv(bit_matrix: "np.ndarray[np.bool]") -> "np.ndarray[np.bool]":
     """
     assert bit_matrix.ndim == 2
 
-    return np.linalg.inv(bit_matrix.astype(np.int8)).astype(bool)
+    return np.linalg.inv(bit_matrix.astype(np.uint8)).astype(bool)
 
 
 def strings_to_ints(bit_strings: "np.ndarray[np.bool]") -> "np.ndarray[np.int]":
@@ -189,6 +189,7 @@ def row_echelon(bit_matrix: "np.ndarray[np.bool]") -> "np.ndarray[np.bool]":
     k_col = 0
 
     while h_row < n_rows and k_col < n_cols:
+
         if np.all(re_bit_matrix[h_row:, k_col] == 0):
             k_col += 1
         else:

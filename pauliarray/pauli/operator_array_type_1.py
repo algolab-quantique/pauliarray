@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Callable, List, Tuple, Union, Self
+from typing import TYPE_CHECKING, Any, Callable, List, Self, Tuple, Union
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
@@ -416,6 +416,31 @@ class OperatorArrayType1(object):
         new_wpaulis = self.wpaulis.clifford_conjugate(clifford)
 
         return OperatorArrayType1(new_wpaulis)
+
+    def successive_clifford_conjugate_pauli_array(self, other: pa.PauliArray) -> Tuple[pa.PauliArray, NDArray]:
+        """
+        Transform a PauliArray using the operators in self to perform a Clifford conjugates. The first operator is applied first.
+
+        Args:
+            other (pa.PauliArray): A PauliArray
+
+        Returns:
+            pa.PauliArray: The transformed PauliArray
+            "np.ndarray[np.complex]": Residual coefficient
+        """
+
+        assert self.ndim == 1
+
+        new_paulis = other.copy()
+        phases = np.ones(new_paulis.shape, dtype=complex)
+
+        for i in range(self.size):
+            transformation = self.get_operator(i)
+
+            new_paulis, factors = transformation.clifford_conjugate_pauli_array(new_paulis)
+            phases *= factors
+
+        return new_paulis, phases
 
     def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float_]) -> "np.ndarray[np.complex]":
         """

@@ -49,6 +49,4 @@ def partition_general_commutating(
 
     commutation_adjacency = paulis[:, None].commute_with(paulis[None, :])
 
-    print(commutation_adjacency.astype(int))
-
     return commutation_adjacency_to_parts_idx(commutation_adjacency)
