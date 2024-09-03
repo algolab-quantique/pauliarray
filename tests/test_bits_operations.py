@@ -114,6 +114,29 @@ class TestBitsOperations(unittest.TestCase):
         self.assertEqual(rank_1, rank_1p)
         self.assertEqual(rank_2, rank_2p)
 
+    def test_pack_diagonal(self):
+
+        bits = np.array(
+            [
+                [0, 0, 0, 0, 1, 0, 0, 0],
+                [0, 0, 0, 0, 0, 1, 0, 1],
+                [0, 0, 0, 0, 0, 0, 1, 0],
+                [1, 0, 0, 1, 0, 0, 0, 0],
+                [0, 1, 0, 1, 0, 0, 0, 0],
+                [0, 0, 1, 1, 0, 0, 0, 0],
+                [1, 0, 0, 0, 1, 0, 0, 0],
+            ],
+            dtype=np.bool_,
+        )
+
+        new_bits, row_op, col_order, start_index = bitops.pack_diagonal(bits)
+
+        # print(new_bits.astype(int))
+
+        self.assertTrue(
+            np.all(np.mod((row_op.astype(np.uint) @ bits.astype(np.uint)), 2).astype(bool)[:, col_order] == new_bits)
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

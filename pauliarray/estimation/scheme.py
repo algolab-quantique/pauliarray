@@ -18,7 +18,10 @@ class EstimatePaulis(Protocol, HasPaulis):
     def partition_with_fct(self, partition_fct: Callable) -> List[HasPaulis]: ...
 
 
-def EstimationSchemaExclusivePartition(object):
+# def estimate_diagonal_paulis
+
+
+class EstimationSchemaExclusivePartition(object):
 
     def __init__(self, pauli_obj: EstimatePaulis, partition_fct: Callable, diagonalisation_fct: Callable):
 

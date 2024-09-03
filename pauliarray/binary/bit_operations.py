@@ -342,3 +342,50 @@ def is_orthogonal(bit_strings_1: "np.ndarray[np.bool]", bit_strings_2: "np.ndarr
     assert bit_strings_1.shape[-1] % 2 == 0
 
     return ~dot(bit_strings_1, bit_strings_2)
+
+
+def pack_diagonal(
+    bit_strings: "np.ndarray[np.bool]", start_index: int = 0
+) -> Tuple["np.ndarray[np.bool]", "np.ndarray[np.bool]", "np.ndarray[np.int]", int]:
+    """
+    Apply row operations, and column reordering to place "1" on the diagonal starting from the "start_index" diagonal element.
+
+    Returns:
+        _type_: _description_
+    """
+
+    bit_strings = bit_strings.copy()
+
+    num_rows, num_cols = bit_strings.shape
+
+    row_range = np.arange(num_rows)
+    col_order = np.arange(num_cols)
+    row_op = np.eye(num_rows)
+
+    while start_index < num_rows:
+        failed = True
+        for hot_col in range(start_index, num_cols):
+            if np.any(bit_strings[start_index:, hot_col]):
+                hot_row = start_index + np.argmax(bit_strings[start_index:, hot_col])
+                failed = False
+
+                break
+        if failed:
+            break
+
+        if hot_col != start_index:
+            bit_strings[:, [start_index, hot_col]] = bit_strings[:, [hot_col, start_index]]
+            col_order[[start_index, hot_col]] = col_order[[hot_col, start_index]]
+
+        if hot_row != start_index:
+            bit_strings[[start_index, hot_row], :] = bit_strings[[hot_row, start_index], :]
+            row_op[[start_index, hot_row], :] = row_op[[hot_row, start_index], :]
+
+        cond_rows = np.logical_and(bit_strings[:, start_index], (row_range != start_index))
+
+        bit_strings[cond_rows, :] = np.logical_xor(bit_strings[cond_rows, :], bit_strings[start_index, :][None, :])
+        row_op[cond_rows, :] = np.logical_xor(row_op[cond_rows, :], row_op[start_index, :][None, :])
+
+        start_index += 1
+
+    return bit_strings, row_op, col_order, start_index

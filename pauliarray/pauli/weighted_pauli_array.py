@@ -1,5 +1,5 @@
 from numbers import Number
-from typing import TYPE_CHECKING, Any, List, Literal, Tuple, Union
+from typing import TYPE_CHECKING, Any, Callable, List, Literal, Tuple, Union
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
@@ -178,6 +178,21 @@ class WeightedPauliArray(object):
             parts.append(flat_wpaulis[part_flat_idx])
 
         return parts
+
+    def partition_with_fct(self, partition_fct: Callable) -> List["WeightedPauliArray"]:
+        """
+        Returns a list of WeightedPauliArray
+
+        Args:
+            partition_fct [Callable]: ...
+
+        Returns:
+            List[PauliArray]: Parts
+        """
+
+        parts_flat_idx = partition_fct(self.paulis)
+
+        return self.partition(parts_flat_idx)
 
     def extract(self, condition: Union[NDArray, list]) -> "WeightedPauliArray":
         """

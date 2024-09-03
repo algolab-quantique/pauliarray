@@ -6,10 +6,11 @@ from numpy.typing import NDArray
 import pauliarray.pauli.operator_array_type_1 as opa
 import pauliarray.pauli.pauli_array as pa
 from pauliarray.binary import symplectic
+from pauliarray.diagonalisation.commutating_paulis.utils import trivial_cummutating_generators
 
 
 def general_to_bitwise(
-    paulis: pa.PauliArray,
+    paulis: pa.PauliArray, force_trivial_generators=False
 ) -> Tuple[pa.PauliArray, NDArray[np.complex_], opa.OperatorArrayType1]:
     """
     Converts a PauliArray of commuting Pauli strings into bitwise commuting pauli strings and factors. Also returns the transformation which performs the conversion.
@@ -24,13 +25,18 @@ def general_to_bitwise(
     assert paulis.ndim == 1
     assert np.all(paulis[:, None].commute_with(paulis[None, :]))
 
-    lag_zx_strings = symplectic.lagrangian_subspace(paulis.zx_strings)
-    colag_zx_strings = symplectic.conjugate_subspace(lag_zx_strings)
+    if force_trivial_generators:
+        gen_paulis = trivial_cummutating_generators(paulis)
+        ext_paulis = pa.concatenate((paulis, gen_paulis), axis=0)
+        zx_strings = ext_paulis.zx_strings
+    else:
+        zx_strings = paulis.zx_strings
 
-    lag_zx_strings, colag_zx_strings = symplectic.simplify_lagrangian_colagrangian(lag_zx_strings, colag_zx_strings)
+    lag_zx_strings = symplectic.lagrangian_subspace(zx_strings)
+    lag_zx_strings, colag_zx_strings = symplectic.lagrangian_bitwise_colagrangian_subspaces(lag_zx_strings)
 
-    commuting_generators = pa.PauliArray(*symplectic.split_zx_strings(lag_zx_strings))
-    conjugate_generators = pa.PauliArray(*symplectic.split_zx_strings(colag_zx_strings))
+    commuting_generators = pa.PauliArray.from_zx_strings(lag_zx_strings)
+    conjugate_generators = pa.PauliArray.from_zx_strings(colag_zx_strings)
 
     commuting_operators = opa.OperatorArrayType1.from_pauli_array(commuting_generators)
     conjugate_operators = opa.OperatorArrayType1.from_pauli_array(conjugate_generators)
@@ -112,10 +118,12 @@ def bitwise_to_diagonal(
 
 
 def general_to_diagonal(
-    paulis: pa.PauliArray,
+    paulis: pa.PauliArray, force_trivial_generators=False
 ) -> Tuple[pa.PauliArray, NDArray[np.complex_], opa.OperatorArrayType1]:
 
-    bitwise_paulis, factors, general_to_bitwise_ops = general_to_bitwise(paulis)
+    bitwise_paulis, factors, general_to_bitwise_ops = general_to_bitwise(
+        paulis, force_trivial_generators=force_trivial_generators
+    )
     diagonal_paulis, add_factors, bitwise_to_diagonal_ops = bitwise_to_diagonal(bitwise_paulis)
 
     factors *= add_factors

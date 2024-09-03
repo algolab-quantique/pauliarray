@@ -1,5 +1,5 @@
 from numbers import Number
-from typing import Any, List, Literal, Tuple, Union
+from typing import Any, Callable, List, Literal, Tuple, Union
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
@@ -191,6 +191,21 @@ class Operator(object):
             parts.append(Operator(self.wpaulis[part_flat_idx]))
 
         return parts
+
+    def partition_with_fct(self, partition_fct: Callable) -> List["Operator"]:
+        """
+        Returns a list of WeightedPauliArray
+
+        Args:
+            partition_fct [Callable]: ...
+
+        Returns:
+            List[PauliArray]: Parts
+        """
+
+        parts_flat_idx = partition_fct(self.paulis)
+
+        return self.partition(parts_flat_idx)
 
     def take_qubits(self, indices: Union["np.ndarray[np.int]", range, int]) -> "Operator":
         """

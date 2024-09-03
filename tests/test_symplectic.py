@@ -6,6 +6,69 @@ import pauliarray.pauli.pauli_array as pa
 from pauliarray.binary import bit_operations as bitops
 from pauliarray.binary import symplectic
 
+cases_paulis = [
+    pa.PauliArray.from_labels(
+        [
+            "XXXX",
+            "XXYY",
+            "YYXX",
+            "YYYY",
+        ]
+    ),
+    pa.PauliArray.from_labels(
+        [
+            "ZIIIIXII",
+            "ZIIIIIXX",
+            "IIIIIXYY",
+            "ZZZXIXII",
+            "IIIIXXII",
+            "IZXZXXII",
+            "IXZZXXII",
+            "ZIIIIIYY",
+            "ZZZXIIYY",
+            "ZZZXXIII",
+            "IIIIIIZZ",
+            "IYIYIIZZ",
+            "ZZZXIIII",
+            "ZZZXIIXX",
+            "IIIIXIYY",
+            "ZIIIIIII",
+            "IIIIIIYY",
+            "IIIIXIXX",
+            "IZZXXXZZ",
+            "ZIIIXIII",
+            "IZZXIIII",
+            "IIYYIIZZ",
+            "IIIIXIII",
+            "IYYIIIII",
+        ]
+    ),
+    pa.PauliArray.from_labels(
+        [
+            "XZXXZZXII",
+            "YYIXZZXII",
+            "IYYXZZXII",
+            "XZXYZZYII",
+            "YYIYZZYII",
+            "IYYYZZYII",
+            "XZXIIIIZI",
+            "YYIIIIIZI",
+            "IYYIIIIZI",
+            "XZXIIIIIZ",
+            "YYIIIIIIZ",
+            "IYYIIIIIZ",
+        ]
+    ),
+    pa.PauliArray.from_labels(
+        [
+            "XZZZZXXZZZZX",
+            "YZZZZYXZZZZX",
+            "XZZZZXYZZZZY",
+            "YZZZZYYZZZZY",
+        ]
+    ),
+]
+
 
 class TestSymplecticBitsOperations(unittest.TestCase):
     def test_dot(self):
@@ -28,10 +91,12 @@ class TestSymplecticBitsOperations(unittest.TestCase):
 
     def test_isotropic_subspace(self):
 
-        paulis = pa.PauliArray.from_labels(["IIXX", "ZZXI", "IZII", "ZZIX"])
-        isotropic_zx_strings = symplectic.isotropic_subspace(paulis.zx_strings)
+        for paulis in cases_paulis:
+            isotropic_zx_strings = symplectic.isotropic_subspace(paulis.zx_strings)
 
-        self.assertTrue(symplectic.is_isotropic(isotropic_zx_strings))
+            print(pa.PauliArray.from_zx_strings(isotropic_zx_strings).inspect())
+
+            self.assertTrue(symplectic.is_isotropic(isotropic_zx_strings))
 
     def test_gram_schmidt_orthogonalization(self):
 
@@ -41,95 +106,78 @@ class TestSymplecticBitsOperations(unittest.TestCase):
 
     def test_conjugate_subspace(self):
 
-        paulis = pa.PauliArray.from_labels(
-            [
-                "ZIIIIXII",
-                "ZIIIIIXX",
-                "IIIIIXYY",
-                "ZZZXIXII",
-                "IIIIXXII",
-                "IZXZXXII",
-                "IXZZXXII",
-                "ZIIIIIYY",
-                "ZZZXIIYY",
-                "ZZZXXIII",
-                "IIIIIIZZ",
-                "IYIYIIZZ",
-                "ZZZXIIII",
-                "ZZZXIIXX",
-                "IIIIXIYY",
-                "ZIIIIIII",
-                "IIIIIIYY",
-                "IIIIXIXX",
-                "IZZXXXZZ",
-                "ZIIIXIII",
-                "IZZXIIII",
-                "IIYYIIZZ",
-                "IIIIXIII",
-                "IYYIIIII",
-            ]
-        )
+        for paulis in cases_paulis:
 
-        iso_zx_strings = paulis.zx_strings
+            iso_zx_strings = paulis.zx_strings
 
-        lag_zx_strings = symplectic.lagrangian_subspace(iso_zx_strings)
-        colag_zx_strings = symplectic.conjugate_subspace(lag_zx_strings)
+            lag_zx_strings = symplectic.lagrangian_subspace(iso_zx_strings)
+            colag_zx_strings = symplectic.conjugate_subspace(lag_zx_strings)
 
-        sigma_lc = np.mod(symplectic.dot(lag_zx_strings[:, None, :], colag_zx_strings[None, :, :]), 2)
-        sigma_ll = np.mod(symplectic.dot(lag_zx_strings[:, None, :], lag_zx_strings[None, :, :]), 2)
-        sigma_cc = np.mod(symplectic.dot(colag_zx_strings[:, None, :], colag_zx_strings[None, :, :]), 2)
+            sigma_lc = np.mod(symplectic.dot(lag_zx_strings[:, None, :], colag_zx_strings[None, :, :]), 2)
+            sigma_ll = np.mod(symplectic.dot(lag_zx_strings[:, None, :], lag_zx_strings[None, :, :]), 2)
+            sigma_cc = np.mod(symplectic.dot(colag_zx_strings[:, None, :], colag_zx_strings[None, :, :]), 2)
 
-        self.assertTrue(np.all(sigma_lc == np.eye(paulis.num_qubits)))
-        self.assertTrue(np.all(sigma_ll == np.zeros((paulis.num_qubits, paulis.num_qubits))))
-        self.assertTrue(np.all(sigma_cc == np.zeros((paulis.num_qubits, paulis.num_qubits))))
+            self.assertTrue(np.all(sigma_lc == np.eye(paulis.num_qubits)))
+            self.assertTrue(np.all(sigma_ll == np.zeros((paulis.num_qubits, paulis.num_qubits))))
+            self.assertTrue(np.all(sigma_cc == np.zeros((paulis.num_qubits, paulis.num_qubits))))
 
-    def test_simplify_lagrangian_colagrangian(self):
+    def test_lagrangian_bitwise_colagrangian_subspaces(self):
 
-        paulis = pa.PauliArray.from_labels(
-            [
-                "ZIIIIXII",
-                "ZIIIIIXX",
-                "IIIIIXYY",
-                "ZZZXIXII",
-                "IIIIXXII",
-                "IZXZXXII",
-                "IXZZXXII",
-                "ZIIIIIYY",
-                "ZZZXIIYY",
-                "ZZZXXIII",
-                "IIIIIIZZ",
-                "IYIYIIZZ",
-                "ZZZXIIII",
-                "ZZZXIIXX",
-                "IIIIXIYY",
-                "ZIIIIIII",
-                "IIIIIIYY",
-                "IIIIXIXX",
-                "IZZXXXZZ",
-                "ZIIIXIII",
-                "IZZXIIII",
-                "IIYYIIZZ",
-                "IIIIXIII",
-                "IYYIIIII",
-            ]
-        )
+        for paulis in cases_paulis:
 
-        iso_zx_strings = paulis.zx_strings
+            iso_zx_strings = paulis.zx_strings
 
-        lag_zx_strings = symplectic.lagrangian_subspace(iso_zx_strings)
-        colag_zx_strings = symplectic.conjugate_subspace(lag_zx_strings)
+            lag_zx_strings = symplectic.lagrangian_subspace(iso_zx_strings)
 
-        new_lag_zx_strings, new_colag_zx_strings = symplectic.simplify_lagrangian_colagrangian(
-            lag_zx_strings, colag_zx_strings
-        )
+            lag_zx_strings, colag_zx_strings = symplectic.lagrangian_bitwise_colagrangian_subspaces(lag_zx_strings)
 
-        sigma_lc = symplectic.dot(new_lag_zx_strings[:, None, :], new_colag_zx_strings[None, :, :])
-        sigma_ll = np.mod(symplectic.dot(new_lag_zx_strings[:, None, :], new_lag_zx_strings[None, :, :]), 2)
-        sigma_cc = np.mod(symplectic.dot(new_colag_zx_strings[:, None, :], new_colag_zx_strings[None, :, :]), 2)
+            sigma_lc = np.mod(symplectic.dot(lag_zx_strings[:, None, :], colag_zx_strings[None, :, :]), 2)
+            sigma_ll = np.mod(symplectic.dot(lag_zx_strings[:, None, :], lag_zx_strings[None, :, :]), 2)
+            sigma_cc = np.mod(symplectic.dot(colag_zx_strings[:, None, :], colag_zx_strings[None, :, :]), 2)
 
-        self.assertTrue(np.all(sigma_lc == np.eye(paulis.num_qubits)))
-        self.assertTrue(np.all(sigma_ll == np.zeros((paulis.num_qubits, paulis.num_qubits))))
-        self.assertTrue(np.all(sigma_cc == np.zeros((paulis.num_qubits, paulis.num_qubits))))
+            self.assertTrue(np.all(sigma_lc == np.eye(paulis.num_qubits)))
+            self.assertTrue(np.all(sigma_ll == np.zeros((paulis.num_qubits, paulis.num_qubits))))
+            self.assertTrue(np.all(sigma_cc == np.zeros((paulis.num_qubits, paulis.num_qubits))))
+
+            z_strings, x_strings = symplectic.split_zx_strings(colag_zx_strings)
+            active_bits = np.logical_or(z_strings, x_strings)
+
+            self.assertTrue(np.all(np.sum(active_bits, axis=1) == 1))
+
+            print(pa.PauliArray.from_zx_strings(lag_zx_strings).inspect())
+            print(pa.PauliArray.from_zx_strings(colag_zx_strings).inspect())
+
+            lag_zx_strings_1, colag_zx_strings_1 = symplectic.row_ech_lagrangian_colagrangian(
+                lag_zx_strings, colag_zx_strings
+            )
+
+            print("Trans 1")
+            print(pa.PauliArray.from_zx_strings(lag_zx_strings_1).inspect())
+            print(pa.PauliArray.from_zx_strings(colag_zx_strings_1).inspect())
+
+            # lag_zx_strings_2, colag_zx_strings_2 = symplectic.row_ech_qubit_lagrangian_colagrangian(
+            #     lag_zx_strings, colag_zx_strings
+            # )
+
+            # print("Trans 2")
+            # print(pa.PauliArray.from_zx_strings(lag_zx_strings_2).inspect())
+            # print(pa.PauliArray.from_zx_strings(colag_zx_strings_2).inspect())
+
+            # colag_zx_strings_3, lag_zx_strings_3 = symplectic.row_ech_lagrangian_colagrangian(
+            #     colag_zx_strings, lag_zx_strings
+            # )
+
+            # print("Trans 3")
+            # print(pa.PauliArray.from_zx_strings(lag_zx_strings_3).inspect())
+            # print(pa.PauliArray.from_zx_strings(colag_zx_strings_3).inspect())
+
+            # colag_zx_strings_4, lag_zx_strings_4 = symplectic.row_ech_qubit_lagrangian_colagrangian(
+            #     colag_zx_strings, lag_zx_strings
+            # )
+
+            # print("Trans 4")
+            # print(pa.PauliArray.from_zx_strings(lag_zx_strings_4).inspect())
+            # print(pa.PauliArray.from_zx_strings(colag_zx_strings_4).inspect())
 
 
 if __name__ == "__main__":
