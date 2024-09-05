@@ -1,5 +1,5 @@
 from numbers import Number
-from typing import Any, Callable, List, Tuple, Union, Self
+from typing import Any, Callable, List, Self, Tuple, Union
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
@@ -334,7 +334,7 @@ class OperatorArrayType2(object):
 
         return self
 
-    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float_]) -> NDArray[np.float_]:
+    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float64]) -> NDArray[np.float64]:
         """
         Calculates the expectation values of the operators given the expectation values of the Pauli operators.
 
@@ -350,7 +350,7 @@ class OperatorArrayType2(object):
 
         return expectation_values
 
-    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float_]) -> NDArray[np.float_]:
+    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float64]) -> NDArray[np.float64]:
         """
         Calculates the covariances of the operators given the covariances of the Pauli operators.
 
@@ -397,7 +397,7 @@ class OperatorArrayType2(object):
         )
         basis_paulis, inverse_basis = pa.unique(all_paulis, return_inverse=True)
 
-        weights = np.zeros(operators.shape + (basis_paulis.size,), dtype=np.complex_)
+        weights = np.zeros(operators.shape + (basis_paulis.size,), dtype=np.complex128)
         for operator_index, idx in enumerate(np.ndindex(operators.shape)):
             weights[idx][inverse_basis[operator_indices == operator_index]] = operators[idx].weights
 

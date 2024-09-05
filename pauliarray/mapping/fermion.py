@@ -116,8 +116,8 @@ class FermionMapping(object):
         imag_z_strings = bitops.matmul(parity_matrix, mapping_matrix_inv)
         real_x_strings = imag_x_strings = mapping_matrix.transpose()
 
-        real_majoranas = pa.PauliArray(real_z_strings, real_x_strings)
-        imag_majoranas = pa.PauliArray(imag_z_strings, imag_x_strings)
+        real_majoranas = pa.PauliArray.from_z_strings_and_x_strings(real_z_strings, real_x_strings)
+        imag_majoranas = pa.PauliArray.from_z_strings_and_x_strings(imag_z_strings, imag_x_strings)
 
         return real_majoranas, imag_majoranas
 
@@ -148,11 +148,13 @@ class FermionMapping(object):
         """
         mapping_matrix_inv = self.mapping_matrix_inv
 
-        identity_paulis = pa.PauliArray(
+        identity_paulis = pa.PauliArray.from_z_strings_and_x_strings(
             np.zeros((self.num_qubits, self.num_qubits), dtype=np.bool_),
             np.zeros((self.num_qubits, self.num_qubits), dtype=np.bool_),
         )
-        z_paulis = pa.PauliArray(mapping_matrix_inv, np.zeros((self.num_qubits, self.num_qubits), dtype=np.bool_))
+        z_paulis = pa.PauliArray.from_z_strings_and_x_strings(
+            mapping_matrix_inv, np.zeros((self.num_qubits, self.num_qubits), dtype=np.bool_)
+        )
 
         identity_operators = opa.OperatorArrayType1.from_pauli_array(identity_paulis)
         z_operators = opa.OperatorArrayType1.from_pauli_array(z_paulis)
@@ -172,7 +174,7 @@ class FermionMapping(object):
             two_body ("np.ndarray[np.complex]"): The two-body fermionic integrals as a 4d array (in physicist order)
 
         Returns:
-            Operator: The qubit Hamiltonia
+            Operator: The qubit Hamiltonian
         """
         one_body_operator = self.one_body_operator_from_array(one_body)
         two_body_operator = self.two_body_operator_from_array(two_body)
@@ -380,7 +382,7 @@ class FermionMapping(object):
 
         return tmp
 
-    def _flip_operators(self, i_orbitals: "np.ndarray[np.int]", factors: NDArray[np.float_]) -> opa.OperatorArrayType1:
+    def _flip_operators(self, i_orbitals: "np.ndarray[np.int]", factors: NDArray[np.float64]) -> opa.OperatorArrayType1:
         r"""
         Constructs an OperatorArray with the :math:`\mu^\text{th}` flip operators acting on the orbitals :math:`i_\mu`
 
@@ -401,7 +403,7 @@ class FermionMapping(object):
         z_strings = self.mapping_matrix_inv[i_orbitals, :]
 
         z_operators = opa.OperatorArrayType1.from_pauli_array(
-            pa.PauliArray(z_strings, np.zeros(z_strings.shape, dtype=np.bool_))
+            pa.PauliArray.from_z_strings_and_x_strings(z_strings, np.zeros(z_strings.shape, dtype=np.bool_))
         )
 
         return z_operators.mul_weights(0.5 * factors).add_scalar(0.5)
@@ -442,7 +444,7 @@ class FermionMapping(object):
 
         update_factors = self._update_factors(*xs_orbitals)
 
-        update_paulis = pa.PauliArray(update_z_strings, update_x_strings)
+        update_paulis = pa.PauliArray.from_z_strings_and_x_strings(update_z_strings, update_x_strings)
         update_operators = opa.OperatorArrayType1.from_pauli_array(update_paulis).mul_weights(update_factors)
 
         return update_operators
@@ -475,7 +477,7 @@ class FermionMapping(object):
 
         update_factors = self._update_factors(i_orbitals, j_orbitals)
 
-        update_paulis = pa.PauliArray(update_z_strings, update_x_strings)
+        update_paulis = pa.PauliArray.from_z_strings_and_x_strings(update_z_strings, update_x_strings)
         update_operators = opa.OperatorArrayType1.from_pauli_array(update_paulis).mul_weights(update_factors)
 
         return update_operators
@@ -530,7 +532,7 @@ class FermionMapping(object):
 
         update_factors = self._update_factors(i_orbitals, j_orbitals, k_orbitals, l_orbitals)
 
-        update_paulis = pa.PauliArray(update_z_strings, update_x_strings)
+        update_paulis = pa.PauliArray.from_z_strings_and_x_strings(update_z_strings, update_x_strings)
         update_operators = opa.OperatorArrayType1.from_pauli_array(update_paulis).mul_weights(update_factors)
 
         return update_operators
@@ -538,7 +540,7 @@ class FermionMapping(object):
     @staticmethod
     def _flip_factors(
         i_orbitals: "np.ndarray[np.int]", j_orbitals: "np.ndarray[np.int]", *args: Tuple["np.ndarray[np.int]"]
-    ) -> NDArray[np.float_]:
+    ) -> NDArray[np.float64]:
         r"""
         Computes flip factors of the type
 
@@ -565,7 +567,7 @@ class FermionMapping(object):
 
     def _update_factors(
         self, i_orbitals: "np.ndarray[np.int]", j_orbitals: "np.ndarray[np.int]", *args: Tuple["np.ndarray[np.int]"]
-    ) -> NDArray[np.float_]:
+    ) -> NDArray[np.float64]:
         r"""
         Computes update factors of the type
 

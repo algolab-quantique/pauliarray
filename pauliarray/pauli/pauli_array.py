@@ -6,8 +6,7 @@ from numpy.typing import NDArray
 
 from pauliarray.binary import bit_operations as bitops
 from pauliarray.binary import symplectic
-
-#
+from pauliarray.binary import void_operations as vops
 from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable, is_concatenatable
 
 if TYPE_CHECKING:
@@ -42,18 +41,17 @@ class PauliArray(object):
     Defines an array of Pauli strings.
     """
 
-    def __init__(self, z_strings: "np.ndarray[np.bool]", x_strings: "np.ndarray[np.bool]"):
+    def __init__(self, z_voids: NDArray[np.bool_], x_voids: NDArray[np.bool_], num_qubits: int):
 
-        z_strings = np.atleast_2d(z_strings)
-        x_strings = np.atleast_2d(x_strings)
+        assert z_voids.shape == x_voids.shape
+        assert z_voids.dtype.itemsize == x_voids.dtype.itemsize
 
-        assert np.all(z_strings.shape == x_strings.shape)
+        assert z_voids.dtype.itemsize * 8 - num_qubits >= 0
+        # assert z_voids.dtype.itemsize * 8 - num_qubits <
 
-        assert z_strings.dtype == np.dtype(np.bool_)
-        assert x_strings.dtype == np.dtype(np.bool_)
-
-        self._z_strings = z_strings
-        self._x_strings = x_strings
+        self._z_voids = z_voids
+        self._x_voids = x_voids
+        self._num_qubits = num_qubits
 
     @property
     def num_qubits(self) -> int:
@@ -63,7 +61,7 @@ class PauliArray(object):
         Returns:
             int: The number of qubits.
         """
-        return self._z_strings.shape[-1]
+        return self._num_qubits
 
     @property
     def shape(self) -> Tuple[int, ...]:
@@ -73,7 +71,7 @@ class PauliArray(object):
         Returns:
             Tuple[int, ...]: The shape of the object.
         """
-        return self._z_strings.shape[:-1]
+        return self._z_voids.shape
 
     @property
     def ndim(self) -> int:
@@ -83,7 +81,7 @@ class PauliArray(object):
         Returns:
             int: The number of dimensions.
         """
-        return len(self.shape)
+        return self._z_voids.ndim
 
     @property
     def size(self) -> int:
@@ -100,6 +98,36 @@ class PauliArray(object):
         return self
 
     @property
+    def x_voids(self) -> NDArray[np.bool_]:
+        """
+        Returns the X voids.
+
+        Returns:
+            NDArray[np.bool_]: The X bits.
+        """
+        return self._x_voids
+
+    @property
+    def z_voids(self) -> NDArray[np.bool_]:
+        """
+        Returns the Z voids.
+
+        Returns:
+            NDArray[np.bool_]: The Z bits.
+        """
+        return self._z_voids
+
+    @property
+    def zx_voids(self) -> NDArray[np.bool_]:
+        """
+        Returns the Z voids.
+
+        Returns:
+            NDArray[np.bool_]: The Z bits.
+        """
+        return vops.stich_voids(self._z_voids, self._x_voids)
+
+    @property
     def x_strings(self) -> "np.ndarray[np.bool]":
         """
         Returns the X bits.
@@ -107,7 +135,7 @@ class PauliArray(object):
         Returns:
             "np.ndarray[np.bool]": The X bits.
         """
-        return self._x_strings
+        return vops.voids_to_bit_strings(self._x_voids, self.num_qubits)
 
     @property
     def z_strings(self) -> "np.ndarray[np.bool]":
@@ -117,7 +145,7 @@ class PauliArray(object):
         Returns:
             "np.ndarray[np.bool]": The Z bits.
         """
-        return self._z_strings
+        return vops.voids_to_bit_strings(self._z_voids, self.num_qubits)
 
     @property
     def zx_strings(self) -> "np.ndarray[np.bool]":
@@ -127,7 +155,7 @@ class PauliArray(object):
         Returns:
             "np.ndarray[np.bool]": The combined Z and X bits.
         """
-        return symplectic.merge_zx_strings(self._z_strings, self._x_strings)
+        return symplectic.merge_zx_strings(self.z_strings, self.x_strings)
 
     @property
     def xz_strings(self) -> "np.ndarray[np.bool]":
@@ -137,7 +165,7 @@ class PauliArray(object):
         Returns:
             "np.ndarray[np.bool]": The combined X and Z bits.
         """
-        return symplectic.merge_zx_strings(self._x_strings, self._z_strings)
+        return symplectic.merge_zx_strings(self.x_strings, self.z_strings)
 
     @property
     def num_ids(self) -> "np.ndarray[np.int]":
@@ -147,7 +175,8 @@ class PauliArray(object):
         Returns:
             "np.ndarray[np.int]": The number of identity operators.
         """
-        return np.sum(~np.logical_or(self._z_strings, self._x_strings), axis=-1)
+
+        return vops.bitwise_count(vops.paded_bitwise_not(vops.bitwise_or(self.z_voids, self.x_voids), self.num_qubits))
 
     @property
     def num_non_ids(self) -> "np.ndarray[np.int]":
@@ -157,19 +186,18 @@ class PauliArray(object):
         Returns:
             "np.ndarray[np.int]": The number of non-identity operators.
         """
-        return np.sum(np.logical_or(self._z_strings, self._x_strings), axis=-1)
+        return vops.bitwise_count(vops.bitwise_or(self.z_voids, self.x_voids))
 
     def __getitem__(self, key):
-        # TODO check number of dimensions in key
-        new_z_strings = self._z_strings[key]
-        new_x_strings = self._x_strings[key]
+        new_z_voids = self._z_voids[key]
+        new_x_voids = self._x_voids[key]
 
-        return PauliArray(new_z_strings, new_x_strings)
+        return PauliArray(new_z_voids, new_x_voids, self.num_qubits)
 
     def __setitem__(self, key, value: "PauliArray"):
         if isinstance(value, PauliArray):
-            self._z_strings[key] = value.z_strings
-            self._x_strings[key] = value.x_strings
+            self._z_voids[key] = value.z_voids
+            self._x_voids[key] = value.x_voids
         else:
             raise TypeError("Value should be of type PauliArray.")
 
@@ -187,7 +215,7 @@ class PauliArray(object):
             "np.ndarray[np.bool]": _description_
         """
 
-        return np.all(np.logical_and((self.z_strings == other.z_strings), (self.x_strings == other.x_strings)), axis=-1)
+        return np.logical_and((self.z_voids == other.z_voids), (self.x_voids == other.x_voids))
 
     def copy(self) -> "PauliArray":
         """
@@ -196,7 +224,7 @@ class PauliArray(object):
         Returns:
             PauliArray: Copied PauliArray.
         """
-        return PauliArray(self.z_strings.copy(), self.x_strings.copy())
+        return PauliArray(self.z_voids.copy(), self.x_voids.copy(), self.num_qubits)
 
     def reshape(self, shape: Tuple[int, ...]) -> "PauliArray":
         """
@@ -209,13 +237,10 @@ class PauliArray(object):
             PauliArray: The PauliArray object with the new shape.
         """
 
-        # TODO check number of dimensions in shape
+        new_z_voids = self._z_voids.reshape(shape)
+        new_x_voids = self._x_voids.reshape(shape)
 
-        new_shape = shape + (self.num_qubits,)
-        new_z_strings = self._z_strings.reshape(new_shape)
-        new_x_strings = self._x_strings.reshape(new_shape)
-
-        return PauliArray(new_z_strings, new_x_strings)
+        return PauliArray(new_z_voids, new_x_voids, self.num_qubits)
 
     def flatten(self) -> "PauliArray":
         """
@@ -224,6 +249,7 @@ class PauliArray(object):
         Returns:
             PauliArray: A flattened copy of the current PauliArray.
         """
+
         shape = (np.prod(self.shape),)
 
         return self.reshape(shape)
@@ -235,10 +261,11 @@ class PauliArray(object):
         Returns:
             PauliArray: The squeezed PauliArray.
         """
-        new_z_strings = self._z_strings.squeeze()
-        new_x_strings = self._x_strings.squeeze()
 
-        return PauliArray(new_z_strings, new_x_strings)
+        new_z_voids = self._z_voids.squeeze()
+        new_x_voids = self._x_voids.squeeze()
+
+        return PauliArray(new_z_voids, new_x_voids, self.num_qubits)
 
     def remove(self, index: int) -> "PauliArray":
         """
@@ -250,37 +277,11 @@ class PauliArray(object):
         Returns:
             PauliArray: PauliArray with removed item at given index.
         """
-        new_z_strings = self._z_strings.remove(index)
-        new_x_strings = self._x_strings.remove(index)
 
-        return PauliArray(new_z_strings, new_x_strings)
+        new_z_voids = self._z_voids.remove(index)
+        new_x_voids = self._x_voids.remove(index)
 
-    def extract(self, condition: Union[NDArray, list]) -> "PauliArray":
-        """
-        Return the Pauli strings from the PauliArray object that satisfy some condition.
-
-        Args:
-          condition (Union[NDArray, list]): An array whose nonzero or True entries indicate the Pauli strings of PauliArray to extract.
-
-        Returns:
-            PauliArray: A new PauliArray object containing the extracted Pauli strings.
-
-        Raises:
-            ValueError: If the shape of the condition array is not equal to shape of the PauliArray.
-        """
-        if isinstance(condition, list):
-            condition = np.array(condition, dtype=bool)
-
-        if condition.shape != self.shape:
-            raise ValueError("The condition array must have the same shape as the PauliArray.")
-
-        new_x_strings = self.x_strings[condition]
-        new_z_strings = self.z_strings[condition]
-
-        if new_x_strings.size == 0:
-            return PauliArray.identities((), self.num_qubits)
-
-        return PauliArray(new_z_strings, new_x_strings)
+        return PauliArray(new_z_voids, new_x_voids, self.num_qubits)
 
     def take_qubits(self, indices: Union["np.ndarray[np.int]", range, int], inplace: bool = True) -> "PauliArray":
         """
@@ -303,7 +304,7 @@ class PauliArray(object):
         new_z_strings = self.z_strings.take(indices, axis=-1)
         new_x_strings = self.x_strings.take(indices, axis=-1)
 
-        return PauliArray(new_z_strings, new_x_strings)
+        return PauliArray.from_z_strings_and_x_strings(new_z_strings, new_x_strings)
 
     def compress_qubits(self, condition: "np.ndarray[np.bool]", inplace: bool = True) -> "PauliArray":
         """
@@ -323,7 +324,7 @@ class PauliArray(object):
         new_z_strings = self.z_strings.compress(condition, axis=-1)
         new_x_strings = self.x_strings.compress(condition, axis=-1)
 
-        return PauliArray(new_z_strings, new_x_strings)
+        return PauliArray.from_z_strings_and_x_strings(new_z_strings, new_x_strings)
 
     def reorder_qubits(self, qubit_order: List[int], inplace: bool = True) -> "PauliArray":
         """
@@ -342,10 +343,10 @@ class PauliArray(object):
         if not inplace:
             return self.copy().reorder_qubits(qubit_order)
 
-        self.z_strings[..., :] = self.z_strings[..., qubit_order]
-        self.x_strings[..., :] = self.x_strings[..., qubit_order]
+        new_z_strings = self.z_strings[..., qubit_order]
+        new_x_strings = self.x_strings[..., qubit_order]
 
-        return self
+        return PauliArray.from_z_strings_and_x_strings(new_z_strings, new_x_strings)
 
     def compose(self, other: Any) -> Any:
 
@@ -368,22 +369,19 @@ class PauliArray(object):
         assert self.num_qubits == other.num_qubits
         assert is_broadcastable(self.shape, other.shape)
 
-        new_z_strings = bitops.add(self.z_strings, other.z_strings)
-        new_x_strings = bitops.add(self.x_strings, other.x_strings)
+        new_z_voids = vops.bitwise_xor(self.z_voids, other.z_voids)
+        new_x_voids = vops.bitwise_xor(self.x_voids, other.x_voids)
 
-        self_phase_power = bitops.dot(self.z_strings, self.x_strings).astype(np.int8)
-        other_phase_power = bitops.dot(other.z_strings, other.x_strings).astype(np.int8)
-        new_phase_power = bitops.dot(new_z_strings, new_x_strings).astype(np.int8)
-        commutation_phase_power = 2 * bitops.dot(self.x_strings, other.z_strings).astype(np.int8)
+        self_phase_power = vops.bitwise_dot(self.z_voids, self.x_voids)
+        other_phase_power = vops.bitwise_dot(other.z_voids, other.x_voids)
+        new_phase_power = vops.bitwise_dot(new_z_voids, new_x_voids)
+        commutation_phase_power = 2 * vops.bitwise_dot(self.x_voids, other.z_voids)
 
-        phase_power = np.mod(
-            commutation_phase_power + self_phase_power + other_phase_power - new_phase_power,
-            4,
-        )
+        phase_power = commutation_phase_power + self_phase_power + other_phase_power - new_phase_power
 
-        phases = np.choose(phase_power, [1, -1j, -1, 1j])
+        phases = np.choose(phase_power, [1, -1j, -1, 1j], mode="wrap")
 
-        return PauliArray(new_z_strings, new_x_strings), phases
+        return PauliArray(new_z_voids, new_x_voids, self.num_qubits), phases
 
     def mul_weights(self, other: Union[Number, NDArray]) -> "WeightedPauliArray":
         """
@@ -398,7 +396,7 @@ class PauliArray(object):
 
         from pauliarray.pauli.weighted_pauli_array import WeightedPauliArray
 
-        new_weights = np.broadcast_to(other, self.shape).astype(np.complex_)
+        new_weights = np.broadcast_to(other, self.shape).astype(np.complex128)
         new_paulis = self.paulis.copy()
 
         return WeightedPauliArray(new_paulis, new_weights)
@@ -423,7 +421,7 @@ class PauliArray(object):
         new_z_strings = np.concatenate((self.z_strings, other.z_strings), axis=-1)
         new_x_strings = np.concatenate((self.x_strings, other.x_strings), axis=-1)
 
-        return PauliArray(new_z_strings, new_x_strings)
+        return PauliArray.from_z_strings_and_x_strings(new_z_strings, new_x_strings)
 
     def add_pauli_array(self, other: "PauliArray") -> "OperatorArrayType1":
         """
@@ -444,7 +442,7 @@ class PauliArray(object):
         new_z_strings = np.stack((self.z_strings, other.z_strings), axis=-2)
         new_x_strings = np.stack((self.x_strings, other.x_strings), axis=-2)
 
-        new_paulis = PauliArray(new_z_strings, new_x_strings)
+        new_paulis = PauliArray.from_z_strings_and_x_strings(new_z_strings, new_x_strings)
 
         return OperatorArrayType1.from_pauli_array(new_paulis, -1)
 
@@ -461,7 +459,7 @@ class PauliArray(object):
         Returns:
             PauliArray: The PauliArray with flipped z and x strings.
         """
-        return PauliArray(self.x_strings.copy(), self.z_strings.copy())
+        return PauliArray(self.x_voids.copy(), self.z_voids.copy(), self.num_qubits)
 
     def commute_with(self, other: "PauliArray") -> "np.ndarray[np.bool]":
         """
@@ -475,7 +473,9 @@ class PauliArray(object):
             "np.ndarray[np.bool]": An array of bool set to true for commuting Pauli string, and false otherwise.
         """
 
-        return ~np.mod(symplectic.dot(self.zx_strings, other.zx_strings), 2).astype(np.bool_)
+        return ~np.mod(
+            vops.bitwise_dot(self.z_voids, other.x_voids) + vops.bitwise_dot(self.x_voids, other.z_voids), 2
+        ).astype(np.bool_)
 
     def bitwise_commute_with(self, other: "PauliArray") -> "np.ndarray[np.bool]":
         """
@@ -489,10 +489,12 @@ class PauliArray(object):
             "np.ndarray[np.bool]": An array of bool set to true for bitwise commuting Pauli string, and false otherwise.
         """
 
-        ovlp_1 = self.z_strings * other.x_strings
-        ovlp_2 = self.x_strings * other.z_strings
+        ovlp_1 = vops.bitwise_and(self.z_voids, other.x_voids)
+        ovlp_2 = vops.bitwise_and(self.x_voids, other.z_voids)
 
-        return np.all(~np.logical_xor(ovlp_1, ovlp_2), axis=-1)
+        olvp_3 = vops.bitwise_xor(ovlp_1, ovlp_2)
+
+        return olvp_3 == vops.bit_strings_to_voids(np.zeros(self.num_qubits, dtype=np.uint8))
 
     def traces(self) -> NDArray:
         """
@@ -515,7 +517,7 @@ class PauliArray(object):
 
         generator_zx_strings = bitops.row_space(self.flatten().zx_strings)
 
-        generators = PauliArray(
+        generators = PauliArray.from_z_strings_and_x_strings(
             generator_zx_strings[..., : self.num_qubits], generator_zx_strings[..., self.num_qubits :]
         )
 
@@ -575,11 +577,15 @@ class PauliArray(object):
         if not inplace:
             return self.copy().x(qubits)
 
-        if isinstance(qubits, int):
-            qubits = [qubits]
+        qubit_mask = np.zeros((self.num_qubits,), dtype=bool)
+        qubit_mask[qubits] = True
+        qubit_void_mask = vops.bit_strings_to_voids(qubit_mask)
 
-        y_strings = np.logical_and(self.x_strings, self.z_strings)
-        sign_phases = np.mod(np.sum(np.logical_or(y_strings[..., qubits], self.z_strings[..., qubits]), axis=-1), 2)
+        y_voids = vops.bitwise_and(self.x_voids, self.z_voids)
+        sign_phases = np.mod(
+            vops.bitwise_count(vops.bitwise_and(vops.bitwise_or(y_voids, self.z_voids), qubit_void_mask)), 2
+        )
+
         factors = (1 - 2 * sign_phases).astype(complex)
 
         return self, factors
@@ -600,17 +606,21 @@ class PauliArray(object):
         if not inplace:
             return self.copy().h(qubits)
 
-        if isinstance(qubits, int):
-            qubits = [qubits]
+        qubit_mask = np.zeros((self.num_qubits,), dtype=bool)
+        qubit_mask[qubits] = True
+        qubit_void_mask = vops.bit_strings_to_voids(qubit_mask)
+        qubit_void_not_mask = vops.bit_strings_to_voids(~qubit_mask)
 
-        y_strings = np.logical_and(self.x_strings, self.z_strings)
-        sign_phases = np.mod(np.sum(y_strings[..., qubits], axis=-1), 2)
-        factors = (1 - 2 * sign_phases).astype(complex)
+        y_voids = vops.bitwise_and(self.x_voids, self.z_voids)
+        sign_phases = np.mod(vops.bitwise_count(vops.bitwise_and(y_voids, qubit_void_mask)), 2)
 
-        self.x_strings[..., qubits], self.z_strings[..., qubits] = (
-            self.z_strings[..., qubits],
-            self.x_strings[..., qubits],
+        self._z_voids, self._x_voids = vops.bitwise_or(
+            vops.bitwise_and(qubit_void_not_mask, self.z_voids), vops.bitwise_and(qubit_void_mask, self.x_voids)
+        ), vops.bitwise_or(
+            vops.bitwise_and(qubit_void_not_mask, self.x_voids), vops.bitwise_and(qubit_void_mask, self.z_voids)
         )
+
+        factors = (1 - 2 * sign_phases).astype(complex)
 
         return self, factors
 
@@ -630,14 +640,19 @@ class PauliArray(object):
         if not inplace:
             return self.copy().s(qubits)
 
-        if isinstance(qubits, int):
-            qubits = [qubits]
+        qubit_mask = np.zeros((self.num_qubits,), dtype=bool)
+        qubit_mask[qubits] = True
+        qubit_void_mask = vops.bit_strings_to_voids(qubit_mask)
+        qubit_void_not_mask = vops.bit_strings_to_voids(~qubit_mask)
 
-        y_strings = np.logical_and(self.x_strings, self.z_strings)
-        sign_phases = np.mod(np.sum(y_strings[..., qubits], axis=-1), 2)
+        y_voids = vops.bitwise_and(self.x_voids, self.z_voids)
+        sign_phases = np.mod(vops.bitwise_count(vops.bitwise_and(y_voids, qubit_void_mask)), 2)
         factors = (1 - 2 * sign_phases).astype(complex)
 
-        self.z_strings[..., qubits] = np.logical_xor(self.z_strings[..., qubits], self.x_strings[..., qubits])
+        self._z_voids = vops.bitwise_or(
+            vops.bitwise_and(qubit_void_not_mask, self.z_voids),
+            vops.bitwise_and(qubit_void_mask, vops.bitwise_xor(self.z_voids, self.x_voids)),
+        )
 
         return self, factors
 
@@ -667,15 +682,21 @@ class PauliArray(object):
         assert len(control_qubits) == len(target_qubits)
 
         factors = np.ones(self.shape, dtype=complex)
+        x_strings = self.x_strings
+        z_strings = self.z_strings
         for cq, tq in zip(control_qubits, target_qubits):
-            factors *= 1 - 2 * self.x_strings[..., cq] * self.z_strings[..., tq] * np.logical_not(
-                np.logical_xor(self.z_strings[..., cq], self.x_strings[..., tq])
+
+            factors *= 1 - 2 * x_strings[..., cq] * z_strings[..., tq] * np.logical_not(
+                np.logical_xor(z_strings[..., cq], x_strings[..., tq])
             )
 
-            tmp_tq_x_bit_array = self.x_strings[..., tq].copy()
-            tmp_cq_z_bit_array = self.z_strings[..., cq].copy()
-            self.x_strings[..., tq] = np.logical_xor(tmp_tq_x_bit_array, self.x_strings[..., cq])
-            self.z_strings[..., cq] = np.logical_xor(tmp_cq_z_bit_array, self.z_strings[..., tq])
+            tmp_tq_x_bit_array = x_strings[..., tq].copy()
+            tmp_cq_z_bit_array = z_strings[..., cq].copy()
+            x_strings[..., tq] = np.logical_xor(tmp_tq_x_bit_array, x_strings[..., cq])
+            z_strings[..., cq] = np.logical_xor(tmp_cq_z_bit_array, z_strings[..., tq])
+
+        self._z_voids = vops.bit_strings_to_voids(z_strings)
+        self._x_voids = vops.bit_strings_to_voids(x_strings)
 
         return self, factors
 
@@ -705,13 +726,18 @@ class PauliArray(object):
         assert len(control_qubits) == len(target_qubits)
 
         factors = np.ones(self.shape, dtype=complex)
+        x_strings = self.x_strings
+        z_strings = self.z_strings
         for cq, tq in zip(control_qubits, target_qubits):
-            factors *= 1 - 2 * self.x_strings[..., cq] * self.x_strings[..., tq] * np.logical_xor(
-                self.z_strings[..., cq], self.z_strings[..., tq]
+            factors *= 1 - 2 * x_strings[..., cq] * x_strings[..., tq] * np.logical_xor(
+                z_strings[..., cq], z_strings[..., tq]
             )
 
-            self.z_strings[..., cq] = np.logical_xor(self.z_strings[..., cq], self.x_strings[..., tq])
-            self.z_strings[..., tq] = np.logical_xor(self.z_strings[..., tq], self.x_strings[..., cq])
+            z_strings[..., cq] = np.logical_xor(z_strings[..., cq], x_strings[..., tq])
+            z_strings[..., tq] = np.logical_xor(z_strings[..., tq], x_strings[..., cq])
+
+        self._z_voids = vops.bit_strings_to_voids(z_strings)
+        self._x_voids = vops.bit_strings_to_voids(x_strings)
 
         return self, factors
 
@@ -738,7 +764,7 @@ class PauliArray(object):
 
         return new_paulis, factors
 
-    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float_]) -> NDArray[np.float_]:
+    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float64]) -> NDArray[np.float64]:
         """
         Returns the PauliArray expectation value given the expectation values of the Paulis. More useful for other classes, but still here for uniformity.
 
@@ -752,7 +778,7 @@ class PauliArray(object):
 
         return paulis_expectation_values
 
-    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float_]) -> NDArray[np.float_]:
+    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float64]) -> NDArray[np.float64]:
         """
         Returns the PauliArray covariances given the covariances of the Paulis. More useful for other classes, but still here for uniformity.
 
@@ -805,13 +831,15 @@ class PauliArray(object):
         Returns:
             matrices (NDArray): An ndarray of shape self.shape + (n**2, n**2).
         """
+        # assert self.num_qubits < 30
+
         mat_shape = (2**self.num_qubits, 2**self.num_qubits)
         matrices = np.zeros(self.shape + mat_shape, dtype=complex)
 
-        z_ints = bitops.strings_to_ints(self.z_strings)
-        x_ints = bitops.strings_to_ints(self.x_strings)
+        z_ints = vops.voids_to_int_strings(self.z_voids)
+        x_ints = vops.voids_to_int_strings(self.x_voids)
 
-        phase_powers = np.mod(bitops.dot(self.z_strings, self.x_strings), 4)
+        phase_powers = np.mod(vops.bitwise_dot(self.z_voids, self.x_voids).astype(np.int32), 4)
         phases = np.choose(phase_powers, [1, -1j, -1, 1j])
 
         for idx in np.ndindex(self.shape):
@@ -819,29 +847,6 @@ class PauliArray(object):
             matrices[idx] = one_matrix
 
         return phases[..., None, None] * matrices
-
-    @staticmethod
-    def sparse_matrix_from_zx_ints(z_int: int, x_int: int, num_qubits: int) -> Tuple[NDArray, NDArray, NDArray]:
-        """
-        Builds the matrix representing the Pauli String encoded in a sparse notation.
-
-        Args:
-            z_int (int): Integer which binary representation defines the z part of a Pauli String.
-            x_int (int): Integer which binary representation defines the x part of a Pauli String.
-            num_qubits (int): Length of the Pauli String.
-
-        Returns:
-            row_ind (NDArray): The row indices of returned matrix elements.
-            col_ind (NDArray): The column indices of returned matrix elements.
-            matrix_elements (NDArray): The matrix elements.
-        """
-        dim = 2**num_qubits
-
-        row_ind = np.arange(dim, dtype=np.uint)
-        col_ind = np.bitwise_xor(row_ind, x_int)
-        matrix_elements = np.array([1 - 2 * (bin(i).count("1") % 2) for i in np.bitwise_and(row_ind, z_int)])
-
-        return row_ind, col_ind, matrix_elements
 
     @staticmethod
     def matrix_from_zx_ints(z_int: int, x_int: int, num_qubits: int) -> NDArray:
@@ -866,6 +871,30 @@ class PauliArray(object):
 
         return matrix
 
+    @staticmethod
+    def sparse_matrix_from_zx_ints(z_int: int, x_int: int, num_qubits: int) -> Tuple[NDArray, NDArray, NDArray]:
+        """
+        Builds the matrix representing the Pauli String encoded in a sparse notation.
+
+        Args:
+            z_int (int): Integer which binary representation defines the z part of a Pauli String.
+            x_int (int): Integer which binary representation defines the x part of a Pauli String.
+            num_qubits (int): Length of the Pauli String.
+
+        Returns:
+            row_ind (NDArray): The row indices of returned matrix elements.
+            col_ind (NDArray): The column indices of returned matrix elements.
+            matrix_elements (NDArray): The matrix elements.
+        """
+        dim = 2**num_qubits
+
+        row_ind = np.arange(dim, dtype=np.uint64)
+        col_ind = np.bitwise_xor(row_ind, x_int)
+
+        matrix_elements = 1 - 2 * (np.bitwise_count(np.bitwise_and(row_ind, z_int)).astype(np.float64) % 2)
+
+        return row_ind, col_ind, matrix_elements
+
     @classmethod
     def from_labels(cls, labels: Union[list[str], "np.ndarray[np.str]"]) -> "PauliArray":
         """
@@ -881,7 +910,30 @@ class PauliArray(object):
             labels = [labels]
         z_strings, x_strings = cls.labels_to_z_strings_x_strings(labels)
 
-        return PauliArray(z_strings, x_strings)
+        return PauliArray.from_z_strings_and_x_strings(z_strings, x_strings)
+
+    @classmethod
+    def from_zx_voids(cls, zx_voids: NDArray, num_qubits: int) -> "PauliArray":
+
+        return PauliArray(*vops.split_voids(zx_voids), num_qubits)
+
+    @classmethod
+    def from_z_strings_and_x_strings(cls, z_strings: NDArray[np.bool_], x_strings: NDArray[np.bool_]) -> "PauliArray":
+        """
+        Create a PauliArray from zx strings.
+
+        Args:
+            zx_strings (NDArray[np.bool_]): Array where the last dimension size is an even integers (twice the number of qubits.)
+
+        Returns:
+            PauliArray: The created PauliArray .
+        """
+
+        z_voids = vops.bit_strings_to_voids(z_strings)
+        x_voids = vops.bit_strings_to_voids(x_strings)
+        num_qubits = z_strings.shape[-1]
+
+        return PauliArray(z_voids, x_voids, num_qubits)
 
     @classmethod
     def from_zx_strings(cls, zx_strings: "np.ndarray[np.bool]") -> "PauliArray":
@@ -899,7 +951,7 @@ class PauliArray(object):
         z_strings = zx_strings[..., :num_qubits]
         x_strings = zx_strings[..., num_qubits:]
 
-        return PauliArray(z_strings, x_strings)
+        return PauliArray.from_z_strings_and_x_strings(z_strings, x_strings)
 
     @classmethod
     def identities(cls, shape: Tuple[int, ...], num_qubits: int) -> "PauliArray":
@@ -918,7 +970,7 @@ class PauliArray(object):
         z_strings = np.zeros(new_shape, dtype=np.bool_)
         x_strings = np.zeros(new_shape, dtype=np.bool_)
 
-        return PauliArray(z_strings, x_strings)
+        return PauliArray.from_z_strings_and_x_strings(z_strings, x_strings)
 
     @classmethod
     def new(cls, shape: Tuple[int, ...], num_qubits: int) -> "PauliArray":
@@ -942,7 +994,7 @@ class PauliArray(object):
         z_strings = np.random.choice([False, True], new_shape)
         x_strings = np.random.choice([False, True], new_shape)
 
-        return PauliArray(z_strings, x_strings)
+        return PauliArray.from_z_strings_and_x_strings(z_strings, x_strings)
 
     @staticmethod
     def labels_to_z_strings_x_strings(
@@ -1063,12 +1115,10 @@ def broadcast_to(paulis: PauliArray, shape: Tuple[int, ...]) -> "PauliArray":
         new_pauli_array (PauliArray): The PauliArray with a new shape.
     """
 
-    new_shape = shape + (paulis.num_qubits,)
+    new_z_voids = np.broadcast_to(paulis.z_voids, shape)
+    new_x_voids = np.broadcast_to(paulis.x_voids, shape)
 
-    new_z_strings = np.broadcast_to(paulis.z_strings, new_shape)
-    new_x_strings = np.broadcast_to(paulis.x_strings, new_shape)
-
-    return PauliArray(new_z_strings, new_x_strings)
+    return PauliArray(new_z_voids, new_x_voids, paulis.num_qubits)
 
 
 def expand_dims(paulis: PauliArray, axis: Union[int, Tuple[int, ...]]) -> "PauliArray":
@@ -1085,19 +1135,10 @@ def expand_dims(paulis: PauliArray, axis: Union[int, Tuple[int, ...]]) -> "Pauli
         expanded_pauli_array (PauliArray) : The expanded PauliArray.
     """
 
-    if type(axis) not in (tuple, list):
-        axis = (axis,)
+    new_z_voids = np.expand_dims(paulis.z_voids, axis)
+    new_x_voids = np.expand_dims(paulis.x_voids, axis)
 
-    actual_ndim = paulis.ndim
-    for ax in axis:
-        if ax > actual_ndim:
-            raise ValueError("axis cannot exceed ndim")
-        actual_ndim += 1
-
-    new_z_strings = np.expand_dims(paulis.z_strings, axis)
-    new_x_strings = np.expand_dims(paulis.x_strings, axis)
-
-    return PauliArray(new_z_strings, new_x_strings)
+    return PauliArray(new_z_voids, new_x_voids, paulis.num_qubits)
 
 
 def commutator(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArray, "np.ndarray[np.complex]"]:
@@ -1117,8 +1158,10 @@ def commutator(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArray, 
     commutators, phases = paulis_1.compose_pauli_array(paulis_2)
     do_commute = paulis_1.commute_with(paulis_2)
 
-    commutators.z_strings[do_commute] = 0
-    commutators.x_strings[do_commute] = 0
+    zero_void = vops.bit_strings_to_voids(np.zeros(2 * paulis_1.num_qubits, dtype=np.uint8))
+
+    commutators.z_voids[do_commute] = zero_void
+    commutators.x_voids[do_commute] = zero_void
 
     coefs = 2 * phases * ~do_commute
 
@@ -1155,7 +1198,7 @@ def commutator2(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArray,
     non_zero_commutators, non_zeros_coefs = paulis_1[*idx1].compose_pauli_array(paulis_2[*idx2])
 
     commutators = PauliArray.identities(shape, paulis_1.num_qubits)
-    coefs = np.zeros(shape, dtype=np.complex_)
+    coefs = np.zeros(shape, dtype=np.complex128)
 
     commutators[*idxs] = non_zero_commutators
     coefs[*idxs] = 2 * non_zeros_coefs
@@ -1201,12 +1244,12 @@ def concatenate(paulis: Tuple[PauliArray, ...], axis: int) -> PauliArray:
     """
     assert is_concatenatable(paulis, axis)
 
-    z_strings_list = [pauli.z_strings for pauli in paulis]
-    x_strings_list = [pauli.x_strings for pauli in paulis]
-    new_z_strings = np.concatenate(z_strings_list, axis=axis)
-    new_x_strings = np.concatenate(x_strings_list, axis=axis)
+    z_voids_list = [pauli.z_voids for pauli in paulis]
+    x_voids_list = [pauli.x_voids for pauli in paulis]
+    new_z_voids = np.concatenate(z_voids_list, axis=axis)
+    new_x_voids = np.concatenate(x_voids_list, axis=axis)
 
-    return PauliArray(new_z_strings, new_x_strings)
+    return PauliArray(new_z_voids, new_x_voids, paulis[0].num_qubits)
 
 
 def swapaxes(paulis: PauliArray, axis1: int, axis2: int) -> PauliArray:
@@ -1221,15 +1264,11 @@ def swapaxes(paulis: PauliArray, axis1: int, axis2: int) -> PauliArray:
     Returns:
         PauliArray: The PauliArrays with axes swaped.
     """
-    assert axis1 < paulis.ndim
-    assert axis2 < paulis.ndim
-    axis1 = axis1 - 1 if axis1 < 0 else axis1
-    axis2 = axis2 - 1 if axis2 < 0 else axis2
 
-    new_z_strings = np.swapaxes(paulis.z_strings, axis1, axis2)
-    new_x_strings = np.swapaxes(paulis.x_strings, axis1, axis2)
+    new_z_voids = np.swapaxes(paulis.z_voids, axis1, axis2)
+    new_x_voids = np.swapaxes(paulis.x_voids, axis1, axis2)
 
-    return PauliArray(new_z_strings, new_x_strings)
+    return PauliArray(new_z_voids, new_x_voids, paulis.num_qubits)
 
 
 def moveaxis(paulis: PauliArray, source: int, destination: int) -> PauliArray:
@@ -1244,15 +1283,11 @@ def moveaxis(paulis: PauliArray, source: int, destination: int) -> PauliArray:
     Returns:
         PauliArray: The PauliArrays with axis moved.
     """
-    assert source < paulis.ndim
-    assert destination < paulis.ndim
-    source = source - 1 if source < 0 else source
-    destination = destination - 1 if destination < 0 else destination
 
-    new_z_strings = np.moveaxis(paulis.z_strings, source, destination)
-    new_x_strings = np.moveaxis(paulis.x_strings, source, destination)
+    new_z_voids = np.moveaxis(paulis.z_voids, source, destination)
+    new_x_voids = np.moveaxis(paulis.x_voids, source, destination)
 
-    return PauliArray(new_z_strings, new_x_strings)
+    return PauliArray(new_z_voids, new_x_voids, paulis.num_qubits)
 
 
 def unique(
@@ -1299,7 +1334,7 @@ def unique(
         axis = axis % paulis.ndim
 
     out = np.unique(
-        paulis.zx_strings,
+        paulis.zx_voids,
         axis=axis,
         return_index=return_index,
         return_inverse=return_inverse,
@@ -1308,64 +1343,10 @@ def unique(
 
     if return_index or return_inverse or return_counts:
         out = list(out)
-        unique_zx_strings = out[0]
-        out[0] = PauliArray.from_zx_strings(unique_zx_strings)
+        unique_zx_voids = out[0]
+        out[0] = PauliArray.from_zx_voids(unique_zx_voids, paulis.num_qubits)
     else:
-        unique_zx_strings = out
-        out = PauliArray.from_zx_strings(unique_zx_strings)
-
-    return out
-
-
-def fast_flat_unique(
-    paulis: PauliArray,
-    return_index: bool = False,
-    return_inverse: bool = False,
-    return_counts: bool = False,
-) -> Union[PauliArray, Tuple[PauliArray, NDArray]]:
-    """
-    Faster version of unique for PauliArray. Only works with flat PauliArray.
-    Directly uses numpy.unique.
-
-    Args:
-        paulis (PauliArray): The PauliArray to return. Must be flat.
-
-        return_index (bool, optional): If True, also return the indices of PauliArray (along the specified axis,
-            if provided, or in the flattened array) that result in the unique array. Defaults to False.
-
-        return_inverse (bool, optional): If True, also return the indices of the unique array
-            (for the specified axis, if provided) that can be used to reconstruct array. Defaults to False.
-
-        return_counts (bool, optional): If True, also return the number of times each unique item appears in array.
-            Defaults to False.
-
-    Returns:
-        PauliArray: The unique Pauli strings in a PauliArray
-        NDArray, optional: Index to get unique from the orginal PauliArray
-        NDArray, optional: Innverse to reconstrut the original PauliArray from unique
-        NDArray, optional: The number of each unique in the original PauliArray
-    """
-
-    assert paulis.ndim == 1
-
-    zx_strings = paulis.zx_strings
-    void_type_size = zx_strings.dtype.itemsize * 2 * paulis.num_qubits
-
-    zx_view = np.ascontiguousarray(zx_strings).view(np.dtype((np.void, void_type_size)))
-
-    _, index, inverse, counts = np.unique(zx_view, return_index=True, return_inverse=True, return_counts=True)
-
-    new_paulis = paulis[index]
-
-    out = (new_paulis,)
-    if return_index:
-        out += (index,)
-    if return_inverse:
-        out += (inverse,)
-    if return_counts:
-        out += (counts,)
-
-    if len(out) == 1:
-        return out[0]
+        unique_zx_voids = out
+        out = PauliArray.from_zx_voids(unique_zx_voids, paulis.num_qubits)
 
     return out

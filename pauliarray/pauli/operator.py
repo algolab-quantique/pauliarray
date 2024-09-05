@@ -532,7 +532,7 @@ class Operator(object):
         prod_wpaulis = self.wpaulis[:, None].compose_weighted_pauli_array(self.wpaulis[None, :].adjoint())
 
         # identifies the unique paulis in the products
-        unique_prod_paulis, inverse = pa.fast_flat_unique(prod_wpaulis.paulis.flatten(), return_inverse=True)
+        unique_prod_paulis, inverse = pa.unique(prod_wpaulis.paulis.flatten(), return_inverse=True)
         # create a square matrix with the unique pauli index of its position in prod_wpaulis
         inverse = inverse.reshape((self.num_terms, self.num_terms))
 
@@ -557,7 +557,7 @@ class Operator(object):
 
         return new_paulis.reshape(original_shape), factors.reshape(original_shape)
 
-    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float_]) -> "np.complex":
+    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float64]) -> "np.complex":
         """
         Returns the PauliArray expectation value given the expectation values of the Paulis. More useful for other classes, but still here for uniformity.
 
@@ -571,7 +571,7 @@ class Operator(object):
 
         return np.sum(wpaulis_expectation_values)
 
-    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float_]) -> "np.complex":
+    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float64]) -> "np.complex":
         """
         Returns the PauliArray expectation value given the expectation values of the Paulis.
 
@@ -598,7 +598,7 @@ class Operator(object):
             Operator: Operator where each Pauli strings appears only once in the sum.
         """
 
-        new_paulis, inverse = pa.fast_flat_unique(self.paulis, return_inverse=True)
+        new_paulis, inverse = pa.unique(self.paulis, return_inverse=True)
 
         new_weights = np.zeros(new_paulis.shape, dtype=self.wpaulis.weights.dtype)
         np.add.at(new_weights, inverse, self.wpaulis.weights)

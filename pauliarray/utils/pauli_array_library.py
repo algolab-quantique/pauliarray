@@ -1,25 +1,29 @@
 import numpy as np
 
+import pauliarray.binary.void_operations as vops
 import pauliarray.pauli.pauli_array as pa
 
 
-def gen_complete_pauli_array_basis(number_of_qubits: int) -> pa.PauliArray:
+def gen_complete_pauli_array_basis(num_qubits: int) -> pa.PauliArray:
     """
     Generates a PauliArray containining all the Pauli strings for n qubits.
 
     Args:
-        number_of_qubits (int): The number of qubits
+        num_qubits (int): The number of qubits
 
     Returns:
         PauliArray: A complete basis
     """
-    bin_power = 2 ** np.arange(number_of_qubits, dtype=np.uintc)
-    bits = ((np.arange(2 ** (number_of_qubits), dtype=np.uintc)[:, None] & bin_power[None, :]) > 0).reshape(
-        (2**number_of_qubits, number_of_qubits)
+    all_ints = np.arange(2**num_qubits, dtype=np.uint8)
+
+    z_powers_of_two = vops.int_strings_to_voids(
+        np.broadcast_to(all_ints[None, :, None], (2**num_qubits, 2**num_qubits, 1))
     )
-    z_bits = np.broadcast_to(bits[None, :], (2**number_of_qubits, 2**number_of_qubits, number_of_qubits))
-    x_bits = np.broadcast_to(bits[:, None], (2**number_of_qubits, 2**number_of_qubits, number_of_qubits))
-    return pa.PauliArray(z_bits, x_bits).flatten()
+    x_powers_of_two = vops.int_strings_to_voids(
+        np.broadcast_to(all_ints[:, None, None], (2**num_qubits, 2**num_qubits, 1))
+    )
+
+    return pa.PauliArray(z_powers_of_two, x_powers_of_two, num_qubits).flatten()
 
 
 def gen_random_pauli_array(shape, number_of_qubits: int) -> pa.PauliArray:
@@ -36,4 +40,4 @@ def gen_random_pauli_array(shape, number_of_qubits: int) -> pa.PauliArray:
     z_strings = np.random.choice(a=[False, True], size=shape + (number_of_qubits,))
     x_strings = np.random.choice(a=[False, True], size=shape + (number_of_qubits,))
 
-    return pa.PauliArray(z_strings, x_strings)
+    return pa.PauliArray.from_z_strings_and_x_strings(z_strings, x_strings)

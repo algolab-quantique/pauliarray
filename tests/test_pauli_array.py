@@ -78,6 +78,10 @@ class TestPauliArray(unittest.TestCase):
 
         generators = paulis_1.generators()
 
+        ref_generators = pa.PauliArray.from_labels(["IZ", "ZI", "IX", "XI"])
+
+        self.assertTrue(np.all(generators == ref_generators))
+
     def test_generators_with_map(self):
         a_paulis = pa.PauliArray.from_labels(
             ["II", "IX", "IY", "IZ", "XI", "XX", "XY", "XZ", "YI", "YX", "YY", "YZ", "ZI", "ZX", "ZY", "ZZ"]
@@ -229,7 +233,7 @@ class TestPauliArray(unittest.TestCase):
         h_op = op.Operator.from_labels_and_weights(["X", "Z"], np.sqrt(0.5) * np.array([1, 1]))
 
         b_paulis, b_factors = paulis_basis.h(0, inplace=False)
-        c_paulis, c_factors = h_op.clifford_conjugate_pauli_array_old(paulis_basis)
+        c_paulis, c_factors = h_op.clifford_conjugate_pauli_array(paulis_basis)
 
         self.assertTrue(np.all(np.isclose(b_factors, c_factors)))
         self.assertTrue(np.all(b_paulis == c_paulis))
@@ -240,7 +244,15 @@ class TestPauliArray(unittest.TestCase):
         cx_op = op.Operator.from_labels_and_weights(["II", "IZ", "XI", "XZ"], 0.5 * np.array([1, 1, 1, -1]))
 
         b_paulis, b_factors = paulis_basis.cx(0, 1, inplace=False)
-        c_paulis, c_factors = cx_op.clifford_conjugate_pauli_array_old(paulis_basis)
+        c_paulis, c_factors = cx_op.clifford_conjugate_pauli_array(paulis_basis)
+
+        print(b_factors)
+        print(c_factors)
+        print(b_factors == c_factors)
+
+        # print(paulis_basis.inspect())
+        print(b_paulis.inspect())
+        print(c_paulis.inspect())
 
         self.assertTrue(np.all(np.isclose(b_factors, c_factors)))
         self.assertTrue(np.all(b_paulis == c_paulis))
@@ -251,7 +263,7 @@ class TestPauliArray(unittest.TestCase):
         cz_op = op.Operator.from_labels_and_weights(["II", "IZ", "ZI", "ZZ"], 0.5 * np.array([1, 1, 1, -1]))
 
         b_paulis, b_factors = paulis_basis.cz(0, 1, inplace=False)
-        c_paulis, c_factors = cz_op.clifford_conjugate_pauli_array_old(paulis_basis)
+        c_paulis, c_factors = cz_op.clifford_conjugate_pauli_array(paulis_basis)
 
         self.assertTrue(np.all(np.isclose(b_factors, c_factors)))
         self.assertTrue(np.all(b_paulis == c_paulis))
@@ -285,7 +297,7 @@ class TestPauliArray(unittest.TestCase):
 
     def test_z_string_x_string_to_label(self):
         paulis_1 = pa.PauliArray.from_labels(["ZZXY"])
-        label = pa.PauliArray.z_string_x_string_to_label(paulis_1._z_strings[0], paulis_1._x_strings[0])
+        label = pa.PauliArray.z_string_x_string_to_label(paulis_1.z_strings[0], paulis_1.x_strings[0])
         expected_label = "ZZXY"
 
         self.assertEqual(label, expected_label)
@@ -352,6 +364,8 @@ class TestPauliArray(unittest.TestCase):
         z_int = bitops.strings_to_ints(paulis_1.z_strings)[0]
         x_int = bitops.strings_to_ints(paulis_1.x_strings)[0]
 
+        print(type(z_int))
+
         matrix = pa.PauliArray.matrix_from_zx_ints(z_int, x_int, paulis_1.num_qubits)
 
         expected_matrix = np.array(
@@ -408,14 +422,6 @@ class TestPauliArray(unittest.TestCase):
 
         self.assertEqual(unique_a_pauli_array.size, 3)
         self.assertEqual(unique_b_pauli_array.size, 3)
-
-    def test_fast_flat_unique(self):
-
-        paulis_1 = pa.PauliArray.from_labels(["IIIX", "IIIY", "IIIZ"] * 10)
-
-        unique_a_pauli_array = pa.fast_flat_unique(paulis_1)
-
-        self.assertEqual(unique_a_pauli_array.size, 3)
 
     def test_traces(self):
         paulis_1 = pa.PauliArray.from_labels(

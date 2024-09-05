@@ -47,7 +47,7 @@ def pauli_array_from_pauli_list(pauli_list: PauliList) -> PauliArray:
     Returns:
         PauliArray: The corresponding PauliArray object.
     """
-    return PauliArray(pauli_list.z, pauli_list.x)
+    return PauliArray.from_z_strings_and_x_strings(pauli_list.z, pauli_list.x)
 
 
 def weighted_pauli_array_from_pauli_list(

@@ -108,7 +108,7 @@ def strings_to_ints(bit_strings: "np.ndarray[np.bool]") -> "np.ndarray[np.int]":
     Returns:
         "np.ndarray[np.int]": Integers obtained from input binary strings
     """
-    power_of_twos = 1 << np.arange(bit_strings.shape[-1])
+    power_of_twos = 1 << np.arange(bit_strings.shape[-1], dtype=np.uint)
 
     return bit_sum(bit_strings * power_of_twos)
 
@@ -123,7 +123,7 @@ def row_echelon(bit_matrix: "np.ndarray[np.bool]") -> "np.ndarray[np.bool]":
     Returns:
         "np.ndarray[np.bool]": Row echelon form of the provided matrix.
     """
-    re_bit_matrix = bit_matrix.copy()
+    re_bit_matrix = bit_matrix.copy().astype(bool)
 
     n_rows = re_bit_matrix.shape[0]
     n_cols = re_bit_matrix.shape[1]
