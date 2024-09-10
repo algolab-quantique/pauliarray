@@ -1352,7 +1352,7 @@ def fast_flat_unique(
     zx_strings = paulis.zx_strings
     void_type_size = zx_strings.dtype.itemsize * 2 * paulis.num_qubits
 
-    zx_view = np.ascontiguousarray(zx_strings).view(np.dtype((np.void, void_type_size)))[..., 0]
+    zx_view = np.squeeze(np.ascontiguousarray(zx_strings).view(np.dtype((np.void, void_type_size))), axis=-1)
 
     _, index, inverse, counts = np.unique(zx_view, return_index=True, return_inverse=True, return_counts=True)
 
