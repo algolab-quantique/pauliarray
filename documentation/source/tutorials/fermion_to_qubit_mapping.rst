@@ -63,7 +63,7 @@ The process is pretty similar using PauliArray except we need to convert the :co
 
 .. code:: python
 
-    from pauliarray.conversion.Qiskit import extract_fermionic_op
+    from pauliarray.conversion.qiskit import extract_fermionic_op
     from pauliarray.mapping.fermion import JordanWigner
 
     num_spin_orbitals = second_q_hamiltonian.num_spin_orbitals
@@ -91,7 +91,7 @@ We can check that both result are the same by converting the :code:`Operator` in
 
 .. code:: python
 
-    from pauliarray.conversion.Qiskit import operator_to_sparse_pauli
+    from pauliarray.conversion.qiskit import operator_to_sparse_pauli
 
     print(operator_to_sparse_pauli(pa_jw_qubit_hamiltonien).sort() == qk_jw_qubit_hamiltonian.sort())
 
