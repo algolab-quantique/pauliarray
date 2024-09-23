@@ -154,7 +154,8 @@ def partition_same_x_plus_special(
 
 
 def _part_idx_from_unique_inverse(inverse) -> List[List[int]]:
-    number_of_parts = max(inverse) + 1
+
+    number_of_parts = np.max(inverse) + 1
     all_indices = np.arange(len(inverse))
     parts_idx = list()
     for i_part in range(number_of_parts):

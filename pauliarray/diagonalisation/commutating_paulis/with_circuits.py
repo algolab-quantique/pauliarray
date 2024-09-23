@@ -12,7 +12,7 @@ from pauliarray.diagonalisation.commutating_paulis.utils import trivial_cummutat
 
 def general_to_diagonal(
     paulis: pa.PauliArray, force_trivial_generators=False
-) -> Tuple[pa.PauliArray, NDArray[np.complex_], List[str]]:
+) -> Tuple[pa.PauliArray, NDArray[np.complex128], List[str]]:
 
     circuit = QuantumCircuit(paulis.num_qubits)
 

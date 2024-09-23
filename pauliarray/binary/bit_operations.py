@@ -148,7 +148,7 @@ def fast_flat_unique_bit_string(
 
     void_type_size = bit_strings.dtype.itemsize * bit_strings.shape[-1]
 
-    string_view = np.ascontiguousarray(bit_strings).view(np.dtype((np.void, void_type_size)))
+    string_view = np.squeeze(np.ascontiguousarray(bit_strings).view(np.dtype((np.void, void_type_size))), axis=-1)
 
     _, index, inverse, counts = np.unique(string_view, return_index=True, return_inverse=True, return_counts=True)
 

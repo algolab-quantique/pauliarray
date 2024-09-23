@@ -4,7 +4,12 @@ import numpy as np
 from qiskit_nature.second_q.drivers import PySCFDriver
 
 from pauliarray.conversion.qiskit import extract_fermionic_op
-from pauliarray.diagonalisation.commutating_paulis.with_operators import general_to_diagonal
+from pauliarray.diagonalisation.commutating_paulis.with_circuits import (
+    general_to_diagonal as general_to_diagonal_with_circuit,
+)
+from pauliarray.diagonalisation.commutating_paulis.with_operators import (
+    general_to_diagonal as general_to_diagonal_with_operator,
+)
 from pauliarray.mapping.fermion import BravyiKitaev, JordanWigner, Parity
 from pauliarray.partition.commutating_paulis.exclusive_fct import (  # partition_same_z,
     partition_general_commutating,
@@ -52,24 +57,35 @@ transformation_num_active_qubits_parts = []
 
 for i, part in enumerate(hamiltonian_parts):
 
-    diag_part, factors_part, transformations_part = general_to_diagonal(part.paulis, force_trivial_generators=True)
-    transformation_num_active_qubits = np.max(
-        np.sum(np.logical_or(transformations_part.paulis.z_strings, transformations_part.paulis.x_strings), axis=-1),
-        axis=-1,
+    diag_part, factors_part, transformations_part_operators = general_to_diagonal_with_operator(
+        part.paulis, force_trivial_generators=True
     )
 
-    if np.any(transformation_num_active_qubits == 7):
-        print(part.inspect())
-        print(diag_part.inspect())
+    diag_part, factors_part, transformations_part_circuits = general_to_diagonal_with_circuit(part.paulis)
 
-    transformation_num_active_qubits_parts.append(transformation_num_active_qubits)
+    # transformation_num_active_qubits = np.max(
+    #     np.sum(
+    #         np.logical_or(
+    #             transformations_part_operators.paulis.z_strings, transformations_part_operators.paulis.x_strings
+    #         ),
+    #         axis=-1,
+    #     ),
+    #     axis=-1,
+    # )
 
-    diag_parts.append(diag_parts)
-    factors_parts.append(factors_parts)
-    transformations_parts.append(transformations_parts)
 
-transformation_num_active_qubits = np.concatenate(transformation_num_active_qubits_parts)
+#     if np.any(transformation_num_active_qubits == 7):
+#         print(part.inspect())
+#         print(diag_part.inspect())
 
-print(np.bincount(transformation_num_active_qubits))
+#     transformation_num_active_qubits_parts.append(transformation_num_active_qubits)
+
+#     diag_parts.append(diag_parts)
+#     factors_parts.append(factors_parts)
+#     transformations_parts.append(transformations_parts)
+
+# transformation_num_active_qubits = np.concatenate(transformation_num_active_qubits_parts)
+
+# print(np.bincount(transformation_num_active_qubits))
 
 # %%
