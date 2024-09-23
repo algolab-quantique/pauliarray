@@ -110,12 +110,12 @@ class BaseEstimator(object):
         labels = list(binary_probabilities.keys())
         probabilities = np.array(list(binary_probabilities.values()))
 
-        basis_states = bsa.BasisStateArray.from_labels(labels)
+        # basis_states = bsa.BasisStateArray.from_labels(labels)
 
-        eigenvalues = basis_states[:, None].diagonal_pauli_array_eigenvalues_values(diagonal_paulis[None, :])
-        expectation_values = np.real(np.sum(probabilities[:, None] * eigenvalues, axis=0))
+        # eigenvalues = basis_states[:, None].diagonal_pauli_array_eigenvalues_values(diagonal_paulis[None, :])
+        # expectation_values = np.real(np.sum(probabilities[:, None] * eigenvalues, axis=0))
 
-        return expectation_values
+        # return expectation_values
 
     @staticmethod
     def estimate_diagonal_paulis_covariances_on_binary_probabilities(

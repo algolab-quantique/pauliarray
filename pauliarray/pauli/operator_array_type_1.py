@@ -63,7 +63,7 @@ class OperatorArrayType1(object):
         return self._wpaulis.paulis
 
     @property
-    def weights(self) -> "np.ndarray[np.complex]":
+    def weights(self) -> "np.ndarray[np.complex128]":
         """Weights of the Pauli terms in the operator array."""
         return self._wpaulis.weights
 
@@ -426,7 +426,7 @@ class OperatorArrayType1(object):
 
         Returns:
             pa.PauliArray: The transformed PauliArray
-            "np.ndarray[np.complex]": Residual coefficient
+            "np.ndarray[np.complex128]": Residual coefficient
         """
 
         assert self.ndim == 1
@@ -442,7 +442,9 @@ class OperatorArrayType1(object):
 
         return new_paulis, phases
 
-    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float_]) -> "np.ndarray[np.complex]":
+    def expectation_values_from_paulis(
+        self, paulis_expectation_values: NDArray[np.float64]
+    ) -> "np.ndarray[np.complex128]":
         """
         Returns the Operator array expectation value given the expectation values of the Paulis.
 
@@ -457,7 +459,7 @@ class OperatorArrayType1(object):
 
         return np.sum(self.wpaulis.expectation_values_from_paulis(paulis_expectation_values), axis=-1)
 
-    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float64]) -> "np.ndarray[np.complex]":
+    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float64]) -> "np.ndarray[np.complex128]":
         """
         Returns the Operator array covariances given the covariances of the Paulis.
 
