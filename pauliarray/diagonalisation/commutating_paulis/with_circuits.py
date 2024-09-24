@@ -1,12 +1,13 @@
 from typing import List, Protocol, Tuple
 
 import numpy as np
-import pauliarray.pauli.pauli_array as pa
 from numpy.typing import NDArray
-from pauliarray.binary.bit_operations import pack_diagonal
-from pauliarray.diagonalisation.commutating_paulis.utils import single_qubit_cummutating_generators
 from qiskit.circuit import QuantumCircuit
 from scipy.optimize import linear_sum_assignment
+
+import pauliarray.pauli.pauli_array as pa
+from pauliarray.binary.bit_operations import pack_diagonal
+from pauliarray.diagonalisation.commutating_paulis.utils import single_qubit_cummutating_generators
 
 
 class HasPaulis(Protocol):
@@ -57,8 +58,8 @@ def general_to_diagonal(
 
     _is = qubit_order[end_block_x:end_block_z]
     if len(_is) > 0:
-        wpaulis.h(qubits)
-        circuit.h(qubits)
+        wpaulis.h(_is)
+        circuit.h(_is)
 
     # print(np.all(wpaulis[:, None].commute_with(wpaulis[None, :])))
 
@@ -98,17 +99,6 @@ def general_to_diagonal(
     if len(_is) > 0:
         wpaulis.h(qubit_order[np.arange(end_block_z)])
         circuit.h(qubit_order[np.arange(end_block_z)])
-
-    # print()
-    # print("x")
-    # print(x_table.astype(int))
-    # print("z")
-    # print(z_table.astype(int))
-
-    # print(wpaulis.inspect())
-
-    # work_generators = pa.PauliArray(z_table, x_table)
-    # assert np.all(work_generators[:, None].commute_with(work_generators[None, :]))
 
     diag_paulis = wpaulis.paulis
     factors = wpaulis.weights
