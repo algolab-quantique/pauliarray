@@ -7,7 +7,7 @@ from pauliarray.diagonalisation.commutating_paulis.with_operators import (
     bitwise_to_diagonal,
     general_to_bitwise,
     general_to_diagonal,
-    trivial_cummutating_generators,
+    single_qubit_cummutating_generators,
 )
 
 cases_paulis = [
@@ -80,7 +80,7 @@ class TestDiagonalisationWithOperators(unittest.TestCase):
 
         for paulis in cases_paulis:
             print(paulis.inspect())
-            gen_paulis = trivial_cummutating_generators(paulis)
+            gen_paulis = single_qubit_cummutating_generators(paulis)
 
             print(gen_paulis.inspect())
 

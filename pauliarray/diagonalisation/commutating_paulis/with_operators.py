@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Protocol, Tuple
 
 import numpy as np
 from numpy.typing import NDArray
@@ -6,11 +6,17 @@ from numpy.typing import NDArray
 import pauliarray.pauli.operator_array_type_1 as opa
 import pauliarray.pauli.pauli_array as pa
 from pauliarray.binary import symplectic
-from pauliarray.diagonalisation.commutating_paulis.utils import trivial_cummutating_generators
+from pauliarray.diagonalisation.commutating_paulis.utils import single_qubit_cummutating_generators
+
+
+class HasPaulis(Protocol):
+    paulis: pa.PauliArray
+
+    def with_new_paulis(self, new_paulis: pa.PauliArray) -> "HasPaulis": ...
 
 
 def general_to_bitwise(
-    paulis: pa.PauliArray, force_trivial_generators=False
+    paulis: pa.PauliArray, force_single_qubit_generators=False
 ) -> Tuple[pa.PauliArray, NDArray[np.complex128], opa.OperatorArrayType1]:
     """
     Converts a PauliArray of commuting Pauli strings into bitwise commuting pauli strings and factors. Also returns the transformation which performs the conversion.
@@ -25,8 +31,8 @@ def general_to_bitwise(
     assert paulis.ndim == 1
     assert np.all(paulis[:, None].commute_with(paulis[None, :]))
 
-    if force_trivial_generators:
-        gen_paulis = trivial_cummutating_generators(paulis)
+    if force_single_qubit_generators:
+        gen_paulis = single_qubit_cummutating_generators(paulis)
         ext_paulis = pa.concatenate((paulis, gen_paulis), axis=0)
         zx_strings = ext_paulis.zx_strings
     else:
@@ -118,11 +124,11 @@ def bitwise_to_diagonal(
 
 
 def general_to_diagonal(
-    paulis: pa.PauliArray, force_trivial_generators=False
+    paulis: pa.PauliArray, force_single_qubit_generators=False
 ) -> Tuple[pa.PauliArray, NDArray[np.complex128], opa.OperatorArrayType1]:
 
     bitwise_paulis, factors, general_to_bitwise_ops = general_to_bitwise(
-        paulis, force_trivial_generators=force_trivial_generators
+        paulis, force_single_qubit_generators=force_single_qubit_generators
     )
     diagonal_paulis, add_factors, bitwise_to_diagonal_ops = bitwise_to_diagonal(bitwise_paulis)
 
@@ -131,3 +137,6 @@ def general_to_diagonal(
     transformations = opa.concatenate((general_to_bitwise_ops, bitwise_to_diagonal_ops), axis=0)
 
     return diagonal_paulis, factors, transformations
+
+
+diagonalise_with_operators = general_to_diagonal

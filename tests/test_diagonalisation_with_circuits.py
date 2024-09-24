@@ -76,7 +76,7 @@ class TestDiagonalisationWithCircuits(unittest.TestCase):
 
         for paulis in cases_paulis[0:1]:
 
-            diag_paulis, factors, circuit = general_to_diagonal(paulis, force_trivial_generators=True)
+            diag_paulis, factors, circuit = general_to_diagonal(paulis, force_single_qubit_generators=True)
 
             t_circuit = transpile(circuit)
 

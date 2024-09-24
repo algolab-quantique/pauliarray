@@ -295,6 +295,9 @@ class PauliArray(object):
 
         return self.partition(parts_flat_idx)
 
+    def recombine_parts(self, parts, part_flat_idx):
+        pass
+
     def weighted_partition(
         self, parts_flat_idx: List[NDArray[np.int64]], parts_weight: NDArray[np.float64]
     ) -> List["WeightedPauliArray"]:
@@ -878,6 +881,10 @@ class PauliArray(object):
             matrices[idx] = one_matrix
 
         return phases[..., None, None] * matrices
+
+    def with_new_paulis(self, new_paulis):
+
+        return new_paulis.copy()
 
     @staticmethod
     def sparse_matrix_from_zx_ints(z_int: int, x_int: int, num_qubits: int) -> Tuple[NDArray, NDArray, NDArray]:

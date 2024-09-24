@@ -3,6 +3,7 @@
 import numpy as np
 from qiskit_nature.second_q.drivers import PySCFDriver
 
+import pauliarray.pauli.pauli_array as pa
 from pauliarray.conversion.qiskit import extract_fermionic_op
 from pauliarray.diagonalisation.commutating_paulis.with_circuits import (
     general_to_diagonal as general_to_diagonal_with_circuit,
@@ -15,6 +16,10 @@ from pauliarray.partition.commutating_paulis.exclusive_fct import (  # partition
     partition_general_commutating,
     partition_same_x,
     partition_same_x_plus_special,
+)
+
+diag_part, factors_part, transformations_part_circuits = general_to_diagonal_with_circuit(
+    pa.PauliArray.from_labels("III")
 )
 
 # %%
@@ -58,10 +63,12 @@ transformation_num_active_qubits_parts = []
 for i, part in enumerate(hamiltonian_parts):
 
     diag_part, factors_part, transformations_part_operators = general_to_diagonal_with_operator(
-        part.paulis, force_trivial_generators=True
+        part.paulis, force_single_qubit_generators=True
     )
 
-    diag_part, factors_part, transformations_part_circuits = general_to_diagonal_with_circuit(part.paulis)
+    diag_part, factors_part, transformations_part_circuits = general_to_diagonal_with_circuit(
+        part.paulis, force_single_qubit_generators=True
+    )
 
     # transformation_num_active_qubits = np.max(
     #     np.sum(

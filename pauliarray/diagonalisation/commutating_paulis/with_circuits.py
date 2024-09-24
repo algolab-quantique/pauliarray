@@ -1,17 +1,22 @@
-from typing import List, Tuple
+from typing import List, Protocol, Tuple
 
 import numpy as np
+import pauliarray.pauli.pauli_array as pa
 from numpy.typing import NDArray
+from pauliarray.binary.bit_operations import pack_diagonal
+from pauliarray.diagonalisation.commutating_paulis.utils import single_qubit_cummutating_generators
 from qiskit.circuit import QuantumCircuit
 from scipy.optimize import linear_sum_assignment
 
-import pauliarray.pauli.pauli_array as pa
-from pauliarray.binary.bit_operations import pack_diagonal
-from pauliarray.diagonalisation.commutating_paulis.utils import trivial_cummutating_generators
+
+class HasPaulis(Protocol):
+    paulis: pa.PauliArray
+
+    def with_new_paulis(self, new_paulis: pa.PauliArray) -> "HasPaulis": ...
 
 
 def general_to_diagonal(
-    paulis: pa.PauliArray, force_trivial_generators=False
+    paulis: pa.PauliArray, force_single_qubit_generators=False
 ) -> Tuple[pa.PauliArray, NDArray[np.complex128], List[str]]:
 
     circuit = QuantumCircuit(paulis.num_qubits)
@@ -20,8 +25,8 @@ def general_to_diagonal(
 
     assert generators_paulis.ndim == 1
 
-    if force_trivial_generators:
-        trivial_generators_paulis = trivial_cummutating_generators(generators_paulis)
+    if force_single_qubit_generators:
+        trivial_generators_paulis = single_qubit_cummutating_generators(generators_paulis)
         generators_paulis = pa.concatenate((generators_paulis, trivial_generators_paulis), axis=0)
 
     wpaulis = paulis.wpaulis
@@ -50,8 +55,10 @@ def general_to_diagonal(
     x_table[:, end_block_x:end_block_z] = z_table[:, end_block_x:end_block_z].copy()
     z_table[:, end_block_x:end_block_z] = tmp
 
-    wpaulis.h(qubit_order[end_block_x:end_block_z])
-    circuit.h(qubit_order[end_block_x:end_block_z])
+    _is = qubit_order[end_block_x:end_block_z]
+    if len(_is) > 0:
+        wpaulis.h(qubits)
+        circuit.h(qubits)
 
     # print(np.all(wpaulis[:, None].commute_with(wpaulis[None, :])))
 
@@ -80,7 +87,7 @@ def general_to_diagonal(
     # clear diag Z with S
     _is = np.where(z_table.diagonal()[:end_block_z])[0]
     z_table[_is, _is] = False
-    if _is:
+    if len(_is) > 0:
         wpaulis.s(qubit_order[_is])
         circuit.s(qubit_order[_is])
 
@@ -88,8 +95,9 @@ def general_to_diagonal(
     _is = np.arange(end_block_z)
     x_table[_is, _is] = False
     z_table[_is, _is] = True
-    wpaulis.h(qubit_order[np.arange(end_block_z)])
-    circuit.h(qubit_order[np.arange(end_block_z)])
+    if len(_is) > 0:
+        wpaulis.h(qubit_order[np.arange(end_block_z)])
+        circuit.h(qubit_order[np.arange(end_block_z)])
 
     # print()
     # print("x")
@@ -106,3 +114,6 @@ def general_to_diagonal(
     factors = wpaulis.weights
 
     return diag_paulis, factors, circuit
+
+
+diagonalise_with_circuits = general_to_diagonal
