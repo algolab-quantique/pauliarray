@@ -399,7 +399,7 @@ class PauliArray(object):
 
         from pauliarray.pauli.weighted_pauli_array import WeightedPauliArray
 
-        new_weights = np.broadcast_to(other, self.shape).astype(np.complex_)
+        new_weights = np.broadcast_to(other, self.shape).astype(np.complex128)
         new_paulis = self.paulis.copy()
 
         return WeightedPauliArray(new_paulis, new_weights)
@@ -739,7 +739,7 @@ class PauliArray(object):
 
         return new_paulis, factors
 
-    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float_]) -> NDArray[np.float_]:
+    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float64]) -> NDArray[np.float64]:
         """
         Returns the PauliArray expectation value given the expectation values of the Paulis. More useful for other classes, but still here for uniformity.
 
@@ -753,7 +753,7 @@ class PauliArray(object):
 
         return paulis_expectation_values
 
-    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float_]) -> NDArray[np.float_]:
+    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float64]) -> NDArray[np.float64]:
         """
         Returns the PauliArray covariances given the covariances of the Paulis. More useful for other classes, but still here for uniformity.
 
@@ -838,7 +838,8 @@ class PauliArray(object):
         """
         dim = 2**num_qubits
 
-        row_ind = np.arange(dim, dtype=np.uint)
+        row_ind = np.arange(dim, dtype=np.int64)
+
         col_ind = np.bitwise_xor(row_ind, x_int)
         matrix_elements = np.array([1 - 2 * (bin(i).count("1") % 2) for i in np.bitwise_and(row_ind, z_int)])
 
@@ -1131,7 +1132,7 @@ def commutator2(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArray,
     non_zero_commutators, non_zeros_coefs = paulis_1[*idx1].compose_pauli_array(paulis_2[*idx2])
 
     commutators = PauliArray.identities(shape, paulis_1.num_qubits)
-    coefs = np.zeros(shape, dtype=np.complex_)
+    coefs = np.zeros(shape, dtype=np.complex128)
 
     commutators[*idxs] = non_zero_commutators
     coefs[*idxs] = 2 * non_zeros_coefs
@@ -1327,7 +1328,7 @@ def fast_flat_unique(
     zx_strings = paulis.zx_strings
     void_type_size = zx_strings.dtype.itemsize * 2 * paulis.num_qubits
 
-    zx_view = np.ascontiguousarray(zx_strings).view(np.dtype((np.void, void_type_size)))
+    zx_view = np.squeeze(np.ascontiguousarray(zx_strings).view(np.dtype((np.void, void_type_size))), axis=-1)
 
     _, index, inverse, counts = np.unique(zx_view, return_index=True, return_inverse=True, return_counts=True)
 

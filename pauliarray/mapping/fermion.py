@@ -380,7 +380,7 @@ class FermionMapping(object):
 
         return tmp
 
-    def _flip_operators(self, i_orbitals: "np.ndarray[np.int]", factors: NDArray[np.float_]) -> opa.OperatorArrayType1:
+    def _flip_operators(self, i_orbitals: "np.ndarray[np.int]", factors: NDArray[np.float64]) -> opa.OperatorArrayType1:
         r"""
         Constructs an OperatorArray with the :math:`\mu^\text{th}` flip operators acting on the orbitals :math:`i_\mu`
 
@@ -538,7 +538,7 @@ class FermionMapping(object):
     @staticmethod
     def _flip_factors(
         i_orbitals: "np.ndarray[np.int]", j_orbitals: "np.ndarray[np.int]", *args: Tuple["np.ndarray[np.int]"]
-    ) -> NDArray[np.float_]:
+    ) -> NDArray[np.float64]:
         r"""
         Computes flip factors of the type
 
@@ -565,7 +565,7 @@ class FermionMapping(object):
 
     def _update_factors(
         self, i_orbitals: "np.ndarray[np.int]", j_orbitals: "np.ndarray[np.int]", *args: Tuple["np.ndarray[np.int]"]
-    ) -> NDArray[np.float_]:
+    ) -> NDArray[np.float64]:
         r"""
         Computes update factors of the type
 
