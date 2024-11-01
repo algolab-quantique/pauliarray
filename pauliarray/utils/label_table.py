@@ -1,3 +1,6 @@
+import numpy as np
+
+
 def label_table_1d(labels) -> str:
 
     return "\n".join(labels)

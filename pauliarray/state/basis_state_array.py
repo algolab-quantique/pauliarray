@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Union
 
 import numpy as np
 
@@ -20,6 +20,16 @@ class BasisStateArray(object):
         self._bit_strings = bit_strings
 
     @property
+    def bit_strings(self) -> "np.ndarray[np.bool]":
+        """
+        Returns the bits.
+
+        Returns:
+            "np.ndarray[np.bool]": The bits.
+        """
+        return self._bit_strings
+
+    @property
     def num_qubits(self) -> int:
         """
         Returns the number of qubits.
@@ -27,7 +37,7 @@ class BasisStateArray(object):
         Returns:
             int: The number of qubits.
         """
-        return self._bit_strings.shape[-1]
+        return self.bit_strings.shape[-1]
 
     @property
     def shape(self) -> Tuple[int, ...]:
@@ -37,7 +47,7 @@ class BasisStateArray(object):
         Returns:
             Tuple[int, ...]: The shape of the object.
         """
-        return self._bit_strings.shape[:-1]
+        return self.bit_strings.shape[:-1]
 
     @property
     def ndim(self) -> int:
@@ -58,16 +68,6 @@ class BasisStateArray(object):
             int: The total number of elements in the BasisStateArray.
         """
         return np.prod(self.shape)
-
-    @property
-    def bit_strings(self) -> "np.ndarray[np.bool]":
-        """
-        Returns the bits.
-
-        Returns:
-            "np.ndarray[np.bool]": The bits.
-        """
-        return self._bit_strings
 
     def __getitem__(self, key):
         # TODO check number of dimensions in key
@@ -142,7 +142,7 @@ class BasisStateArray(object):
 
         new_bit_strings = bitops.add(self.bit_strings, paulis.x_strings)
 
-        commutation_phase_power = bitops.dot(paulis.z_strings, new_bit_strings)
+        commutation_phase_power = 2 * bitops.dot(paulis.z_strings, new_bit_strings)
         phase_power = bitops.dot(paulis.z_strings, paulis.x_strings)
 
         phase_power = np.mod(commutation_phase_power + phase_power, 4)
@@ -211,3 +211,96 @@ class BasisStateArray(object):
             labels[idx] = label
 
         return labels
+
+    @classmethod
+    def from_labels(cls, labels) -> "BasisStateArray":
+        if type(labels) not in (list, np.ndarray):
+            labels = [labels]
+
+        labels = np.atleast_1d(np.array(labels, dtype=str))
+
+        num_qubits = len(labels[(0,) * labels.ndim])
+        shape = labels.shape
+
+        bit_strings = np.zeros(shape + (num_qubits,), dtype=bool)
+        for idx in np.ndindex(*shape):
+            label = labels[idx]
+            bit_strings[idx] = np.array([s == "1" for s in reversed(label)])
+
+        return BasisStateArray(bit_strings)
+
+    @classmethod
+    def complete_basis(cls, num_qubits: int) -> "BasisStateArray":
+        bin_power = 2 ** np.arange(num_qubits, dtype=np.uintc)
+        bit_strings = ((np.arange(2 ** (num_qubits), dtype=np.uintc)[:, None] & bin_power[None, :]) > 0).reshape(
+            (2**num_qubits, num_qubits)
+        )
+
+        return BasisStateArray(bit_strings)
+
+
+def unique(
+    states: BasisStateArray,
+    axis=None,
+    return_index: bool = False,
+    return_inverse: bool = False,
+    return_counts: bool = False,
+) -> Union[BasisStateArray, Tuple[BasisStateArray, "np.ndarray[np.int64]"]]:
+
+    if axis is None:
+        states = states.flatten()
+        axis = 0
+    elif axis >= states.ndim:
+        raise ValueError("")
+    else:
+        axis = axis % states.ndim
+
+    out = np.unique(
+        states.bit_strings,
+        axis=axis,
+        return_index=return_index,
+        return_inverse=return_inverse,
+        return_counts=return_counts,
+    )
+
+    if return_index or return_inverse or return_counts:
+        out = list(out)
+        unique_bit_strings = out[0]
+        out[0] = BasisStateArray(unique_bit_strings)
+    else:
+        unique_bit_strings = out
+        out = BasisStateArray(unique_bit_strings)
+
+    return out
+
+
+def fast_flat_unique(
+    states: BasisStateArray,
+    return_index: bool = False,
+    return_inverse: bool = False,
+    return_counts: bool = False,
+) -> Union[BasisStateArray, Tuple[BasisStateArray, "np.ndarray[np.int64]"]]:
+
+    assert states.ndim == 1
+
+    bit_strings = states.bit_strings
+    void_type_size = bit_strings.dtype.itemsize * states.num_qubits
+
+    bit_view = np.squeeze(np.ascontiguousarray(bit_strings).view(np.dtype((np.void, void_type_size))), axis=-1)
+
+    _, index, inverse, counts = np.unique(bit_view, return_index=True, return_inverse=True, return_counts=True)
+
+    new_paulis = states[index]
+
+    out = (new_paulis,)
+    if return_index:
+        out += (index,)
+    if return_inverse:
+        out += (inverse,)
+    if return_counts:
+        out += (counts,)
+
+    if len(out) == 1:
+        return out[0]
+
+    return out
