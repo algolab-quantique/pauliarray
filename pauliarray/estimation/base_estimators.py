@@ -23,9 +23,6 @@ class BaseEstimator(object):
     def __init__(self, pauli_object):
         self._pauli_object = pauli_object
 
-        self._last_paulis_expectation_values = None
-        self._last_paulis_covariances = None
-
     @property
     def pauli_object(self):
         return self._pauli_object
@@ -33,14 +30,6 @@ class BaseEstimator(object):
     @property
     def paulis(self):
         return self.pauli_object.paulis
-
-    @property
-    def last_paulis_expectation_values(self):
-        return self._last_paulis_expectation_values
-
-    @property
-    def last_paulis_covariances(self):
-        return self._last_paulis_covariances
 
     @abc.abstractmethod
     def estimate_paulis_on_state_circuit(self, state_circuit: QuantumCircuit) -> NDArray:
@@ -78,9 +67,6 @@ class BaseEstimator(object):
         """
 
         paulis_expectation_values, paulis_covariances = self.estimate_paulis_on_state_circuit(state_circuit)
-
-        self._last_paulis_expectation_values = paulis_expectation_values
-        self._last_paulis_covariances = paulis_covariances
 
         pauli_object_expectation_values = self.pauli_object.expectation_values_from_paulis(paulis_expectation_values)
         pauli_object_covariances = self.pauli_object.covariances_from_paulis(paulis_covariances)
