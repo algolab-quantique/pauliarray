@@ -1223,8 +1223,10 @@ def anticommutator(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArr
     anticommutators, phases = paulis_1.compose_pauli_array(paulis_2)
     do_commute = paulis_1.commute_with(paulis_2)
 
-    anticommutators.z_strings[~do_commute] = 0
-    anticommutators.x_strings[~do_commute] = 0
+    zero_void = vops.bit_strings_to_voids(np.zeros(2 * paulis_1.num_qubits, dtype=np.uint8))
+
+    anticommutators.z_voids[~do_commute] = zero_void
+    anticommutators.x_voids[~do_commute] = zero_void
 
     coefs = 2 * phases * do_commute
 

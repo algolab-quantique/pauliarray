@@ -496,11 +496,11 @@ class TestPauliArrayFunc(unittest.TestCase):
 
         anticommutator_array, coefs = pa.anticommutator(paulis_1, paulis_2)
 
-        expected_commutator = pa.PauliArray.from_labels(["IIII", "IIII", "IIII"])
+        expected_anticommutator = pa.PauliArray.from_labels(["IIII", "IIII", "IIII"])
 
         expected_coefs = [2.0, 0.0, 0.0]
 
-        self.assertTrue(np.all(anticommutator_array == expected_commutator))
+        self.assertTrue(np.all(anticommutator_array == expected_anticommutator))
         self.assertTrue(np.all(coefs == expected_coefs))
 
     def test_expand_dims(self):
