@@ -9,6 +9,7 @@ from pauliarray.binary import symplectic
 
 #
 from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable, is_concatenatable
+from pauliarray.utils.label_table import label_table_1d, label_table_2d, label_table_nd
 
 if TYPE_CHECKING:
     from pauliarray.pauli.operator import Operator
@@ -548,14 +549,14 @@ class PauliArray(object):
             return "Empty PauliArray"
 
         if self.ndim == 1:
-            label_table = self.label_table_1d(self.to_labels())
+            label_table = label_table_1d(self.to_labels())
             return f"PauliArray\n{label_table}"
 
         if self.ndim == 2:
-            label_table = self.label_table_2d(self.to_labels())
+            label_table = label_table_2d(self.to_labels())
             return f"PauliArray\n{label_table}"
 
-        label_table = self.label_table_nd(self.to_labels())
+        label_table = label_table_nd(self.to_labels())
         return f"PauliArray\n{label_table}"
 
     def x(self, qubits: Union[int, List[int]], inplace: bool = True) -> Tuple["PauliArray", "np.ndarray[np.complex]"]:
@@ -786,7 +787,7 @@ class PauliArray(object):
 
     def to_labels(self) -> "np.ndarray[np.str]":
         """
-        Returns the labels of all zx strings.
+        Returns the labels of all Pauli strings.
 
         Returns:
             "np.ndarray[np.str]": An array containing the labels of all Pauli strings.
@@ -1012,31 +1013,6 @@ class PauliArray(object):
             label += PAULI_LABELS[pauli]
 
         return label
-
-    @staticmethod
-    def label_table_1d(labels) -> str:
-
-        return "\n".join(labels)
-
-    @staticmethod
-    def label_table_2d(labels) -> str:
-
-        row_strs = []
-        for i in range(labels.shape[0]):
-            row_strs.append("  ".join(labels[i, :]))
-
-        return "\n".join(row_strs)
-
-    @staticmethod
-    def label_table_nd(labels) -> str:
-
-        slice_strs = []
-        for idx in np.ndindex(labels.shape[:-2]):
-            slice_str = "Slice (" + ",".join([str(i) for i in idx]) + ",:,:)\n"
-            slice_str += PauliArray.label_table_2d(labels[idx])
-            slice_strs.append(slice_str)
-
-        return "\n".join(slice_strs)
 
 
 def argsort(paulis: PauliArray, axis: int = -1) -> "np.ndarray[np.int]":
