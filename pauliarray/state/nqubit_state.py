@@ -105,7 +105,7 @@ class NQubitState(object):
         Returns:
             _type_: _description_
         """
-        ij_amplitudes = np.conj(self.amplitudes[:, None]) * self.amplitudes[None, :]
+        ij_prod_amplitudes = np.conj(self.amplitudes[:, None]) * self.amplitudes[None, :]
         ij_bit_strings = np.logical_xor(self.bit_strings[:, None, :], self.bit_strings[None, :, :])
 
         nd_i_shape = paulis.shape + (self.num_terms,)
@@ -124,15 +124,36 @@ class NQubitState(object):
             np.expand_dims(ij_bit_strings, tuple(range(0, paulis.ndim))), nd_ij_shape + (self.num_qubits,)
         )
 
-        nd_ij_amplitudes = np.broadcast_to(np.expand_dims(ij_amplitudes, tuple(range(0, paulis.ndim))), nd_ij_shape)
+        nd_ij_prod_amplitudes = np.broadcast_to(
+            np.expand_dims(ij_prod_amplitudes, tuple(range(0, paulis.ndim))), nd_ij_shape
+        )
 
         nd_ij_matching_x = np.all(nd_ij_bit_strings == nd_ij_paulis.x_strings, axis=-1)
 
-        expectation_values = np.sum(nd_ij_amplitudes * nd_ij_matching_x * nd_i_phases[..., None], axis=(-1, -2))
+        expectation_values = np.sum(nd_ij_prod_amplitudes * nd_ij_matching_x * nd_i_phases[..., None], axis=(-1, -2))
 
         y_phases = np.choose(np.mod(bitops.dot(paulis.z_strings, paulis.x_strings), 4), [1, 1j, -1, -1j])
 
         return expectation_values * y_phases
+
+    def diagonal_pauli_array_expectation_values(self, paulis: pa.PauliArray):
+
+        assert np.all(paulis.is_diagonal())
+
+        i_prod_amplitudes = np.conj(self.amplitudes) * self.amplitudes
+
+        nd_i_shape = paulis.shape + (self.num_terms,)
+
+        nd_i_paulis = pa.broadcast_to(pa.expand_dims(paulis, (paulis.ndim,)), nd_i_shape)
+
+        nd_i_bit_strings = np.broadcast_to(
+            np.expand_dims(self.bit_strings, tuple(range(0, paulis.ndim))), nd_i_shape + (self.num_qubits,)
+        )
+        nd_i_phases = np.choose(np.mod(bitops.dot(nd_i_paulis.z_strings, nd_i_bit_strings), 2), [1, -1])
+
+        expectation_values = i_prod_amplitudes * nd_i_phases
+
+        return expectation_values
 
     @classmethod
     def from_statevector(cls, statevector: "np.array[np.complex128]") -> "NQubitState":
