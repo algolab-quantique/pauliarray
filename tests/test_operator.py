@@ -110,6 +110,8 @@ class TestOperator(unittest.TestCase):
             np.array([1, 1, 1, 3, 4]),
         )
 
+        print(other_po.inspect())
+
         self.assertEqual(po, other_po)
 
         # Test two PauliOperators of different length

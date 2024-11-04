@@ -65,3 +65,17 @@ class TestQubitState(unittest.TestCase):
         expectation_values = state.pauli_array_expectation_values(paulis)
 
         self.assertTrue(np.all(expectation_values == expected_expvals))
+
+    def test_from_statevector(self):
+
+        state = NQubitState.from_statevector(np.sqrt(0.5) * np.array([1, 0, 0, 1]))
+
+        state_ref = NQubitState.from_labels_and_amplitudes(
+            np.array(["00", "11"]),
+            np.sqrt(np.array([1, 1]) / 2),
+        )
+
+        print(state.inspect())
+        print(state_ref.inspect())
+
+        self.assertTrue(state == state_ref)

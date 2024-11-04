@@ -6,6 +6,7 @@ import pauliarray.pauli.operator as op
 import pauliarray.pauli.pauli_array as pa
 import pauliarray.state.basis_state_array as bsa
 from pauliarray.binary import bit_operations as bitops
+from pauliarray.utils import label_utils
 
 
 class NQubitState(object):
@@ -63,6 +64,19 @@ class NQubitState(object):
         """
 
         return NotImplemented
+
+    def __eq__(self, other: "NQubitState") -> "np.ndarray[np.bool]":
+        """
+        Checks if the other NQubitState is equal.
+
+        Args:
+            other (BasisStateArray): An other BasisStateArray. Must be broadcastable
+
+        Returns:
+            "np.ndarray[np.bool]": _description_
+        """
+
+        return np.all(self.basis == other.basis, axis=-1) and np.all(np.isclose(self.amplitudes, other.amplitudes))
 
     def combine_repeated_terms(self) -> "NQubitState":
         new_basis, inverse = bsa.fast_flat_unique(self.basis, return_inverse=True)
@@ -155,13 +169,30 @@ class NQubitState(object):
 
         return expectation_values
 
+    def inspect(self) -> str:
+        """
+        Generates a string representation of the NQubitState showing amplitudes and basis states.
+
+        Returns:
+            str: A string representation of the Operator.
+        """
+        labels = self.basis.to_labels()
+        weights = self.amplitudes
+
+        detail_str = "State\nSum of\n"
+        detail_str += label_utils.weighted_table_1d(labels, weights)
+
+        return detail_str
+
     @classmethod
-    def from_statevector(cls, statevector: "np.array[np.complex128]") -> "NQubitState":
+    def from_statevector(cls, statevector: "np.array[np.complex128]", threshold: float = 1e-12) -> "NQubitState":
         num_qubits = int(np.log2(statevector.size))
 
-        all_basis = bsa.BasisStateArray.complete_basis(num_qubits)
+        nonzero_idx = np.where(np.abs(statevector) > threshold)[0]
 
-        return NQubitState(all_basis, statevector).remove_small_amplitudes()
+        subbasis = bsa.BasisStateArray.integer_subbasis(num_qubits, nonzero_idx)
+
+        return NQubitState(subbasis, statevector[nonzero_idx])
 
     @classmethod
     def from_labels_and_amplitudes(cls, labels, amplitudes) -> "NQubitState":

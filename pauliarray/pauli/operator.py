@@ -8,6 +8,7 @@ import pauliarray.pauli.pauli_array as pa
 import pauliarray.pauli.weighted_pauli_array as wpa
 from pauliarray.binary import bit_operations as bitops
 from pauliarray.binary import symplectic
+from pauliarray.utils import label_utils
 from pauliarray.utils.pauli_array_library import gen_complete_pauli_array_basis
 
 
@@ -346,7 +347,7 @@ class Operator(object):
         weights = self.wpaulis.weights
 
         detail_str = "Operator\nSum of\n"
-        detail_str += wpa.WeightedPauliArray.label_table_2d(labels[:, None], weights[:, None])
+        detail_str += label_utils.weighted_table_1d(labels, weights)
 
         return detail_str
 

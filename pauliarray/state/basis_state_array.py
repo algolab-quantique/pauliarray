@@ -5,7 +5,7 @@ import numpy as np
 import pauliarray.pauli.pauli_array as pa
 from pauliarray.binary import bit_operations as bitops
 from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable, is_concatenatable
-from pauliarray.utils.label_table import label_table_1d, label_table_2d, label_table_nd
+from pauliarray.utils.label_utils import table_1d, table_2d, table_nd
 
 BIT_LABELS = "01"
 
@@ -185,14 +185,14 @@ class BasisStateArray(object):
             return "Empty BasisStateArray"
 
         if self.ndim == 1:
-            label_table = label_table_1d(self.to_labels())
+            label_table = table_1d(self.to_labels())
             return f"BasisStateArray\n{label_table}"
 
         if self.ndim == 2:
-            label_table = label_table_2d(self.to_labels())
+            label_table = table_2d(self.to_labels())
             return f"BasisStateArray\n{label_table}"
 
-        label_table = label_table_nd(self.to_labels())
+        label_table = table_nd(self.to_labels())
         return f"BasisStateArray\n{label_table}"
 
     def to_labels(self):
@@ -235,6 +235,13 @@ class BasisStateArray(object):
         bit_strings = ((np.arange(2 ** (num_qubits), dtype=np.uintc)[:, None] & bin_power[None, :]) > 0).reshape(
             (2**num_qubits, num_qubits)
         )
+
+        return BasisStateArray(bit_strings)
+
+    @classmethod
+    def integer_subbasis(cls, num_qubits: int, integers: "np.array[np.int64]") -> "BasisStateArray":
+        bin_power = 2 ** np.arange(num_qubits, dtype=np.uintc)
+        bit_strings = ((integers[:, None] & bin_power[None, :]) > 0).reshape((len(integers), num_qubits))
 
         return BasisStateArray(bit_strings)
 

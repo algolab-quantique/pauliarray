@@ -6,10 +6,10 @@ from numpy.typing import NDArray
 
 from pauliarray.binary import bit_operations as bitops
 from pauliarray.binary import symplectic
+from pauliarray.utils import label_utils
 
 #
 from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable, is_concatenatable
-from pauliarray.utils.label_table import label_table_1d, label_table_2d, label_table_nd
 
 if TYPE_CHECKING:
     from pauliarray.pauli.operator import Operator
@@ -549,14 +549,14 @@ class PauliArray(object):
             return "Empty PauliArray"
 
         if self.ndim == 1:
-            label_table = label_table_1d(self.to_labels())
+            label_table = label_utils.table_1d(self.to_labels())
             return f"PauliArray\n{label_table}"
 
         if self.ndim == 2:
-            label_table = label_table_2d(self.to_labels())
+            label_table = label_utils.table_2d(self.to_labels())
             return f"PauliArray\n{label_table}"
 
-        label_table = label_table_nd(self.to_labels())
+        label_table = label_utils.table_nd(self.to_labels())
         return f"PauliArray\n{label_table}"
 
     def x(self, qubits: Union[int, List[int]], inplace: bool = True) -> Tuple["PauliArray", "np.ndarray[np.complex]"]:
