@@ -3,7 +3,7 @@ run-name: Build triggered by Pull Request ${{github.event.number}} on branch mai
 
 on:
   pull_request:
-    types: [opened, closed]
+    types: [opened, edited, closed]
     branches:
     - main
 
