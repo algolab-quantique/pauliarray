@@ -175,6 +175,23 @@ class Operator(object):
         new_wpaulis = wpa.WeightedPauliArray(self.wpaulis.paulis.copy(), np.conj(self.wpaulis.weights))
         return Operator(new_wpaulis)
 
+    def partition(self, parts_flat_idx: List[NDArray[np.int_]]) -> List["Operator"]:
+        """
+        Returns a list of Operator
+
+        Args:
+            parts_flat_idx [List[NDArray[np.int_]]]: List of parts given in linear indices
+
+        Returns:
+            List[PauliArray]: Parts
+        """
+
+        parts = []
+        for part_flat_idx in parts_flat_idx:
+            parts.append(Operator(self.wpaulis[part_flat_idx]))
+
+        return parts
+
     def take_qubits(self, indices: Union["np.ndarray[np.int]", range, int]) -> "Operator":
         """
         Takes a subset of qubits.
@@ -831,6 +848,22 @@ class Operator(object):
             Operator: The empty Operator.
         """
         return Operator.from_labels_and_weights(["I" * num_qubits], np.zeros(1))
+
+    @classmethod
+    def random(cls, num_terms: int, num_qubits: int) -> "Operator":
+        """
+        Creates a random Operator.
+
+        Args:
+            num_terms (int): Shape of new PauliArray.
+            num_qubits (int): Number of qubits of new PauliArray.
+
+        Returns:
+            new_PauliArray (PauliArray): The PauliArray created.
+        """
+        random_wpaulis = wpa.WeightedPauliArray.random((num_terms,), num_qubits)
+
+        return Operator(random_wpaulis)
 
     @classmethod
     def identity(cls, num_qubits) -> "Operator":

@@ -160,6 +160,25 @@ class WeightedPauliArray(object):
 
         return WeightedPauliArray(new_paulis, new_weights)
 
+    def partition(self, parts_flat_idx: List[NDArray[np.int_]]) -> List["WeightedPauliArray"]:
+        """
+        Returns a list of WeightedPauliArray
+
+        Args:
+            parts_flat_idx [List[NDArray[np.int_]]]: List of parts given in linear indices
+
+        Returns:
+            List[PauliArray]: Parts
+        """
+
+        flat_wpaulis = self.flatten()
+
+        parts = []
+        for part_flat_idx in parts_flat_idx:
+            parts.append(flat_wpaulis[part_flat_idx])
+
+        return parts
+
     def extract(self, condition: Union[NDArray, list]) -> "WeightedPauliArray":
         """
         Return the Pauli strings from the WeightedPauliArray object that satisfy some condition.
@@ -486,11 +505,11 @@ class WeightedPauliArray(object):
     @classmethod
     def random(cls, shape: Tuple[int, ...], num_qubits: int) -> "WeightedPauliArray":
         """
-        Creates a PauliArray of a given shape and number of qubits filled with random Pauli strings.
+        Creates a WeightedPauliArray of a given shape and number of qubits filled with random Pauli strings and weights.
 
         Args:
-            shape (_type_): Shape of new PauliArray.
-            num_qubits (_type_): Number of qubits of new PauliArray.
+            shape (Tuple[int, ...]): Shape of new PauliArray.
+            num_qubits (int): Number of qubits of new PauliArray.
 
         Returns:
             new_PauliArray (PauliArray): The PauliArray created.
