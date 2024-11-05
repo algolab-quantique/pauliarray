@@ -296,7 +296,7 @@ class PauliArray(object):
         return self.partition(parts_flat_idx)
 
     def weighted_partition(
-        self, parts_flat_idx: List[NDArray[np.int_]], parts_weight: NDArray[np.float_]
+        self, parts_flat_idx: List[NDArray[np.int_]], parts_weight: NDArray[np.float64]
     ) -> List["WeightedPauliArray"]:
 
         # if parts_weight is None:

@@ -10,7 +10,7 @@ from pauliarray.binary import symplectic
 
 def general_to_bitwise(
     paulis: pa.PauliArray,
-) -> Tuple[pa.PauliArray, NDArray[np.complex_], opa.OperatorArrayType1]:
+) -> Tuple[pa.PauliArray, NDArray[np.complex128], opa.OperatorArrayType1]:
     """
     Converts a PauliArray of commuting Pauli strings into bitwise commuting pauli strings and factors. Also returns the transformation which performs the conversion.
 
@@ -18,7 +18,7 @@ def general_to_bitwise(
         paulis (pa.PauliArray): _description_
 
     Returns:
-        Tuple[pa.PauliArray, NDArray[np.complex_], opa.OperatorArrayType1]: _description_
+        Tuple[pa.PauliArray, NDArray[np.complex128], opa.OperatorArrayType1]: _description_
     """
 
     assert paulis.ndim == 1
@@ -46,7 +46,7 @@ def general_to_bitwise(
 
 def bitwise_to_diagonal(
     paulis: pa.PauliArray,
-) -> Tuple[pa.PauliArray, NDArray[np.complex_], opa.OperatorArrayType1]:
+) -> Tuple[pa.PauliArray, NDArray[np.complex128], opa.OperatorArrayType1]:
     """
     Converts a PauliArray of bitwise commuting Pauli strings into diagonal commuting pauli strings and factors. Also returns the transformation which performs the conversion.
 
@@ -54,7 +54,7 @@ def bitwise_to_diagonal(
         paulis (pa.PauliArray): _description_
 
     Returns:
-        Tuple[pa.PauliArray, NDArray[np.complex_], opa.OperatorArrayType1]: _description_
+        Tuple[pa.PauliArray, NDArray[np.complex128], opa.OperatorArrayType1]: _description_
     """
 
     assert paulis.ndim == 1
@@ -113,7 +113,7 @@ def bitwise_to_diagonal(
 
 def general_to_diagonal(
     paulis: pa.PauliArray,
-) -> Tuple[pa.PauliArray, NDArray[np.complex_], opa.OperatorArrayType1]:
+) -> Tuple[pa.PauliArray, NDArray[np.complex128], opa.OperatorArrayType1]:
 
     bitwise_paulis, factors, general_to_bitwise_ops = general_to_bitwise(paulis)
     diagonal_paulis, add_factors, bitwise_to_diagonal_ops = bitwise_to_diagonal(bitwise_paulis)
