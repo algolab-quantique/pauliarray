@@ -4,9 +4,10 @@ from qiskit import QuantumCircuit
 from qiskit.quantum_info import Statevector
 
 from pauliarray.estimation.base_estimators import BaseEstimator
+from pauliarray.state.nqubit_state import NQubitState
 
 
-class StateVectorEstimator(BaseEstimator):
+class StatevectorEstimator(BaseEstimator):
     """
     Uses qiskit statevector simulator to compute expectation values of PauliArray.
     """
@@ -23,24 +24,17 @@ class StateVectorEstimator(BaseEstimator):
         """
         state_circuit = state_circuit.copy()
 
-        statevector = Statevector(state_circuit).data
+        state = NQubitState.from_statevector(Statevector(state_circuit).data)
 
-        # print(f"{statevector=}")
-
-        matrices = self.paulis.to_matrices()
-
-        # all_matrices = np.zeros(matrices.shape + (len(statevector), len(statevector)), dtype=complex)
-
-        # print(f"{all_matrices.shape=}")
-
-        # for idx in np.ndindex(matrices.shape):
-        #     all_matrices[idx, :, :] = matrices[idx]
-
-        paulis_expectation_values = np.zeros(matrices.shape, dtype=complex)
-        for idx in np.ndindex(matrices.shape):
-
-            paulis_expectation_values[idx] = np.einsum("i,j,ij->...", np.conj(statevector), statevector, matrices[idx])
+        paulis_expectation_values = state.pauli_array_expectation_values(self.paulis)
 
         paulis_covariances = np.zeros(self.paulis.shape + self.paulis.shape)
 
         return paulis_expectation_values, paulis_covariances
+
+
+class SchemedStatevectorEstimator(BaseEstimator):
+
+    def __init__(self, pauli_object, scheme):
+        self._pauli_object = pauli_object
+        self._scheme = scheme
