@@ -414,7 +414,9 @@ class WeightedPauliArray(object):
 
         return WeightedPauliArray(new_paulis, new_weights)
 
-    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float_]) -> "np.ndarray[np.complex]":
+    def expectation_values_from_paulis(
+        self, paulis_expectation_values: NDArray[np.float64]
+    ) -> "np.ndarray[np.complex]":
         """
         Returns the WeightedPauliArray expectation value given the expectation values of the Paulis.
 
@@ -429,7 +431,7 @@ class WeightedPauliArray(object):
 
         return self.weights * paulis_expectation_values
 
-    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float_]) -> "np.ndarray[np.complex]":
+    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float64]) -> "np.ndarray[np.complex]":
         """
         Returns the WeightedPauliArray covariances given the covariances of the Paulis.
 
@@ -479,7 +481,7 @@ class WeightedPauliArray(object):
 
     @classmethod
     def new(cls, shape: Tuple[int, ...], num_qubits: int) -> "WeightedPauliArray":
-        weights = np.zeros(shape, dtype=np.complex_)
+        weights = np.zeros(shape, dtype=np.complex128)
         paulis = pa.PauliArray.identities(shape, num_qubits)
 
         return WeightedPauliArray(paulis, weights)

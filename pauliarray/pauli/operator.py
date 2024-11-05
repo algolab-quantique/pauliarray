@@ -574,7 +574,7 @@ class Operator(object):
 
         return new_paulis.reshape(original_shape), factors.reshape(original_shape)
 
-    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float_]) -> "np.complex":
+    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float64]) -> "np.complex":
         """
         Returns the PauliArray expectation value given the expectation values of the Paulis. More useful for other classes, but still here for uniformity.
 
@@ -588,7 +588,7 @@ class Operator(object):
 
         return np.sum(wpaulis_expectation_values)
 
-    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float_]) -> "np.complex":
+    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float64]) -> "np.complex":
         """
         Returns the PauliArray expectation value given the expectation values of the Paulis.
 
@@ -618,6 +618,7 @@ class Operator(object):
         new_paulis, inverse = pa.fast_flat_unique(self.paulis, return_inverse=True)
 
         new_weights = np.zeros(new_paulis.shape, dtype=self.wpaulis.weights.dtype)
+
         np.add.at(new_weights, inverse, self.wpaulis.weights)
 
         if inplace:

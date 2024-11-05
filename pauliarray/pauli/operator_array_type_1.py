@@ -442,7 +442,9 @@ class OperatorArrayType1(object):
 
         return new_paulis, phases
 
-    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float_]) -> "np.ndarray[np.complex]":
+    def expectation_values_from_paulis(
+        self, paulis_expectation_values: NDArray[np.float64]
+    ) -> "np.ndarray[np.complex]":
         """
         Returns the Operator array expectation value given the expectation values of the Paulis.
 
@@ -457,7 +459,7 @@ class OperatorArrayType1(object):
 
         return np.sum(self.wpaulis.expectation_values_from_paulis(paulis_expectation_values), axis=-1)
 
-    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float_]) -> "np.ndarray[np.complex]":
+    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float64]) -> "np.ndarray[np.complex]":
         """
         Returns the Operator array covariances given the covariances of the Paulis.
 
@@ -663,7 +665,7 @@ class OperatorArrayType1(object):
         weights_shape = operators.shape + (all_num_terms.max(),)
         strings_shape = weights_shape + (num_qubits,)
 
-        new_weights = np.zeros(weights_shape, dtype=np.complex_)
+        new_weights = np.zeros(weights_shape, dtype=np.complex128)
         new_xstrings = np.zeros(strings_shape, dtype=np.bool_)
         new_zstrings = np.zeros(strings_shape, dtype=np.bool_)
 
