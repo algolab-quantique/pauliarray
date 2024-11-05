@@ -1,0 +1,1059 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>pauliarray.binary package &#8212; PauliArray</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api_reference/pauliarray.binary';</script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pauliarray.conversion package" href="pauliarray.conversion.html" />
+    <link rel="prev" title="pauliarray package" href="pauliarray.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="PauliArray - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="PauliArray - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    PauliArray
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/data_structures.html">Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/operations.html">Operations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/commutators.html">Commutators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/fermion_to_qubit_mapping.html">Fermion to Qubit Mapping</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="pauliarray.html">pauliarray package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">pauliarray.binary package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.conversion.html">pauliarray.conversion package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.mapping.html">pauliarray.mapping package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.pauli.html">pauliarray.pauli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.utils.html">pauliarray.utils package</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git/issues/new?title=Issue%20on%20page%20%2Fapi_reference/pauliarray.binary.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>pauliarray.binary package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray.binary.bit_operations">pauliarray.binary.bit_operations module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.add"><code class="docutils literal notranslate"><span class="pre">add()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.bit_sum"><code class="docutils literal notranslate"><span class="pre">bit_sum()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.dot"><code class="docutils literal notranslate"><span class="pre">dot()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.intersection"><code class="docutils literal notranslate"><span class="pre">intersection()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.intersection_row_space"><code class="docutils literal notranslate"><span class="pre">intersection_row_space()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.inv"><code class="docutils literal notranslate"><span class="pre">inv()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.is_orthogonal"><code class="docutils literal notranslate"><span class="pre">is_orthogonal()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.kernel"><code class="docutils literal notranslate"><span class="pre">kernel()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.matmul"><code class="docutils literal notranslate"><span class="pre">matmul()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.orthogonal_basis"><code class="docutils literal notranslate"><span class="pre">orthogonal_basis()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.orthogonal_complement"><code class="docutils literal notranslate"><span class="pre">orthogonal_complement()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.rank"><code class="docutils literal notranslate"><span class="pre">rank()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.row_echelon"><code class="docutils literal notranslate"><span class="pre">row_echelon()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.row_space"><code class="docutils literal notranslate"><span class="pre">row_space()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.strings_to_ints"><code class="docutils literal notranslate"><span class="pre">strings_to_ints()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray.binary.symplectic">pauliarray.binary.symplectic module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.coisotropic_subspace"><code class="docutils literal notranslate"><span class="pre">coisotropic_subspace()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.conjugate_subspace"><code class="docutils literal notranslate"><span class="pre">conjugate_subspace()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.dot"><code class="docutils literal notranslate"><span class="pre">dot()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.flip_zx"><code class="docutils literal notranslate"><span class="pre">flip_zx()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.gram_schmidt_orthogonalization"><code class="docutils literal notranslate"><span class="pre">gram_schmidt_orthogonalization()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.is_coisotropic"><code class="docutils literal notranslate"><span class="pre">is_coisotropic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.is_isotropic"><code class="docutils literal notranslate"><span class="pre">is_isotropic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.is_lagrangian"><code class="docutils literal notranslate"><span class="pre">is_lagrangian()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.is_orthogonal"><code class="docutils literal notranslate"><span class="pre">is_orthogonal()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.isotropic_subspace"><code class="docutils literal notranslate"><span class="pre">isotropic_subspace()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.lagrangian_subspace"><code class="docutils literal notranslate"><span class="pre">lagrangian_subspace()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.merge_zx_strings"><code class="docutils literal notranslate"><span class="pre">merge_zx_strings()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.orthogonal_complement"><code class="docutils literal notranslate"><span class="pre">orthogonal_complement()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.split_zx_strings"><code class="docutils literal notranslate"><span class="pre">split_zx_strings()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray.binary">Module contents</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="pauliarray-binary-package">
+<h1>pauliarray.binary package<a class="headerlink" href="#pauliarray-binary-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-pauliarray.binary.bit_operations">
+<span id="pauliarray-binary-bit-operations-module"></span><h2>pauliarray.binary.bit_operations module<a class="headerlink" href="#module-pauliarray.binary.bit_operations" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.bit_operations.add">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.bit_operations.</span></span><span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bit_matrix_1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bit_matrix_2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/bit_operations.html#add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.bit_operations.add" title="Link to this definition">#</a></dt>
+<dd><p>Performs element-wise XOR operation between two binary matrices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bit_matrix_1</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – First binary matrix.</p></li>
+<li><p><strong>bit_matrix_2</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Second binary matrix.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Element-wise XOR result of the two input matrices.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.bit_operations.bit_sum">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.bit_operations.</span></span><span class="sig-name descname"><span class="pre">bit_sum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bit_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/bit_operations.html#bit_sum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.bit_operations.bit_sum" title="Link to this definition">#</a></dt>
+<dd><p>Calculates the sum of booleans along the last axis of the input array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bit_strings</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Array of booleans.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Sum of bits along the last axis.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.bit_operations.dot">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.bit_operations.</span></span><span class="sig-name descname"><span class="pre">dot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bit_strings_1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bit_strings_2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/bit_operations.html#dot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.bit_operations.dot" title="Link to this definition">#</a></dt>
+<dd><p>Computes the dot product between two arrays of boolean values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bit_strings_1</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – First array of boolean values.</p></li>
+<li><p><strong>bit_strings_2</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Second array of boolean values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dot product of the two input arrays.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.int]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.bit_operations.intersection">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.bit_operations.</span></span><span class="sig-name descname"><span class="pre">intersection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bit_strings_1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bit_strings_2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/bit_operations.html#intersection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.bit_operations.intersection" title="Link to this definition">#</a></dt>
+<dd><p>Computes the intersection of two sets of bit strings.</p>
+<dl class="simple">
+<dt>Args</dt><dd><p>bit_strings_1 (“np.ndarray[np.bool]”): First array of boolean values.
+bit_strings_2 (“np.ndarray[np.bool]”): Second array of boolean values.</p>
+</dd>
+<dt>Returns</dt><dd><p>“np.ndarray[np.bool]”: Intersection of the input bit strings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.bit_operations.intersection_row_space">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.bit_operations.</span></span><span class="sig-name descname"><span class="pre">intersection_row_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bit_matrix_1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bit_matrix_2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/bit_operations.html#intersection_row_space"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.bit_operations.intersection_row_space" title="Link to this definition">#</a></dt>
+<dd><p>Given two matrices which rows are spanning two subspace, this fonction returns rows spanning the intersection
+subspace.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bit_matrix_1</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – First binary matrix.</p></li>
+<li><p><strong>bit_matrix_2</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Second binary matrix.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Rows spanning the intersection subspace.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.bit_operations.inv">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.bit_operations.</span></span><span class="sig-name descname"><span class="pre">inv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bit_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/bit_operations.html#inv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.bit_operations.inv" title="Link to this definition">#</a></dt>
+<dd><p>Computes the inverse of a binary matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bit_matrix</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Input binary matrix.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Inverse of the input binary matrix.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.bit_operations.is_orthogonal">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.bit_operations.</span></span><span class="sig-name descname"><span class="pre">is_orthogonal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bit_strings_1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bit_strings_2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/bit_operations.html#is_orthogonal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.bit_operations.is_orthogonal" title="Link to this definition">#</a></dt>
+<dd><p>Checks if two sets of bit strings are orthogonal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bit_strings_1</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – First array of boolean values.</p></li>
+<li><p><strong>bit_strings_2</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Second array of boolean values.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns</dt><dd><p>“np.ndarray[np.bool]”: True if the input bit strings are orthogonal, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.bit_operations.kernel">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.bit_operations.</span></span><span class="sig-name descname"><span class="pre">kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bit_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/bit_operations.html#kernel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.bit_operations.kernel" title="Link to this definition">#</a></dt>
+<dd><p>Computes the Kernel of a two dimensions “np.ndarray[np.bool]”.
+The Kernel of a matrix A is a matrix which the columns are formed by the vectors x such that</p>
+<div class="math notranslate nohighlight">
+\[A x = 0.\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bit_matrix</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Input binary matrix.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Kernel of the input binary matrix.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.bit_operations.matmul">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.bit_operations.</span></span><span class="sig-name descname"><span class="pre">matmul</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bit_matrix_1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bit_matrix_2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/bit_operations.html#matmul"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.bit_operations.matmul" title="Link to this definition">#</a></dt>
+<dd><p>Performs matrix multiplication over binary matrices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bit_matrix_1</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – First binary matrix.</p></li>
+<li><p><strong>bit_matrix_2</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Second binary matrix.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Resultant binary matrix after multiplication.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.bit_operations.orthogonal_basis">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.bit_operations.</span></span><span class="sig-name descname"><span class="pre">orthogonal_basis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bit_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/bit_operations.html#orthogonal_basis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.bit_operations.orthogonal_basis" title="Link to this definition">#</a></dt>
+<dd><p>Computes the orthogonal basis of the given set of bit strings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bit_strings</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Input array of bit strings.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns</dt><dd><p>“np.ndarray[np.bool]”: Orthogonal basis of the input bit strings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.bit_operations.orthogonal_complement">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.bit_operations.</span></span><span class="sig-name descname"><span class="pre">orthogonal_complement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bit_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/bit_operations.html#orthogonal_complement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.bit_operations.orthogonal_complement" title="Link to this definition">#</a></dt>
+<dd><p>Computes the orthogonal complement of the given set of bit strings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bit_strings</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Input array of bit strings.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns</dt><dd><p>“np.ndarray[np.bool]”: Orthogonal basis of the input bit strings.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.bit_operations.rank">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.bit_operations.</span></span><span class="sig-name descname"><span class="pre">rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bit_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/bit_operations.html#rank"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.bit_operations.rank" title="Link to this definition">#</a></dt>
+<dd><p>Computes the rank of a binary matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bit_matrix</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Input binary matrix.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Rank of the binary matrix.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.bit_operations.row_echelon">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.bit_operations.</span></span><span class="sig-name descname"><span class="pre">row_echelon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bit_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/bit_operations.html#row_echelon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.bit_operations.row_echelon" title="Link to this definition">#</a></dt>
+<dd><p>Applies Gauss-Jordan elimination on a binary matrix to produce row echelon form.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bit_matrix</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Input binary matrix.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Row echelon form of the provided matrix.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.bit_operations.row_space">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.bit_operations.</span></span><span class="sig-name descname"><span class="pre">row_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/bit_operations.html#row_space"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.bit_operations.row_space" title="Link to this definition">#</a></dt>
+<dd><p>Computes the row space of a binary matrix using Gauss-Jordan elimination and
+removing the zero lines.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bits</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Input binary matrix.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns</dt><dd><p>“np.ndarray[np.bool]”: Row space of the current matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.bit_operations.strings_to_ints">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.bit_operations.</span></span><span class="sig-name descname"><span class="pre">strings_to_ints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bit_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/bit_operations.html#strings_to_ints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.bit_operations.strings_to_ints" title="Link to this definition">#</a></dt>
+<dd><p>Converts binary strings to integers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bit_strings</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Input array of binary strings.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Integers obtained from input binary strings</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.int]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pauliarray.binary.symplectic">
+<span id="pauliarray-binary-symplectic-module"></span><h2>pauliarray.binary.symplectic module<a class="headerlink" href="#module-pauliarray.binary.symplectic" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.symplectic.coisotropic_subspace">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.symplectic.</span></span><span class="sig-name descname"><span class="pre">coisotropic_subspace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orthogonal_zx_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/symplectic.html#coisotropic_subspace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.symplectic.coisotropic_subspace" title="Link to this definition">#</a></dt>
+<dd><p>Given a list of zx_strings which are mutually orthogonal in the smplectic sense, returns a list of zx_strings
+which are orthogonal to the provided zx_strings. For zx_strings of length 2*n, the number of returned zx_strings
+is 2*n - rank(zx_strings). The returned zx_strings might not be mutually orthogonal in the symplectic sense.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>orthogonal_zx_strings</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – A list of zx_strings (2d-array of bools) which are mutually</p></li>
+<li><p><strong>strings.</strong> (<em>orthogonal. Last dimension is along the length</em><em> of </em><em>the</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of zx_strings defining the coisotropic subspace.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.symplectic.conjugate_subspace">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.symplectic.</span></span><span class="sig-name descname"><span class="pre">conjugate_subspace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">isotropic_zx_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/symplectic.html#conjugate_subspace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.symplectic.conjugate_subspace" title="Link to this definition">#</a></dt>
+<dd><p>Conctruct a conjugate subspace to the provided isotropic subspace. Each zx_string the conjugate subspace is
+orthogonal ins the symplectic sense to all provided zx_strings of the isotropic subspace,
+except for one : its conjugate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>isotropic_zx_strings</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Isotropic subspace.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Conjugate subspace to the input isotropic subspace.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.symplectic.dot">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.symplectic.</span></span><span class="sig-name descname"><span class="pre">dot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zx_strings_1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zx_strings_2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/symplectic.html#dot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.symplectic.dot" title="Link to this definition">#</a></dt>
+<dd><p>Computes the binary dot product between two zx boolean strings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>zx_strings_1</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – First input zx string to compute the dot product with.</p></li>
+<li><p><strong>zx_strings_2</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Second input zx string to compute the dot product with.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dot product of the two input arrays.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.int]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.symplectic.flip_zx">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.symplectic.</span></span><span class="sig-name descname"><span class="pre">flip_zx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zx_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/symplectic.html#flip_zx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.symplectic.flip_zx" title="Link to this definition">#</a></dt>
+<dd><p>Flips an input zx string into an xz string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>zx_strings</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Input zx string to flip</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Flipped zx string (xz string)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.symplectic.gram_schmidt_orthogonalization">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.symplectic.</span></span><span class="sig-name descname"><span class="pre">gram_schmidt_orthogonalization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zx_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/symplectic.html#gram_schmidt_orthogonalization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.symplectic.gram_schmidt_orthogonalization" title="Link to this definition">#</a></dt>
+<dd><p>Performs a Gram Schmidt orthogonalization procedure in the symplectic space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>zx_strings</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Input space.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Bit strings which are mutually symplectic orthogonal spawning the same space as the input.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.symplectic.is_coisotropic">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.symplectic.</span></span><span class="sig-name descname"><span class="pre">is_coisotropic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zx_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/symplectic.html#is_coisotropic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.symplectic.is_coisotropic" title="Link to this definition">#</a></dt>
+<dd><p>Checks if a given list of zx_strings defines an coisotropic subspace.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>zx_strings</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – A list of zx_strings (2d-array of bools) defining a subspace.</p></li>
+<li><p><strong>strings.</strong> (<em>Last dimension is along the length</em><em> of </em><em>the</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Wether or not input is coisotropic</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.symplectic.is_isotropic">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.symplectic.</span></span><span class="sig-name descname"><span class="pre">is_isotropic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zx_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/symplectic.html#is_isotropic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.symplectic.is_isotropic" title="Link to this definition">#</a></dt>
+<dd><p>Checks if a given list of zx_strings defines an isotropic subspace.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>zx_strings</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – A list of zx_strings (2d-array of bools) defining a subspace.</p></li>
+<li><p><strong>strings.</strong> (<em>Last dimension is along the length</em><em> of </em><em>the</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Wether or not input is isotropic</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.symplectic.is_lagrangian">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.symplectic.</span></span><span class="sig-name descname"><span class="pre">is_lagrangian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zx_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/symplectic.html#is_lagrangian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.symplectic.is_lagrangian" title="Link to this definition">#</a></dt>
+<dd><p>Checks if a given list of zx_strings defines a Lagrangian subspace.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>zx_strings</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – A list of zx_strings (2d-array of bools) defining a subspace.</p></li>
+<li><p><strong>strings.</strong> (<em>Last dimension is along the length</em><em> of </em><em>the</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Wether or not input is lagrangian</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.symplectic.is_orthogonal">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.symplectic.</span></span><span class="sig-name descname"><span class="pre">is_orthogonal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zx_strings_1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zx_strings_2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/symplectic.html#is_orthogonal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.symplectic.is_orthogonal" title="Link to this definition">#</a></dt>
+<dd><p>Check if the zx_strings of one string array are orthogonal to the zx_strings of an other string array element wise
+and using the simplectic dot product. Two zx_strings are orthogonal if the symplectic dot product is 0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>zx_strings_1</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – A list of zx_strings defining a subspace.</p></li>
+<li><p><strong>strings.</strong> (<em>Last dimension is along the length</em><em> of </em><em>the</em>)</p></li>
+<li><p><strong>zx_strings_2</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – A list of zx_strings defining a subspace.</p></li>
+<li><p><strong>strings.</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Wether or not the two input string are orthogonal to each other.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.symplectic.isotropic_subspace">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.symplectic.</span></span><span class="sig-name descname"><span class="pre">isotropic_subspace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orthogonal_zx_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/symplectic.html#isotropic_subspace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.symplectic.isotropic_subspace" title="Link to this definition">#</a></dt>
+<dd><p>Given a list of zx_strings which are mutually orthogonal in the smplectic sense, returns a list of zx_strings
+which are mutually orthogonal and linearly independent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>orthogonal_zx_strings</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – A list of zx_strings (2d-array of bools) which are mutually</p></li>
+<li><p><strong>strings.</strong> (<em>orthogonal. Last dimension is along the length</em><em> of </em><em>the</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of zx_strings defining the isotropic subspace.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.symplectic.lagrangian_subspace">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.symplectic.</span></span><span class="sig-name descname"><span class="pre">lagrangian_subspace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orthogonal_zx_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/symplectic.html#lagrangian_subspace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.symplectic.lagrangian_subspace" title="Link to this definition">#</a></dt>
+<dd><p>Given a list of zx_strings of length 2*n which are mutually orthogonal in the smplectic sense, returns a list of
+n zx_strings which are mutually orthogonal and orthogonal to the provided zx_strings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>orthogonal_zx_strings</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – A list of zx_strings (2d-array of bools) which are mutually</p></li>
+<li><p><strong>strings.</strong> (<em>orthogonal. Last dimension is along the length</em><em> of </em><em>the</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of zx_strings defining the Lagrangian subspace.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.symplectic.merge_zx_strings">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.symplectic.</span></span><span class="sig-name descname"><span class="pre">merge_zx_strings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/symplectic.html#merge_zx_strings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.symplectic.merge_zx_strings" title="Link to this definition">#</a></dt>
+<dd><p>Merges z and x strings to create one zx string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>z_strings</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – First string to concatenate (z)</p></li>
+<li><p><strong>x_strings</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Second string to concatenate (x)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Concatenated zx string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.symplectic.orthogonal_complement">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.symplectic.</span></span><span class="sig-name descname"><span class="pre">orthogonal_complement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zx_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/symplectic.html#orthogonal_complement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.symplectic.orthogonal_complement" title="Link to this definition">#</a></dt>
+<dd><p>Finds a list of zx_strings which or orthogonal in the symplectic sense to the provided zx_strings.
+For zx_strings of length 2*n, the number of returned zx_strings is 2*n - rank(zx_strings).
+The returned zx_strings might not be mutually orthogonal in the symplectic sense.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>zx_strings</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – A list of zx_strings (2d-array of bools) defining a subspace.</p></li>
+<li><p><strong>strings.</strong> (<em>Last dimension is along the length</em><em> of </em><em>the</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of zx_strings defining the orthogonal completement.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.binary.symplectic.split_zx_strings">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.binary.symplectic.</span></span><span class="sig-name descname"><span class="pre">split_zx_strings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">zx_strings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/binary/symplectic.html#split_zx_strings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.binary.symplectic.split_zx_strings" title="Link to this definition">#</a></dt>
+<dd><p>Split one concatenated zx string into a z string and an x string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>zx_strings</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.bool</em><em>]</em><em>&quot;</em>) – Concatenated zx string</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Split z string and x string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[“np.ndarray[np.bool]”, “np.ndarray[np.bool]”]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pauliarray.binary">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pauliarray.binary" title="Link to this heading">#</a></h2>
+<p>Binary module. Implements operations on binary data structures.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="pauliarray.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">pauliarray package</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="pauliarray.conversion.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">pauliarray.conversion package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray.binary.bit_operations">pauliarray.binary.bit_operations module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.add"><code class="docutils literal notranslate"><span class="pre">add()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.bit_sum"><code class="docutils literal notranslate"><span class="pre">bit_sum()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.dot"><code class="docutils literal notranslate"><span class="pre">dot()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.intersection"><code class="docutils literal notranslate"><span class="pre">intersection()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.intersection_row_space"><code class="docutils literal notranslate"><span class="pre">intersection_row_space()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.inv"><code class="docutils literal notranslate"><span class="pre">inv()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.is_orthogonal"><code class="docutils literal notranslate"><span class="pre">is_orthogonal()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.kernel"><code class="docutils literal notranslate"><span class="pre">kernel()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.matmul"><code class="docutils literal notranslate"><span class="pre">matmul()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.orthogonal_basis"><code class="docutils literal notranslate"><span class="pre">orthogonal_basis()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.orthogonal_complement"><code class="docutils literal notranslate"><span class="pre">orthogonal_complement()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.rank"><code class="docutils literal notranslate"><span class="pre">rank()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.row_echelon"><code class="docutils literal notranslate"><span class="pre">row_echelon()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.row_space"><code class="docutils literal notranslate"><span class="pre">row_space()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.bit_operations.strings_to_ints"><code class="docutils literal notranslate"><span class="pre">strings_to_ints()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray.binary.symplectic">pauliarray.binary.symplectic module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.coisotropic_subspace"><code class="docutils literal notranslate"><span class="pre">coisotropic_subspace()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.conjugate_subspace"><code class="docutils literal notranslate"><span class="pre">conjugate_subspace()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.dot"><code class="docutils literal notranslate"><span class="pre">dot()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.flip_zx"><code class="docutils literal notranslate"><span class="pre">flip_zx()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.gram_schmidt_orthogonalization"><code class="docutils literal notranslate"><span class="pre">gram_schmidt_orthogonalization()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.is_coisotropic"><code class="docutils literal notranslate"><span class="pre">is_coisotropic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.is_isotropic"><code class="docutils literal notranslate"><span class="pre">is_isotropic()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.is_lagrangian"><code class="docutils literal notranslate"><span class="pre">is_lagrangian()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.is_orthogonal"><code class="docutils literal notranslate"><span class="pre">is_orthogonal()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.isotropic_subspace"><code class="docutils literal notranslate"><span class="pre">isotropic_subspace()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.lagrangian_subspace"><code class="docutils literal notranslate"><span class="pre">lagrangian_subspace()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.merge_zx_strings"><code class="docutils literal notranslate"><span class="pre">merge_zx_strings()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.orthogonal_complement"><code class="docutils literal notranslate"><span class="pre">orthogonal_complement()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.binary.symplectic.split_zx_strings"><code class="docutils literal notranslate"><span class="pre">split_zx_strings()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray.binary">Module contents</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Quantum AlgoLab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Quantum AlgoLab.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

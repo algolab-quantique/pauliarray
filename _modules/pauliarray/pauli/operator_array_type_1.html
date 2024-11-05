@@ -1,0 +1,1260 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pauliarray.pauli.operator_array_type_1 &#8212; PauliArray</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../../../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pauliarray/pauli/operator_array_type_1';</script>
+    <link rel="icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.svg" class="logo__image only-light" alt="PauliArray - Home"/>
+    <img src="../../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="PauliArray - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../index.html">
+                    PauliArray
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/data_structures.html">Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/operations.html">Operations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/commutators.html">Commutators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/fermion_to_qubit_mapping.html">Fermion to Qubit Mapping</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api_reference/pauliarray.html">pauliarray package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.binary.html">pauliarray.binary package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.conversion.html">pauliarray.conversion package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.mapping.html">pauliarray.mapping package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.pauli.html">pauliarray.pauli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.utils.html">pauliarray.utils package</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git/issues/new?title=Issue%20on%20page%20%2F_modules/pauliarray/pauli/operator_array_type_1.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for pauliarray.pauli.operator_array_type_1</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Self</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy.typing</span> <span class="kn">import</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">NDArray</span>
+
+<span class="kn">import</span> <span class="nn">pauliarray.pauli.operator</span> <span class="k">as</span> <span class="nn">op</span>
+<span class="kn">import</span> <span class="nn">pauliarray.pauli.pauli_array</span> <span class="k">as</span> <span class="nn">pa</span>
+<span class="kn">import</span> <span class="nn">pauliarray.pauli.weighted_pauli_array</span> <span class="k">as</span> <span class="nn">wpa</span>
+<span class="kn">from</span> <span class="nn">pauliarray.utils.array_operations</span> <span class="kn">import</span> <span class="n">broadcast_shape</span><span class="p">,</span> <span class="n">broadcasted_index</span><span class="p">,</span> <span class="n">is_broadcastable</span><span class="p">,</span> <span class="n">is_concatenatable</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pauliarray.pauli.operator</span> <span class="kn">import</span> <span class="n">Operator</span>
+
+
+<div class="viewcode-block" id="OperatorArrayType1">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1">[docs]</a>
+<span class="k">class</span> <span class="nc">OperatorArrayType1</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Defines an OperatorArray that contains an array of Operator. Each op.Operator has the same number of Pauli strings.</span>
+<span class="sd">    Based on the wpa.WeightedPauliArray where the last dimension is used for summation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="OperatorArrayType1.__init__">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wpaulis</span><span class="p">:</span> <span class="n">wpa</span><span class="o">.</span><span class="n">WeightedPauliArray</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the OperatorArrayType1 with a WeightedPauliArray.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            wpaulis (wpa.WeightedPauliArray): The WeightedPauliArray to initialize with.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span> <span class="o">=</span> <span class="n">wpaulis</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">num_qubits</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Number of qubits in the operator array.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span><span class="o">.</span><span class="n">num_qubits</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">num_terms</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Number of terms in the operator array.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Shape of the operator array, excluding the last dimension.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ndim</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Number of dimensions in the operator array, excluding the last dimension.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="mi">1</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Total number of elements in the operator array.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">wpaulis</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">wpa</span><span class="o">.</span><span class="n">WeightedPauliArray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;WeightedPauliArray object representing the current operator array.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">paulis</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;PauliArray object representing the current operator array.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span><span class="o">.</span><span class="n">paulis</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.complex]&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Weights of the Pauli terms in the operator array.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span><span class="o">.</span><span class="n">weights</span>
+
+<div class="viewcode-block" id="OperatorArrayType1.__str__">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.__str__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;String representation of current operator array&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;OperatorUniformArray: num_qubits = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span><span class="si">}</span><span class="s2">, num_terms = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_terms</span><span class="si">}</span><span class="s2">, ...&quot;</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.__getitem__">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.__getitem__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets an item from the operator array.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key: The index or slice to access the operator array.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: A new OperatorArrayType1 instance with the accessed item.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">OperatorArrayType1</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span><span class="p">[</span><span class="n">key</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.__eq__">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.__eq__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks element-wise if the operators in the array are equal to the other.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (OperatorArrayType1): Another OperatorArrayType1. Must be broadcastable.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            &quot;np.ndarray[np.bool]&quot;: An array indicating where the operators are equal.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_shape</span> <span class="o">=</span> <span class="n">broadcast_shape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="n">eq_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">new_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndindex</span><span class="p">(</span><span class="n">new_shape</span><span class="p">):</span>
+            <span class="n">idx1</span> <span class="o">=</span> <span class="n">broadcasted_index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+            <span class="n">idx2</span> <span class="o">=</span> <span class="n">broadcasted_index</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+
+            <span class="n">eq_array</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_operator</span><span class="p">(</span><span class="o">*</span><span class="n">idx1</span><span class="p">)</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">get_operator</span><span class="p">(</span><span class="o">*</span><span class="n">idx2</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">eq_array</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1._mul">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1._mul">[docs]</a>
+    <span class="k">def</span> <span class="nf">_mul</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">ArrayLike</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Multiplies the operator array with another array-like object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (ArrayLike): The array-like object to multiply with.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: A new OperatorArrayType1 instance with the result.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">OperatorArrayType1</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span> <span class="o">*</span> <span class="n">other</span><span class="p">)</span></div>
+
+
+    <span class="fm">__mul__</span> <span class="o">=</span> <span class="fm">__rmul__</span> <span class="o">=</span> <span class="n">_mul</span>
+
+<div class="viewcode-block" id="OperatorArrayType1.copy">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.copy">[docs]</a>
+    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a copy of the operator array.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: A copy of the operator array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">OperatorArrayType1</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.adjoint">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.adjoint">[docs]</a>
+    <span class="k">def</span> <span class="nf">adjoint</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes the adjoint of the operator array.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: The adjoint of the operator array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">OperatorArrayType1</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">adjoint</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.reshape">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.reshape">[docs]</a>
+    <span class="k">def</span> <span class="nf">reshape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reshapes the operator array.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            shape (Tuple[int, ...]): New shape.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: Reshaped operator array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_wpaulis_shape</span> <span class="o">=</span> <span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_terms</span><span class="p">,)</span>
+
+        <span class="k">return</span> <span class="n">OperatorArrayType1</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">new_wpaulis_shape</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.flatten">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.flatten">[docs]</a>
+    <span class="k">def</span> <span class="nf">flatten</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Flattens the operator array into one dimension.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: A flattened copy of the operator array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.compose">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.compose">[docs]</a>
+    <span class="k">def</span> <span class="nf">compose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Composes the operator array with another operator array or object.</span>
+<span class="sd">        Supports : OperatorArrayType1. Exists for coherence between all PauliArray data structures and</span>
+<span class="sd">        raises NotImplemented if other type is inputed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (Any): The other object to compose with.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: The resulting OperatorArrayType1 or NotImplemented Error.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">OperatorArrayType1</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compose_operator_array_type_1</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">NotImplemented</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.compose_operator_array_type_1">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.compose_operator_array_type_1">[docs]</a>
+    <span class="k">def</span> <span class="nf">compose_operator_array_type_1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Composes the operator array with another OperatorArrayType1. Both objects must be broadcastable following</span>
+<span class="sd">        numpy&#39;s broadcasting rules.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (OperatorArrayType1): The other OperatorArrayType1 to compose with.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: The composition result.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">ndim</span>
+        <span class="k">assert</span> <span class="n">is_broadcastable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="n">exp_self_wpaulis</span> <span class="o">=</span> <span class="n">wpa</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ndim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">exp_other_wpaulis</span> <span class="o">=</span> <span class="n">wpa</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">other</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+
+        <span class="n">exp_prod_wpaulis</span> <span class="o">=</span> <span class="n">exp_self_wpaulis</span><span class="o">.</span><span class="n">compose_weighted_pauli_array</span><span class="p">(</span><span class="n">exp_other_wpaulis</span><span class="p">)</span>
+
+        <span class="n">final_shape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">broadcast_shapes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_terms</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">num_terms</span><span class="p">,)</span>
+
+        <span class="k">return</span> <span class="n">OperatorArrayType1</span><span class="p">(</span><span class="n">exp_prod_wpaulis</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">final_shape</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.mul_weights">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.mul_weights">[docs]</a>
+    <span class="k">def</span> <span class="nf">mul_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Multiplies the weights of the operator array with another array of weights. Both objects must be</span>
+<span class="sd">        broadcastable following numpy&#39;s broadcasting rules.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (NDArray): The array to multiply weights with.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: The resulting operator array with multiplied weights.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">other</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">is_broadcastable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="n">exp_other</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+        <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">mul_weights</span><span class="p">(</span><span class="n">exp_other</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">OperatorArrayType1</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.add">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.add">[docs]</a>
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds another operator array to the current operator array.</span>
+<span class="sd">        Supports : OperatorArrayType1. Exists for coherence between all PauliArray data structures and</span>
+<span class="sd">        raises NotImplemented if other type is inputed.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (Any): The other object to add.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: The resulting OperatorArrayType1 or NotImplemented Error.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">OperatorArrayType1</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_operator_array_type_1</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">NotImplemented</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.add_operator_array_type_1">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.add_operator_array_type_1">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_operator_array_type_1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds another OperatorArrayType1 to the current operator array.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (OperatorArrayType1): The other OperatorArrayType1 to add.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: The resulting OperatorArrayType1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="n">wpa</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">OperatorArrayType1</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.add_scalar">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.add_scalar">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_scalar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds scalar array to the operator array.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (NDArray): The scalar array to add.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: The resulting operator array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">other_operators</span> <span class="o">=</span> <span class="n">OperatorArrayType1</span><span class="o">.</span><span class="n">from_pauli_array</span><span class="p">(</span>
+            <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="o">.</span><span class="n">identities</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">mul_weights</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_operator_array_type_1</span><span class="p">(</span><span class="n">other_operators</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.get_operator">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.get_operator">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">idx</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">op</span><span class="o">.</span><span class="n">Operator</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a single operator in operator array.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            idx: Indices to access the operator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            op.Operator: The accessed operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span>
+
+        <span class="k">return</span> <span class="n">op</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.inspect">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.inspect">[docs]</a>
+    <span class="k">def</span> <span class="nf">inspect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a string describing the operator array.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: String representation of the operator array details.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">detail_str</span> <span class="o">=</span> <span class="s2">&quot;OperatorArray&quot;</span>
+
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndindex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
+            <span class="n">operator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="n">detail_str</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> ---</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">--- &quot;</span> <span class="o">+</span> <span class="n">operator</span><span class="o">.</span><span class="n">inspect</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">detail_str</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.x">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.x">[docs]</a>
+    <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Applies X transformations on qubits of Operators. This leaves the Pauli Strings unchanged but produce</span>
+<span class="sd">        phase factors -1 when operators are Y or Z.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            qubits (int or list[int]): The qubits on which to apply the X.</span>
+<span class="sd">            inplace (bool, optional): Applies the changes to self if True. Returns a modified copy if False.</span>
+<span class="sd">            Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: A modified self if inplace=True, else returns a new modified instance of</span>
+<span class="sd">            OperatorArrayType1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">qubits</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">qubits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.h">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.h">[docs]</a>
+    <span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Applies a H transformation on qubits of OperatorArray. This exchanges X matrices for Z matrices and vice-versa.</span>
+<span class="sd">        It exchanges Y matrices into -Y matrices.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            qubits (Union[int, List[int]]): The qubits to apply the H transformation to.</span>
+<span class="sd">            inplace (bool, optional): Applies the changes to self if True. Returns a modified copy if False.</span>
+<span class="sd">            Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: A modified self if inplace=True, else returns a new modified instance of</span>
+<span class="sd">            OperatorArrayType1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="n">qubits</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="n">qubits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.s">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.s">[docs]</a>
+    <span class="k">def</span> <span class="nf">s</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Applies S transformations on qubits of Operator. This exchanges X for Y and vice-versa with respective factors.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            qubits (int or list[int]): The qubits on which to apply the S.</span>
+<span class="sd">            inplace (bool, optional): Applies the changes to self if True. Returns a modified copy if False.</span>
+<span class="sd">            Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: A modified self if inplace=True, else returns a new modified instance of</span>
+<span class="sd">            OperatorArrayType1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">qubits</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">qubits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.cx">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.cx">[docs]</a>
+    <span class="k">def</span> <span class="nf">cx</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">control_qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">target_qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Applies CX transformations on qubits of Operator. The order of the CX is set by the order of the qubits.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            control_qubits (int or list[int]): The qubits which controls the CZ.</span>
+<span class="sd">            target_qubits (int or list[int]): The qubits target by CZ.</span>
+<span class="sd">            inplace (bool, optional): Applies the changes to self if True. Returns a modified copy if False.</span>
+<span class="sd">            Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: A modified self if inplace=True, else returns a new modified instance of</span>
+<span class="sd">            OperatorArrayType1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="n">control_qubits</span><span class="p">,</span> <span class="n">target_qubits</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="n">control_qubits</span><span class="p">,</span> <span class="n">target_qubits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.cz">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.cz">[docs]</a>
+    <span class="k">def</span> <span class="nf">cz</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">control_qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">target_qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Applies CZ transformations on qubits of Operator. The order of the CZ is set by the order of the qubits.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            control_qubits (int or list[int]): The qubits which controls the CZ.</span>
+<span class="sd">            target_qubits (int or list[int]): The qubits target by CZ.</span>
+<span class="sd">            inplace (bool, optional): Applies the changes to self if True. Returns a modified copy if False.</span>
+<span class="sd">            Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: A modified self if inplace=True, else returns a new modified instance of</span>
+<span class="sd">            OperatorArrayType1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="n">control_qubits</span><span class="p">,</span> <span class="n">target_qubits</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="n">control_qubits</span><span class="p">,</span> <span class="n">target_qubits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.clifford_conjugate">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.clifford_conjugate">[docs]</a>
+    <span class="k">def</span> <span class="nf">clifford_conjugate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clifford</span><span class="p">:</span> <span class="s2">&quot;Operator&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs a Clifford transformation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            clifford (Operator) : Must represent a Clifford transformation with the correct number of qubits.</span>
+<span class="sd">            inplace (bool, optional): Applies the changes to self if True. Returns a modified copy if False.</span>
+<span class="sd">            Defaults to True.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: The transformed OperatorArrayType1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">clifford_conjugate</span><span class="p">(</span><span class="n">clifford</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">OperatorArrayType1</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.expectation_values_from_paulis">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.expectation_values_from_paulis">[docs]</a>
+    <span class="k">def</span> <span class="nf">expectation_values_from_paulis</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">paulis_expectation_values</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.complex]&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the Operator array expectation value given the expectation values of the Paulis.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            paulis_expectation_values (NDArray[float]): An array of expectation values for each Paulis present in the</span>
+<span class="sd">            OperatorArray.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            NDArray: An array of complex expectation values for the Operator array, derived from the given</span>
+<span class="sd">            Paulis expectation values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">expectation_values_from_paulis</span><span class="p">(</span><span class="n">paulis_expectation_values</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.covariances_from_paulis">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.covariances_from_paulis">[docs]</a>
+    <span class="k">def</span> <span class="nf">covariances_from_paulis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paulis_covariances</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.complex]&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the Operator array covariances given the covariances of the Paulis.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            paulis_covariances (NDArray[float]): An array of covariances for each Paulis present in the</span>
+<span class="sd">            OperatorArray.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            NDArray: An array of covariances for the Operator array, derived from the given Paulis covariances.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">covariances_from_paulis</span><span class="p">(</span><span class="n">paulis_covariances</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ndim</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.combine_repeated_terms">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.combine_repeated_terms">[docs]</a>
+    <span class="k">def</span> <span class="nf">combine_repeated_terms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Combines repeated terms within each operator in the array.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            inplace (bool, optional): Applies the changes to self if True. Returns a modified copy if False.</span>
+<span class="sd">            Defaults to False</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1 : A modified self if inplace=True, else returns a new modified instance of</span>
+<span class="sd">            OperatorArrayType1.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">red_operators</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">op</span><span class="o">.</span><span class="n">Operator</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndindex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
+            <span class="n">red_operators</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_operator</span><span class="p">(</span><span class="o">*</span><span class="n">idx</span><span class="p">)</span><span class="o">.</span><span class="n">combine_repeated_terms</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operator_ndarray_to_wpaulis</span><span class="p">(</span><span class="n">red_operators</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span> <span class="o">=</span> <span class="n">new_wpaulis</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="k">return</span> <span class="n">OperatorArrayType1</span><span class="o">.</span><span class="n">from_operator_ndarray</span><span class="p">(</span><span class="n">red_operators</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.filter_weights">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.filter_weights">[docs]</a>
+    <span class="k">def</span> <span class="nf">filter_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_function</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Filters the weights of the Pauli terms using a provided filter function.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filter_function (Callable): A function that takes an array of weights and returns a boolean mask array of</span>
+<span class="sd">            the same shape, indicating which weights to keep.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: A new instance of the class with the filtered weights applied to the Pauli terms.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">weight_filter_mask</span> <span class="o">=</span> <span class="n">filter_function</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span>
+
+        <span class="n">all_num_terms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">weight_filter_mask</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">max_num_terms</span> <span class="o">=</span> <span class="n">all_num_terms</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+        <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="n">wpa</span><span class="o">.</span><span class="n">WeightedPauliArray</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="n">max_num_terms</span><span class="p">,),</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndindex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
+            <span class="n">new_wpaulis</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="p">:</span> <span class="n">all_num_terms</span><span class="p">[</span><span class="n">idx</span><span class="p">]]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="n">weight_filter_mask</span><span class="p">[</span><span class="n">idx</span><span class="p">]]</span>
+
+        <span class="k">return</span> <span class="n">OperatorArrayType1</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.remove_small_weights">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.remove_small_weights">[docs]</a>
+    <span class="k">def</span> <span class="nf">remove_small_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-14</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes Pauli terms with weights smaller than a specified threshold.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            threshold (float, optional): The threshold below which Pauli term weights will be removed.</span>
+<span class="sd">            Defaults to 1e-14.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: A new instance of the class with the small weights removed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_weights</span><span class="p">(</span><span class="k">lambda</span> <span class="n">weight</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.sum">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.sum">[docs]</a>
+    <span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axes</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">op</span><span class="o">.</span><span class="n">Operator</span><span class="p">,</span> <span class="n">Self</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs summation along the specified axes, combining these axes with the hidden summation axis.</span>
+<span class="sd">        Returns an Operator if a single operator remains in the operator array. Else, return an OperatorArray.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            axes (Union[Tuple[int, ...], None], optional): Axes along which to sum. If None, the entire array is summed.</span>
+<span class="sd">                Axes can be negative to count from the last to the first axis. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Union[op.Operator, OperatorArrayType1]: An instance of `op.Operator` if the result is a single operator,</span>
+<span class="sd">            otherwise an instance of OperatorArrayType1 with the summed array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">axes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">op</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">axes</span> <span class="o">=</span> <span class="p">(</span><span class="n">axes</span><span class="p">,)</span>
+
+        <span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="n">axis</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">axis</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">axis</span> <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">]</span>
+
+        <span class="n">num_sum_axis</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">num_keep_axis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">ndim</span> <span class="o">-</span> <span class="n">num_sum_axis</span>
+
+        <span class="n">axes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">axes</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="p">):</span>
+            <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="n">wpa</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span>
+
+        <span class="n">new_wshape</span> <span class="o">=</span> <span class="n">new_wpaulis</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="n">num_keep_axis</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">num_keep_axis</span><span class="p">:]),)</span>
+        <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="n">new_wpaulis</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">new_wshape</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">new_wpaulis</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">op</span><span class="o">.</span><span class="n">Operator</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">OperatorArrayType1</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.from_pauli_array">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.from_pauli_array">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_pauli_array</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">paulis</span><span class="p">:</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">,</span> <span class="n">summation_axis</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts a PauliArray into an OperatorArrayType1.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            paulis (pa.PauliArray): The input PauliArray to convert.</span>
+<span class="sd">            summation_axis (int, optional): Which axis of PauliArray to use for summation.</span>
+<span class="sd">            If None, each Pauli string becomes an operator. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: A new instance of OperatorArrayType1 according to given Paulis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_paulis</span> <span class="o">=</span> <span class="n">paulis</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">paulis</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+
+        <span class="n">new_operators</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">wpa</span><span class="o">.</span><span class="n">WeightedPauliArray</span><span class="o">.</span><span class="n">from_paulis</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">summation_axis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">new_operators</span> <span class="o">=</span> <span class="n">new_operators</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">summation_axis</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">new_operators</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.from_weighted_pauli_array">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.from_weighted_pauli_array">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_weighted_pauli_array</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">wpaulis</span><span class="p">:</span> <span class="n">wpa</span><span class="o">.</span><span class="n">WeightedPauliArray</span><span class="p">,</span> <span class="n">summation_axis</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts a WeightedPauliArray into an OperatorArrayType1.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            wpaulis (wpa.WeightedPauliArray): The input WeightedPauliArray to convert.</span>
+<span class="sd">            summation_axis (int, optional): Which axis of WeightedPauliArray to use for summation.</span>
+<span class="sd">            If None, each Pauli string becomes an operator. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: A new instance of OperatorArrayType1 according to given Paulis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="n">wpaulis</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+
+        <span class="n">new_operators</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">summation_axis</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">new_operators</span> <span class="o">=</span> <span class="n">new_operators</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">summation_axis</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">new_operators</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.from_operator_list">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.from_operator_list">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_operator_list</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">operators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">op</span><span class="o">.</span><span class="n">Operator</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts a list of Operator into an OperatorArrayType1.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            operators (List[op.Operator]): The input list of operators to convert.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: A new instance of OperatorArrayType1 according to given operators.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_operator_ndarray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">operators</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">op</span><span class="o">.</span><span class="n">Operator</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1.from_operator_ndarray">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.from_operator_ndarray">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_operator_ndarray</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">operators</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts an NDArray of operators into an OperatorArrayType1.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            operators (NDArray): The input array of operators to convert.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: A new instance of OperatorArrayType1 according to given operators.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_operator_ndarray_to_wpaulis</span><span class="p">(</span><span class="n">operators</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="OperatorArrayType1._operator_ndarray_to_wpaulis">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1._operator_ndarray_to_wpaulis">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_operator_ndarray_to_wpaulis</span><span class="p">(</span><span class="n">operators</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">wpa</span><span class="o">.</span><span class="n">WeightedPauliArray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts an NDArray of operators into a WeightedPauliArray.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            operators (NDArray): The input array of operators to convert.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            wpa.WeightedPauliArray: A new instance of WeightedPauliArray according to given operators.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num_qubits</span> <span class="o">=</span> <span class="n">operators</span><span class="o">.</span><span class="n">flat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">num_qubits</span>
+
+        <span class="n">all_num_terms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">operators</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int_</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndindex</span><span class="p">(</span><span class="n">operators</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
+            <span class="n">operator</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">Operator</span> <span class="o">=</span> <span class="n">operators</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">operator</span><span class="o">.</span><span class="n">num_qubits</span> <span class="o">!=</span> <span class="n">num_qubits</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;All the Operators must have the same number of qubits.&quot;</span><span class="p">)</span>
+            <span class="n">all_num_terms</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">num_terms</span>
+
+        <span class="n">weights_shape</span> <span class="o">=</span> <span class="n">operators</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="n">all_num_terms</span><span class="o">.</span><span class="n">max</span><span class="p">(),)</span>
+        <span class="n">strings_shape</span> <span class="o">=</span> <span class="n">weights_shape</span> <span class="o">+</span> <span class="p">(</span><span class="n">num_qubits</span><span class="p">,)</span>
+
+        <span class="n">new_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">weights_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>
+        <span class="n">new_xstrings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">strings_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)</span>
+        <span class="n">new_zstrings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">strings_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndindex</span><span class="p">(</span><span class="n">operators</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
+            <span class="n">operator</span><span class="p">:</span> <span class="n">op</span><span class="o">.</span><span class="n">Operator</span> <span class="o">=</span> <span class="n">operators</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="n">new_weights</span><span class="p">[</span><span class="o">*</span><span class="n">idx</span><span class="p">,</span> <span class="p">:</span> <span class="n">all_num_terms</span><span class="p">[</span><span class="n">idx</span><span class="p">]]</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">weights</span>
+            <span class="n">new_xstrings</span><span class="p">[</span><span class="o">*</span><span class="n">idx</span><span class="p">,</span> <span class="p">:</span> <span class="n">all_num_terms</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">x_strings</span>
+            <span class="n">new_zstrings</span><span class="p">[</span><span class="o">*</span><span class="n">idx</span><span class="p">,</span> <span class="p">:</span> <span class="n">all_num_terms</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">operator</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">z_strings</span>
+
+        <span class="k">return</span> <span class="n">wpa</span><span class="o">.</span><span class="n">WeightedPauliArray</span><span class="o">.</span><span class="n">from_z_strings_and_x_strings_and_weights</span><span class="p">(</span><span class="n">new_zstrings</span><span class="p">,</span> <span class="n">new_xstrings</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="commutator">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.commutator">[docs]</a>
+<span class="k">def</span> <span class="nf">commutator</span><span class="p">(</span>
+    <span class="n">operators_1</span><span class="p">:</span> <span class="n">OperatorArrayType1</span><span class="p">,</span>
+    <span class="n">operators_2</span><span class="p">:</span> <span class="n">OperatorArrayType1</span><span class="p">,</span>
+    <span class="n">combine_repeated_terms</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">remove_small_weights</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OperatorArrayType1</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the commutator</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        [A, B] = AB - BA</span>
+
+<span class="sd">    for pairs of operators from two operator arrays.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        operators_1 (OperatorArrayType1): The first array of operators.</span>
+<span class="sd">        operators_2 (OperatorArrayType1): The second array of operators.</span>
+<span class="sd">        combine_repeated_terms (bool, optional): If True, combines repeated terms in the resulting commutators.</span>
+<span class="sd">        Defaults to False.</span>
+<span class="sd">        remove_small_weights (bool, optional): If True, removes small weights from the resulting commutators.</span>
+<span class="sd">        Defaults to False.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        OperatorArrayType1: An array of commutators of the input operator arrays.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">is_broadcastable</span><span class="p">(</span><span class="n">operators_1</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">operators_2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="n">new_shape</span> <span class="o">=</span> <span class="n">broadcast_shape</span><span class="p">(</span><span class="n">operators_1</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">operators_2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="n">commutator_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">new_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">op</span><span class="o">.</span><span class="n">Operator</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndindex</span><span class="p">(</span><span class="n">new_shape</span><span class="p">):</span>
+        <span class="n">idx1</span> <span class="o">=</span> <span class="n">broadcasted_index</span><span class="p">(</span><span class="n">operators_1</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+        <span class="n">idx2</span> <span class="o">=</span> <span class="n">broadcasted_index</span><span class="p">(</span><span class="n">operators_2</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">idx</span><span class="p">)</span>
+
+        <span class="n">one_commutator</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">commutator</span><span class="p">(</span><span class="n">operators_1</span><span class="o">.</span><span class="n">get_operator</span><span class="p">(</span><span class="o">*</span><span class="n">idx1</span><span class="p">),</span> <span class="n">operators_2</span><span class="o">.</span><span class="n">get_operator</span><span class="p">(</span><span class="o">*</span><span class="n">idx2</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">combine_repeated_terms</span><span class="p">:</span>
+            <span class="n">one_commutator</span> <span class="o">=</span> <span class="n">one_commutator</span><span class="o">.</span><span class="n">combine_repeated_terms</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">remove_small_weights</span><span class="p">:</span>
+            <span class="n">one_commutator</span> <span class="o">=</span> <span class="n">one_commutator</span><span class="o">.</span><span class="n">remove_small_weights</span><span class="p">()</span>
+
+        <span class="n">commutator_array</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">one_commutator</span>
+
+    <span class="k">return</span> <span class="n">OperatorArrayType1</span><span class="o">.</span><span class="n">from_operator_ndarray</span><span class="p">(</span><span class="n">commutator_array</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="anticommutator">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.anticommutator">[docs]</a>
+<span class="k">def</span> <span class="nf">anticommutator</span><span class="p">(</span>
+    <span class="n">operators_1</span><span class="p">:</span> <span class="n">OperatorArrayType1</span><span class="p">,</span>
+    <span class="n">operators_2</span><span class="p">:</span> <span class="n">OperatorArrayType1</span><span class="p">,</span>
+    <span class="n">combine_repeated_terms</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">remove_small_weights</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OperatorArrayType1</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the anticommutator</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        {A, B} = AB + BA</span>
+
+<span class="sd">    for pairs of operators from two operator arrays.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        operators_1 (OperatorArrayType1): The first array of operators.</span>
+<span class="sd">        operators_2 (OperatorArrayType1): The second array of operators.</span>
+<span class="sd">        combine_repeated_terms (bool, optional): If True, combines repeated terms in the resulting anticommutators. Defaults to False.</span>
+<span class="sd">        remove_small_weights (bool, optional): If True, removes small weights from the resulting anticommutators. Defaults to False.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        OperatorArrayType1: An array of anticommutators of the input operator arrays.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">is_broadcastable</span><span class="p">(</span><span class="n">operators_1</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">operators_2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="n">new_shape</span> <span class="o">=</span> <span class="n">broadcast_shape</span><span class="p">(</span><span class="n">operators_1</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">operators_2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="n">commutator_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">new_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">op</span><span class="o">.</span><span class="n">Operator</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndindex</span><span class="p">(</span><span class="n">new_shape</span><span class="p">):</span>
+        <span class="n">idx1</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">i</span> <span class="k">if</span> <span class="n">operators_1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">dim</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">idx</span><span class="p">)])</span>
+        <span class="n">idx2</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="n">i</span> <span class="k">if</span> <span class="n">operators_2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">dim</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">idx</span><span class="p">)])</span>
+
+        <span class="n">operators_1</span><span class="o">.</span><span class="n">get_operator</span><span class="p">(</span><span class="o">*</span><span class="n">idx1</span><span class="p">)</span>
+        <span class="n">operators_2</span><span class="o">.</span><span class="n">get_operator</span><span class="p">(</span><span class="o">*</span><span class="n">idx2</span><span class="p">)</span>
+
+        <span class="n">one_commutator</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">anticommutator</span><span class="p">(</span><span class="n">operators_1</span><span class="o">.</span><span class="n">get_operator</span><span class="p">(</span><span class="o">*</span><span class="n">idx1</span><span class="p">),</span> <span class="n">operators_2</span><span class="o">.</span><span class="n">get_operator</span><span class="p">(</span><span class="o">*</span><span class="n">idx2</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">combine_repeated_terms</span><span class="p">:</span>
+            <span class="n">one_commutator</span> <span class="o">=</span> <span class="n">one_commutator</span><span class="o">.</span><span class="n">combine_repeated_terms</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">remove_small_weights</span><span class="p">:</span>
+            <span class="n">one_commutator</span> <span class="o">=</span> <span class="n">one_commutator</span><span class="o">.</span><span class="n">remove_small_weights</span><span class="p">()</span>
+
+        <span class="n">commutator_array</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">one_commutator</span>
+
+    <span class="k">return</span> <span class="n">OperatorArrayType1</span><span class="o">.</span><span class="n">from_operator_ndarray</span><span class="p">(</span><span class="n">commutator_array</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="concatenate">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.concatenate">[docs]</a>
+<span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="n">operators</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">OperatorArrayType1</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">axis</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OperatorArrayType1</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Concatenates multiple operator arrays along the specified axis.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        operators (Tuple[OperatorArrayType1, ...]): A tuple of operator arrays to concatenate.</span>
+<span class="sd">        axis (int): The axis along which to concatenate the operator arrays.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        OperatorArrayType1: A new operator array resulting from the concatenation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">is_concatenatable</span><span class="p">(</span><span class="n">operators</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+
+    <span class="n">wpauliss</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">operators</span><span class="o">.</span><span class="n">wpaulis</span> <span class="k">for</span> <span class="n">operators</span> <span class="ow">in</span> <span class="n">operators</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">OperatorArrayType1</span><span class="p">(</span><span class="n">wpa</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">wpauliss</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">))</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Quantum AlgoLab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Quantum AlgoLab.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

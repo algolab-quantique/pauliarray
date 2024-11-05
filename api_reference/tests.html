@@ -1,0 +1,1311 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>tests package &#8212; PauliArray</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api_reference/tests';</script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="PauliArray - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="PauliArray - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    PauliArray
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/data_structures.html">Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/operations.html">Operations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/commutators.html">Commutators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/fermion_to_qubit_mapping.html">Fermion to Qubit Mapping</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="pauliarray.html">pauliarray package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.binary.html">pauliarray.binary package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.conversion.html">pauliarray.conversion package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.mapping.html">pauliarray.mapping package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.pauli.html">pauliarray.pauli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.utils.html">pauliarray.utils package</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git/issues/new?title=Issue%20on%20page%20%2Fapi_reference/tests.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>tests package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.test_bits_operations">tests.test_bits_operations module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_bits_operations.TestBitsOperations"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_bits_operations.TestBitsOperations.test_dot"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations.test_dot()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_bits_operations.TestBitsOperations.test_intersection"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations.test_intersection()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_bits_operations.TestBitsOperations.test_kernel"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations.test_kernel()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_bits_operations.TestBitsOperations.test_kernel_2"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations.test_kernel_2()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_bits_operations.TestBitsOperations.test_rank"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations.test_rank()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_bits_operations.TestBitsOperations.test_row_echelon"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations.test_row_echelon()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.test_conversion">tests.test_conversion module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_conversion.TestPauliFromQiskit"><code class="docutils literal notranslate"><span class="pre">TestPauliFromQiskit</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_conversion.TestPauliFromQiskit.test_operator_from_sparse_pauli"><code class="docutils literal notranslate"><span class="pre">TestPauliFromQiskit.test_operator_from_sparse_pauli()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_conversion.TestPauliFromQiskit.test_operator_to_sparse_pauli"><code class="docutils literal notranslate"><span class="pre">TestPauliFromQiskit.test_operator_to_sparse_pauli()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_conversion.TestPauliFromQiskit.test_pauli_array_from_pauli_list"><code class="docutils literal notranslate"><span class="pre">TestPauliFromQiskit.test_pauli_array_from_pauli_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_conversion.TestPauliFromQiskit.test_pauli_array_to_pauli_list"><code class="docutils literal notranslate"><span class="pre">TestPauliFromQiskit.test_pauli_array_to_pauli_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_conversion.TestPauliFromQiskit.test_weighted_pauli_array_from_pauli_list"><code class="docutils literal notranslate"><span class="pre">TestPauliFromQiskit.test_weighted_pauli_array_from_pauli_list()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_conversion.get_qubit_operators_list"><code class="docutils literal notranslate"><span class="pre">get_qubit_operators_list()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.test_mapping">tests.test_mapping module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_mapping.TestJordanWignerMapping"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_mapping.TestJordanWignerMapping.test_assemble_qubit_hamiltonian_from_sparses"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_assemble_qubit_hamiltonian_from_sparses()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_mapping.TestJordanWignerMapping.test_creation_annihilation_operators"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_creation_annihilation_operators()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_mapping.TestJordanWignerMapping.test_majoranas"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_majoranas()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_mapping.TestJordanWignerMapping.test_occupation_operators"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_occupation_operators()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_mapping.TestJordanWignerMapping.test_one_body_to_pauli_operator_from_sparse"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_one_body_to_pauli_operator_from_sparse()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_mapping.TestJordanWignerMapping.test_one_body_to_pauli_operator_from_tensor"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_one_body_to_pauli_operator_from_tensor()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_mapping.TestJordanWignerMapping.test_two_body_to_pauli_operator_from_sparse"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_two_body_to_pauli_operator_from_sparse()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_mapping.TestJordanWignerMapping.test_two_body_to_pauli_operator_from_tensor"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_two_body_to_pauli_operator_from_tensor()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.test_operator">tests.test_operator module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator"><code class="docutils literal notranslate"><span class="pre">TestOperator</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_clifford_conjugate_pauli_array"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_clifford_conjugate_pauli_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_combine_repeated_terms"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_combine_repeated_terms()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_compose"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_compose()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_eq"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_eq()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_equals"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_equals()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_from_weights_and_labels"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_from_weights_and_labels()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_power"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_power()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_remove_small_weights"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_remove_small_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_str"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_str()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_to_npz_from_npz"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_to_npz_from_npz()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.test_operator_array_type_1">tests.test_operator_array_type_1 module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_commutator"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_commutator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_concatenate"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_concatenate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_from_pauli_array"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_from_pauli_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_get_item"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_get_item()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_init"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_init()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_mul_weights"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_mul_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_remove_small_weights"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_remove_small_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_sum"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_sum()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_x"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_x()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.test_operator_array_type_2">tests.test_operator_array_type_2 module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_2.TestOperatorArrayType2"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_combine_basis_paulis"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_combine_basis_paulis()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_commutator"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_commutator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_concatenate"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_concatenate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_get_item"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_get_item()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_init"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_init()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_remove_small_weights"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_remove_small_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_remove_unused_basis_paulis"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_remove_unused_basis_paulis()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.test_pauli_array">tests.test_pauli_array module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray"><code class="docutils literal notranslate"><span class="pre">TestPauliArray</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_add_pauli_array"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_add_pauli_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_bitwisecommute_with"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_bitwisecommute_with()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_clifford_conjugate"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_clifford_conjugate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_commutator"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_commutator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_commute_with"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_commute_with()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_compose_pauli_array"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_compose_pauli_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_cx"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_cx()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_cz"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_cz()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_eq"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_eq()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_fast_flat_unique"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_fast_flat_unique()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_from_labels"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_from_labels()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_generators"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_generators()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_generators_with_map"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_generators_with_map()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_getitem"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_getitem()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_h"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_h()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_inspect"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_inspect()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_matrix_from_zx_ints"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_matrix_from_zx_ints()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_mul_weights"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_mul_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_reorder_qubits"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_reorder_qubits()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_s"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_s()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_set_item"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_set_item()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_str"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_str()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_to_labels"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_to_labels()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_to_matrices"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_to_matrices()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_traces"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_traces()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_unique"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_unique()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_x"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_x()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_z_string_x_string_to_label"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_z_string_x_string_to_label()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArrayFunc"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArrayFunc.test_anticommutator"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_anticommutator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArrayFunc.test_argsort"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_argsort()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArrayFunc.test_broadcast_to"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_broadcast_to()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArrayFunc.test_commutator"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_commutator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArrayFunc.test_concatenate"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_concatenate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArrayFunc.test_expand_dims"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_expand_dims()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArrayFunc.test_swapaxes"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_swapaxes()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.test_symplectic">tests.test_symplectic module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_symplectic.TestSymplecticBitsOperations"><code class="docutils literal notranslate"><span class="pre">TestSymplecticBitsOperations</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_symplectic.TestSymplecticBitsOperations.test_dot"><code class="docutils literal notranslate"><span class="pre">TestSymplecticBitsOperations.test_dot()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_symplectic.TestSymplecticBitsOperations.test_gram_schmidt_orthogonalization"><code class="docutils literal notranslate"><span class="pre">TestSymplecticBitsOperations.test_gram_schmidt_orthogonalization()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_symplectic.TestSymplecticBitsOperations.test_isotropic_subspace"><code class="docutils literal notranslate"><span class="pre">TestSymplecticBitsOperations.test_isotropic_subspace()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_symplectic.TestSymplecticBitsOperations.test_orthogonal_complement"><code class="docutils literal notranslate"><span class="pre">TestSymplecticBitsOperations.test_orthogonal_complement()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.test_weighted_pauli_array">tests.test_weighted_pauli_array module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_cx"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_cx()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_cz"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_cz()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_extract"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_extract()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_from_weights_and_labels"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_from_weights_and_labels()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_h"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_h()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_s"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_s()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_str"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_str()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_to_npz_from_npz"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_to_npz_from_npz()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_x"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_x()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArrayFunc</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc.test_anticommutator"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArrayFunc.test_anticommutator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc.test_commutator"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArrayFunc.test_commutator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc.test_concatenate"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArrayFunc.test_concatenate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests">Module contents</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="tests-package">
+<h1>tests package<a class="headerlink" href="#tests-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-tests.test_bits_operations">
+<span id="tests-test-bits-operations-module"></span><h2>tests.test_bits_operations module<a class="headerlink" href="#module-tests.test_bits_operations" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_bits_operations.TestBitsOperations">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_bits_operations.</span></span><span class="sig-name descname"><span class="pre">TestBitsOperations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_bits_operations.html#TestBitsOperations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_bits_operations.TestBitsOperations" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_bits_operations.TestBitsOperations.test_dot">
+<span class="sig-name descname"><span class="pre">test_dot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_bits_operations.html#TestBitsOperations.test_dot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_bits_operations.TestBitsOperations.test_dot" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_bits_operations.TestBitsOperations.test_intersection">
+<span class="sig-name descname"><span class="pre">test_intersection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_bits_operations.html#TestBitsOperations.test_intersection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_bits_operations.TestBitsOperations.test_intersection" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_bits_operations.TestBitsOperations.test_kernel">
+<span class="sig-name descname"><span class="pre">test_kernel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_bits_operations.html#TestBitsOperations.test_kernel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_bits_operations.TestBitsOperations.test_kernel" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_bits_operations.TestBitsOperations.test_kernel_2">
+<span class="sig-name descname"><span class="pre">test_kernel_2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_bits_operations.html#TestBitsOperations.test_kernel_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_bits_operations.TestBitsOperations.test_kernel_2" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_bits_operations.TestBitsOperations.test_rank">
+<span class="sig-name descname"><span class="pre">test_rank</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_bits_operations.html#TestBitsOperations.test_rank"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_bits_operations.TestBitsOperations.test_rank" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_bits_operations.TestBitsOperations.test_row_echelon">
+<span class="sig-name descname"><span class="pre">test_row_echelon</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_bits_operations.html#TestBitsOperations.test_row_echelon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_bits_operations.TestBitsOperations.test_row_echelon" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-tests.test_conversion">
+<span id="tests-test-conversion-module"></span><h2>tests.test_conversion module<a class="headerlink" href="#module-tests.test_conversion" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_conversion.TestPauliFromQiskit">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_conversion.</span></span><span class="sig-name descname"><span class="pre">TestPauliFromQiskit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_conversion.html#TestPauliFromQiskit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_conversion.TestPauliFromQiskit" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_conversion.TestPauliFromQiskit.test_operator_from_sparse_pauli">
+<span class="sig-name descname"><span class="pre">test_operator_from_sparse_pauli</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_conversion.html#TestPauliFromQiskit.test_operator_from_sparse_pauli"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_conversion.TestPauliFromQiskit.test_operator_from_sparse_pauli" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_conversion.TestPauliFromQiskit.test_operator_to_sparse_pauli">
+<span class="sig-name descname"><span class="pre">test_operator_to_sparse_pauli</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_conversion.html#TestPauliFromQiskit.test_operator_to_sparse_pauli"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_conversion.TestPauliFromQiskit.test_operator_to_sparse_pauli" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_conversion.TestPauliFromQiskit.test_pauli_array_from_pauli_list">
+<span class="sig-name descname"><span class="pre">test_pauli_array_from_pauli_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_conversion.html#TestPauliFromQiskit.test_pauli_array_from_pauli_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_conversion.TestPauliFromQiskit.test_pauli_array_from_pauli_list" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_conversion.TestPauliFromQiskit.test_pauli_array_to_pauli_list">
+<span class="sig-name descname"><span class="pre">test_pauli_array_to_pauli_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_conversion.html#TestPauliFromQiskit.test_pauli_array_to_pauli_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_conversion.TestPauliFromQiskit.test_pauli_array_to_pauli_list" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_conversion.TestPauliFromQiskit.test_weighted_pauli_array_from_pauli_list">
+<span class="sig-name descname"><span class="pre">test_weighted_pauli_array_from_pauli_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_conversion.html#TestPauliFromQiskit.test_weighted_pauli_array_from_pauli_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_conversion.TestPauliFromQiskit.test_weighted_pauli_array_from_pauli_list" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_conversion.get_qubit_operators_list">
+<span class="sig-prename descclassname"><span class="pre">tests.test_conversion.</span></span><span class="sig-name descname"><span class="pre">get_qubit_operators_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_conversion.html#get_qubit_operators_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_conversion.get_qubit_operators_list" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-tests.test_mapping">
+<span id="tests-test-mapping-module"></span><h2>tests.test_mapping module<a class="headerlink" href="#module-tests.test_mapping" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_mapping.TestJordanWignerMapping">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_mapping.</span></span><span class="sig-name descname"><span class="pre">TestJordanWignerMapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_mapping.html#TestJordanWignerMapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_mapping.TestJordanWignerMapping" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_mapping.TestJordanWignerMapping.test_assemble_qubit_hamiltonian_from_sparses">
+<span class="sig-name descname"><span class="pre">test_assemble_qubit_hamiltonian_from_sparses</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_mapping.html#TestJordanWignerMapping.test_assemble_qubit_hamiltonian_from_sparses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_mapping.TestJordanWignerMapping.test_assemble_qubit_hamiltonian_from_sparses" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_mapping.TestJordanWignerMapping.test_creation_annihilation_operators">
+<span class="sig-name descname"><span class="pre">test_creation_annihilation_operators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_mapping.html#TestJordanWignerMapping.test_creation_annihilation_operators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_mapping.TestJordanWignerMapping.test_creation_annihilation_operators" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_mapping.TestJordanWignerMapping.test_majoranas">
+<span class="sig-name descname"><span class="pre">test_majoranas</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_mapping.html#TestJordanWignerMapping.test_majoranas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_mapping.TestJordanWignerMapping.test_majoranas" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_mapping.TestJordanWignerMapping.test_occupation_operators">
+<span class="sig-name descname"><span class="pre">test_occupation_operators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_mapping.html#TestJordanWignerMapping.test_occupation_operators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_mapping.TestJordanWignerMapping.test_occupation_operators" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_mapping.TestJordanWignerMapping.test_one_body_to_pauli_operator_from_sparse">
+<span class="sig-name descname"><span class="pre">test_one_body_to_pauli_operator_from_sparse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_mapping.html#TestJordanWignerMapping.test_one_body_to_pauli_operator_from_sparse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_mapping.TestJordanWignerMapping.test_one_body_to_pauli_operator_from_sparse" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_mapping.TestJordanWignerMapping.test_one_body_to_pauli_operator_from_tensor">
+<span class="sig-name descname"><span class="pre">test_one_body_to_pauli_operator_from_tensor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_mapping.html#TestJordanWignerMapping.test_one_body_to_pauli_operator_from_tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_mapping.TestJordanWignerMapping.test_one_body_to_pauli_operator_from_tensor" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_mapping.TestJordanWignerMapping.test_two_body_to_pauli_operator_from_sparse">
+<span class="sig-name descname"><span class="pre">test_two_body_to_pauli_operator_from_sparse</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_mapping.html#TestJordanWignerMapping.test_two_body_to_pauli_operator_from_sparse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_mapping.TestJordanWignerMapping.test_two_body_to_pauli_operator_from_sparse" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_mapping.TestJordanWignerMapping.test_two_body_to_pauli_operator_from_tensor">
+<span class="sig-name descname"><span class="pre">test_two_body_to_pauli_operator_from_tensor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_mapping.html#TestJordanWignerMapping.test_two_body_to_pauli_operator_from_tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_mapping.TestJordanWignerMapping.test_two_body_to_pauli_operator_from_tensor" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-tests.test_operator">
+<span id="tests-test-operator-module"></span><h2>tests.test_operator module<a class="headerlink" href="#module-tests.test_operator" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_operator.TestOperator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_operator.</span></span><span class="sig-name descname"><span class="pre">TestOperator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator.html#TestOperator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator.TestOperator" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator.TestOperator.test_clifford_conjugate_pauli_array">
+<span class="sig-name descname"><span class="pre">test_clifford_conjugate_pauli_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator.html#TestOperator.test_clifford_conjugate_pauli_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator.TestOperator.test_clifford_conjugate_pauli_array" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator.TestOperator.test_combine_repeated_terms">
+<span class="sig-name descname"><span class="pre">test_combine_repeated_terms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator.html#TestOperator.test_combine_repeated_terms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator.TestOperator.test_combine_repeated_terms" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator.TestOperator.test_compose">
+<span class="sig-name descname"><span class="pre">test_compose</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator.html#TestOperator.test_compose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator.TestOperator.test_compose" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator.TestOperator.test_eq">
+<span class="sig-name descname"><span class="pre">test_eq</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator.html#TestOperator.test_eq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator.TestOperator.test_eq" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator.TestOperator.test_equals">
+<span class="sig-name descname"><span class="pre">test_equals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator.html#TestOperator.test_equals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator.TestOperator.test_equals" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator.TestOperator.test_from_weights_and_labels">
+<span class="sig-name descname"><span class="pre">test_from_weights_and_labels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator.html#TestOperator.test_from_weights_and_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator.TestOperator.test_from_weights_and_labels" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator.TestOperator.test_power">
+<span class="sig-name descname"><span class="pre">test_power</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator.html#TestOperator.test_power"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator.TestOperator.test_power" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator.TestOperator.test_remove_small_weights">
+<span class="sig-name descname"><span class="pre">test_remove_small_weights</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator.html#TestOperator.test_remove_small_weights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator.TestOperator.test_remove_small_weights" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator.TestOperator.test_str">
+<span class="sig-name descname"><span class="pre">test_str</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator.html#TestOperator.test_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator.TestOperator.test_str" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator.TestOperator.test_to_npz_from_npz">
+<span class="sig-name descname"><span class="pre">test_to_npz_from_npz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator.html#TestOperator.test_to_npz_from_npz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator.TestOperator.test_to_npz_from_npz" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-tests.test_operator_array_type_1">
+<span id="tests-test-operator-array-type-1-module"></span><h2>tests.test_operator_array_type_1 module<a class="headerlink" href="#module-tests.test_operator_array_type_1" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_operator_array_type_1.TestOperatorArrayType1">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_operator_array_type_1.</span></span><span class="sig-name descname"><span class="pre">TestOperatorArrayType1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator_array_type_1.html#TestOperatorArrayType1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator_array_type_1.TestOperatorArrayType1" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator_array_type_1.TestOperatorArrayType1.test_commutator">
+<span class="sig-name descname"><span class="pre">test_commutator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator_array_type_1.html#TestOperatorArrayType1.test_commutator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_commutator" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator_array_type_1.TestOperatorArrayType1.test_concatenate">
+<span class="sig-name descname"><span class="pre">test_concatenate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator_array_type_1.html#TestOperatorArrayType1.test_concatenate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_concatenate" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator_array_type_1.TestOperatorArrayType1.test_from_pauli_array">
+<span class="sig-name descname"><span class="pre">test_from_pauli_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator_array_type_1.html#TestOperatorArrayType1.test_from_pauli_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_from_pauli_array" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator_array_type_1.TestOperatorArrayType1.test_get_item">
+<span class="sig-name descname"><span class="pre">test_get_item</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator_array_type_1.html#TestOperatorArrayType1.test_get_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_get_item" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator_array_type_1.TestOperatorArrayType1.test_init">
+<span class="sig-name descname"><span class="pre">test_init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator_array_type_1.html#TestOperatorArrayType1.test_init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_init" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator_array_type_1.TestOperatorArrayType1.test_mul_weights">
+<span class="sig-name descname"><span class="pre">test_mul_weights</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator_array_type_1.html#TestOperatorArrayType1.test_mul_weights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_mul_weights" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator_array_type_1.TestOperatorArrayType1.test_remove_small_weights">
+<span class="sig-name descname"><span class="pre">test_remove_small_weights</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator_array_type_1.html#TestOperatorArrayType1.test_remove_small_weights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_remove_small_weights" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator_array_type_1.TestOperatorArrayType1.test_sum">
+<span class="sig-name descname"><span class="pre">test_sum</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator_array_type_1.html#TestOperatorArrayType1.test_sum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_sum" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator_array_type_1.TestOperatorArrayType1.test_x">
+<span class="sig-name descname"><span class="pre">test_x</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator_array_type_1.html#TestOperatorArrayType1.test_x"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_x" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-tests.test_operator_array_type_2">
+<span id="tests-test-operator-array-type-2-module"></span><h2>tests.test_operator_array_type_2 module<a class="headerlink" href="#module-tests.test_operator_array_type_2" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_operator_array_type_2.TestOperatorArrayType2">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_operator_array_type_2.</span></span><span class="sig-name descname"><span class="pre">TestOperatorArrayType2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator_array_type_2.html#TestOperatorArrayType2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator_array_type_2.TestOperatorArrayType2" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator_array_type_2.TestOperatorArrayType2.test_combine_basis_paulis">
+<span class="sig-name descname"><span class="pre">test_combine_basis_paulis</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator_array_type_2.html#TestOperatorArrayType2.test_combine_basis_paulis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_combine_basis_paulis" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator_array_type_2.TestOperatorArrayType2.test_commutator">
+<span class="sig-name descname"><span class="pre">test_commutator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator_array_type_2.html#TestOperatorArrayType2.test_commutator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_commutator" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator_array_type_2.TestOperatorArrayType2.test_concatenate">
+<span class="sig-name descname"><span class="pre">test_concatenate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator_array_type_2.html#TestOperatorArrayType2.test_concatenate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_concatenate" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator_array_type_2.TestOperatorArrayType2.test_get_item">
+<span class="sig-name descname"><span class="pre">test_get_item</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator_array_type_2.html#TestOperatorArrayType2.test_get_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_get_item" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator_array_type_2.TestOperatorArrayType2.test_init">
+<span class="sig-name descname"><span class="pre">test_init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator_array_type_2.html#TestOperatorArrayType2.test_init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_init" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator_array_type_2.TestOperatorArrayType2.test_remove_small_weights">
+<span class="sig-name descname"><span class="pre">test_remove_small_weights</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator_array_type_2.html#TestOperatorArrayType2.test_remove_small_weights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_remove_small_weights" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_operator_array_type_2.TestOperatorArrayType2.test_remove_unused_basis_paulis">
+<span class="sig-name descname"><span class="pre">test_remove_unused_basis_paulis</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_operator_array_type_2.html#TestOperatorArrayType2.test_remove_unused_basis_paulis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_remove_unused_basis_paulis" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-tests.test_pauli_array">
+<span id="tests-test-pauli-array-module"></span><h2>tests.test_pauli_array module<a class="headerlink" href="#module-tests.test_pauli_array" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_pauli_array.</span></span><span class="sig-name descname"><span class="pre">TestPauliArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_add_pauli_array">
+<span class="sig-name descname"><span class="pre">test_add_pauli_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_add_pauli_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_add_pauli_array" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_bitwisecommute_with">
+<span class="sig-name descname"><span class="pre">test_bitwisecommute_with</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_bitwisecommute_with"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_bitwisecommute_with" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_clifford_conjugate">
+<span class="sig-name descname"><span class="pre">test_clifford_conjugate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_clifford_conjugate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_clifford_conjugate" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_commutator">
+<span class="sig-name descname"><span class="pre">test_commutator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_commutator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_commutator" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_commute_with">
+<span class="sig-name descname"><span class="pre">test_commute_with</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_commute_with"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_commute_with" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_compose_pauli_array">
+<span class="sig-name descname"><span class="pre">test_compose_pauli_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_compose_pauli_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_compose_pauli_array" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_cx">
+<span class="sig-name descname"><span class="pre">test_cx</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_cx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_cx" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_cz">
+<span class="sig-name descname"><span class="pre">test_cz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_cz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_cz" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_eq">
+<span class="sig-name descname"><span class="pre">test_eq</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_eq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_eq" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_fast_flat_unique">
+<span class="sig-name descname"><span class="pre">test_fast_flat_unique</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_fast_flat_unique"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_fast_flat_unique" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_from_labels">
+<span class="sig-name descname"><span class="pre">test_from_labels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_from_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_from_labels" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_generators">
+<span class="sig-name descname"><span class="pre">test_generators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_generators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_generators" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_generators_with_map">
+<span class="sig-name descname"><span class="pre">test_generators_with_map</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_generators_with_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_generators_with_map" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_getitem">
+<span class="sig-name descname"><span class="pre">test_getitem</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_getitem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_getitem" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_h">
+<span class="sig-name descname"><span class="pre">test_h</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_h"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_h" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_inspect">
+<span class="sig-name descname"><span class="pre">test_inspect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_inspect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_inspect" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_matrix_from_zx_ints">
+<span class="sig-name descname"><span class="pre">test_matrix_from_zx_ints</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_matrix_from_zx_ints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_matrix_from_zx_ints" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_mul_weights">
+<span class="sig-name descname"><span class="pre">test_mul_weights</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_mul_weights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_mul_weights" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_reorder_qubits">
+<span class="sig-name descname"><span class="pre">test_reorder_qubits</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_reorder_qubits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_reorder_qubits" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_s">
+<span class="sig-name descname"><span class="pre">test_s</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_s" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_set_item">
+<span class="sig-name descname"><span class="pre">test_set_item</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_set_item"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_set_item" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_str">
+<span class="sig-name descname"><span class="pre">test_str</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_str" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_to_labels">
+<span class="sig-name descname"><span class="pre">test_to_labels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_to_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_to_labels" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_to_matrices">
+<span class="sig-name descname"><span class="pre">test_to_matrices</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_to_matrices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_to_matrices" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_traces">
+<span class="sig-name descname"><span class="pre">test_traces</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_traces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_traces" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_unique">
+<span class="sig-name descname"><span class="pre">test_unique</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_unique"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_unique" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_x">
+<span class="sig-name descname"><span class="pre">test_x</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_x"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_x" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArray.test_z_string_x_string_to_label">
+<span class="sig-name descname"><span class="pre">test_z_string_x_string_to_label</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArray.test_z_string_x_string_to_label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArray.test_z_string_x_string_to_label" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArrayFunc">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_pauli_array.</span></span><span class="sig-name descname"><span class="pre">TestPauliArrayFunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArrayFunc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArrayFunc" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArrayFunc.test_anticommutator">
+<span class="sig-name descname"><span class="pre">test_anticommutator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArrayFunc.test_anticommutator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArrayFunc.test_anticommutator" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArrayFunc.test_argsort">
+<span class="sig-name descname"><span class="pre">test_argsort</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArrayFunc.test_argsort"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArrayFunc.test_argsort" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArrayFunc.test_broadcast_to">
+<span class="sig-name descname"><span class="pre">test_broadcast_to</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArrayFunc.test_broadcast_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArrayFunc.test_broadcast_to" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArrayFunc.test_commutator">
+<span class="sig-name descname"><span class="pre">test_commutator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArrayFunc.test_commutator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArrayFunc.test_commutator" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArrayFunc.test_concatenate">
+<span class="sig-name descname"><span class="pre">test_concatenate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArrayFunc.test_concatenate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArrayFunc.test_concatenate" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArrayFunc.test_expand_dims">
+<span class="sig-name descname"><span class="pre">test_expand_dims</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArrayFunc.test_expand_dims"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArrayFunc.test_expand_dims" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_pauli_array.TestPauliArrayFunc.test_swapaxes">
+<span class="sig-name descname"><span class="pre">test_swapaxes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_pauli_array.html#TestPauliArrayFunc.test_swapaxes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_pauli_array.TestPauliArrayFunc.test_swapaxes" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-tests.test_symplectic">
+<span id="tests-test-symplectic-module"></span><h2>tests.test_symplectic module<a class="headerlink" href="#module-tests.test_symplectic" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_symplectic.TestSymplecticBitsOperations">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_symplectic.</span></span><span class="sig-name descname"><span class="pre">TestSymplecticBitsOperations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_symplectic.html#TestSymplecticBitsOperations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_symplectic.TestSymplecticBitsOperations" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_symplectic.TestSymplecticBitsOperations.test_dot">
+<span class="sig-name descname"><span class="pre">test_dot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_symplectic.html#TestSymplecticBitsOperations.test_dot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_symplectic.TestSymplecticBitsOperations.test_dot" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_symplectic.TestSymplecticBitsOperations.test_gram_schmidt_orthogonalization">
+<span class="sig-name descname"><span class="pre">test_gram_schmidt_orthogonalization</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_symplectic.html#TestSymplecticBitsOperations.test_gram_schmidt_orthogonalization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_symplectic.TestSymplecticBitsOperations.test_gram_schmidt_orthogonalization" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_symplectic.TestSymplecticBitsOperations.test_isotropic_subspace">
+<span class="sig-name descname"><span class="pre">test_isotropic_subspace</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_symplectic.html#TestSymplecticBitsOperations.test_isotropic_subspace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_symplectic.TestSymplecticBitsOperations.test_isotropic_subspace" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_symplectic.TestSymplecticBitsOperations.test_orthogonal_complement">
+<span class="sig-name descname"><span class="pre">test_orthogonal_complement</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_symplectic.html#TestSymplecticBitsOperations.test_orthogonal_complement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_symplectic.TestSymplecticBitsOperations.test_orthogonal_complement" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-tests.test_weighted_pauli_array">
+<span id="tests-test-weighted-pauli-array-module"></span><h2>tests.test_weighted_pauli_array module<a class="headerlink" href="#module-tests.test_weighted_pauli_array" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_weighted_pauli_array.TestWeightedPauliArray">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_weighted_pauli_array.</span></span><span class="sig-name descname"><span class="pre">TestWeightedPauliArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_weighted_pauli_array.html#TestWeightedPauliArray"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_weighted_pauli_array.TestWeightedPauliArray.test_cx">
+<span class="sig-name descname"><span class="pre">test_cx</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_weighted_pauli_array.html#TestWeightedPauliArray.test_cx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_cx" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_weighted_pauli_array.TestWeightedPauliArray.test_cz">
+<span class="sig-name descname"><span class="pre">test_cz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_weighted_pauli_array.html#TestWeightedPauliArray.test_cz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_cz" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_weighted_pauli_array.TestWeightedPauliArray.test_extract">
+<span class="sig-name descname"><span class="pre">test_extract</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_weighted_pauli_array.html#TestWeightedPauliArray.test_extract"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_extract" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_weighted_pauli_array.TestWeightedPauliArray.test_from_weights_and_labels">
+<span class="sig-name descname"><span class="pre">test_from_weights_and_labels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_weighted_pauli_array.html#TestWeightedPauliArray.test_from_weights_and_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_from_weights_and_labels" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_weighted_pauli_array.TestWeightedPauliArray.test_h">
+<span class="sig-name descname"><span class="pre">test_h</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_weighted_pauli_array.html#TestWeightedPauliArray.test_h"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_h" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_weighted_pauli_array.TestWeightedPauliArray.test_s">
+<span class="sig-name descname"><span class="pre">test_s</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_weighted_pauli_array.html#TestWeightedPauliArray.test_s"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_s" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_weighted_pauli_array.TestWeightedPauliArray.test_str">
+<span class="sig-name descname"><span class="pre">test_str</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_weighted_pauli_array.html#TestWeightedPauliArray.test_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_str" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_weighted_pauli_array.TestWeightedPauliArray.test_to_npz_from_npz">
+<span class="sig-name descname"><span class="pre">test_to_npz_from_npz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_weighted_pauli_array.html#TestWeightedPauliArray.test_to_npz_from_npz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_to_npz_from_npz" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_weighted_pauli_array.TestWeightedPauliArray.test_x">
+<span class="sig-name descname"><span class="pre">test_x</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_weighted_pauli_array.html#TestWeightedPauliArray.test_x"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_x" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">tests.test_weighted_pauli_array.</span></span><span class="sig-name descname"><span class="pre">TestWeightedPauliArrayFunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_weighted_pauli_array.html#TestWeightedPauliArrayFunc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc.test_anticommutator">
+<span class="sig-name descname"><span class="pre">test_anticommutator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_weighted_pauli_array.html#TestWeightedPauliArrayFunc.test_anticommutator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc.test_anticommutator" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc.test_commutator">
+<span class="sig-name descname"><span class="pre">test_commutator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_weighted_pauli_array.html#TestWeightedPauliArrayFunc.test_commutator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc.test_commutator" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc.test_concatenate">
+<span class="sig-name descname"><span class="pre">test_concatenate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/test_weighted_pauli_array.html#TestWeightedPauliArrayFunc.test_concatenate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc.test_concatenate" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-tests">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-tests" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.test_bits_operations">tests.test_bits_operations module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_bits_operations.TestBitsOperations"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_bits_operations.TestBitsOperations.test_dot"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations.test_dot()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_bits_operations.TestBitsOperations.test_intersection"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations.test_intersection()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_bits_operations.TestBitsOperations.test_kernel"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations.test_kernel()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_bits_operations.TestBitsOperations.test_kernel_2"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations.test_kernel_2()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_bits_operations.TestBitsOperations.test_rank"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations.test_rank()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_bits_operations.TestBitsOperations.test_row_echelon"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations.test_row_echelon()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.test_conversion">tests.test_conversion module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_conversion.TestPauliFromQiskit"><code class="docutils literal notranslate"><span class="pre">TestPauliFromQiskit</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_conversion.TestPauliFromQiskit.test_operator_from_sparse_pauli"><code class="docutils literal notranslate"><span class="pre">TestPauliFromQiskit.test_operator_from_sparse_pauli()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_conversion.TestPauliFromQiskit.test_operator_to_sparse_pauli"><code class="docutils literal notranslate"><span class="pre">TestPauliFromQiskit.test_operator_to_sparse_pauli()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_conversion.TestPauliFromQiskit.test_pauli_array_from_pauli_list"><code class="docutils literal notranslate"><span class="pre">TestPauliFromQiskit.test_pauli_array_from_pauli_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_conversion.TestPauliFromQiskit.test_pauli_array_to_pauli_list"><code class="docutils literal notranslate"><span class="pre">TestPauliFromQiskit.test_pauli_array_to_pauli_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_conversion.TestPauliFromQiskit.test_weighted_pauli_array_from_pauli_list"><code class="docutils literal notranslate"><span class="pre">TestPauliFromQiskit.test_weighted_pauli_array_from_pauli_list()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_conversion.get_qubit_operators_list"><code class="docutils literal notranslate"><span class="pre">get_qubit_operators_list()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.test_mapping">tests.test_mapping module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_mapping.TestJordanWignerMapping"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_mapping.TestJordanWignerMapping.test_assemble_qubit_hamiltonian_from_sparses"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_assemble_qubit_hamiltonian_from_sparses()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_mapping.TestJordanWignerMapping.test_creation_annihilation_operators"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_creation_annihilation_operators()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_mapping.TestJordanWignerMapping.test_majoranas"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_majoranas()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_mapping.TestJordanWignerMapping.test_occupation_operators"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_occupation_operators()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_mapping.TestJordanWignerMapping.test_one_body_to_pauli_operator_from_sparse"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_one_body_to_pauli_operator_from_sparse()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_mapping.TestJordanWignerMapping.test_one_body_to_pauli_operator_from_tensor"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_one_body_to_pauli_operator_from_tensor()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_mapping.TestJordanWignerMapping.test_two_body_to_pauli_operator_from_sparse"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_two_body_to_pauli_operator_from_sparse()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_mapping.TestJordanWignerMapping.test_two_body_to_pauli_operator_from_tensor"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_two_body_to_pauli_operator_from_tensor()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.test_operator">tests.test_operator module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator"><code class="docutils literal notranslate"><span class="pre">TestOperator</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_clifford_conjugate_pauli_array"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_clifford_conjugate_pauli_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_combine_repeated_terms"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_combine_repeated_terms()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_compose"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_compose()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_eq"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_eq()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_equals"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_equals()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_from_weights_and_labels"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_from_weights_and_labels()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_power"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_power()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_remove_small_weights"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_remove_small_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_str"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_str()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator.TestOperator.test_to_npz_from_npz"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_to_npz_from_npz()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.test_operator_array_type_1">tests.test_operator_array_type_1 module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_commutator"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_commutator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_concatenate"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_concatenate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_from_pauli_array"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_from_pauli_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_get_item"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_get_item()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_init"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_init()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_mul_weights"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_mul_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_remove_small_weights"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_remove_small_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_sum"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_sum()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_1.TestOperatorArrayType1.test_x"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_x()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.test_operator_array_type_2">tests.test_operator_array_type_2 module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_2.TestOperatorArrayType2"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_combine_basis_paulis"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_combine_basis_paulis()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_commutator"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_commutator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_concatenate"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_concatenate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_get_item"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_get_item()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_init"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_init()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_remove_small_weights"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_remove_small_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_operator_array_type_2.TestOperatorArrayType2.test_remove_unused_basis_paulis"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_remove_unused_basis_paulis()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.test_pauli_array">tests.test_pauli_array module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray"><code class="docutils literal notranslate"><span class="pre">TestPauliArray</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_add_pauli_array"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_add_pauli_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_bitwisecommute_with"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_bitwisecommute_with()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_clifford_conjugate"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_clifford_conjugate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_commutator"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_commutator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_commute_with"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_commute_with()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_compose_pauli_array"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_compose_pauli_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_cx"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_cx()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_cz"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_cz()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_eq"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_eq()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_fast_flat_unique"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_fast_flat_unique()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_from_labels"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_from_labels()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_generators"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_generators()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_generators_with_map"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_generators_with_map()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_getitem"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_getitem()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_h"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_h()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_inspect"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_inspect()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_matrix_from_zx_ints"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_matrix_from_zx_ints()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_mul_weights"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_mul_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_reorder_qubits"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_reorder_qubits()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_s"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_s()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_set_item"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_set_item()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_str"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_str()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_to_labels"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_to_labels()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_to_matrices"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_to_matrices()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_traces"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_traces()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_unique"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_unique()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_x"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_x()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArray.test_z_string_x_string_to_label"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_z_string_x_string_to_label()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArrayFunc"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArrayFunc.test_anticommutator"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_anticommutator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArrayFunc.test_argsort"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_argsort()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArrayFunc.test_broadcast_to"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_broadcast_to()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArrayFunc.test_commutator"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_commutator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArrayFunc.test_concatenate"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_concatenate()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArrayFunc.test_expand_dims"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_expand_dims()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_pauli_array.TestPauliArrayFunc.test_swapaxes"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_swapaxes()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.test_symplectic">tests.test_symplectic module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_symplectic.TestSymplecticBitsOperations"><code class="docutils literal notranslate"><span class="pre">TestSymplecticBitsOperations</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_symplectic.TestSymplecticBitsOperations.test_dot"><code class="docutils literal notranslate"><span class="pre">TestSymplecticBitsOperations.test_dot()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_symplectic.TestSymplecticBitsOperations.test_gram_schmidt_orthogonalization"><code class="docutils literal notranslate"><span class="pre">TestSymplecticBitsOperations.test_gram_schmidt_orthogonalization()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_symplectic.TestSymplecticBitsOperations.test_isotropic_subspace"><code class="docutils literal notranslate"><span class="pre">TestSymplecticBitsOperations.test_isotropic_subspace()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_symplectic.TestSymplecticBitsOperations.test_orthogonal_complement"><code class="docutils literal notranslate"><span class="pre">TestSymplecticBitsOperations.test_orthogonal_complement()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests.test_weighted_pauli_array">tests.test_weighted_pauli_array module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_cx"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_cx()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_cz"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_cz()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_extract"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_extract()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_from_weights_and_labels"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_from_weights_and_labels()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_h"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_h()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_s"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_s()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_str"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_str()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_to_npz_from_npz"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_to_npz_from_npz()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_x"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_x()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArrayFunc</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc.test_anticommutator"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArrayFunc.test_anticommutator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc.test_commutator"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArrayFunc.test_commutator()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc.test_concatenate"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArrayFunc.test_concatenate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-tests">Module contents</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Quantum AlgoLab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Quantum AlgoLab.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

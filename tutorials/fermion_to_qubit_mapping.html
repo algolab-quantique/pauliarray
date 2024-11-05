@@ -1,0 +1,587 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Fermion to Qubit Mapping &#8212; PauliArray</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/fermion_to_qubit_mapping';</script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pauliarray package" href="../api_reference/pauliarray.html" />
+    <link rel="prev" title="Commutators" href="commutators.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="PauliArray - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="PauliArray - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    PauliArray
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/data_structures.html">Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/operations.html">Operations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="commutators.html">Commutators</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Fermion to Qubit Mapping</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api_reference/pauliarray.html">pauliarray package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api_reference/pauliarray.binary.html">pauliarray.binary package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api_reference/pauliarray.conversion.html">pauliarray.conversion package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api_reference/pauliarray.mapping.html">pauliarray.mapping package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api_reference/pauliarray.pauli.html">pauliarray.pauli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api_reference/pauliarray.utils.html">pauliarray.utils package</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git/issues/new?title=Issue%20on%20page%20%2Ftutorials/fermion_to_qubit_mapping.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Fermion to Qubit Mapping</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fermionic-hamiltonian-with-qiskit">Fermionic Hamiltonian with Qiskit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jordan-wigner-mapping-with-qiskit">Jordan Wigner Mapping with Qiskit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jordan-wigner-mapping-with-pauliarray">Jordan Wigner Mapping with PauliArray</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-random-mapping-with-pauliarray">General (Random) Mapping with PauliArray</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="fermion-to-qubit-mapping">
+<h1>Fermion to Qubit Mapping<a class="headerlink" href="#fermion-to-qubit-mapping" title="Link to this heading">#</a></h1>
+<p>In this tutorial we will see how to map a fermionic Hamiltonian to a qubit Hamiltonian using PauliArray. We will also make a comparison with similar tools provided in Qiskit and show that PauliArray accomplishes the same task much faster.</p>
+<section id="fermionic-hamiltonian-with-qiskit">
+<h2>Fermionic Hamiltonian with Qiskit<a class="headerlink" href="#fermionic-hamiltonian-with-qiskit" title="Link to this heading">#</a></h2>
+<p>As a starting point, we will use Qiskit to generate the fermionic Hamiltonian (<code class="code docutils literal notranslate"><span class="pre">FermioncOp</span></code>) for the <span class="math notranslate nohighlight">\(\text{N}_2\)</span> molecule.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qiskit_nature.second_q.drivers</span> <span class="kn">import</span> <span class="n">PySCFDriver</span>
+
+<span class="n">mol_info</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;atom&quot;</span><span class="p">:</span> <span class="s2">&quot;N 0 0 -0.545;N 0 0 0.545;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;basis&quot;</span><span class="p">:</span> <span class="s2">&quot;sto3g&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;charge&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;spin&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">driver</span> <span class="o">=</span> <span class="n">PySCFDriver</span><span class="p">(</span><span class="o">**</span><span class="n">mol_info</span><span class="p">)</span>
+<span class="n">problem</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">hamiltonian</span> <span class="o">=</span> <span class="n">problem</span><span class="o">.</span><span class="n">hamiltonian</span>
+<span class="n">second_q_hamiltonian</span> <span class="o">=</span> <span class="n">problem</span><span class="o">.</span><span class="n">hamiltonian</span><span class="o">.</span><span class="n">second_q_op</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="jordan-wigner-mapping-with-qiskit">
+<h2>Jordan Wigner Mapping with Qiskit<a class="headerlink" href="#jordan-wigner-mapping-with-qiskit" title="Link to this heading">#</a></h2>
+<p>Carrying out the mapping with Qiskit is pretty straight forward. The result is a <code class="code docutils literal notranslate"><span class="pre">SparsePauliOp</span></code>. We can measure the time it takes to complete the process.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">qiskit_nature.second_q.mappers</span> <span class="kn">import</span> <span class="n">JordanWignerMapper</span>
+
+<span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">mapper</span> <span class="o">=</span> <span class="n">JordanWignerMapper</span><span class="p">()</span>
+<span class="n">qk_jw_qubit_hamiltonian</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">second_q_hamiltonian</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Qiskit : </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> sec&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of qubits : </span><span class="si">{</span><span class="n">qk_jw_qubit_hamiltonian</span><span class="o">.</span><span class="n">num_qubits</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of Pauli strings : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">qk_jw_qubit_hamiltonian</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Qiskit</span> <span class="p">:</span> <span class="mf">2.049</span> <span class="n">sec</span>
+<span class="n">Number</span> <span class="n">of</span> <span class="n">qubits</span> <span class="p">:</span> <span class="mi">20</span>
+<span class="n">Number</span> <span class="n">of</span> <span class="n">Pauli</span> <span class="n">strings</span> <span class="p">:</span> <span class="mi">2951</span>
+</pre></div>
+</div>
+<p>As a not so rigorous benchmark, it takes about 2.1 sec to an Apple M2 to complete the mapping for the <span class="math notranslate nohighlight">\(\text{N}_2\)</span> molecule involving 20 qubits and 2951 Pauli strings.</p>
+</section>
+<section id="jordan-wigner-mapping-with-pauliarray">
+<h2>Jordan Wigner Mapping with PauliArray<a class="headerlink" href="#jordan-wigner-mapping-with-pauliarray" title="Link to this heading">#</a></h2>
+<p>The process is pretty similar using PauliArray except we need to convert the <code class="code docutils literal notranslate"><span class="pre">FermioncOp</span></code> into arguments compatible with the <code class="code docutils literal notranslate"><span class="pre">FermionMapping</span></code>. We also need to specify the number of qubits to initialize the <code class="code docutils literal notranslate"><span class="pre">JordanWigner</span></code> mapping. The result is a <code class="code docutils literal notranslate"><span class="pre">Operator</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pauliarray.conversion.qiskit</span> <span class="kn">import</span> <span class="n">extract_fermionic_op</span>
+<span class="kn">from</span> <span class="nn">pauliarray.mapping.fermion</span> <span class="kn">import</span> <span class="n">JordanWigner</span>
+
+<span class="n">num_spin_orbitals</span> <span class="o">=</span> <span class="n">second_q_hamiltonian</span><span class="o">.</span><span class="n">num_spin_orbitals</span>
+
+<span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">one_body_tuple</span><span class="p">,</span> <span class="n">two_body_tuple</span> <span class="o">=</span> <span class="n">extract_fermionic_op</span><span class="p">(</span><span class="n">second_q_hamiltonian</span><span class="p">)</span>
+
+<span class="n">mapping</span> <span class="o">=</span> <span class="n">JordanWigner</span><span class="p">(</span><span class="n">num_spin_orbitals</span><span class="p">)</span>
+<span class="n">pa_jw_qubit_hamiltonien</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">assemble_qubit_hamiltonian_from_sparses</span><span class="p">(</span><span class="n">one_body_tuple</span><span class="p">,</span> <span class="n">two_body_tuple</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PauliArray : </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> sec&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of qubits : </span><span class="si">{</span><span class="n">pa_jw_qubit_hamiltonien</span><span class="o">.</span><span class="n">num_qubits</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of Pauli strings : </span><span class="si">{</span><span class="n">pa_jw_qubit_hamiltonien</span><span class="o">.</span><span class="n">num_terms</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PauliArray</span> <span class="p">:</span> <span class="mf">0.124</span> <span class="n">sec</span>
+<span class="n">Number</span> <span class="n">of</span> <span class="n">qubits</span> <span class="p">:</span> <span class="mi">20</span>
+<span class="n">Number</span> <span class="n">of</span> <span class="n">Pauli</span> <span class="n">strings</span> <span class="p">:</span> <span class="mi">2951</span>
+</pre></div>
+</div>
+<p>Again, the not so rigorous benchmarking shows that PauliArray completes the mapping in less than 0.15 sec, which is more than 10 times faster than Qiskit.</p>
+<p>We can check that both result are the same by converting the <code class="code docutils literal notranslate"><span class="pre">Operator</span></code> into a <code class="code docutils literal notranslate"><span class="pre">SparsePauliOp</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pauliarray.conversion.qiskit</span> <span class="kn">import</span> <span class="n">operator_to_sparse_pauli</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">operator_to_sparse_pauli</span><span class="p">(</span><span class="n">pa_jw_qubit_hamiltonien</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span> <span class="o">==</span> <span class="n">qk_jw_qubit_hamiltonian</span><span class="o">.</span><span class="n">sort</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+</section>
+<section id="general-random-mapping-with-pauliarray">
+<h2>General (Random) Mapping with PauliArray<a class="headerlink" href="#general-random-mapping-with-pauliarray" title="Link to this heading">#</a></h2>
+<p>PauliArray allows for constructing mapping for <span class="math notranslate nohighlight">\(n\)</span> states by providing an invertible binary component <span class="math notranslate nohighlight">\(n\times n\)</span> matrix. To show this, we will consider a smaller molecule <span class="math notranslate nohighlight">\(\text{LiH}\)</span>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mol_info</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;atom&quot;</span><span class="p">:</span> <span class="s2">&quot;Li 0 0 0;H 0 0 1.6;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;basis&quot;</span><span class="p">:</span> <span class="s2">&quot;sto3g&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;charge&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;spin&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">driver</span> <span class="o">=</span> <span class="n">PySCFDriver</span><span class="p">(</span><span class="o">**</span><span class="n">mol_info</span><span class="p">)</span>
+<span class="n">problem</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">hamiltonian</span> <span class="o">=</span> <span class="n">problem</span><span class="o">.</span><span class="n">hamiltonian</span>
+<span class="n">second_q_hamiltonian</span> <span class="o">=</span> <span class="n">problem</span><span class="o">.</span><span class="n">hamiltonian</span><span class="o">.</span><span class="n">second_q_op</span><span class="p">()</span>
+
+<span class="n">num_spin_orbitals</span> <span class="o">=</span> <span class="n">second_q_hamiltonian</span><span class="o">.</span><span class="n">num_spin_orbitals</span>
+
+<span class="n">one_body_tuple</span><span class="p">,</span> <span class="n">two_body_tuple</span> <span class="o">=</span> <span class="n">extract_fermionic_op</span><span class="p">(</span><span class="n">second_q_hamiltonian</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num_spin_orbitals</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">num_spin_orbitals</span><span class="o">=</span><span class="mi">12</span>
+</pre></div>
+</div>
+<p>Let’s construct such a matrix randomly. Noteworthy, such a matrix with 1 on the diagonal, an upper triangle filled with 0, and a random lower triangle is guaranteed to be invertible.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mapping_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">num_spin_orbitals</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">tril</span><span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">num_spin_orbitals</span><span class="p">,</span> <span class="n">num_spin_orbitals</span><span class="p">)),</span> <span class="n">k</span><span class="o">=-</span><span class="mi">1</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mapping_matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">0</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">1</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>To initialize the mapping, we only need to provide this matrix to <code class="code docutils literal notranslate"><span class="pre">FermionMapping</span></code>. The mapping is then used in the same way as before to construct a qubit Hamiltonian.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pauliarray.mapping.fermion</span> <span class="kn">import</span> <span class="n">FermionMapping</span>
+
+<span class="n">mapping</span> <span class="o">=</span> <span class="n">FermionMapping</span><span class="p">(</span><span class="n">mapping_matrix</span><span class="p">)</span>
+<span class="n">pa_rd_qubit_hamiltonien</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">assemble_qubit_hamiltonian_from_sparses</span><span class="p">(</span><span class="n">one_body_tuple</span><span class="p">,</span> <span class="n">two_body_tuple</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, to confirm that such a mapping is valid we can compare the qubit Hamiltonian it produces with the one we get from Jordan-Wigner mapping. These two Hamiltonians are expressing the same operator but in different basis. Therefore, their eigenvalues should be equals.</p>
+<p>Let’s check that this is true. This may take a while.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">jw_mapping</span> <span class="o">=</span> <span class="n">JordanWigner</span><span class="p">(</span><span class="n">num_spin_orbitals</span><span class="p">)</span>
+<span class="n">pa_jw_qubit_hamiltonien</span> <span class="o">=</span> <span class="n">rd_mapping</span><span class="o">.</span><span class="n">assemble_qubit_hamiltonian_from_sparses</span><span class="p">(</span><span class="n">one_body_tuple</span><span class="p">,</span> <span class="n">two_body_tuple</span><span class="p">)</span>
+
+<span class="n">eigvals_jw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">pa_jw_qubit_hamiltonien</span><span class="o">.</span><span class="n">to_matrix</span><span class="p">())</span>
+<span class="n">eigvals_rd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">pa_rd_qubit_hamiltonien</span><span class="o">.</span><span class="n">to_matrix</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">eigvals_jw</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">eigvals_rd</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="commutators.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Commutators</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../api_reference/pauliarray.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">pauliarray package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fermionic-hamiltonian-with-qiskit">Fermionic Hamiltonian with Qiskit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jordan-wigner-mapping-with-qiskit">Jordan Wigner Mapping with Qiskit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jordan-wigner-mapping-with-pauliarray">Jordan Wigner Mapping with PauliArray</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#general-random-mapping-with-pauliarray">General (Random) Mapping with PauliArray</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Quantum AlgoLab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Quantum AlgoLab.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1107 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>pauliarray.mapping package &#8212; PauliArray</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api_reference/pauliarray.mapping';</script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pauliarray.pauli package" href="pauliarray.pauli.html" />
+    <link rel="prev" title="pauliarray.conversion package" href="pauliarray.conversion.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="PauliArray - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="PauliArray - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    PauliArray
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/data_structures.html">Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/operations.html">Operations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/commutators.html">Commutators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/fermion_to_qubit_mapping.html">Fermion to Qubit Mapping</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="pauliarray.html">pauliarray package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.binary.html">pauliarray.binary package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.conversion.html">pauliarray.conversion package</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">pauliarray.mapping package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.pauli.html">pauliarray.pauli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.utils.html">pauliarray.utils package</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git/issues/new?title=Issue%20on%20page%20%2Fapi_reference/pauliarray.mapping.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>pauliarray.mapping package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray.mapping.fermion">pauliarray.mapping.fermion module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.BravyiKitaev"><code class="docutils literal notranslate"><span class="pre">BravyiKitaev</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.BravyiKitaev.__init__"><code class="docutils literal notranslate"><span class="pre">BravyiKitaev.__init__()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.BravyiKitaev._build_bravyi_kitaev_mapping_matrix"><code class="docutils literal notranslate"><span class="pre">BravyiKitaev._build_bravyi_kitaev_mapping_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping"><code class="docutils literal notranslate"><span class="pre">FermionMapping</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.mapping_matrix"><code class="docutils literal notranslate"><span class="pre">FermionMapping.mapping_matrix</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.name"><code class="docutils literal notranslate"><span class="pre">FermionMapping.name</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping._mapping_matrix_inv"><code class="docutils literal notranslate"><span class="pre">FermionMapping._mapping_matrix_inv</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping._heavyside_matrix"><code class="docutils literal notranslate"><span class="pre">FermionMapping._heavyside_matrix</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping._parity_matrix"><code class="docutils literal notranslate"><span class="pre">FermionMapping._parity_matrix</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.__init__"><code class="docutils literal notranslate"><span class="pre">FermionMapping.__init__()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping._flip_factors"><code class="docutils literal notranslate"><span class="pre">FermionMapping._flip_factors()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping._flip_operators"><code class="docutils literal notranslate"><span class="pre">FermionMapping._flip_operators()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping._update_factors"><code class="docutils literal notranslate"><span class="pre">FermionMapping._update_factors()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping._update_operators"><code class="docutils literal notranslate"><span class="pre">FermionMapping._update_operators()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping._update_operators_2"><code class="docutils literal notranslate"><span class="pre">FermionMapping._update_operators_2()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping._update_operators_4"><code class="docutils literal notranslate"><span class="pre">FermionMapping._update_operators_4()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.assemble_creation_annihilation_operators"><code class="docutils literal notranslate"><span class="pre">FermionMapping.assemble_creation_annihilation_operators()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.assemble_one_body_operator_array"><code class="docutils literal notranslate"><span class="pre">FermionMapping.assemble_one_body_operator_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.assemble_qubit_hamiltonian_from_arrays"><code class="docutils literal notranslate"><span class="pre">FermionMapping.assemble_qubit_hamiltonian_from_arrays()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.assemble_qubit_hamiltonian_from_sparses"><code class="docutils literal notranslate"><span class="pre">FermionMapping.assemble_qubit_hamiltonian_from_sparses()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.assemble_two_body_operator_array"><code class="docutils literal notranslate"><span class="pre">FermionMapping.assemble_two_body_operator_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.heavyside_matrix"><code class="docutils literal notranslate"><span class="pre">FermionMapping.heavyside_matrix</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.majoranas"><code class="docutils literal notranslate"><span class="pre">FermionMapping.majoranas()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.mapping_matrix_inv"><code class="docutils literal notranslate"><span class="pre">FermionMapping.mapping_matrix_inv</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.num_qubits"><code class="docutils literal notranslate"><span class="pre">FermionMapping.num_qubits</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.occupation_operators"><code class="docutils literal notranslate"><span class="pre">FermionMapping.occupation_operators()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.one_body_operator_from_array"><code class="docutils literal notranslate"><span class="pre">FermionMapping.one_body_operator_from_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.one_body_operator_from_sparse"><code class="docutils literal notranslate"><span class="pre">FermionMapping.one_body_operator_from_sparse()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.parity_matrix"><code class="docutils literal notranslate"><span class="pre">FermionMapping.parity_matrix</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.two_body_operator_from_array"><code class="docutils literal notranslate"><span class="pre">FermionMapping.two_body_operator_from_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.two_body_operator_from_sparse"><code class="docutils literal notranslate"><span class="pre">FermionMapping.two_body_operator_from_sparse()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.JordanWigner"><code class="docutils literal notranslate"><span class="pre">JordanWigner</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.JordanWigner.__init__"><code class="docutils literal notranslate"><span class="pre">JordanWigner.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.Parity"><code class="docutils literal notranslate"><span class="pre">Parity</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.Parity.__init__"><code class="docutils literal notranslate"><span class="pre">Parity.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray.mapping">Module contents</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="pauliarray-mapping-package">
+<h1>pauliarray.mapping package<a class="headerlink" href="#pauliarray-mapping-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-pauliarray.mapping.fermion">
+<span id="pauliarray-mapping-fermion-module"></span><h2>pauliarray.mapping.fermion module<a class="headerlink" href="#module-pauliarray.mapping.fermion" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.BravyiKitaev">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pauliarray.mapping.fermion.</span></span><span class="sig-name descname"><span class="pre">BravyiKitaev</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_qubits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#BravyiKitaev"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.BravyiKitaev" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pauliarray.mapping.fermion.FermionMapping" title="pauliarray.mapping.fermion.FermionMapping"><code class="xref py py-class docutils literal notranslate"><span class="pre">FermionMapping</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.BravyiKitaev.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_qubits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#BravyiKitaev.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.BravyiKitaev.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Initialize the Bravyi-Kitaev mapping for a given number of qubits. Maps fermionic operators to qubit operators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>num_qubits</strong> (<em>int</em>) – The number of qubits to be used in the mapping.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.BravyiKitaev._build_bravyi_kitaev_mapping_matrix">
+<span class="sig-name descname"><span class="pre">_build_bravyi_kitaev_mapping_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_qubits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#BravyiKitaev._build_bravyi_kitaev_mapping_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.BravyiKitaev._build_bravyi_kitaev_mapping_matrix" title="Link to this definition">#</a></dt>
+<dd><p>Constructs the Bravyi-Kitaev mapping matrix for the given number of qubits.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>num_qubits</strong> (<em>int</em>) – The number of qubits.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The Bravyi-Kitaev mapping matrix.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pauliarray.mapping.fermion.</span></span><span class="sig-name descname"><span class="pre">FermionMapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'mapping'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class to represent a Fermion-to-qubit mapping.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping.mapping_matrix">
+<span class="sig-name descname"><span class="pre">mapping_matrix</span></span><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping.mapping_matrix" title="Link to this definition">#</a></dt>
+<dd><p>A boolean numpy array representing the mapping matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping.name" title="Link to this definition">#</a></dt>
+<dd><p>A name identifier for the mapping (default is “mapping”).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping._mapping_matrix_inv">
+<span class="sig-name descname"><span class="pre">_mapping_matrix_inv</span></span><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping._mapping_matrix_inv" title="Link to this definition">#</a></dt>
+<dd><p>The inverse of the mapping matrix, initially None</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">and</span> <span class="pre">computed</span> <span class="pre">on</span> <span class="pre">demand.</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping._heavyside_matrix">
+<span class="sig-name descname"><span class="pre">_heavyside_matrix</span></span><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping._heavyside_matrix" title="Link to this definition">#</a></dt>
+<dd><p>The Heavyside matrix, initially None and computed</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">on</span> <span class="pre">demand.</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping._parity_matrix">
+<span class="sig-name descname"><span class="pre">_parity_matrix</span></span><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping._parity_matrix" title="Link to this definition">#</a></dt>
+<dd><p>The parity matrix, initially None and computed on demand.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>“np.ndarray[np.bool]”, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'mapping'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Constructs all the necessary attributes for the FermionMapping object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mapping_matrix</strong> – “np.ndarray[np.bool]”
+A boolean numpy array representing the mapping matrix.</p></li>
+<li><p><strong>name</strong> – str, optional
+A name identifier for the mapping (default is “mapping”).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping._flip_factors">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_flip_factors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i_orbitals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j_orbitals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping._flip_factors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping._flip_factors" title="Link to this definition">#</a></dt>
+<dd><p>Computes flip factors of the type</p>
+<div class="math notranslate nohighlight">
+\[f_\mu = (-1)^{\delta_{i_\mu j_\mu} + \delta_{i_\mu k_\mu} + \ldots}.\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i_orbitals</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.int</em><em>]</em><em>&quot;</em>) – The indices of the orbital i the operator is acting on.</p></li>
+<li><p><strong>j_orbitals</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.int</em><em>]</em><em>&quot;</em>) – The indices of the orbital i the operator is acting on.</p></li>
+<li><p><strong>etc</strong><strong>...</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The factors.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>NDArray[float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping._flip_operators">
+<span class="sig-name descname"><span class="pre">_flip_operators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i_orbitals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1"><span class="pre">OperatorArrayType1</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping._flip_operators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping._flip_operators" title="Link to this definition">#</a></dt>
+<dd><p>Constructs an OperatorArray with the <span class="math notranslate nohighlight">\(\mu^\text{th}\)</span> flip operators acting on the orbitals <span class="math notranslate nohighlight">\(i_\mu\)</span></p>
+<div class="math notranslate nohighlight">
+\[\hat{F}_\mu = \frac{1}{2}(1 + f_\mu \hat{Z}_q^{[\mathsf{M}^{-1}]_{i_\mu q}]})\]</div>
+<p>where <span class="math notranslate nohighlight">\(f_\mu\)</span> is a factor (+1 or -1) associted with the creation and annihilation operators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i_orbitals</strong> (<em>NDArray</em><em>[</em><em>int</em><em>]</em>) – The indices of the orbital i the operator is acting on</p></li>
+<li><p><strong>factors</strong> (<em>NDArray</em><em>[</em><em>float</em><em>]</em>) – The factors (+1 or -1) defining if a creation or an annihilation operator is</p></li>
+<li><p><strong>applied.</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The array of flip operators.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1">OperatorArrayType1</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping._update_factors">
+<span class="sig-name descname"><span class="pre">_update_factors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i_orbitals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j_orbitals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">float64</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping._update_factors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping._update_factors" title="Link to this definition">#</a></dt>
+<dd><p>Computes update factors of the type</p>
+<div class="math notranslate nohighlight">
+\[f_\mu = (-1)^{\theta_{i_\mu j_\mu} - \theta_{j_\mu i_\mu} + \ldots}.\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i_orbitals</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.int</em><em>]</em><em>&quot;</em>) – The indices of the orbital i the operator is acting on.</p></li>
+<li><p><strong>j_orbitals</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.int</em><em>]</em><em>&quot;</em>) – The indices of the orbital i the operator is acting on.</p></li>
+<li><p><strong>etc</strong><strong>...</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The factors.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>NDArray[float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping._update_operators">
+<span class="sig-name descname"><span class="pre">_update_operators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i_orbitals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j_orbitals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1"><span class="pre">OperatorArrayType1</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping._update_operators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping._update_operators" title="Link to this definition">#</a></dt>
+<dd><p>Updates the operators based on the given orbitals, using the
+Heaviside matrix, the inverse mapping matrix, and the transposed mapping matrix.
+The function processes the input orbitals to generate updated Z and X strings,
+used to create new Pauli operators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i_orbitals</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.int</em><em>]</em><em>&quot;</em>) – The first set of orbitals.</p></li>
+<li><p><strong>j_orbitals</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.int</em><em>]</em><em>&quot;</em>) – The second set of orbitals.</p></li>
+<li><p><strong>*args</strong> (<em>Tuple</em><em>[</em><em>&quot;np.ndarray</em><em>[</em><em>np.int</em><em>]</em><em>&quot;</em><em>]</em>) – Additional sets of orbitals.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated operators as an OperatorArrayType1 object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>opa.OperatorArrayType1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping._update_operators_2">
+<span class="sig-name descname"><span class="pre">_update_operators_2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i_orbitals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j_orbitals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1"><span class="pre">OperatorArrayType1</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping._update_operators_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping._update_operators_2" title="Link to this definition">#</a></dt>
+<dd><p>Constructs an OperatorArray with the <span class="math notranslate nohighlight">\(\mu^\text{th}\)</span> main operators acting on the orbitals <span class="math notranslate nohighlight">\(i_\mu\)</span>
+and <span class="math notranslate nohighlight">\(j_\mu\)</span> in a one-body fermionic operator</p>
+<div class="math notranslate nohighlight">
+\[\hat{U}^{(2)}_{\mu} = (-1)^{\theta_{i_\mu j_ \mu}} \hat{X}_q^{M_{qi_\mu} + M_{qj_\mu}}.\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i_orbitals</strong> (<em>NDArray</em><em>[</em><em>int</em><em>]</em>) – The indices of the orbital i the operator is acting on.</p></li>
+<li><p><strong>j_orbitals</strong> (<em>NDArray</em><em>[</em><em>int</em><em>]</em>) – The indices of the orbital j the operator is acting on.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The array of operators.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1">OperatorArrayType1</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping._update_operators_4">
+<span class="sig-name descname"><span class="pre">_update_operators_4</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i_orbitals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j_orbitals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k_orbitals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l_orbitals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1"><span class="pre">OperatorArrayType1</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping._update_operators_4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping._update_operators_4" title="Link to this definition">#</a></dt>
+<dd><p>Constructs an OperatorArray with the <span class="math notranslate nohighlight">\(\mu^\text{th}\)</span> main operators acting on the orbitals
+<span class="math notranslate nohighlight">\(i_\mu\)</span>, <span class="math notranslate nohighlight">\(j_\mu\)</span>, <span class="math notranslate nohighlight">\(k_\mu\)</span> and <span class="math notranslate nohighlight">\(l_\mu\)</span> in a two-body fermionic operator.</p>
+<div class="math notranslate nohighlight">
+\[(-1)^{\theta_{ij} + \theta_{i_\mu k_\mu} + \theta_{i_\mu l_\mu} + \theta_{j_\mu k_\mu}  +
+    \theta_{j_\mu l_\mu} + \theta_{k_\mu l_\mu}}
+    \hat{X}_q^{M_{qi_\mu} + M_{qj_\mu} + M_{qk_\mu} + M_{ql_\mu}}
+    \hat{Z}_q^{(\theta_{i_\mu p} + \theta_{j_\mu p} + \theta_{k_\mu p} +
+    \theta_{l_\mu p})[\mathsf{M}^{-1}]_{pq}}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i_orbitals</strong> (<em>NDArray</em><em>[</em><em>int</em><em>]</em>) – The indices of the orbital i the operator is acting on.</p></li>
+<li><p><strong>j_orbitals</strong> (<em>NDArray</em><em>[</em><em>int</em><em>]</em>) – The indices of the orbital j the operator is acting on.</p></li>
+<li><p><strong>k_orbitals</strong> (<em>NDArray</em><em>[</em><em>int</em><em>]</em>) – The indices of the orbital k the operator is acting on.</p></li>
+<li><p><strong>l_orbitals</strong> (<em>NDArray</em><em>[</em><em>int</em><em>]</em>) – The indices of the orbital l the operator is acting on.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The array of operators.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1">OperatorArrayType1</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping.assemble_creation_annihilation_operators">
+<span class="sig-name descname"><span class="pre">assemble_creation_annihilation_operators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1"><span class="pre">OperatorArrayType1</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1"><span class="pre">OperatorArrayType1</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping.assemble_creation_annihilation_operators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping.assemble_creation_annihilation_operators" title="Link to this definition">#</a></dt>
+<dd><p>Constructs the creation and annihilation operators for all available states and returns them as OperatorArrays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The creation operators
+OperatorArrayType1: The annihilation operators</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1">OperatorArrayType1</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping.assemble_one_body_operator_array">
+<span class="sig-name descname"><span class="pre">assemble_one_body_operator_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1"><span class="pre">OperatorArrayType1</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping.assemble_one_body_operator_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping.assemble_one_body_operator_array" title="Link to this definition">#</a></dt>
+<dd><p>Assembles an array of one-body operators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An operator array of one-body operators.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>opa.OperatorArrayType1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping.assemble_qubit_hamiltonian_from_arrays">
+<span class="sig-name descname"><span class="pre">assemble_qubit_hamiltonian_from_arrays</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">one_body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.complex</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">two_body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.complex</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator" title="pauliarray.pauli.operator.Operator"><span class="pre">Operator</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping.assemble_qubit_hamiltonian_from_arrays"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping.assemble_qubit_hamiltonian_from_arrays" title="Link to this definition">#</a></dt>
+<dd><p>Assemble the whole qubit Hamiltonian as an Operator using fermionic integrals given as arrays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>one_body</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.complex</em><em>]</em><em>&quot;</em>) – The one-body fermionic integrals as a 2d array</p></li>
+<li><p><strong>two_body</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.complex</em><em>]</em><em>&quot;</em>) – The two-body fermionic integrals as a 4d array (in physicist order)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The qubit Hamiltonia</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator" title="pauliarray.pauli.operator.Operator">Operator</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping.assemble_qubit_hamiltonian_from_sparses">
+<span class="sig-name descname"><span class="pre">assemble_qubit_hamiltonian_from_sparses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">one_body_tuple</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">two_body_tuple</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator" title="pauliarray.pauli.operator.Operator"><span class="pre">Operator</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping.assemble_qubit_hamiltonian_from_sparses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping.assemble_qubit_hamiltonian_from_sparses" title="Link to this definition">#</a></dt>
+<dd><p>Assemble the whole qubit Hamiltonian as an Operator using fermionic integrals given in sparse representations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>one_body_tuple</strong> (<em>Tuple</em>) – Contains the argument for the <cite>one_body_operator_from_sparse</cite> method.</p></li>
+<li><p><strong>two_body_tuple</strong> (<em>Tuple</em>) – Contains the argument for the <cite>two_body_operator_from_sparse</cite> method.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The qubit Hamiltonian</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>op.Operator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping.assemble_two_body_operator_array">
+<span class="sig-name descname"><span class="pre">assemble_two_body_operator_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1"><span class="pre">OperatorArrayType1</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping.assemble_two_body_operator_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping.assemble_two_body_operator_array" title="Link to this definition">#</a></dt>
+<dd><p>Assembles an array of two-body operators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An operator array of two-body operators.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>opa.OperatorArrayType1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping.heavyside_matrix">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">heavyside_matrix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping.heavyside_matrix" title="Link to this definition">#</a></dt>
+<dd><p>Returns the Heavyside matrix. Computes it if not already computed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The Heavyside matrix.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping.majoranas">
+<span class="sig-name descname"><span class="pre">majoranas</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray" title="pauliarray.pauli.pauli_array.PauliArray"><span class="pre">PauliArray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray" title="pauliarray.pauli.pauli_array.PauliArray"><span class="pre">PauliArray</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping.majoranas"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping.majoranas" title="Link to this definition">#</a></dt>
+<dd><p>In a fermion-to-qubit mapping, each creation/annihilation operator is a sum of two majorana operators,</p>
+<div class="math notranslate nohighlight">
+\[0.5 * (P_\text{real} + P_\text{imag})\]</div>
+<p>each being a Pauli string. This methods construct these majorana operators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The Pauli strings for <span class="math notranslate nohighlight">\(P_\text{real}\)</span>
+PauliArray: The Pauli strings for <span class="math notranslate nohighlight">\(P_\text{imag}\)</span></p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray" title="pauliarray.pauli.pauli_array.PauliArray">PauliArray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping.mapping_matrix_inv">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mapping_matrix_inv</span></span><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping.mapping_matrix_inv" title="Link to this definition">#</a></dt>
+<dd><p>Returns the inverse of the mapping matrix. Computes it if not already computed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The inverse of the mapping matrix.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping.num_qubits">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">num_qubits</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping.num_qubits" title="Link to this definition">#</a></dt>
+<dd><p>Returns the number of qubits based on the shape of the mapping matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The number of qubits.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping.occupation_operators">
+<span class="sig-name descname"><span class="pre">occupation_operators</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1"><span class="pre">OperatorArrayType1</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping.occupation_operators"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping.occupation_operators" title="Link to this definition">#</a></dt>
+<dd><p>Constructs the occupation operators for all available states and returns them as OperatorArray.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An Operator array with all the occupation operators.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>opa.OperatorArrayType1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping.one_body_operator_from_array">
+<span class="sig-name descname"><span class="pre">one_body_operator_from_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">one_body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.complex</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator" title="pauliarray.pauli.operator.Operator"><span class="pre">Operator</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping.one_body_operator_from_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping.one_body_operator_from_array" title="Link to this definition">#</a></dt>
+<dd><p>Converts a one-body array to an operator object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>one_body</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.complex</em><em>]</em><em>&quot;</em>) – A complex numpy array representing the one-body operator.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding operator object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>op.Operator</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>AssertionError. If the input array is not 2-dimensional</strong><strong> or </strong><strong>if its dimensions do not match the</strong> – </p></li>
+<li><p><strong>number</strong><strong> of </strong><strong>qubits.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping.one_body_operator_from_sparse">
+<span class="sig-name descname"><span class="pre">one_body_operator_from_sparse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">locations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.complex</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(1,</span> <span class="pre">-1)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator" title="pauliarray.pauli.operator.Operator"><span class="pre">Operator</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping.one_body_operator_from_sparse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping.one_body_operator_from_sparse" title="Link to this definition">#</a></dt>
+<dd><p>Assemble a one body fermionic operator as an Operator using fermionic integrals given in sparse representations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>locations</strong> (<em>List</em><em>[</em><em>&quot;np.ndarray</em><em>[</em><em>np.int</em><em>]</em><em>&quot;</em><em>]</em>) – Pairs of orbital indices</p></li>
+<li><p><strong>values</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.complex</em><em>]</em><em>&quot;</em>) – Values of the integral for the pairs of orbitals</p></li>
+<li><p><strong>signs</strong> (<em>the operators are creation</em><em> or </em><em>annihilation. Can be a list</em><em> of </em><em>two</em>) – Values +1 or -1 determining if</p></li>
+<li><p><strong>signs</strong></p></li>
+<li><p><strong>sign.</strong> (<em>or two arrays of</em>)</p></li>
+<li><p><strong>[</strong><strong>1</strong> (<em>Defaults to</em>)</p></li>
+<li><p><strong>-1</strong><strong>]</strong><strong>.</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The qubit operator</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>op.Operator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping.parity_matrix">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parity_matrix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.bool</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping.parity_matrix" title="Link to this definition">#</a></dt>
+<dd><p>Returns the parity matrix. Computes it if not already computed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The parity matrix.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>“np.ndarray[np.bool]”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping.two_body_operator_from_array">
+<span class="sig-name descname"><span class="pre">two_body_operator_from_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">two_body</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.complex</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator" title="pauliarray.pauli.operator.Operator"><span class="pre">Operator</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping.two_body_operator_from_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping.two_body_operator_from_array" title="Link to this definition">#</a></dt>
+<dd><p>Converts a two-body array to an operator object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>two_body</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.complex</em><em>]</em><em>&quot;</em>) – A complex numpy array representing the two-body operator.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding operator object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>op.Operator</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>AssertionError. If the input array's dimensions do not match the number</strong><strong> of </strong><strong>qubits</strong><strong> or </strong><strong>if it does not satisfy</strong> – </p></li>
+<li><p><strong>the required symmetries.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.FermionMapping.two_body_operator_from_sparse">
+<span class="sig-name descname"><span class="pre">two_body_operator_from_sparse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">locations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.complex</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(1,</span> <span class="pre">1,</span> <span class="pre">-1,</span> <span class="pre">-1)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator" title="pauliarray.pauli.operator.Operator"><span class="pre">Operator</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#FermionMapping.two_body_operator_from_sparse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.FermionMapping.two_body_operator_from_sparse" title="Link to this definition">#</a></dt>
+<dd><p>Assemble a two-body fermionic operator as an Operator using fermionic integrals given in sparse representations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>locations</strong> (<em>List</em><em>[</em><em>&quot;np.ndarray</em><em>[</em><em>np.int</em><em>]</em><em>&quot;</em><em>]</em>) – Quartet of orbital indices</p></li>
+<li><p><strong>values</strong> (<em>&quot;np.ndarray</em><em>[</em><em>np.complex</em><em>]</em><em>&quot;</em>) – Values of the integral for the quartets of orbitals</p></li>
+<li><p><strong>signs</strong> (<em>the operators are creation</em><em> or </em><em>annihilation. Can be a list</em><em> of </em><em>two</em>) – Values +1 or -1 determining if</p></li>
+<li><p><strong>signs</strong></p></li>
+<li><p><strong>sign.</strong> (<em>or two arrays of</em>)</p></li>
+<li><p><strong>[</strong><strong>+1</strong> (<em>Defaults to</em>)</p></li>
+<li><p><strong>+1</strong></p></li>
+<li><p><strong>-1</strong></p></li>
+<li><p><strong>-1</strong><strong>]</strong><strong>.</strong></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The qubit operator</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>op.Operator</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.JordanWigner">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pauliarray.mapping.fermion.</span></span><span class="sig-name descname"><span class="pre">JordanWigner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_qubits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#JordanWigner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.JordanWigner" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pauliarray.mapping.fermion.FermionMapping" title="pauliarray.mapping.fermion.FermionMapping"><code class="xref py py-class docutils literal notranslate"><span class="pre">FermionMapping</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.JordanWigner.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_qubits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#JordanWigner.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.JordanWigner.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Initializes the Jordan-Wigner mapping for a given number of qubits. Maps fermionic operators to qubit operators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>num_qubits</strong> (<em>int</em>) – The number of qubits to be used in the mapping.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.Parity">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pauliarray.mapping.fermion.</span></span><span class="sig-name descname"><span class="pre">Parity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_qubits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#Parity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.Parity" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pauliarray.mapping.fermion.FermionMapping" title="pauliarray.mapping.fermion.FermionMapping"><code class="xref py py-class docutils literal notranslate"><span class="pre">FermionMapping</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pauliarray.mapping.fermion.Parity.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_qubits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pauliarray/mapping/fermion.html#Parity.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.mapping.fermion.Parity.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Initializes the Parity mapping for a given number of qubits. Maps fermionic operators to qubit operators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>num_qubits</strong> (<em>int</em>) – The number of qubits to be used in the mapping.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pauliarray.mapping">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pauliarray.mapping" title="Link to this heading">#</a></h2>
+<p>Mapping module. Implements mapping of operators into qubit operators.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="pauliarray.conversion.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">pauliarray.conversion package</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="pauliarray.pauli.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">pauliarray.pauli package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray.mapping.fermion">pauliarray.mapping.fermion module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.BravyiKitaev"><code class="docutils literal notranslate"><span class="pre">BravyiKitaev</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.BravyiKitaev.__init__"><code class="docutils literal notranslate"><span class="pre">BravyiKitaev.__init__()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.BravyiKitaev._build_bravyi_kitaev_mapping_matrix"><code class="docutils literal notranslate"><span class="pre">BravyiKitaev._build_bravyi_kitaev_mapping_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping"><code class="docutils literal notranslate"><span class="pre">FermionMapping</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.mapping_matrix"><code class="docutils literal notranslate"><span class="pre">FermionMapping.mapping_matrix</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.name"><code class="docutils literal notranslate"><span class="pre">FermionMapping.name</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping._mapping_matrix_inv"><code class="docutils literal notranslate"><span class="pre">FermionMapping._mapping_matrix_inv</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping._heavyside_matrix"><code class="docutils literal notranslate"><span class="pre">FermionMapping._heavyside_matrix</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping._parity_matrix"><code class="docutils literal notranslate"><span class="pre">FermionMapping._parity_matrix</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.__init__"><code class="docutils literal notranslate"><span class="pre">FermionMapping.__init__()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping._flip_factors"><code class="docutils literal notranslate"><span class="pre">FermionMapping._flip_factors()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping._flip_operators"><code class="docutils literal notranslate"><span class="pre">FermionMapping._flip_operators()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping._update_factors"><code class="docutils literal notranslate"><span class="pre">FermionMapping._update_factors()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping._update_operators"><code class="docutils literal notranslate"><span class="pre">FermionMapping._update_operators()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping._update_operators_2"><code class="docutils literal notranslate"><span class="pre">FermionMapping._update_operators_2()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping._update_operators_4"><code class="docutils literal notranslate"><span class="pre">FermionMapping._update_operators_4()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.assemble_creation_annihilation_operators"><code class="docutils literal notranslate"><span class="pre">FermionMapping.assemble_creation_annihilation_operators()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.assemble_one_body_operator_array"><code class="docutils literal notranslate"><span class="pre">FermionMapping.assemble_one_body_operator_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.assemble_qubit_hamiltonian_from_arrays"><code class="docutils literal notranslate"><span class="pre">FermionMapping.assemble_qubit_hamiltonian_from_arrays()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.assemble_qubit_hamiltonian_from_sparses"><code class="docutils literal notranslate"><span class="pre">FermionMapping.assemble_qubit_hamiltonian_from_sparses()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.assemble_two_body_operator_array"><code class="docutils literal notranslate"><span class="pre">FermionMapping.assemble_two_body_operator_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.heavyside_matrix"><code class="docutils literal notranslate"><span class="pre">FermionMapping.heavyside_matrix</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.majoranas"><code class="docutils literal notranslate"><span class="pre">FermionMapping.majoranas()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.mapping_matrix_inv"><code class="docutils literal notranslate"><span class="pre">FermionMapping.mapping_matrix_inv</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.num_qubits"><code class="docutils literal notranslate"><span class="pre">FermionMapping.num_qubits</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.occupation_operators"><code class="docutils literal notranslate"><span class="pre">FermionMapping.occupation_operators()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.one_body_operator_from_array"><code class="docutils literal notranslate"><span class="pre">FermionMapping.one_body_operator_from_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.one_body_operator_from_sparse"><code class="docutils literal notranslate"><span class="pre">FermionMapping.one_body_operator_from_sparse()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.parity_matrix"><code class="docutils literal notranslate"><span class="pre">FermionMapping.parity_matrix</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.two_body_operator_from_array"><code class="docutils literal notranslate"><span class="pre">FermionMapping.two_body_operator_from_array()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.FermionMapping.two_body_operator_from_sparse"><code class="docutils literal notranslate"><span class="pre">FermionMapping.two_body_operator_from_sparse()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.JordanWigner"><code class="docutils literal notranslate"><span class="pre">JordanWigner</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.JordanWigner.__init__"><code class="docutils literal notranslate"><span class="pre">JordanWigner.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.Parity"><code class="docutils literal notranslate"><span class="pre">Parity</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.mapping.fermion.Parity.__init__"><code class="docutils literal notranslate"><span class="pre">Parity.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray.mapping">Module contents</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Quantum AlgoLab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Quantum AlgoLab.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

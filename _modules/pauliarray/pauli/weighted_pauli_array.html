@@ -1,0 +1,1252 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pauliarray.pauli.weighted_pauli_array &#8212; PauliArray</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../../../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pauliarray/pauli/weighted_pauli_array';</script>
+    <link rel="icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.svg" class="logo__image only-light" alt="PauliArray - Home"/>
+    <img src="../../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="PauliArray - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../index.html">
+                    PauliArray
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/data_structures.html">Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/operations.html">Operations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/commutators.html">Commutators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/fermion_to_qubit_mapping.html">Fermion to Qubit Mapping</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api_reference/pauliarray.html">pauliarray package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.binary.html">pauliarray.binary package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.conversion.html">pauliarray.conversion package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.mapping.html">pauliarray.mapping package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.pauli.html">pauliarray.pauli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.utils.html">pauliarray.utils package</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git/issues/new?title=Issue%20on%20page%20%2F_modules/pauliarray/pauli/weighted_pauli_array.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for pauliarray.pauli.weighted_pauli_array</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy.typing</span> <span class="kn">import</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">NDArray</span>
+
+<span class="kn">import</span> <span class="nn">pauliarray.pauli.pauli_array</span> <span class="k">as</span> <span class="nn">pa</span>
+<span class="kn">from</span> <span class="nn">pauliarray.utils.array_operations</span> <span class="kn">import</span> <span class="n">broadcast_shape</span><span class="p">,</span> <span class="n">is_broadcastable</span><span class="p">,</span> <span class="n">is_concatenatable</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pauliarray.pauli.operator</span> <span class="kn">import</span> <span class="n">Operator</span>
+    <span class="kn">from</span> <span class="nn">pauliarray.pauli.operator_array_type_1</span> <span class="kn">import</span> <span class="n">OperatorArrayType1</span>
+
+
+<div class="viewcode-block" id="WeightedPauliArray">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray">[docs]</a>
+<span class="k">class</span> <span class="nc">WeightedPauliArray</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paulis</span><span class="p">:</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s2">&quot;np.ndarray[np.complex]&quot;</span><span class="p">,</span> <span class="n">Number</span><span class="p">]):</span>
+
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">paulis</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
+            <span class="n">shape</span> <span class="o">=</span> <span class="n">broadcast_shape</span><span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">paulis</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+            <span class="n">paulis</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span><span class="n">paulis</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+            <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span> <span class="o">=</span> <span class="n">weights</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_paulis</span> <span class="o">=</span> <span class="n">paulis</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">num_qubits</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_paulis</span><span class="o">.</span><span class="n">num_qubits</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ndim</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.complex]&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">paulis</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_paulis</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="n">new_paulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_paulis</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="n">new_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">WeightedPauliArray</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">_weights</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_paulis</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">_paulis</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;WeightedPauliArray: num_qubits = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span><span class="si">}</span><span class="s2">, shape = </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">}</span><span class="s2">, ...&quot;</span>
+
+<div class="viewcode-block" id="WeightedPauliArray.__eq__">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.__eq__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks element-wise if the other WeightedPauliArray is equal.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (WeightedPauliArray): An other WeightedPauliArray. Must be broadcastable</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            &quot;np.ndarray[np.bool]&quot;: _description_</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">eq_paulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">paulis</span>
+        <span class="n">eq_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">eq_paulis</span><span class="p">,</span> <span class="n">eq_weights</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_mul</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Number</span><span class="p">,</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Number</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mul_weights</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">WeightedPauliArray</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compose_weighted_pauli_array</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+    <span class="fm">__mul__</span> <span class="o">=</span> <span class="fm">__rmul__</span> <span class="o">=</span> <span class="n">_mul</span>
+
+<div class="viewcode-block" id="WeightedPauliArray.copy">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.copy">[docs]</a>
+    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a copy of the WeightedPauliArray.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            WeightedPauliArray: Copied WeightedPauliArray.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_paulis</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.adjoint">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.adjoint">[docs]</a>
+    <span class="k">def</span> <span class="nf">adjoint</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.reshape">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.reshape">[docs]</a>
+    <span class="k">def</span> <span class="nf">reshape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reshape the WeightedPauliArray</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            shape (tuple[int]): New shape</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            WeightedPauliArray: Reshaped WeightedPauliArray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># TODO check number of dimensions in shape</span>
+
+        <span class="n">new_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">new_paulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_paulis</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.flatten">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.flatten">[docs]</a>
+    <span class="k">def</span> <span class="nf">flatten</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a copy of the WeightedPauliArray flattened into one dimension.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            WeightedPauliArray: A flattened copy of the current WeightedPauliArray.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.squeeze">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.squeeze">[docs]</a>
+    <span class="k">def</span> <span class="nf">squeeze</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a WeightedPauliArray with axes of length one removed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            WeightedPauliArray: The squeezed WeightedPauliArray.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_paulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+        <span class="n">new_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.remove">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.remove">[docs]</a>
+    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a WeightedPauliArray with removed item at given index.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            index (int): Index of element to remove.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            WeightedPauliArray: WeightedPauliArray with removed item at given index.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_paulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">new_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.extract">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.extract">[docs]</a>
+    <span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">condition</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">NDArray</span><span class="p">,</span> <span class="nb">list</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the Pauli strings from the WeightedPauliArray object that satisfy some condition.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">          condition (Union[NDArray, list]): An array whose nonzero or True entries indicate the Pauli strings of WeightedPauliArray to extract.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            WeightedPauliArray: A new WeightedPauliArray object containing the extracted Pauli strings.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the shape of the condition array is not equal to shape of the WeightedPauliArray.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">condition</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">condition</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">condition</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The condition array must have the same shape as the weighted Paulis.&quot;</span><span class="p">)</span>
+
+        <span class="n">new_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">[</span><span class="n">condition</span><span class="p">]</span>
+        <span class="n">new_paulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="p">[</span><span class="n">condition</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_weights</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.take_qubits">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.take_qubits">[docs]</a>
+    <span class="k">def</span> <span class="nf">take_qubits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">,</span> <span class="nb">range</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">indices</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+        <span class="n">new_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">new_paulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">take_qubits</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.compress_qubits">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.compress_qubits">[docs]</a>
+    <span class="k">def</span> <span class="nf">compress_qubits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">condition</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+        <span class="n">new_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">new_paulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">compress_qubits</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.compose">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.compose">[docs]</a>
+    <span class="k">def</span> <span class="nf">compose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">WeightedPauliArray</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compose_weighted_pauli_array</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">NotImplemented</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.compose_weighted_pauli_array">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.compose_weighted_pauli_array">[docs]</a>
+    <span class="k">def</span> <span class="nf">compose_weighted_pauli_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+        <span class="n">new_paulis</span><span class="p">,</span> <span class="n">phases</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_paulis</span><span class="o">.</span><span class="n">compose_pauli_array</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">paulis</span><span class="p">)</span>
+        <span class="n">new_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">weights</span> <span class="o">*</span> <span class="n">phases</span>
+
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.mul_weights">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.mul_weights">[docs]</a>
+    <span class="k">def</span> <span class="nf">mul_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Number</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+        <span class="n">new_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">*</span> <span class="n">other</span>
+        <span class="n">new_paulis</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.tensor">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.tensor">[docs]</a>
+    <span class="k">def</span> <span class="nf">tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">WeightedPauliArray</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor_weighted_pauli_array</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">NotImplemented</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.tensor_weighted_pauli_array">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.tensor_weighted_pauli_array">[docs]</a>
+    <span class="k">def</span> <span class="nf">tensor_weighted_pauli_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+        <span class="n">new_paulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">tensor_pauli_array</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">paulis</span><span class="p">)</span>
+        <span class="n">new_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">weights</span>
+
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.add_weighted_pauli_array">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.add_weighted_pauli_array">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_weighted_pauli_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;OperatorArrayType1&quot;</span><span class="p">:</span>
+
+        <span class="kn">from</span> <span class="nn">pauliarray.pauli.operator_array_type_1</span> <span class="kn">import</span> <span class="n">OperatorArrayType1</span>
+
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">num_qubits</span>
+        <span class="k">assert</span> <span class="n">is_broadcastable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="n">new_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">weights</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">new_paulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">add_pauli_array</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">paulis</span><span class="p">)</span>
+
+        <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">OperatorArrayType1</span><span class="o">.</span><span class="n">from_weighted_pauli_array</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.commute_with">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.commute_with">[docs]</a>
+    <span class="k">def</span> <span class="nf">commute_with</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">commute_with</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">paulis</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.bitwise_commute_with">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.bitwise_commute_with">[docs]</a>
+    <span class="k">def</span> <span class="nf">bitwise_commute_with</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">bitwise_commute_with</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">paulis</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.inspect">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.inspect">[docs]</a>
+    <span class="k">def</span> <span class="nf">inspect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Empty PauliArray&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">label_table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_table_1d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">to_labels</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;PauliArray</span><span class="se">\n</span><span class="si">{</span><span class="n">label_table</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">label_table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_table_2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">to_labels</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;PauliArray</span><span class="se">\n</span><span class="si">{</span><span class="n">label_table</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="n">label_table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_table_nd</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">to_labels</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;PauliArray</span><span class="se">\n</span><span class="si">{</span><span class="n">label_table</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.x">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.x">[docs]</a>
+    <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply X transformations on qubits of WeightedPauliStrings. This leaves the PauliStrings unchanged but produce</span>
+<span class="sd">        phase factors -1 when operators are Y or Z.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            qubits (int or list[int]): The qubits on which to apply the X.</span>
+<span class="sd">            inplace (bool): Apply the changes to self if True. Return a modified copy if False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            self_copy (WeightedPauliArray): A modified copy of self, only if inplace=True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">qubits</span><span class="p">)</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">factors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">qubits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span> <span class="o">*=</span> <span class="n">factors</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.h">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.h">[docs]</a>
+    <span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply H transformations on qubits of WeightedPauliStrings. This exchanges X for Z and vice-versa and Y into -Y.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            qubits (int or list[int]): The qubits on which to apply the H.</span>
+<span class="sd">            inplace (bool): Apply the changes to self if True. Return a modified copy if False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            self_copy (WeightedPauliArray): A modified copy of self, only if inplace=True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="n">qubits</span><span class="p">)</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">factors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="n">qubits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span> <span class="o">*=</span> <span class="n">factors</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.s">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.s">[docs]</a>
+    <span class="k">def</span> <span class="nf">s</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply S transformations on qubits of WeightedPauliStrings. This exchanges X for Y and vice-versa with respective factors.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            qubits (int or list[int]): The qubits on which to apply the S.</span>
+<span class="sd">            inplace (bool): Apply the changes to self if True. Return a modified copy if False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            self_copy (WeightedPauliArray): A modified copy of self, only if inplace=True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">qubits</span><span class="p">)</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">factors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">qubits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span> <span class="o">*=</span> <span class="n">factors</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.cx">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.cx">[docs]</a>
+    <span class="k">def</span> <span class="nf">cx</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">control_qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
+        <span class="n">target_qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
+        <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply CX transformations on qubits of WeightedPauliStrings. The order of the CX is set by the order of the qubits.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            control_qubits (int or list[int]): The qubits which controls the CZ.</span>
+<span class="sd">            target_qubits (int or list[int]): The qubits target by CZ.</span>
+<span class="sd">            inplace (bool): Apply the changes to self if True. Return a modified copy if False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            self_copy (WeightedPauliArray): A modified copy of self, only if inplace=True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="n">control_qubits</span><span class="p">,</span> <span class="n">target_qubits</span><span class="p">)</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">factors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="n">control_qubits</span><span class="p">,</span> <span class="n">target_qubits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span> <span class="o">*=</span> <span class="n">factors</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.cz">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.cz">[docs]</a>
+    <span class="k">def</span> <span class="nf">cz</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">control_qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
+        <span class="n">target_qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
+        <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply CZ transformations on qubits of WeightedPauliStrings. The order of the CZ is set by the order of the qubits.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            control_qubits (int or list[int]): The qubits which controls the CZ.</span>
+<span class="sd">            target_qubits (int or list[int]): The qubits target by CZ.</span>
+<span class="sd">            inplace (bool): Apply the changes to self if True. Return a modified copy if False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            self_copy (WeightedPauliArray): A modified copy of self, only if inplace=True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="n">control_qubits</span><span class="p">,</span> <span class="n">target_qubits</span><span class="p">)</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">factors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="n">control_qubits</span><span class="p">,</span> <span class="n">target_qubits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span> <span class="o">*=</span> <span class="n">factors</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.clifford_conjugate">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.clifford_conjugate">[docs]</a>
+    <span class="k">def</span> <span class="nf">clifford_conjugate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clifford</span><span class="p">:</span> <span class="s2">&quot;Operator&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs a Clifford transformation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            clifford (Operator) : Must represent a Clifford transformation with the correct number of qubits.</span>
+<span class="sd">            inplace (bool): Apply the changes to self if True. Return a modified copy if False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            WeightedPauliArray: The transformed WeightedPauliArray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">new_paulis</span><span class="p">,</span> <span class="n">factors</span> <span class="o">=</span> <span class="n">clifford</span><span class="o">.</span><span class="n">clifford_conjugate_pauli_array_old</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="p">)</span>
+        <span class="n">new_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">*</span> <span class="n">factors</span>
+        <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_paulis</span> <span class="o">=</span> <span class="n">new_paulis</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span> <span class="o">=</span> <span class="n">new_weights</span>
+
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.expectation_values_from_paulis">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.expectation_values_from_paulis">[docs]</a>
+    <span class="k">def</span> <span class="nf">expectation_values_from_paulis</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">paulis_expectation_values</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.complex]&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the WeightedPauliArray expectation value given the expectation values of the Paulis.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            paulis_expectation_values (NDArray[float]): _description_</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            NDArray: _description_</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">paulis_expectation_values</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">*</span> <span class="n">paulis_expectation_values</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.covariances_from_paulis">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.covariances_from_paulis">[docs]</a>
+    <span class="k">def</span> <span class="nf">covariances_from_paulis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paulis_covariances</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.complex]&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the WeightedPauliArray covariances given the covariances of the Paulis.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            paulis_covariances (NDArray[float]): _description_</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            NDArray: _description_</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">paulis_covariances</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+
+        <span class="n">flat_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="n">flat_paulis_covariances</span> <span class="o">=</span> <span class="n">paulis_covariances</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+
+        <span class="n">flat_wpaulis_covariances</span> <span class="o">=</span> <span class="n">flat_weights</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">flat_weights</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span> <span class="o">*</span> <span class="n">flat_paulis_covariances</span>
+
+        <span class="k">return</span> <span class="n">flat_wpaulis_covariances</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.update_weights">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.update_weights">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">new_weights</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_weights</span> <span class="o">=</span> <span class="n">new_weights</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.update_weights_from_other">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.update_weights_from_other">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_weights_from_other</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paulis</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">paulis</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_weights</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.is_diagonal">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.is_diagonal">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_diagonal</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if the Pauli strings are diagonal i.e. if all Pauli strings are I or Z.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            NDArray[bool]: True if the Pauli string is diagonal, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_paulis</span><span class="o">.</span><span class="n">is_diagonal</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.to_matrices">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.to_matrices">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_matrices</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the WeightedPauliArray as a numpy matrix.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            matrices (NDArray): An ndarray of shape self.shape + (n**2, n**2).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">to_matrices</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.new">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.new">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">new</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">num_qubits</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>
+        <span class="n">paulis</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="o">.</span><span class="n">identities</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">paulis</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.empty">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.empty">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">empty</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns an empty WeightedPauliArray with the number of qubits already set.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            num_qubits (int): The number of qubits.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            WeightedPauliArray: An empty WeightedPauliArray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">paulis</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="o">.</span><span class="n">identities</span><span class="p">((),</span> <span class="n">num_qubits</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">paulis</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.random">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.random">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">random</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">num_qubits</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a PauliArray of a given shape and number of qubits filled with random Pauli strings.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            shape (_type_): Shape of new PauliArray.</span>
+<span class="sd">            num_qubits (_type_): Number of qubits of new PauliArray.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            new_PauliArray (PauliArray): The PauliArray created.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">random_paulis</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">)</span>
+        <span class="n">random_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="o">*</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">random_paulis</span><span class="p">,</span> <span class="n">random_weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.from_labels_and_weights">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.from_labels_and_weights">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_labels_and_weights</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+        <span class="n">paulis</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="o">.</span><span class="n">from_labels</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">paulis</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.from_z_strings_and_x_strings_and_weights">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.from_z_strings_and_x_strings_and_weights">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_z_strings_and_x_strings_and_weights</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">z_strings</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">,</span>
+        <span class="n">x_strings</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">,</span>
+        <span class="n">weights</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.complex]&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+
+        <span class="n">paulis</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">(</span><span class="n">z_strings</span><span class="p">,</span> <span class="n">x_strings</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">paulis</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.from_paulis">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.from_paulis">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_paulis</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">paulis</span><span class="p">:</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">paulis</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">paulis</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.to_npz">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.to_npz">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_npz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">zx_strings</span><span class="p">)</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.from_npz">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.from_npz">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_npz</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">zx_strings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="o">.</span><span class="n">from_zx_strings</span><span class="p">(</span><span class="n">zx_strings</span><span class="p">),</span> <span class="n">weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.label_table_1d">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.label_table_1d">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">label_table_1d</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+
+        <span class="n">pauli_str_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">))</span>
+
+        <span class="n">row_strs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
+            <span class="n">row_strs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">weight</span><span class="o">.</span><span class="n">real</span><span class="si">:</span><span class="s2">+7.4f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">weight</span><span class="o">.</span><span class="n">imag</span><span class="si">:</span><span class="s2">+7.4f</span><span class="si">}</span><span class="s2">j) </span><span class="si">{</span><span class="n">label</span><span class="si">:{</span><span class="n">pauli_str_len</span><span class="si">}</span><span class="s2">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">row_strs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.label_table_2d">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.label_table_2d">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">label_table_2d</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+
+        <span class="n">pauli_str_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">))</span>
+
+        <span class="n">row_strs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">col_strs</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:],</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]):</span>
+                <span class="n">col_strs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">weight</span><span class="o">.</span><span class="n">real</span><span class="si">:</span><span class="s2">+7.4f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">weight</span><span class="o">.</span><span class="n">imag</span><span class="si">:</span><span class="s2">+7.4f</span><span class="si">}</span><span class="s2">j) </span><span class="si">{</span><span class="n">label</span><span class="si">:{</span><span class="n">pauli_str_len</span><span class="si">}</span><span class="s2">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">row_strs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;  &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">col_strs</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">row_strs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WeightedPauliArray.label_table_nd">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.label_table_nd">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">label_table_nd</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+
+        <span class="n">slice_strs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndindex</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]):</span>
+            <span class="n">slice_str</span> <span class="o">=</span> <span class="s2">&quot;Slice (&quot;</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">idx</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;,:,:)</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="n">slice_str</span> <span class="o">+=</span> <span class="n">WeightedPauliArray</span><span class="o">.</span><span class="n">label_table_2d</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">weights</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="n">slice_strs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">slice_str</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">slice_strs</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="broadcast_to">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.broadcast_to">[docs]</a>
+<span class="k">def</span> <span class="nf">broadcast_to</span><span class="p">(</span><span class="n">wpaulis</span><span class="p">:</span> <span class="n">WeightedPauliArray</span><span class="p">,</span> <span class="n">shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the given WeightedPauliArray broadcasted to a given shape.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        paulis (WeightedPauliArray): WeightedPauliArray to broadcast.</span>
+<span class="sd">        shape (Tuple[int, ...]): Shape to broadcast to.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        new_pauli_array (WeightedPauliArray): The WeightedPauliArray with a new shape.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">new_paulis</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">paulis</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+    <span class="n">new_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="expand_dims">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.expand_dims">[docs]</a>
+<span class="k">def</span> <span class="nf">expand_dims</span><span class="p">(</span><span class="n">wpaulis</span><span class="p">:</span> <span class="n">WeightedPauliArray</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="s2">&quot;WeightedPauliArray&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Expands the shape of a WeightedPauliArray.</span>
+
+<span class="sd">    Inserts a new axis that will appear at the axis position in the expanded array shape.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        paulis (WeightedPauliArray): The WeightedPauliArray to expand.</span>
+<span class="sd">        axis (Union[int, Tuple[int, ...]]): The axis upon which expand the WeightedPauliArray.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        expanded_pauli_array (WeightedPauliArray) : The expanded WeightedPauliArray.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">new_paulis</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">paulis</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+    <span class="n">new_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="commutator">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.commutator">[docs]</a>
+<span class="k">def</span> <span class="nf">commutator</span><span class="p">(</span><span class="n">wpaulis_1</span><span class="p">:</span> <span class="n">WeightedPauliArray</span><span class="p">,</span> <span class="n">wpaulis_2</span><span class="p">:</span> <span class="n">WeightedPauliArray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WeightedPauliArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the commutator of the two WeightedPauliArray parameters.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        wpaulis_1 (WeightedPauliArray): WeightedPauliArray to calculate commmutator with.</span>
+<span class="sd">        wpaulis_2 (WeightedPauliArray): Other WeightedPauliArray to calculate commmutator with.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        commutator_pauli_array (WeightedPauliArray): WeightedPauliArray containing the commutators.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="n">is_broadcastable</span><span class="p">(</span><span class="n">wpaulis_1</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">wpaulis_2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="n">commutators</span> <span class="o">=</span> <span class="n">wpaulis_1</span><span class="o">.</span><span class="n">compose_weighted_pauli_array</span><span class="p">(</span><span class="n">wpaulis_2</span><span class="p">)</span>
+    <span class="n">do_commute</span> <span class="o">=</span> <span class="n">wpaulis_1</span><span class="o">.</span><span class="n">commute_with</span><span class="p">(</span><span class="n">wpaulis_2</span><span class="p">)</span>
+
+    <span class="n">commutators</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">x_strings</span><span class="p">[</span><span class="n">do_commute</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">commutators</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">z_strings</span><span class="p">[</span><span class="n">do_commute</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">commutators</span><span class="o">.</span><span class="n">_weights</span> <span class="o">*=</span> <span class="o">~</span><span class="n">do_commute</span> <span class="o">*</span> <span class="mi">2</span>
+
+    <span class="k">return</span> <span class="n">commutators</span></div>
+
+
+
+<div class="viewcode-block" id="anticommutator">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.anticommutator">[docs]</a>
+<span class="k">def</span> <span class="nf">anticommutator</span><span class="p">(</span><span class="n">wpaulis_1</span><span class="p">:</span> <span class="n">WeightedPauliArray</span><span class="p">,</span> <span class="n">wpaulis_2</span><span class="p">:</span> <span class="n">WeightedPauliArray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WeightedPauliArray</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="n">is_broadcastable</span><span class="p">(</span><span class="n">wpaulis_1</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">wpaulis_2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="n">anticommutators</span> <span class="o">=</span> <span class="n">wpaulis_1</span><span class="o">.</span><span class="n">compose_weighted_pauli_array</span><span class="p">(</span><span class="n">wpaulis_2</span><span class="p">)</span>
+    <span class="n">do_commute</span> <span class="o">=</span> <span class="n">wpaulis_1</span><span class="o">.</span><span class="n">commute_with</span><span class="p">(</span><span class="n">wpaulis_2</span><span class="p">)</span>
+
+    <span class="n">anticommutators</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">x_strings</span><span class="p">[</span><span class="o">~</span><span class="n">do_commute</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">anticommutators</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">z_strings</span><span class="p">[</span><span class="o">~</span><span class="n">do_commute</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">anticommutators</span><span class="o">.</span><span class="n">_weights</span> <span class="o">*=</span> <span class="n">do_commute</span> <span class="o">*</span> <span class="mi">2</span>
+
+    <span class="k">return</span> <span class="n">anticommutators</span></div>
+
+
+
+<div class="viewcode-block" id="concatenate">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.concatenate">[docs]</a>
+<span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="n">wpauli_arrays</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">WeightedPauliArray</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">axis</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WeightedPauliArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Concatenated multiple WeightedPauliArrays.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        paulis (List[PauliArray]): WeightedPauliArrays to concatenate.</span>
+<span class="sd">        axis (int): The axis along which the arrays will be joined.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        WeightedPauliArray: The concatenated WeightedPauliArrays.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="n">is_concatenatable</span><span class="p">(</span><span class="n">wpauli_arrays</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+
+    <span class="n">weights_list</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">weights</span> <span class="k">for</span> <span class="n">wpaulis</span> <span class="ow">in</span> <span class="n">wpauli_arrays</span><span class="p">)</span>
+    <span class="n">paulis_list</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">paulis</span> <span class="k">for</span> <span class="n">wpaulis</span> <span class="ow">in</span> <span class="n">wpauli_arrays</span><span class="p">)</span>
+
+    <span class="n">new_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">weights_list</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+    <span class="n">new_paulis</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">paulis_list</span><span class="p">,</span> <span class="n">axis</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="swapaxes">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.swapaxes">[docs]</a>
+<span class="k">def</span> <span class="nf">swapaxes</span><span class="p">(</span><span class="n">wpaulis</span><span class="p">:</span> <span class="n">WeightedPauliArray</span><span class="p">,</span> <span class="n">axis1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">axis2</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Swap axes of a WeightedPauliArray</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        paulis (WeightedPauliArray): The WeightedPauliArray</span>
+<span class="sd">        axis1 (int): Original axis position</span>
+<span class="sd">        axis2 (int): Target axis position</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        WeightedPauliArray: The WeightedPauliArrays with axes swaped.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="n">axis1</span> <span class="o">&lt;</span> <span class="n">wpaulis</span><span class="o">.</span><span class="n">ndim</span>
+    <span class="k">assert</span> <span class="n">axis2</span> <span class="o">&lt;</span> <span class="n">wpaulis</span><span class="o">.</span><span class="n">ndim</span>
+
+    <span class="n">new_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span> <span class="n">axis1</span><span class="p">,</span> <span class="n">axis2</span><span class="p">)</span>
+    <span class="n">new_paulis</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">paulis</span><span class="p">,</span> <span class="n">axis1</span><span class="p">,</span> <span class="n">axis2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="moveaxis">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.moveaxis">[docs]</a>
+<span class="k">def</span> <span class="nf">moveaxis</span><span class="p">(</span><span class="n">wpaulis</span><span class="p">:</span> <span class="n">WeightedPauliArray</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">destination</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Move an axis of a WeightedPauliArray</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        paulis (WeightedPauliArray): The WeightedPauliArray</span>
+<span class="sd">        axis1 (int): Original axis position</span>
+<span class="sd">        axis2 (int): Target axis position</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        WeightedPauliArray: The WeightedPauliArrays with axis moved.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">assert</span> <span class="n">source</span> <span class="o">&lt;</span> <span class="n">wpaulis</span><span class="o">.</span><span class="n">ndim</span>
+    <span class="k">assert</span> <span class="n">destination</span> <span class="o">&lt;</span> <span class="n">wpaulis</span><span class="o">.</span><span class="n">ndim</span>
+
+    <span class="n">new_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+    <span class="n">new_paulis</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">paulis</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Quantum AlgoLab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Quantum AlgoLab.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

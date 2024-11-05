@@ -1,0 +1,711 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>pauliarray.conversion package &#8212; PauliArray</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api_reference/pauliarray.conversion';</script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pauliarray.mapping package" href="pauliarray.mapping.html" />
+    <link rel="prev" title="pauliarray.binary package" href="pauliarray.binary.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="PauliArray - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="PauliArray - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    PauliArray
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/data_structures.html">Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/operations.html">Operations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/commutators.html">Commutators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/fermion_to_qubit_mapping.html">Fermion to Qubit Mapping</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="pauliarray.html">pauliarray package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.binary.html">pauliarray.binary package</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">pauliarray.conversion package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.mapping.html">pauliarray.mapping package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.pauli.html">pauliarray.pauli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.utils.html">pauliarray.utils package</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git/issues/new?title=Issue%20on%20page%20%2Fapi_reference/pauliarray.conversion.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>pauliarray.conversion package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray.conversion.openfermion">pauliarray.conversion.openfermion module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.openfermion.labels_and_weights_from_qubit_operator"><code class="docutils literal notranslate"><span class="pre">labels_and_weights_from_qubit_operator()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.openfermion.qubit_operator_to_operator"><code class="docutils literal notranslate"><span class="pre">qubit_operator_to_operator()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.openfermion.qubit_operators_to_operator_array"><code class="docutils literal notranslate"><span class="pre">qubit_operators_to_operator_array()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray.conversion.pennylane">pauliarray.conversion.pennylane module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.pennylane.operator_array_to_pauli_sentence_list"><code class="docutils literal notranslate"><span class="pre">operator_array_to_pauli_sentence_list()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray.conversion.qiskit">pauliarray.conversion.qiskit module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.qiskit.extract_fermionic_op"><code class="docutils literal notranslate"><span class="pre">extract_fermionic_op()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.qiskit.operator_array_from_sparse_pauli_list"><code class="docutils literal notranslate"><span class="pre">operator_array_from_sparse_pauli_list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.qiskit.operator_array_to_sparse_pauli_list"><code class="docutils literal notranslate"><span class="pre">operator_array_to_sparse_pauli_list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.qiskit.operator_from_sparse_pauli"><code class="docutils literal notranslate"><span class="pre">operator_from_sparse_pauli()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.qiskit.operator_to_sparse_pauli"><code class="docutils literal notranslate"><span class="pre">operator_to_sparse_pauli()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.qiskit.pauli_array_from_pauli_list"><code class="docutils literal notranslate"><span class="pre">pauli_array_from_pauli_list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.qiskit.pauli_array_to_pauli_list"><code class="docutils literal notranslate"><span class="pre">pauli_array_to_pauli_list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.qiskit.weighted_pauli_array_from_pauli_list"><code class="docutils literal notranslate"><span class="pre">weighted_pauli_array_from_pauli_list()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray.conversion">Module contents</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="pauliarray-conversion-package">
+<h1>pauliarray.conversion package<a class="headerlink" href="#pauliarray-conversion-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-pauliarray.conversion.openfermion">
+<span id="pauliarray-conversion-openfermion-module"></span><h2>pauliarray.conversion.openfermion module<a class="headerlink" href="#module-pauliarray.conversion.openfermion" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.conversion.openfermion.labels_and_weights_from_qubit_operator">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.conversion.openfermion.</span></span><span class="sig-name descname"><span class="pre">labels_and_weights_from_qubit_operator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qubit_op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QubitOperator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_qubits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">complex</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/conversion/openfermion.html#labels_and_weights_from_qubit_operator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.conversion.openfermion.labels_and_weights_from_qubit_operator" title="Link to this definition">#</a></dt>
+<dd><p>Extracts labels and weights lists from a OpenFermion QubitOperator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>qubit_op</strong> (<em>QubitOperator</em>) – OpenFermion QubitOperator.</p></li>
+<li><p><strong>nb_qubits</strong> (<em>int</em>) – Number of qubits on which the operator acts.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lists of labels and weights (coefficients) associated with input QubitOperator.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[list[str], list[complex]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.conversion.openfermion.qubit_operator_to_operator">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.conversion.openfermion.</span></span><span class="sig-name descname"><span class="pre">qubit_operator_to_operator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qubit_op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QubitOperator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_qubits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator" title="pauliarray.pauli.operator.Operator"><span class="pre">Operator</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/conversion/openfermion.html#qubit_operator_to_operator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.conversion.openfermion.qubit_operator_to_operator" title="Link to this definition">#</a></dt>
+<dd><p>Creates a PauliArray Operator from a OpenFermion QubitOperator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>qubit_op</strong> (<em>QubitOperator</em>) – OpenFermion QubitOperator to convert.</p></li>
+<li><p><strong>nb_qubits</strong> (<em>int</em>) – Number of qubits on which the operator acts.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Operator with the same form as input QubitOperator.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator" title="pauliarray.pauli.operator.Operator">Operator</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.conversion.openfermion.qubit_operators_to_operator_array">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.conversion.openfermion.</span></span><span class="sig-name descname"><span class="pre">qubit_operators_to_operator_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qubit_ops</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">QubitOperator</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_qubits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1"><span class="pre">OperatorArrayType1</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/conversion/openfermion.html#qubit_operators_to_operator_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.conversion.openfermion.qubit_operators_to_operator_array" title="Link to this definition">#</a></dt>
+<dd><p>Creates a PauliArray OperatorArrayType1 from a list of OpenFermion QubitOperators.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>qubit_ops</strong> (<em>list</em><em>[</em><em>QubitOperator</em><em>]</em>) – List of OpenFermion QubitOperators to transform.</p></li>
+<li><p><strong>nb_qubits</strong> (<em>int</em>) – Number of qubits on which the operators act.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Operator array containing all operators in input list.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1">OperatorArrayType1</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pauliarray.conversion.pennylane">
+<span id="pauliarray-conversion-pennylane-module"></span><h2>pauliarray.conversion.pennylane module<a class="headerlink" href="#module-pauliarray.conversion.pennylane" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.conversion.pennylane.operator_array_to_pauli_sentence_list">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.conversion.pennylane.</span></span><span class="sig-name descname"><span class="pre">operator_array_to_pauli_sentence_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operator_array</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2" title="pauliarray.pauli.operator_array_type_2.OperatorArrayType2"><span class="pre">OperatorArrayType2</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">PauliSentence</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/conversion/pennylane.html#operator_array_to_pauli_sentence_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.conversion.pennylane.operator_array_to_pauli_sentence_list" title="Link to this definition">#</a></dt>
+<dd><p>Creates a list of Pennylane PauliSentences from an OperatorArrayType2.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>operator_array</strong> (<a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2" title="pauliarray.pauli.operator_array_type_2.OperatorArrayType2"><em>OperatorArrayType2</em></a>) – Input OperatorArray to convert into list of PauliSentences.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>PauliSentences obtained from input OperatorArray.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[PauliSentence]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pauliarray.conversion.qiskit">
+<span id="pauliarray-conversion-qiskit-module"></span><h2>pauliarray.conversion.qiskit module<a class="headerlink" href="#module-pauliarray.conversion.qiskit" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.conversion.qiskit.extract_fermionic_op">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.conversion.qiskit.</span></span><span class="sig-name descname"><span class="pre">extract_fermionic_op</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fermionic_op</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FermionicOp</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">_ScalarType_co</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">np.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">np.int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">_ScalarType_co</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/conversion/qiskit.html#extract_fermionic_op"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.conversion.qiskit.extract_fermionic_op" title="Link to this definition">#</a></dt>
+<dd><p>Extracts data from a Qiskit Nature FermionicOp to be used by PauliArray mapping.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fermionic_op</strong> (<em>FermionicOp</em>) – A FermionicOp object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Two tuples containing one-body and two-body terms.</dt><dd><p>Each tuple consists of:
+- list[“np.ndarray[np.int]”]: Orbital indices for the terms.
+- NDArray: Values of the terms.
+- list[list]: Signs of the terms.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[tuple[list[“np.ndarray[np.int]”], NDArray, list[list]], tuple[list[“np.ndarray[np.int]”], NDArray, list[list]]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.conversion.qiskit.operator_array_from_sparse_pauli_list">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.conversion.qiskit.</span></span><span class="sig-name descname"><span class="pre">operator_array_from_sparse_pauli_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sparse_paulis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">SparsePauliOp</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1"><span class="pre">OperatorArrayType1</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/conversion/qiskit.html#operator_array_from_sparse_pauli_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.conversion.qiskit.operator_array_from_sparse_pauli_list" title="Link to this definition">#</a></dt>
+<dd><p>Converts a list of Qiskit’s SparsePauliOps to an OperatorArrayType1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sparse_paulis</strong> (<em>List</em><em>[</em><em>SparsePauliOp</em><em>]</em>) – A list of SparsePauliOp objects.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An OperatorArray object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1">OperatorArrayType1</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.conversion.qiskit.operator_array_to_sparse_pauli_list">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.conversion.qiskit.</span></span><span class="sig-name descname"><span class="pre">operator_array_to_sparse_pauli_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operator_array</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1"><span class="pre">OperatorArrayType1</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">SparsePauliOp</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/pauliarray/conversion/qiskit.html#operator_array_to_sparse_pauli_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.conversion.qiskit.operator_array_to_sparse_pauli_list" title="Link to this definition">#</a></dt>
+<dd><p>Converts an OperatorArrayType1 to a list of Qiskit’s SparsePauliOps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>operator_array</strong> (<a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1" title="pauliarray.pauli.operator_array_type_1.OperatorArrayType1"><em>OperatorArrayType1</em></a>) – An OperatorArray.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of corresponding SparsePauliOp objects.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[SparsePauliOp]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.conversion.qiskit.operator_from_sparse_pauli">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.conversion.qiskit.</span></span><span class="sig-name descname"><span class="pre">operator_from_sparse_pauli</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sparse_pauli</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SparsePauliOp</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator" title="pauliarray.pauli.operator.Operator"><span class="pre">Operator</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/conversion/qiskit.html#operator_from_sparse_pauli"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.conversion.qiskit.operator_from_sparse_pauli" title="Link to this definition">#</a></dt>
+<dd><p>Converts a Qiskit’s SparsePauliOp to an Operator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sparse_pauli</strong> (<em>SparsePauliOp</em>) – A SparsePauliOp.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding Operator object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator" title="pauliarray.pauli.operator.Operator">Operator</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.conversion.qiskit.operator_to_sparse_pauli">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.conversion.qiskit.</span></span><span class="sig-name descname"><span class="pre">operator_to_sparse_pauli</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator" title="pauliarray.pauli.operator.Operator"><span class="pre">Operator</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">SparsePauliOp</span></span></span><a class="reference internal" href="../_modules/pauliarray/conversion/qiskit.html#operator_to_sparse_pauli"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.conversion.qiskit.operator_to_sparse_pauli" title="Link to this definition">#</a></dt>
+<dd><p>Converts an Operator to a Qiskit’s SparsePauliOp.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>operator</strong> (<a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator" title="pauliarray.pauli.operator.Operator"><em>Operator</em></a>) – An Operator object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding SparsePauliOp object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>SparsePauliOp</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.conversion.qiskit.pauli_array_from_pauli_list">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.conversion.qiskit.</span></span><span class="sig-name descname"><span class="pre">pauli_array_from_pauli_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pauli_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PauliList</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray" title="pauliarray.pauli.pauli_array.PauliArray"><span class="pre">PauliArray</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/conversion/qiskit.html#pauli_array_from_pauli_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.conversion.qiskit.pauli_array_from_pauli_list" title="Link to this definition">#</a></dt>
+<dd><p>Converts a Qiskit’s PauliList to a PauliArray.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pauli_list</strong> (<em>PauliList</em>) – A PauliList to convert.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding PauliArray object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray" title="pauliarray.pauli.pauli_array.PauliArray">PauliArray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.conversion.qiskit.pauli_array_to_pauli_list">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.conversion.qiskit.</span></span><span class="sig-name descname"><span class="pre">pauli_array_to_pauli_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paulis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray" title="pauliarray.pauli.pauli_array.PauliArray"><span class="pre">PauliArray</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PauliList</span></span></span><a class="reference internal" href="../_modules/pauliarray/conversion/qiskit.html#pauli_array_to_pauli_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.conversion.qiskit.pauli_array_to_pauli_list" title="Link to this definition">#</a></dt>
+<dd><p>Converts a PauliArray to a Qiskit’s PauliList.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>paulis</strong> (<a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray" title="pauliarray.pauli.pauli_array.PauliArray"><em>PauliArray</em></a>) – A PauliArray object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding PauliList object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>PauliList</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pauliarray.conversion.qiskit.weighted_pauli_array_from_pauli_list">
+<span class="sig-prename descclassname"><span class="pre">pauliarray.conversion.qiskit.</span></span><span class="sig-name descname"><span class="pre">weighted_pauli_array_from_pauli_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pauli_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PauliList</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray" title="pauliarray.pauli.weighted_pauli_array.WeightedPauliArray"><span class="pre">WeightedPauliArray</span></a></span></span><a class="reference internal" href="../_modules/pauliarray/conversion/qiskit.html#weighted_pauli_array_from_pauli_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pauliarray.conversion.qiskit.weighted_pauli_array_from_pauli_list" title="Link to this definition">#</a></dt>
+<dd><p>Converts a Qiskit’s PauliList to a WeightedPauliArray.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pauli_list</strong> (<em>PauliList</em>) – A PauliList to convert.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding WeightedPauliArray object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray" title="pauliarray.pauli.weighted_pauli_array.WeightedPauliArray">WeightedPauliArray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pauliarray.conversion">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pauliarray.conversion" title="Link to this heading">#</a></h2>
+<p>Conversion module. Implements an interface for common Quantum Computing libraries.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="pauliarray.binary.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">pauliarray.binary package</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="pauliarray.mapping.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">pauliarray.mapping package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray.conversion.openfermion">pauliarray.conversion.openfermion module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.openfermion.labels_and_weights_from_qubit_operator"><code class="docutils literal notranslate"><span class="pre">labels_and_weights_from_qubit_operator()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.openfermion.qubit_operator_to_operator"><code class="docutils literal notranslate"><span class="pre">qubit_operator_to_operator()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.openfermion.qubit_operators_to_operator_array"><code class="docutils literal notranslate"><span class="pre">qubit_operators_to_operator_array()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray.conversion.pennylane">pauliarray.conversion.pennylane module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.pennylane.operator_array_to_pauli_sentence_list"><code class="docutils literal notranslate"><span class="pre">operator_array_to_pauli_sentence_list()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray.conversion.qiskit">pauliarray.conversion.qiskit module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.qiskit.extract_fermionic_op"><code class="docutils literal notranslate"><span class="pre">extract_fermionic_op()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.qiskit.operator_array_from_sparse_pauli_list"><code class="docutils literal notranslate"><span class="pre">operator_array_from_sparse_pauli_list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.qiskit.operator_array_to_sparse_pauli_list"><code class="docutils literal notranslate"><span class="pre">operator_array_to_sparse_pauli_list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.qiskit.operator_from_sparse_pauli"><code class="docutils literal notranslate"><span class="pre">operator_from_sparse_pauli()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.qiskit.operator_to_sparse_pauli"><code class="docutils literal notranslate"><span class="pre">operator_to_sparse_pauli()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.qiskit.pauli_array_from_pauli_list"><code class="docutils literal notranslate"><span class="pre">pauli_array_from_pauli_list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.qiskit.pauli_array_to_pauli_list"><code class="docutils literal notranslate"><span class="pre">pauli_array_to_pauli_list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pauliarray.conversion.qiskit.weighted_pauli_array_from_pauli_list"><code class="docutils literal notranslate"><span class="pre">weighted_pauli_array_from_pauli_list()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray.conversion">Module contents</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Quantum AlgoLab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Quantum AlgoLab.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

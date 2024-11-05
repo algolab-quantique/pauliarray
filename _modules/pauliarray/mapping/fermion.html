@@ -1,0 +1,1148 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pauliarray.mapping.fermion &#8212; PauliArray</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../../../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pauliarray/mapping/fermion';</script>
+    <link rel="icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.svg" class="logo__image only-light" alt="PauliArray - Home"/>
+    <img src="../../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="PauliArray - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../index.html">
+                    PauliArray
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/data_structures.html">Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/operations.html">Operations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/commutators.html">Commutators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/fermion_to_qubit_mapping.html">Fermion to Qubit Mapping</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api_reference/pauliarray.html">pauliarray package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.binary.html">pauliarray.binary package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.conversion.html">pauliarray.conversion package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.mapping.html">pauliarray.mapping package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.pauli.html">pauliarray.pauli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.utils.html">pauliarray.utils package</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git/issues/new?title=Issue%20on%20page%20%2F_modules/pauliarray/mapping/fermion.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for pauliarray.mapping.fermion</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy.typing</span> <span class="kn">import</span> <span class="n">NDArray</span>
+
+<span class="kn">import</span> <span class="nn">pauliarray.pauli.operator</span> <span class="k">as</span> <span class="nn">op</span>
+<span class="kn">import</span> <span class="nn">pauliarray.pauli.operator_array_type_1</span> <span class="k">as</span> <span class="nn">opa</span>
+<span class="kn">import</span> <span class="nn">pauliarray.pauli.pauli_array</span> <span class="k">as</span> <span class="nn">pa</span>
+<span class="kn">import</span> <span class="nn">pauliarray.pauli.weighted_pauli_array</span> <span class="k">as</span> <span class="nn">wpa</span>
+<span class="kn">from</span> <span class="nn">pauliarray.binary</span> <span class="kn">import</span> <span class="n">bit_operations</span> <span class="k">as</span> <span class="n">bitops</span>
+
+
+<div class="viewcode-block" id="FermionMapping">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping">[docs]</a>
+<span class="k">class</span> <span class="nc">FermionMapping</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class to represent a Fermion-to-qubit mapping.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        mapping_matrix (&quot;np.ndarray[np.bool]&quot;): A boolean numpy array representing the mapping matrix.</span>
+<span class="sd">        name (str): A name identifier for the mapping (default is &quot;mapping&quot;).</span>
+<span class="sd">        _mapping_matrix_inv (&quot;np.ndarray[np.bool]&quot;, optional): The inverse of the mapping matrix, initially None</span>
+<span class="sd">        and computed on demand.</span>
+<span class="sd">        _heavyside_matrix (&quot;np.ndarray[np.bool]&quot;, optional): The Heavyside matrix, initially None and computed</span>
+<span class="sd">        on demand.</span>
+<span class="sd">        _parity_matrix (&quot;np.ndarray[np.bool]&quot;, optional): The parity matrix, initially None and computed on demand.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="FermionMapping.__init__">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mapping_matrix</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;mapping&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs all the necessary attributes for the FermionMapping object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mapping_matrix : &quot;np.ndarray[np.bool]&quot;</span>
+<span class="sd">                A boolean numpy array representing the mapping matrix.</span>
+<span class="sd">            name : str, optional</span>
+<span class="sd">                A name identifier for the mapping (default is &quot;mapping&quot;).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mapping_matrix</span> <span class="o">=</span> <span class="n">mapping_matrix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mapping_matrix_inv</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_heavyside_matrix</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parity_matrix</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">num_qubits</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the number of qubits based on the shape of the mapping matrix.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: The number of qubits.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapping_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">mapping_matrix_inv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the inverse of the mapping matrix. Computes it if not already computed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            &quot;np.ndarray[np.bool]&quot;: The inverse of the mapping matrix.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mapping_matrix_inv</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mapping_matrix_inv</span> <span class="o">=</span> <span class="n">bitops</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mapping_matrix</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mapping_matrix_inv</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">heavyside_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the Heavyside matrix. Computes it if not already computed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            &quot;np.ndarray[np.bool]&quot;: The Heavyside matrix.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_heavyside_matrix</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_heavyside_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tri</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">k</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_heavyside_matrix</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">parity_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the parity matrix. Computes it if not already computed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            &quot;np.ndarray[np.bool]&quot;: The parity matrix.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parity_matrix</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parity_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tri</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parity_matrix</span>
+
+<div class="viewcode-block" id="FermionMapping.majoranas">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.majoranas">[docs]</a>
+    <span class="k">def</span> <span class="nf">majoranas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">,</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">]:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        In a fermion-to-qubit mapping, each creation/annihilation operator is a sum of two majorana operators,</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            0.5 * (P_\text{real} + P_\text{imag})</span>
+
+<span class="sd">        each being a Pauli string. This methods construct these majorana operators.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            PauliArray: The Pauli strings for :math:`P_\text{real}`</span>
+<span class="sd">            PauliArray: The Pauli strings for :math:`P_\text{imag}`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">mapping_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapping_matrix</span>
+        <span class="n">mapping_matrix_inv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapping_matrix_inv</span>
+
+        <span class="n">heavyside_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heavyside_matrix</span>
+        <span class="n">parity_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parity_matrix</span>
+
+        <span class="n">real_z_strings</span> <span class="o">=</span> <span class="n">bitops</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">heavyside_matrix</span><span class="p">,</span> <span class="n">mapping_matrix_inv</span><span class="p">)</span>
+        <span class="n">imag_z_strings</span> <span class="o">=</span> <span class="n">bitops</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">parity_matrix</span><span class="p">,</span> <span class="n">mapping_matrix_inv</span><span class="p">)</span>
+        <span class="n">real_x_strings</span> <span class="o">=</span> <span class="n">imag_x_strings</span> <span class="o">=</span> <span class="n">mapping_matrix</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+
+        <span class="n">real_majoranas</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">(</span><span class="n">real_z_strings</span><span class="p">,</span> <span class="n">real_x_strings</span><span class="p">)</span>
+        <span class="n">imag_majoranas</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">(</span><span class="n">imag_z_strings</span><span class="p">,</span> <span class="n">imag_x_strings</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">real_majoranas</span><span class="p">,</span> <span class="n">imag_majoranas</span></div>
+
+
+<div class="viewcode-block" id="FermionMapping.assemble_creation_annihilation_operators">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.assemble_creation_annihilation_operators">[docs]</a>
+    <span class="k">def</span> <span class="nf">assemble_creation_annihilation_operators</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">opa</span><span class="o">.</span><span class="n">OperatorArrayType1</span><span class="p">,</span> <span class="n">opa</span><span class="o">.</span><span class="n">OperatorArrayType1</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs the creation and annihilation operators for all available states and returns them as OperatorArrays.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: The creation operators</span>
+<span class="sd">            OperatorArrayType1: The annihilation operators</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">real_majoranas</span><span class="p">,</span> <span class="n">imag_majoranas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">majoranas</span><span class="p">()</span>
+
+        <span class="n">real_operators</span> <span class="o">=</span> <span class="n">opa</span><span class="o">.</span><span class="n">OperatorArrayType1</span><span class="o">.</span><span class="n">from_pauli_array</span><span class="p">(</span><span class="n">real_majoranas</span><span class="p">)</span>
+        <span class="n">imag_operators</span> <span class="o">=</span> <span class="n">opa</span><span class="o">.</span><span class="n">OperatorArrayType1</span><span class="o">.</span><span class="n">from_pauli_array</span><span class="p">(</span><span class="n">imag_majoranas</span><span class="p">)</span>
+
+        <span class="n">annihilation_operators</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">real_operators</span><span class="o">.</span><span class="n">add_operator_array_type_1</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">imag_operators</span><span class="p">)</span>
+        <span class="n">creation_operators</span> <span class="o">=</span> <span class="n">annihilation_operators</span><span class="o">.</span><span class="n">adjoint</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">creation_operators</span><span class="p">,</span> <span class="n">annihilation_operators</span></div>
+
+
+<div class="viewcode-block" id="FermionMapping.occupation_operators">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.occupation_operators">[docs]</a>
+    <span class="k">def</span> <span class="nf">occupation_operators</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">opa</span><span class="o">.</span><span class="n">OperatorArrayType1</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs the occupation operators for all available states and returns them as OperatorArray.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            opa.OperatorArrayType1: An Operator array with all the occupation operators.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mapping_matrix_inv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapping_matrix_inv</span>
+
+        <span class="n">identity_paulis</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">z_paulis</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">(</span><span class="n">mapping_matrix_inv</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">))</span>
+
+        <span class="n">identity_operators</span> <span class="o">=</span> <span class="n">opa</span><span class="o">.</span><span class="n">OperatorArrayType1</span><span class="o">.</span><span class="n">from_pauli_array</span><span class="p">(</span><span class="n">identity_paulis</span><span class="p">)</span>
+        <span class="n">z_operators</span> <span class="o">=</span> <span class="n">opa</span><span class="o">.</span><span class="n">OperatorArrayType1</span><span class="o">.</span><span class="n">from_pauli_array</span><span class="p">(</span><span class="n">z_paulis</span><span class="p">)</span>
+
+        <span class="n">occupation_operators</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">identity_operators</span><span class="o">.</span><span class="n">add_operator_array_type_1</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">z_operators</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">occupation_operators</span></div>
+
+
+<div class="viewcode-block" id="FermionMapping.assemble_qubit_hamiltonian_from_arrays">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.assemble_qubit_hamiltonian_from_arrays">[docs]</a>
+    <span class="k">def</span> <span class="nf">assemble_qubit_hamiltonian_from_arrays</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">one_body</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.complex]&quot;</span><span class="p">,</span> <span class="n">two_body</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.complex]&quot;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">op</span><span class="o">.</span><span class="n">Operator</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Assemble the whole qubit Hamiltonian as an Operator using fermionic integrals given as arrays.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            one_body (&quot;np.ndarray[np.complex]&quot;): The one-body fermionic integrals as a 2d array</span>
+<span class="sd">            two_body (&quot;np.ndarray[np.complex]&quot;): The two-body fermionic integrals as a 4d array (in physicist order)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The qubit Hamiltonia</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">one_body_operator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">one_body_operator_from_array</span><span class="p">(</span><span class="n">one_body</span><span class="p">)</span>
+        <span class="n">two_body_operator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">two_body_operator_from_array</span><span class="p">(</span><span class="n">two_body</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">one_body_operator</span> <span class="o">+</span> <span class="n">two_body_operator</span><span class="p">)</span><span class="o">.</span><span class="n">combine_repeated_terms</span><span class="p">()</span><span class="o">.</span><span class="n">remove_small_weights</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="FermionMapping.assemble_qubit_hamiltonian_from_sparses">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.assemble_qubit_hamiltonian_from_sparses">[docs]</a>
+    <span class="k">def</span> <span class="nf">assemble_qubit_hamiltonian_from_sparses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">one_body_tuple</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">two_body_tuple</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">op</span><span class="o">.</span><span class="n">Operator</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Assemble the whole qubit Hamiltonian as an Operator using fermionic integrals given in sparse representations.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            one_body_tuple (Tuple): Contains the argument for the `one_body_operator_from_sparse` method.</span>
+<span class="sd">            two_body_tuple (Tuple): Contains the argument for the `two_body_operator_from_sparse` method.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            op.Operator: The qubit Hamiltonian</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">one_body_operator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">one_body_operator_from_sparse</span><span class="p">(</span><span class="o">*</span><span class="n">one_body_tuple</span><span class="p">)</span>
+        <span class="n">two_body_operator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">two_body_operator_from_sparse</span><span class="p">(</span><span class="o">*</span><span class="n">two_body_tuple</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">one_body_operator</span> <span class="o">+</span> <span class="n">two_body_operator</span><span class="p">)</span><span class="o">.</span><span class="n">combine_repeated_terms</span><span class="p">()</span><span class="o">.</span><span class="n">remove_small_weights</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="FermionMapping.one_body_operator_from_sparse">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.one_body_operator_from_sparse">[docs]</a>
+    <span class="k">def</span> <span class="nf">one_body_operator_from_sparse</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">locations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">],</span>
+        <span class="n">values</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.complex]&quot;</span><span class="p">,</span>
+        <span class="n">signs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">op</span><span class="o">.</span><span class="n">Operator</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Assemble a one body fermionic operator as an Operator using fermionic integrals given in sparse representations.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            locations (List[&quot;np.ndarray[np.int]&quot;]): Pairs of orbital indices</span>
+<span class="sd">            values (&quot;np.ndarray[np.complex]&quot;): Values of the integral for the pairs of orbitals</span>
+<span class="sd">            signs (List[int] or &quot;np.ndarray[np.int]&quot; or List[&quot;np.ndarray[np.int]&quot;]): Values +1 or -1 determining if</span>
+<span class="sd">            the operators are creation or annihilation. Can be a list of two signs, or two arrays of sign.</span>
+<span class="sd">            Defaults to [1,-1].</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            op.Operator: The qubit operator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">num_terms</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">locations</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">locations</span><span class="p">[</span><span class="n">index</span><span class="p">])</span> <span class="o">==</span> <span class="n">num_terms</span>
+
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">signs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="n">signs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">signs</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">signs</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">signs</span><span class="p">[</span><span class="n">index</span><span class="p">])</span> <span class="o">==</span> <span class="n">num_terms</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">signs</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">signs</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_terms</span><span class="p">)</span>
+
+        <span class="n">_is</span><span class="p">,</span> <span class="n">_js</span> <span class="o">=</span> <span class="n">locations</span>
+        <span class="n">isigns</span><span class="p">,</span> <span class="n">jsigns</span> <span class="o">=</span> <span class="n">signs</span>
+
+        <span class="n">flip_ij_operators</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flip_operators</span><span class="p">(</span><span class="n">_is</span><span class="p">,</span> <span class="n">isigns</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flip_factors</span><span class="p">(</span><span class="n">_is</span><span class="p">,</span> <span class="n">_js</span><span class="p">))</span>
+        <span class="n">flip_j_operators</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flip_operators</span><span class="p">(</span><span class="n">_js</span><span class="p">,</span> <span class="n">jsigns</span><span class="p">)</span>
+
+        <span class="n">update_operators</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_operators</span><span class="p">(</span><span class="n">_is</span><span class="p">,</span> <span class="n">_js</span><span class="p">)</span>
+
+        <span class="n">all_operators</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">update_operators</span><span class="o">.</span><span class="n">compose_operator_array_type_1</span><span class="p">(</span><span class="n">flip_ij_operators</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">compose_operator_array_type_1</span><span class="p">(</span><span class="n">flip_j_operators</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">mul_weights</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">one_body_operator</span> <span class="o">=</span> <span class="n">all_operators</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">one_body_operator</span></div>
+
+
+<div class="viewcode-block" id="FermionMapping.two_body_operator_from_sparse">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.two_body_operator_from_sparse">[docs]</a>
+    <span class="k">def</span> <span class="nf">two_body_operator_from_sparse</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">locations</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">],</span>
+        <span class="n">values</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.complex]&quot;</span><span class="p">,</span>
+        <span class="n">signs</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">op</span><span class="o">.</span><span class="n">Operator</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Assemble a two-body fermionic operator as an Operator using fermionic integrals given in sparse representations.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            locations (List[&quot;np.ndarray[np.int]&quot;]): Quartet of orbital indices</span>
+<span class="sd">            values (&quot;np.ndarray[np.complex]&quot;): Values of the integral for the quartets of orbitals</span>
+<span class="sd">            signs (List[int] or &quot;np.ndarray[np.int]&quot; or List[&quot;np.ndarray[np.int]&quot;]): Values +1 or -1 determining if</span>
+<span class="sd">            the operators are creation or annihilation. Can be a list of two signs, or two arrays of sign.</span>
+<span class="sd">            Defaults to [+1,+1,-1,-1].</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            op.Operator: The qubit operator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">num_terms</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">locations</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">locations</span><span class="p">[</span><span class="n">index</span><span class="p">])</span> <span class="o">==</span> <span class="n">num_terms</span>
+
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">signs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+        <span class="n">signs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">signs</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">signs</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">signs</span><span class="p">[</span><span class="n">index</span><span class="p">])</span> <span class="o">==</span> <span class="n">num_terms</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">signs</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">signs</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_terms</span><span class="p">)</span>
+
+        <span class="n">_is</span><span class="p">,</span> <span class="n">_js</span><span class="p">,</span> <span class="n">_ks</span><span class="p">,</span> <span class="n">_ls</span> <span class="o">=</span> <span class="n">locations</span>
+
+        <span class="n">isigns</span><span class="p">,</span> <span class="n">jsigns</span><span class="p">,</span> <span class="n">ksigns</span><span class="p">,</span> <span class="n">lsigns</span> <span class="o">=</span> <span class="n">signs</span>
+
+        <span class="n">flip_ijkl_operators</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flip_operators</span><span class="p">(</span><span class="n">_is</span><span class="p">,</span> <span class="n">isigns</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flip_factors</span><span class="p">(</span><span class="n">_is</span><span class="p">,</span> <span class="n">_js</span><span class="p">,</span> <span class="n">_ks</span><span class="p">,</span> <span class="n">_ls</span><span class="p">))</span>
+        <span class="n">flip_jkl_operators</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flip_operators</span><span class="p">(</span><span class="n">_js</span><span class="p">,</span> <span class="n">jsigns</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flip_factors</span><span class="p">(</span><span class="n">_js</span><span class="p">,</span> <span class="n">_ks</span><span class="p">,</span> <span class="n">_ls</span><span class="p">))</span>
+        <span class="n">flip_kl_operators</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flip_operators</span><span class="p">(</span><span class="n">_ks</span><span class="p">,</span> <span class="n">ksigns</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flip_factors</span><span class="p">(</span><span class="n">_ks</span><span class="p">,</span> <span class="n">_ls</span><span class="p">))</span>
+        <span class="n">flip_l_operators</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_flip_operators</span><span class="p">(</span><span class="n">_ls</span><span class="p">,</span> <span class="n">lsigns</span><span class="p">)</span>
+
+        <span class="n">update_operators</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_operators</span><span class="p">(</span><span class="n">_is</span><span class="p">,</span> <span class="n">_js</span><span class="p">,</span> <span class="n">_ks</span><span class="p">,</span> <span class="n">_ls</span><span class="p">)</span>
+
+        <span class="n">all_operators</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">update_operators</span><span class="o">.</span><span class="n">compose_operator_array_type_1</span><span class="p">(</span><span class="n">flip_ijkl_operators</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">compose_operator_array_type_1</span><span class="p">(</span><span class="n">flip_jkl_operators</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">compose_operator_array_type_1</span><span class="p">(</span><span class="n">flip_kl_operators</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">compose_operator_array_type_1</span><span class="p">(</span><span class="n">flip_l_operators</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">mul_weights</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+
+        <span class="n">two_body_operator</span> <span class="o">=</span> <span class="n">all_operators</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">two_body_operator</span></div>
+
+
+<div class="viewcode-block" id="FermionMapping.one_body_operator_from_array">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.one_body_operator_from_array">[docs]</a>
+    <span class="k">def</span> <span class="nf">one_body_operator_from_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">one_body</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.complex]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">op</span><span class="o">.</span><span class="n">Operator</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts a one-body array to an operator object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            one_body (&quot;np.ndarray[np.complex]&quot;): A complex numpy array representing the one-body operator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            op.Operator: The corresponding operator object.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError. If the input array is not 2-dimensional or if its dimensions do not match the</span>
+<span class="sd">            number of qubits.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">one_body</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="k">assert</span> <span class="nb">all</span><span class="p">([</span><span class="n">s</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">one_body</span><span class="o">.</span><span class="n">shape</span><span class="p">])</span>
+
+        <span class="n">non_zero_coef</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">one_body</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">locations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">non_zero_coef</span><span class="p">)</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">one_body</span><span class="p">[</span><span class="n">locations</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">locations</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">one_body_operator_from_sparse</span><span class="p">(</span><span class="n">locations</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FermionMapping.two_body_operator_from_array">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.two_body_operator_from_array">[docs]</a>
+    <span class="k">def</span> <span class="nf">two_body_operator_from_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">two_body</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.complex]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">op</span><span class="o">.</span><span class="n">Operator</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts a two-body array to an operator object.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            two_body (&quot;np.ndarray[np.complex]&quot;): A complex numpy array representing the two-body operator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            op.Operator: The corresponding operator object.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            AssertionError. If the input array&#39;s dimensions do not match the number of qubits or if it does not satisfy</span>
+<span class="sd">            the required symmetries.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">all</span><span class="p">([</span><span class="n">s</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">two_body</span><span class="o">.</span><span class="n">shape</span><span class="p">])</span>
+
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">two_body</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ijkl-&gt;ikjl&quot;</span><span class="p">,</span> <span class="n">two_body</span><span class="p">)))</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">two_body</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ijkl-&gt;ljki&quot;</span><span class="p">,</span> <span class="n">two_body</span><span class="p">)))</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">two_body</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;ijkl-&gt;jilk&quot;</span><span class="p">,</span> <span class="n">two_body</span><span class="p">)))</span>
+
+        <span class="n">non_zero_coef</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">two_body</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">locations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">non_zero_coef</span><span class="p">)</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">two_body</span><span class="p">[</span><span class="n">locations</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">locations</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">locations</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">locations</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">two_body_operator_from_sparse</span><span class="p">(</span><span class="n">locations</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FermionMapping.assemble_one_body_operator_array">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.assemble_one_body_operator_array">[docs]</a>
+    <span class="k">def</span> <span class="nf">assemble_one_body_operator_array</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">opa</span><span class="o">.</span><span class="n">OperatorArrayType1</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Assembles an array of one-body operators.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            opa.OperatorArrayType1: An operator array of one-body operators.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">creation_operators</span><span class="p">,</span> <span class="n">annihilation_operators</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assemble_creation_annihilation_operators</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">creation_operators</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span><span class="o">.</span><span class="n">compose_operator_array_type_1</span><span class="p">(</span><span class="n">annihilation_operators</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:])</span></div>
+
+
+<div class="viewcode-block" id="FermionMapping.assemble_two_body_operator_array">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.assemble_two_body_operator_array">[docs]</a>
+    <span class="k">def</span> <span class="nf">assemble_two_body_operator_array</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">opa</span><span class="o">.</span><span class="n">OperatorArrayType1</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Assembles an array of two-body operators.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            opa.OperatorArrayType1: An operator array of two-body operators.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">creation_operators</span><span class="p">,</span> <span class="n">annihilation_operators</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">assemble_creation_annihilation_operators</span><span class="p">()</span>
+        <span class="n">double_annihilation</span> <span class="o">=</span> <span class="n">annihilation_operators</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span><span class="o">.</span><span class="n">compose_operator_array_type_1</span><span class="p">(</span>
+            <span class="n">annihilation_operators</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="p">)</span>
+        <span class="n">double_creaation</span> <span class="o">=</span> <span class="n">creation_operators</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span><span class="o">.</span><span class="n">compose_operator_array_type_1</span><span class="p">(</span><span class="n">creation_operators</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:])</span>
+
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">double_creaation</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span><span class="o">.</span><span class="n">compose_operator_array_type_1</span><span class="p">(</span><span class="n">double_annihilation</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:])</span>
+
+        <span class="k">return</span> <span class="n">tmp</span></div>
+
+
+<div class="viewcode-block" id="FermionMapping._flip_operators">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping._flip_operators">[docs]</a>
+    <span class="k">def</span> <span class="nf">_flip_operators</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i_orbitals</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">,</span> <span class="n">factors</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">opa</span><span class="o">.</span><span class="n">OperatorArrayType1</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs an OperatorArray with the :math:`\mu^\text{th}` flip operators acting on the orbitals :math:`i_\mu`</span>
+
+<span class="sd">        .. math::</span>
+<span class="sd">            \hat{F}_\mu = \frac{1}{2}(1 + f_\mu \hat{Z}_q^{[\mathsf{M}^{-1}]_{i_\mu q}]})</span>
+
+<span class="sd">        where :math:`f_\mu` is a factor (+1 or -1) associted with the creation and annihilation operators.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            i_orbitals (NDArray[int]): The indices of the orbital i the operator is acting on</span>
+<span class="sd">            factors (NDArray[float]): The factors (+1 or -1) defining if a creation or an annihilation operator is</span>
+<span class="sd">            applied.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: The array of flip operators.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">z_strings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapping_matrix_inv</span><span class="p">[</span><span class="n">i_orbitals</span><span class="p">,</span> <span class="p">:]</span>
+
+        <span class="n">z_operators</span> <span class="o">=</span> <span class="n">opa</span><span class="o">.</span><span class="n">OperatorArrayType1</span><span class="o">.</span><span class="n">from_pauli_array</span><span class="p">(</span>
+            <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">(</span><span class="n">z_strings</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">z_strings</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">))</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">z_operators</span><span class="o">.</span><span class="n">mul_weights</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">factors</span><span class="p">)</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="FermionMapping._update_operators">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping._update_operators">[docs]</a>
+    <span class="k">def</span> <span class="nf">_update_operators</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">i_orbitals</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">,</span> <span class="n">j_orbitals</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">opa</span><span class="o">.</span><span class="n">OperatorArrayType1</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the operators based on the given orbitals, using the</span>
+<span class="sd">        Heaviside matrix, the inverse mapping matrix, and the transposed mapping matrix.</span>
+<span class="sd">        The function processes the input orbitals to generate updated Z and X strings,</span>
+<span class="sd">        used to create new Pauli operators.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            i_orbitals (&quot;np.ndarray[np.int]&quot;): The first set of orbitals.</span>
+<span class="sd">            j_orbitals (&quot;np.ndarray[np.int]&quot;): The second set of orbitals.</span>
+<span class="sd">            *args (Tuple[&quot;np.ndarray[np.int]&quot;]): Additional sets of orbitals.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            opa.OperatorArrayType1: The updated operators as an OperatorArrayType1 object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">heavy_map_inv</span> <span class="o">=</span> <span class="n">bitops</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heavyside_matrix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapping_matrix_inv</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+        <span class="n">mapping_matrix_tra</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapping_matrix</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+
+        <span class="n">xs_orbitals</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">i_orbitals</span><span class="p">,</span>
+            <span class="n">j_orbitals</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">+</span> <span class="n">args</span>
+
+        <span class="n">update_z_strings</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">update_x_strings</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">x_orbitals</span> <span class="ow">in</span> <span class="n">xs_orbitals</span><span class="p">:</span>
+            <span class="n">update_z_strings</span> <span class="o">+=</span> <span class="n">heavy_map_inv</span><span class="p">[</span><span class="n">x_orbitals</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="n">update_x_strings</span> <span class="o">+=</span> <span class="n">mapping_matrix_tra</span><span class="p">[</span><span class="n">x_orbitals</span><span class="p">,</span> <span class="p">:]</span>
+
+        <span class="n">update_z_strings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">update_z_strings</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)</span>
+        <span class="n">update_x_strings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">update_x_strings</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)</span>
+
+        <span class="n">update_factors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_factors</span><span class="p">(</span><span class="o">*</span><span class="n">xs_orbitals</span><span class="p">)</span>
+
+        <span class="n">update_paulis</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">(</span><span class="n">update_z_strings</span><span class="p">,</span> <span class="n">update_x_strings</span><span class="p">)</span>
+        <span class="n">update_operators</span> <span class="o">=</span> <span class="n">opa</span><span class="o">.</span><span class="n">OperatorArrayType1</span><span class="o">.</span><span class="n">from_pauli_array</span><span class="p">(</span><span class="n">update_paulis</span><span class="p">)</span><span class="o">.</span><span class="n">mul_weights</span><span class="p">(</span><span class="n">update_factors</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">update_operators</span></div>
+
+
+<div class="viewcode-block" id="FermionMapping._update_operators_2">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping._update_operators_2">[docs]</a>
+    <span class="k">def</span> <span class="nf">_update_operators_2</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">i_orbitals</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">,</span> <span class="n">j_orbitals</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.int]&quot;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">opa</span><span class="o">.</span><span class="n">OperatorArrayType1</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs an OperatorArray with the :math:`\mu^\text{th}` main operators acting on the orbitals :math:`i_\mu`</span>
+<span class="sd">        and :math:`j_\mu` in a one-body fermionic operator</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \hat{U}^{(2)}_{\mu} = (-1)^{\theta_{i_\mu j_ \mu}} \hat{X}_q^{M_{qi_\mu} + M_{qj_\mu}}.</span>
+
+
+<span class="sd">        Args:</span>
+<span class="sd">            i_orbitals (NDArray[int]): The indices of the orbital i the operator is acting on.</span>
+<span class="sd">            j_orbitals (NDArray[int]): The indices of the orbital j the operator is acting on.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: The array of operators.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">heavy_map_inv</span> <span class="o">=</span> <span class="n">bitops</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heavyside_matrix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapping_matrix_inv</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+        <span class="n">mapping_matrix_tra</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapping_matrix</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+
+        <span class="n">update_z_strings</span> <span class="o">=</span> <span class="n">bitops</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">heavy_map_inv</span><span class="p">[</span><span class="n">i_orbitals</span><span class="p">,</span> <span class="p">:],</span> <span class="n">heavy_map_inv</span><span class="p">[</span><span class="n">j_orbitals</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="n">update_x_strings</span> <span class="o">=</span> <span class="n">bitops</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">mapping_matrix_tra</span><span class="p">[</span><span class="n">i_orbitals</span><span class="p">,</span> <span class="p">:],</span> <span class="n">mapping_matrix_tra</span><span class="p">[</span><span class="n">j_orbitals</span><span class="p">,</span> <span class="p">:])</span>
+
+        <span class="n">update_factors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_factors</span><span class="p">(</span><span class="n">i_orbitals</span><span class="p">,</span> <span class="n">j_orbitals</span><span class="p">)</span>
+
+        <span class="n">update_paulis</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">(</span><span class="n">update_z_strings</span><span class="p">,</span> <span class="n">update_x_strings</span><span class="p">)</span>
+        <span class="n">update_operators</span> <span class="o">=</span> <span class="n">opa</span><span class="o">.</span><span class="n">OperatorArrayType1</span><span class="o">.</span><span class="n">from_pauli_array</span><span class="p">(</span><span class="n">update_paulis</span><span class="p">)</span><span class="o">.</span><span class="n">mul_weights</span><span class="p">(</span><span class="n">update_factors</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">update_operators</span></div>
+
+
+<div class="viewcode-block" id="FermionMapping._update_operators_4">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping._update_operators_4">[docs]</a>
+    <span class="k">def</span> <span class="nf">_update_operators_4</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">i_orbitals</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">,</span>
+        <span class="n">j_orbitals</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">,</span>
+        <span class="n">k_orbitals</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">,</span>
+        <span class="n">l_orbitals</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">opa</span><span class="o">.</span><span class="n">OperatorArrayType1</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs an OperatorArray with the :math:`\mu^\text{th}` main operators acting on the orbitals</span>
+<span class="sd">        :math:`i_\mu`, :math:`j_\mu`, :math:`k_\mu` and :math:`l_\mu` in a two-body fermionic operator.</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            (-1)^{\theta_{ij} + \theta_{i_\mu k_\mu} + \theta_{i_\mu l_\mu} + \theta_{j_\mu k_\mu}  +</span>
+<span class="sd">                \theta_{j_\mu l_\mu} + \theta_{k_\mu l_\mu}}</span>
+<span class="sd">                \hat{X}_q^{M_{qi_\mu} + M_{qj_\mu} + M_{qk_\mu} + M_{ql_\mu}}</span>
+<span class="sd">                \hat{Z}_q^{(\theta_{i_\mu p} + \theta_{j_\mu p} + \theta_{k_\mu p} +</span>
+<span class="sd">                \theta_{l_\mu p})[\mathsf{M}^{-1}]_{pq}}</span>
+
+
+<span class="sd">        Args:</span>
+<span class="sd">            i_orbitals (NDArray[int]): The indices of the orbital i the operator is acting on.</span>
+<span class="sd">            j_orbitals (NDArray[int]): The indices of the orbital j the operator is acting on.</span>
+<span class="sd">            k_orbitals (NDArray[int]): The indices of the orbital k the operator is acting on.</span>
+<span class="sd">            l_orbitals (NDArray[int]): The indices of the orbital l the operator is acting on.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            OperatorArrayType1: The array of operators.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">heavy_map_inv</span> <span class="o">=</span> <span class="n">bitops</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heavyside_matrix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapping_matrix_inv</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+        <span class="n">mapping_matrix_tra</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mapping_matrix</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+
+        <span class="n">update_z_strings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span>
+            <span class="n">heavy_map_inv</span><span class="p">[</span><span class="n">i_orbitals</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="o">+</span> <span class="n">heavy_map_inv</span><span class="p">[</span><span class="n">j_orbitals</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="o">+</span> <span class="n">heavy_map_inv</span><span class="p">[</span><span class="n">k_orbitals</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="o">+</span> <span class="n">heavy_map_inv</span><span class="p">[</span><span class="n">l_orbitals</span><span class="p">,</span> <span class="p">:],</span>
+            <span class="mi">2</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)</span>
+        <span class="n">update_x_strings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span>
+            <span class="n">mapping_matrix_tra</span><span class="p">[</span><span class="n">i_orbitals</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="o">+</span> <span class="n">mapping_matrix_tra</span><span class="p">[</span><span class="n">j_orbitals</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="o">+</span> <span class="n">mapping_matrix_tra</span><span class="p">[</span><span class="n">k_orbitals</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="o">+</span> <span class="n">mapping_matrix_tra</span><span class="p">[</span><span class="n">l_orbitals</span><span class="p">,</span> <span class="p">:],</span>
+            <span class="mi">2</span><span class="p">,</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)</span>
+
+        <span class="n">update_factors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_factors</span><span class="p">(</span><span class="n">i_orbitals</span><span class="p">,</span> <span class="n">j_orbitals</span><span class="p">,</span> <span class="n">k_orbitals</span><span class="p">,</span> <span class="n">l_orbitals</span><span class="p">)</span>
+
+        <span class="n">update_paulis</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">(</span><span class="n">update_z_strings</span><span class="p">,</span> <span class="n">update_x_strings</span><span class="p">)</span>
+        <span class="n">update_operators</span> <span class="o">=</span> <span class="n">opa</span><span class="o">.</span><span class="n">OperatorArrayType1</span><span class="o">.</span><span class="n">from_pauli_array</span><span class="p">(</span><span class="n">update_paulis</span><span class="p">)</span><span class="o">.</span><span class="n">mul_weights</span><span class="p">(</span><span class="n">update_factors</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">update_operators</span></div>
+
+
+<div class="viewcode-block" id="FermionMapping._flip_factors">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping._flip_factors">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_flip_factors</span><span class="p">(</span>
+        <span class="n">i_orbitals</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">,</span> <span class="n">j_orbitals</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes flip factors of the type</span>
+
+<span class="sd">        .. math::</span>
+<span class="sd">            f_\mu = (-1)^{\delta_{i_\mu j_\mu} + \delta_{i_\mu k_\mu} + \ldots}.</span>
+
+
+<span class="sd">        Args:</span>
+<span class="sd">            i_orbitals (&quot;np.ndarray[np.int]&quot;): The indices of the orbital i the operator is acting on.</span>
+<span class="sd">            j_orbitals (&quot;np.ndarray[np.int]&quot;): The indices of the orbital i the operator is acting on.</span>
+<span class="sd">            etc...</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            NDArray[float]: The factors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">xs_orbitals</span> <span class="o">=</span> <span class="p">(</span><span class="n">j_orbitals</span><span class="p">,)</span> <span class="o">+</span> <span class="n">args</span>
+
+        <span class="n">factors</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">x_orbitals</span> <span class="ow">in</span> <span class="n">xs_orbitals</span><span class="p">:</span>
+            <span class="n">factors</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">choose</span><span class="p">(</span><span class="n">i_orbitals</span> <span class="o">==</span> <span class="n">x_orbitals</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">factors</span></div>
+
+
+<div class="viewcode-block" id="FermionMapping._update_factors">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping._update_factors">[docs]</a>
+    <span class="k">def</span> <span class="nf">_update_factors</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">i_orbitals</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">,</span> <span class="n">j_orbitals</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">]:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Computes update factors of the type</span>
+
+<span class="sd">        .. math::</span>
+<span class="sd">            f_\mu = (-1)^{\theta_{i_\mu j_\mu} - \theta_{j_\mu i_\mu} + \ldots}.</span>
+
+
+<span class="sd">        Args:</span>
+<span class="sd">            i_orbitals (&quot;np.ndarray[np.int]&quot;): The indices of the orbital i the operator is acting on.</span>
+<span class="sd">            j_orbitals (&quot;np.ndarray[np.int]&quot;): The indices of the orbital i the operator is acting on.</span>
+<span class="sd">            etc...</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            NDArray[float]: The factors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">xs_orbitals</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">i_orbitals</span><span class="p">,</span>
+            <span class="n">j_orbitals</span><span class="p">,</span>
+        <span class="p">)</span> <span class="o">+</span> <span class="n">args</span>
+
+        <span class="n">heavyside_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">heavyside_matrix</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+
+        <span class="n">phases</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">x_orbitals</span><span class="p">,</span> <span class="n">y_orbitals</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">xs_orbitals</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="n">phases</span> <span class="o">+=</span> <span class="n">heavyside_matrix</span><span class="p">[</span><span class="n">x_orbitals</span><span class="p">,</span> <span class="n">y_orbitals</span><span class="p">]</span> <span class="o">-</span> <span class="n">heavyside_matrix</span><span class="p">[</span><span class="n">y_orbitals</span><span class="p">,</span> <span class="n">x_orbitals</span><span class="p">]</span>
+
+        <span class="c1"># TODO : check which one is faster</span>
+        <span class="c1"># factors = np.choose(np.mod(phase, 4), [1, 1j, -1, -1j])</span>
+        <span class="c1"># factors = np.choose(np.bitwise_and(phase - phase, 3), [1, 1j, -1, -1j])</span>
+        <span class="c1"># factors = np.choose(phase - phase, [1, 1j, -1, -1j] * 2, mode=&quot;wrap&quot;)</span>
+
+        <span class="n">factors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">choose</span><span class="p">(</span><span class="n">phases</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;wrap&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">factors</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="JordanWigner">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.JordanWigner">[docs]</a>
+<span class="k">class</span> <span class="nc">JordanWigner</span><span class="p">(</span><span class="n">FermionMapping</span><span class="p">):</span>
+<div class="viewcode-block" id="JordanWigner.__init__">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.JordanWigner.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the Jordan-Wigner mapping for a given number of qubits. Maps fermionic operators to qubit operators.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            num_qubits (int): The number of qubits to be used in the mapping.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">FermionMapping</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">),</span> <span class="s2">&quot;jordan-wigner&quot;</span><span class="p">)</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">__name__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the name of the mapping.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The name of the mapping, &quot;JordanWigner&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;JordanWigner&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="Parity">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.Parity">[docs]</a>
+<span class="k">class</span> <span class="nc">Parity</span><span class="p">(</span><span class="n">FermionMapping</span><span class="p">):</span>
+<div class="viewcode-block" id="Parity.__init__">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.Parity.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the Parity mapping for a given number of qubits. Maps fermionic operators to qubit operators.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            num_qubits (int): The number of qubits to be used in the mapping.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">FermionMapping</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">tri</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">),</span> <span class="s2">&quot;parity&quot;</span><span class="p">)</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">__name__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the name of the mapping.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The name of the mapping, &quot;Parity&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;Parity&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="BravyiKitaev">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.BravyiKitaev">[docs]</a>
+<span class="k">class</span> <span class="nc">BravyiKitaev</span><span class="p">(</span><span class="n">FermionMapping</span><span class="p">):</span>
+<div class="viewcode-block" id="BravyiKitaev.__init__">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.BravyiKitaev.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the Bravyi-Kitaev mapping for a given number of qubits. Maps fermionic operators to qubit operators.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            num_qubits (int): The number of qubits to be used in the mapping.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">FermionMapping</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_bravyi_kitaev_mapping_matrix</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">),</span> <span class="s2">&quot;bravyi-kitaev&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BravyiKitaev._build_bravyi_kitaev_mapping_matrix">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.mapping.html#pauliarray.mapping.fermion.BravyiKitaev._build_bravyi_kitaev_mapping_matrix">[docs]</a>
+    <span class="k">def</span> <span class="nf">_build_bravyi_kitaev_mapping_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs the Bravyi-Kitaev mapping matrix for the given number of qubits.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            num_qubits (int): The number of qubits.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            &quot;np.ndarray[np.bool]&quot;: The Bravyi-Kitaev mapping matrix.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mapping_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_qubits</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">mapping_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">mapping_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span> <span class="o">**</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="n">mapping_matrix</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">__name__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the name of the mapping.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The name of the mapping, &quot;BravyiKitaev&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;BravyiKitaev&quot;</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Quantum AlgoLab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Quantum AlgoLab.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,881 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>pauliarray package &#8212; PauliArray</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api_reference/pauliarray';</script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pauliarray.binary package" href="pauliarray.binary.html" />
+    <link rel="prev" title="Fermion to Qubit Mapping" href="../tutorials/fermion_to_qubit_mapping.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="PauliArray - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="PauliArray - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    PauliArray
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/data_structures.html">Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/operations.html">Operations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/commutators.html">Commutators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/fermion_to_qubit_mapping.html">Fermion to Qubit Mapping</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">pauliarray package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.binary.html">pauliarray.binary package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.conversion.html">pauliarray.conversion package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.mapping.html">pauliarray.mapping package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.pauli.html">pauliarray.pauli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.utils.html">pauliarray.utils package</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git/issues/new?title=Issue%20on%20page%20%2Fapi_reference/pauliarray.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>pauliarray package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray">Module contents</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="pauliarray-package">
+<h1>pauliarray package<a class="headerlink" href="#pauliarray-package" title="Link to this heading">#</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pauliarray.binary.html">pauliarray.binary package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.binary.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.binary.html#module-pauliarray.binary.bit_operations">pauliarray.binary.bit_operations module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.bit_operations.add"><code class="docutils literal notranslate"><span class="pre">add()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.bit_operations.bit_sum"><code class="docutils literal notranslate"><span class="pre">bit_sum()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.bit_operations.dot"><code class="docutils literal notranslate"><span class="pre">dot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.bit_operations.intersection"><code class="docutils literal notranslate"><span class="pre">intersection()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.bit_operations.intersection_row_space"><code class="docutils literal notranslate"><span class="pre">intersection_row_space()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.bit_operations.inv"><code class="docutils literal notranslate"><span class="pre">inv()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.bit_operations.is_orthogonal"><code class="docutils literal notranslate"><span class="pre">is_orthogonal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.bit_operations.kernel"><code class="docutils literal notranslate"><span class="pre">kernel()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.bit_operations.matmul"><code class="docutils literal notranslate"><span class="pre">matmul()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.bit_operations.orthogonal_basis"><code class="docutils literal notranslate"><span class="pre">orthogonal_basis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.bit_operations.orthogonal_complement"><code class="docutils literal notranslate"><span class="pre">orthogonal_complement()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.bit_operations.rank"><code class="docutils literal notranslate"><span class="pre">rank()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.bit_operations.row_echelon"><code class="docutils literal notranslate"><span class="pre">row_echelon()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.bit_operations.row_space"><code class="docutils literal notranslate"><span class="pre">row_space()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.bit_operations.strings_to_ints"><code class="docutils literal notranslate"><span class="pre">strings_to_ints()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.binary.html#module-pauliarray.binary.symplectic">pauliarray.binary.symplectic module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.symplectic.coisotropic_subspace"><code class="docutils literal notranslate"><span class="pre">coisotropic_subspace()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.symplectic.conjugate_subspace"><code class="docutils literal notranslate"><span class="pre">conjugate_subspace()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.symplectic.dot"><code class="docutils literal notranslate"><span class="pre">dot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.symplectic.flip_zx"><code class="docutils literal notranslate"><span class="pre">flip_zx()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.symplectic.gram_schmidt_orthogonalization"><code class="docutils literal notranslate"><span class="pre">gram_schmidt_orthogonalization()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.symplectic.is_coisotropic"><code class="docutils literal notranslate"><span class="pre">is_coisotropic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.symplectic.is_isotropic"><code class="docutils literal notranslate"><span class="pre">is_isotropic()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.symplectic.is_lagrangian"><code class="docutils literal notranslate"><span class="pre">is_lagrangian()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.symplectic.is_orthogonal"><code class="docutils literal notranslate"><span class="pre">is_orthogonal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.symplectic.isotropic_subspace"><code class="docutils literal notranslate"><span class="pre">isotropic_subspace()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.symplectic.lagrangian_subspace"><code class="docutils literal notranslate"><span class="pre">lagrangian_subspace()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.symplectic.merge_zx_strings"><code class="docutils literal notranslate"><span class="pre">merge_zx_strings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.symplectic.orthogonal_complement"><code class="docutils literal notranslate"><span class="pre">orthogonal_complement()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html#pauliarray.binary.symplectic.split_zx_strings"><code class="docutils literal notranslate"><span class="pre">split_zx_strings()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.binary.html#module-pauliarray.binary">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pauliarray.conversion.html">pauliarray.conversion package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.conversion.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.conversion.html#module-pauliarray.conversion.openfermion">pauliarray.conversion.openfermion module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.conversion.html#pauliarray.conversion.openfermion.labels_and_weights_from_qubit_operator"><code class="docutils literal notranslate"><span class="pre">labels_and_weights_from_qubit_operator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.conversion.html#pauliarray.conversion.openfermion.qubit_operator_to_operator"><code class="docutils literal notranslate"><span class="pre">qubit_operator_to_operator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.conversion.html#pauliarray.conversion.openfermion.qubit_operators_to_operator_array"><code class="docutils literal notranslate"><span class="pre">qubit_operators_to_operator_array()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.conversion.html#module-pauliarray.conversion.pennylane">pauliarray.conversion.pennylane module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.conversion.html#pauliarray.conversion.pennylane.operator_array_to_pauli_sentence_list"><code class="docutils literal notranslate"><span class="pre">operator_array_to_pauli_sentence_list()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.conversion.html#module-pauliarray.conversion.qiskit">pauliarray.conversion.qiskit module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.conversion.html#pauliarray.conversion.qiskit.extract_fermionic_op"><code class="docutils literal notranslate"><span class="pre">extract_fermionic_op()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.conversion.html#pauliarray.conversion.qiskit.operator_array_from_sparse_pauli_list"><code class="docutils literal notranslate"><span class="pre">operator_array_from_sparse_pauli_list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.conversion.html#pauliarray.conversion.qiskit.operator_array_to_sparse_pauli_list"><code class="docutils literal notranslate"><span class="pre">operator_array_to_sparse_pauli_list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.conversion.html#pauliarray.conversion.qiskit.operator_from_sparse_pauli"><code class="docutils literal notranslate"><span class="pre">operator_from_sparse_pauli()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.conversion.html#pauliarray.conversion.qiskit.operator_to_sparse_pauli"><code class="docutils literal notranslate"><span class="pre">operator_to_sparse_pauli()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.conversion.html#pauliarray.conversion.qiskit.pauli_array_from_pauli_list"><code class="docutils literal notranslate"><span class="pre">pauli_array_from_pauli_list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.conversion.html#pauliarray.conversion.qiskit.pauli_array_to_pauli_list"><code class="docutils literal notranslate"><span class="pre">pauli_array_to_pauli_list()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.conversion.html#pauliarray.conversion.qiskit.weighted_pauli_array_from_pauli_list"><code class="docutils literal notranslate"><span class="pre">weighted_pauli_array_from_pauli_list()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.conversion.html#module-pauliarray.conversion">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pauliarray.mapping.html">pauliarray.mapping package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.mapping.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.mapping.html#module-pauliarray.mapping.fermion">pauliarray.mapping.fermion module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.BravyiKitaev"><code class="docutils literal notranslate"><span class="pre">BravyiKitaev</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.BravyiKitaev.__init__"><code class="docutils literal notranslate"><span class="pre">BravyiKitaev.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.BravyiKitaev._build_bravyi_kitaev_mapping_matrix"><code class="docutils literal notranslate"><span class="pre">BravyiKitaev._build_bravyi_kitaev_mapping_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping"><code class="docutils literal notranslate"><span class="pre">FermionMapping</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.mapping_matrix"><code class="docutils literal notranslate"><span class="pre">FermionMapping.mapping_matrix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.name"><code class="docutils literal notranslate"><span class="pre">FermionMapping.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping._mapping_matrix_inv"><code class="docutils literal notranslate"><span class="pre">FermionMapping._mapping_matrix_inv</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping._heavyside_matrix"><code class="docutils literal notranslate"><span class="pre">FermionMapping._heavyside_matrix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping._parity_matrix"><code class="docutils literal notranslate"><span class="pre">FermionMapping._parity_matrix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.__init__"><code class="docutils literal notranslate"><span class="pre">FermionMapping.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping._flip_factors"><code class="docutils literal notranslate"><span class="pre">FermionMapping._flip_factors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping._flip_operators"><code class="docutils literal notranslate"><span class="pre">FermionMapping._flip_operators()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping._update_factors"><code class="docutils literal notranslate"><span class="pre">FermionMapping._update_factors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping._update_operators"><code class="docutils literal notranslate"><span class="pre">FermionMapping._update_operators()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping._update_operators_2"><code class="docutils literal notranslate"><span class="pre">FermionMapping._update_operators_2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping._update_operators_4"><code class="docutils literal notranslate"><span class="pre">FermionMapping._update_operators_4()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.assemble_creation_annihilation_operators"><code class="docutils literal notranslate"><span class="pre">FermionMapping.assemble_creation_annihilation_operators()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.assemble_one_body_operator_array"><code class="docutils literal notranslate"><span class="pre">FermionMapping.assemble_one_body_operator_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.assemble_qubit_hamiltonian_from_arrays"><code class="docutils literal notranslate"><span class="pre">FermionMapping.assemble_qubit_hamiltonian_from_arrays()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.assemble_qubit_hamiltonian_from_sparses"><code class="docutils literal notranslate"><span class="pre">FermionMapping.assemble_qubit_hamiltonian_from_sparses()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.assemble_two_body_operator_array"><code class="docutils literal notranslate"><span class="pre">FermionMapping.assemble_two_body_operator_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.heavyside_matrix"><code class="docutils literal notranslate"><span class="pre">FermionMapping.heavyside_matrix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.majoranas"><code class="docutils literal notranslate"><span class="pre">FermionMapping.majoranas()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.mapping_matrix_inv"><code class="docutils literal notranslate"><span class="pre">FermionMapping.mapping_matrix_inv</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.num_qubits"><code class="docutils literal notranslate"><span class="pre">FermionMapping.num_qubits</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.occupation_operators"><code class="docutils literal notranslate"><span class="pre">FermionMapping.occupation_operators()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.one_body_operator_from_array"><code class="docutils literal notranslate"><span class="pre">FermionMapping.one_body_operator_from_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.one_body_operator_from_sparse"><code class="docutils literal notranslate"><span class="pre">FermionMapping.one_body_operator_from_sparse()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.parity_matrix"><code class="docutils literal notranslate"><span class="pre">FermionMapping.parity_matrix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.two_body_operator_from_array"><code class="docutils literal notranslate"><span class="pre">FermionMapping.two_body_operator_from_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.FermionMapping.two_body_operator_from_sparse"><code class="docutils literal notranslate"><span class="pre">FermionMapping.two_body_operator_from_sparse()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.JordanWigner"><code class="docutils literal notranslate"><span class="pre">JordanWigner</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.JordanWigner.__init__"><code class="docutils literal notranslate"><span class="pre">JordanWigner.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.Parity"><code class="docutils literal notranslate"><span class="pre">Parity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#pauliarray.mapping.fermion.Parity.__init__"><code class="docutils literal notranslate"><span class="pre">Parity.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.mapping.html#module-pauliarray.mapping">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pauliarray.pauli.html">pauliarray.pauli package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.pauli.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.pauli.html#module-pauliarray.pauli.operator">pauliarray.pauli.operator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator"><code class="docutils literal notranslate"><span class="pre">Operator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.__add__"><code class="docutils literal notranslate"><span class="pre">Operator.__add__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.__eq__"><code class="docutils literal notranslate"><span class="pre">Operator.__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.__init__"><code class="docutils literal notranslate"><span class="pre">Operator.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.__mul__"><code class="docutils literal notranslate"><span class="pre">Operator.__mul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.__rmul__"><code class="docutils literal notranslate"><span class="pre">Operator.__rmul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.__str__"><code class="docutils literal notranslate"><span class="pre">Operator.__str__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.add_operator"><code class="docutils literal notranslate"><span class="pre">Operator.add_operator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.add_scalar"><code class="docutils literal notranslate"><span class="pre">Operator.add_scalar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.adjoint"><code class="docutils literal notranslate"><span class="pre">Operator.adjoint()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.clifford_conjugate"><code class="docutils literal notranslate"><span class="pre">Operator.clifford_conjugate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.clifford_conjugate_pauli_array"><code class="docutils literal notranslate"><span class="pre">Operator.clifford_conjugate_pauli_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.clifford_conjugate_pauli_array_old"><code class="docutils literal notranslate"><span class="pre">Operator.clifford_conjugate_pauli_array_old()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.combine_repeated_terms"><code class="docutils literal notranslate"><span class="pre">Operator.combine_repeated_terms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.compose"><code class="docutils literal notranslate"><span class="pre">Operator.compose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.compose_operator"><code class="docutils literal notranslate"><span class="pre">Operator.compose_operator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.compress_qubits"><code class="docutils literal notranslate"><span class="pre">Operator.compress_qubits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.copy"><code class="docutils literal notranslate"><span class="pre">Operator.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.covariances_from_paulis"><code class="docutils literal notranslate"><span class="pre">Operator.covariances_from_paulis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.cx"><code class="docutils literal notranslate"><span class="pre">Operator.cx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.cz"><code class="docutils literal notranslate"><span class="pre">Operator.cz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.empty"><code class="docutils literal notranslate"><span class="pre">Operator.empty()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.expectation_values_from_paulis"><code class="docutils literal notranslate"><span class="pre">Operator.expectation_values_from_paulis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.filter_weights"><code class="docutils literal notranslate"><span class="pre">Operator.filter_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.from_labels_and_weights"><code class="docutils literal notranslate"><span class="pre">Operator.from_labels_and_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.from_matrix"><code class="docutils literal notranslate"><span class="pre">Operator.from_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.from_npz"><code class="docutils literal notranslate"><span class="pre">Operator.from_npz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.from_paulis"><code class="docutils literal notranslate"><span class="pre">Operator.from_paulis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.from_paulis_and_weights"><code class="docutils literal notranslate"><span class="pre">Operator.from_paulis_and_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.h"><code class="docutils literal notranslate"><span class="pre">Operator.h()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.identity"><code class="docutils literal notranslate"><span class="pre">Operator.identity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.inspect"><code class="docutils literal notranslate"><span class="pre">Operator.inspect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.is_clifford"><code class="docutils literal notranslate"><span class="pre">Operator.is_clifford()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.is_scalar"><code class="docutils literal notranslate"><span class="pre">Operator.is_scalar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.is_unitary"><code class="docutils literal notranslate"><span class="pre">Operator.is_unitary()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.mul_scalar"><code class="docutils literal notranslate"><span class="pre">Operator.mul_scalar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.num_qubits"><code class="docutils literal notranslate"><span class="pre">Operator.num_qubits</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.num_terms"><code class="docutils literal notranslate"><span class="pre">Operator.num_terms</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.paulis"><code class="docutils literal notranslate"><span class="pre">Operator.paulis</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.power"><code class="docutils literal notranslate"><span class="pre">Operator.power()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.remove_small_weights"><code class="docutils literal notranslate"><span class="pre">Operator.remove_small_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.s"><code class="docutils literal notranslate"><span class="pre">Operator.s()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.simplify"><code class="docutils literal notranslate"><span class="pre">Operator.simplify()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.sort_paulis"><code class="docutils literal notranslate"><span class="pre">Operator.sort_paulis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.take_qubits"><code class="docutils literal notranslate"><span class="pre">Operator.take_qubits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.tensor"><code class="docutils literal notranslate"><span class="pre">Operator.tensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.tensor_operator"><code class="docutils literal notranslate"><span class="pre">Operator.tensor_operator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.to_matrix"><code class="docutils literal notranslate"><span class="pre">Operator.to_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.to_npz"><code class="docutils literal notranslate"><span class="pre">Operator.to_npz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.trace"><code class="docutils literal notranslate"><span class="pre">Operator.trace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.update_weights"><code class="docutils literal notranslate"><span class="pre">Operator.update_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.update_weights_from_other"><code class="docutils literal notranslate"><span class="pre">Operator.update_weights_from_other()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.weights"><code class="docutils literal notranslate"><span class="pre">Operator.weights</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.wpaulis"><code class="docutils literal notranslate"><span class="pre">Operator.wpaulis</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.Operator.x"><code class="docutils literal notranslate"><span class="pre">Operator.x()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.anticommutator"><code class="docutils literal notranslate"><span class="pre">anticommutator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator.commutator"><code class="docutils literal notranslate"><span class="pre">commutator()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.pauli.html#module-pauliarray.pauli.operator_array_type_1">pauliarray.pauli.operator_array_type_1 module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.__eq__"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.__getitem__"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.__init__"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.__mul__"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.__mul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.__rmul__"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.__rmul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.__str__"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.__str__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1._mul"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1._mul()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1._operator_ndarray_to_wpaulis"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1._operator_ndarray_to_wpaulis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.add"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.add()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.add_operator_array_type_1"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.add_operator_array_type_1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.add_scalar"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.add_scalar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.adjoint"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.adjoint()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.clifford_conjugate"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.clifford_conjugate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.combine_repeated_terms"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.combine_repeated_terms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.compose"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.compose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.compose_operator_array_type_1"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.compose_operator_array_type_1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.copy"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.covariances_from_paulis"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.covariances_from_paulis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.cx"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.cx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.cz"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.cz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.expectation_values_from_paulis"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.expectation_values_from_paulis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.filter_weights"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.filter_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.flatten"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.flatten()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.from_operator_list"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.from_operator_list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.from_operator_ndarray"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.from_operator_ndarray()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.from_pauli_array"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.from_pauli_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.from_weighted_pauli_array"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.from_weighted_pauli_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.get_operator"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.get_operator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.h"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.h()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.inspect"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.inspect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.mul_weights"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.mul_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.ndim"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.ndim</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.num_qubits"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.num_qubits</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.num_terms"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.num_terms</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.paulis"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.paulis</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.remove_small_weights"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.remove_small_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.reshape"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.reshape()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.s"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.s()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.shape"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.shape</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.size"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.sum"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.sum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.weights"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.weights</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.wpaulis"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.wpaulis</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.OperatorArrayType1.x"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType1.x()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.anticommutator"><code class="docutils literal notranslate"><span class="pre">anticommutator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.commutator"><code class="docutils literal notranslate"><span class="pre">commutator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_1.concatenate"><code class="docutils literal notranslate"><span class="pre">concatenate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.pauli.html#module-pauliarray.pauli.operator_array_type_2">pauliarray.pauli.operator_array_type_2 module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.__getitem__"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.__getitem__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.__init__"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.__mul__"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.__mul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.__rmul__"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.__rmul__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2._mul"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2._mul()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.add"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.add()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.add_operator_array_type_2"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.add_operator_array_type_2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.basis_paulis"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.basis_paulis</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.build_basis_paulis"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.build_basis_paulis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.combine_basis_paulis"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.combine_basis_paulis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.compose"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.compose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.compose_operator_array_type_2"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.compose_operator_array_type_2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.covariances_from_paulis"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.covariances_from_paulis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.expectation_values_from_paulis"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.expectation_values_from_paulis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.filter_weights"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.filter_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.flatten"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.flatten()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.from_operator"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.from_operator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.from_operator_list"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.from_operator_list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.from_operator_ndarray"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.from_operator_ndarray()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.from_pauli_array"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.from_pauli_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.get_operator"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.get_operator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.mul_weights"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.mul_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.ndim"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.ndim</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.num_qubits"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.num_qubits</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.paulis"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.paulis</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.remove_small_weights"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.remove_small_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.remove_unused_basis_paulis"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.remove_unused_basis_paulis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.reshape"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.reshape()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.shape"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.shape</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.size"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.squeeze"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.squeeze()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.sum"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.sum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.OperatorArrayType2.weights"><code class="docutils literal notranslate"><span class="pre">OperatorArrayType2.weights</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.commutator"><code class="docutils literal notranslate"><span class="pre">commutator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.operator_array_type_2.concatenate"><code class="docutils literal notranslate"><span class="pre">concatenate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.pauli.html#module-pauliarray.pauli.pauli_array">pauliarray.pauli.pauli_array module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray"><code class="docutils literal notranslate"><span class="pre">PauliArray</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.__eq__"><code class="docutils literal notranslate"><span class="pre">PauliArray.__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.add_pauli_array"><code class="docutils literal notranslate"><span class="pre">PauliArray.add_pauli_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.bitwise_commute_with"><code class="docutils literal notranslate"><span class="pre">PauliArray.bitwise_commute_with()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.clifford_conjugate"><code class="docutils literal notranslate"><span class="pre">PauliArray.clifford_conjugate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.commute_with"><code class="docutils literal notranslate"><span class="pre">PauliArray.commute_with()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.compose"><code class="docutils literal notranslate"><span class="pre">PauliArray.compose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.compose_pauli_array"><code class="docutils literal notranslate"><span class="pre">PauliArray.compose_pauli_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.compress_qubits"><code class="docutils literal notranslate"><span class="pre">PauliArray.compress_qubits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.copy"><code class="docutils literal notranslate"><span class="pre">PauliArray.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.covariances_from_paulis"><code class="docutils literal notranslate"><span class="pre">PauliArray.covariances_from_paulis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.cx"><code class="docutils literal notranslate"><span class="pre">PauliArray.cx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.cz"><code class="docutils literal notranslate"><span class="pre">PauliArray.cz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.expectation_values_from_paulis"><code class="docutils literal notranslate"><span class="pre">PauliArray.expectation_values_from_paulis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.extract"><code class="docutils literal notranslate"><span class="pre">PauliArray.extract()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.flatten"><code class="docutils literal notranslate"><span class="pre">PauliArray.flatten()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.flip_zx"><code class="docutils literal notranslate"><span class="pre">PauliArray.flip_zx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.from_labels"><code class="docutils literal notranslate"><span class="pre">PauliArray.from_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.from_zx_strings"><code class="docutils literal notranslate"><span class="pre">PauliArray.from_zx_strings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.generators"><code class="docutils literal notranslate"><span class="pre">PauliArray.generators()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.generators_with_map"><code class="docutils literal notranslate"><span class="pre">PauliArray.generators_with_map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.h"><code class="docutils literal notranslate"><span class="pre">PauliArray.h()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.identities"><code class="docutils literal notranslate"><span class="pre">PauliArray.identities()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.inspect"><code class="docutils literal notranslate"><span class="pre">PauliArray.inspect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.is_diagonal"><code class="docutils literal notranslate"><span class="pre">PauliArray.is_diagonal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.is_identity"><code class="docutils literal notranslate"><span class="pre">PauliArray.is_identity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.label_table_1d"><code class="docutils literal notranslate"><span class="pre">PauliArray.label_table_1d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.label_table_2d"><code class="docutils literal notranslate"><span class="pre">PauliArray.label_table_2d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.label_table_nd"><code class="docutils literal notranslate"><span class="pre">PauliArray.label_table_nd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.label_to_z_string_x_string"><code class="docutils literal notranslate"><span class="pre">PauliArray.label_to_z_string_x_string()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.labels_to_z_strings_x_strings"><code class="docutils literal notranslate"><span class="pre">PauliArray.labels_to_z_strings_x_strings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.matrix_from_zx_ints"><code class="docutils literal notranslate"><span class="pre">PauliArray.matrix_from_zx_ints()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.mul_weights"><code class="docutils literal notranslate"><span class="pre">PauliArray.mul_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.ndim"><code class="docutils literal notranslate"><span class="pre">PauliArray.ndim</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.new"><code class="docutils literal notranslate"><span class="pre">PauliArray.new()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.num_ids"><code class="docutils literal notranslate"><span class="pre">PauliArray.num_ids</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.num_non_ids"><code class="docutils literal notranslate"><span class="pre">PauliArray.num_non_ids</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.num_qubits"><code class="docutils literal notranslate"><span class="pre">PauliArray.num_qubits</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.paulis"><code class="docutils literal notranslate"><span class="pre">PauliArray.paulis</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.random"><code class="docutils literal notranslate"><span class="pre">PauliArray.random()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.remove"><code class="docutils literal notranslate"><span class="pre">PauliArray.remove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.reorder_qubits"><code class="docutils literal notranslate"><span class="pre">PauliArray.reorder_qubits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.reshape"><code class="docutils literal notranslate"><span class="pre">PauliArray.reshape()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.s"><code class="docutils literal notranslate"><span class="pre">PauliArray.s()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.shape"><code class="docutils literal notranslate"><span class="pre">PauliArray.shape</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.size"><code class="docutils literal notranslate"><span class="pre">PauliArray.size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.sparse_matrix_from_zx_ints"><code class="docutils literal notranslate"><span class="pre">PauliArray.sparse_matrix_from_zx_ints()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.squeeze"><code class="docutils literal notranslate"><span class="pre">PauliArray.squeeze()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.sum"><code class="docutils literal notranslate"><span class="pre">PauliArray.sum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.take_qubits"><code class="docutils literal notranslate"><span class="pre">PauliArray.take_qubits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.tensor"><code class="docutils literal notranslate"><span class="pre">PauliArray.tensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.tensor_pauli_array"><code class="docutils literal notranslate"><span class="pre">PauliArray.tensor_pauli_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.to_labels"><code class="docutils literal notranslate"><span class="pre">PauliArray.to_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.to_matrices"><code class="docutils literal notranslate"><span class="pre">PauliArray.to_matrices()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.traces"><code class="docutils literal notranslate"><span class="pre">PauliArray.traces()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.x"><code class="docutils literal notranslate"><span class="pre">PauliArray.x()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.x_strings"><code class="docutils literal notranslate"><span class="pre">PauliArray.x_strings</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.xz_strings"><code class="docutils literal notranslate"><span class="pre">PauliArray.xz_strings</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.z_string_x_string_to_label"><code class="docutils literal notranslate"><span class="pre">PauliArray.z_string_x_string_to_label()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.z_strings"><code class="docutils literal notranslate"><span class="pre">PauliArray.z_strings</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.PauliArray.zx_strings"><code class="docutils literal notranslate"><span class="pre">PauliArray.zx_strings</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.anticommutator"><code class="docutils literal notranslate"><span class="pre">anticommutator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.argsort"><code class="docutils literal notranslate"><span class="pre">argsort()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.broadcast_to"><code class="docutils literal notranslate"><span class="pre">broadcast_to()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.commutator"><code class="docutils literal notranslate"><span class="pre">commutator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.commutator2"><code class="docutils literal notranslate"><span class="pre">commutator2()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.concatenate"><code class="docutils literal notranslate"><span class="pre">concatenate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.expand_dims"><code class="docutils literal notranslate"><span class="pre">expand_dims()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.fast_flat_unique"><code class="docutils literal notranslate"><span class="pre">fast_flat_unique()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.moveaxis"><code class="docutils literal notranslate"><span class="pre">moveaxis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.swapaxes"><code class="docutils literal notranslate"><span class="pre">swapaxes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.pauli_array.unique"><code class="docutils literal notranslate"><span class="pre">unique()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.pauli.html#module-pauliarray.pauli.weighted_pauli_array">pauliarray.pauli.weighted_pauli_array module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.__eq__"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.__eq__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.add_weighted_pauli_array"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.add_weighted_pauli_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.adjoint"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.adjoint()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.bitwise_commute_with"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.bitwise_commute_with()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.clifford_conjugate"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.clifford_conjugate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.commute_with"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.commute_with()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.compose"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.compose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.compose_weighted_pauli_array"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.compose_weighted_pauli_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.compress_qubits"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.compress_qubits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.copy"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.copy()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.covariances_from_paulis"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.covariances_from_paulis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.cx"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.cx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.cz"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.cz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.empty"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.empty()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.expectation_values_from_paulis"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.expectation_values_from_paulis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.extract"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.extract()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.flatten"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.flatten()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.from_labels_and_weights"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.from_labels_and_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.from_npz"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.from_npz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.from_paulis"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.from_paulis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.from_z_strings_and_x_strings_and_weights"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.from_z_strings_and_x_strings_and_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.h"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.h()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.inspect"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.inspect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.is_diagonal"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.is_diagonal()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.label_table_1d"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.label_table_1d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.label_table_2d"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.label_table_2d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.label_table_nd"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.label_table_nd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.mul_weights"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.mul_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.ndim"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.ndim</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.new"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.new()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.num_qubits"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.num_qubits</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.paulis"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.paulis</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.random"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.random()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.remove"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.remove()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.reshape"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.reshape()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.s"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.s()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.shape"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.shape</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.size"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.squeeze"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.squeeze()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.take_qubits"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.take_qubits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.tensor"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.tensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.tensor_weighted_pauli_array"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.tensor_weighted_pauli_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.to_matrices"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.to_matrices()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.to_npz"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.to_npz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.update_weights"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.update_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.update_weights_from_other"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.update_weights_from_other()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.weights"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.weights</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.WeightedPauliArray.x"><code class="docutils literal notranslate"><span class="pre">WeightedPauliArray.x()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.anticommutator"><code class="docutils literal notranslate"><span class="pre">anticommutator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.broadcast_to"><code class="docutils literal notranslate"><span class="pre">broadcast_to()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.commutator"><code class="docutils literal notranslate"><span class="pre">commutator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.concatenate"><code class="docutils literal notranslate"><span class="pre">concatenate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.expand_dims"><code class="docutils literal notranslate"><span class="pre">expand_dims()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.moveaxis"><code class="docutils literal notranslate"><span class="pre">moveaxis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html#pauliarray.pauli.weighted_pauli_array.swapaxes"><code class="docutils literal notranslate"><span class="pre">swapaxes()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.pauli.html#module-pauliarray.pauli">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pauliarray.utils.html">pauliarray.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.utils.html#module-pauliarray.utils.array_operations">pauliarray.utils.array_operations module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.utils.html#pauliarray.utils.array_operations.all_equal"><code class="docutils literal notranslate"><span class="pre">all_equal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.utils.html#pauliarray.utils.array_operations.broadcast_shape"><code class="docutils literal notranslate"><span class="pre">broadcast_shape()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.utils.html#pauliarray.utils.array_operations.broadcasted_index"><code class="docutils literal notranslate"><span class="pre">broadcasted_index()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.utils.html#pauliarray.utils.array_operations.is_broadcastable"><code class="docutils literal notranslate"><span class="pre">is_broadcastable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.utils.html#pauliarray.utils.array_operations.is_concatenatable"><code class="docutils literal notranslate"><span class="pre">is_concatenatable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.utils.html#pauliarray.utils.array_operations.is_stackatable"><code class="docutils literal notranslate"><span class="pre">is_stackatable()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.utils.html#pauliarray.utils.array_operations.new_concatenate_shape"><code class="docutils literal notranslate"><span class="pre">new_concatenate_shape()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.utils.html#module-pauliarray.utils.pauli_array_library">pauliarray.utils.pauli_array_library module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.utils.html#pauliarray.utils.pauli_array_library.gen_complete_pauli_array_basis"><code class="docutils literal notranslate"><span class="pre">gen_complete_pauli_array_basis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.utils.html#pauliarray.utils.pauli_array_library.gen_random_pauli_array"><code class="docutils literal notranslate"><span class="pre">gen_random_pauli_array()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.utils.html#module-pauliarray.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-pauliarray">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pauliarray" title="Link to this heading">#</a></h2>
+<p>Efficient Pauli operators manipulation toolbox</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../tutorials/fermion_to_qubit_mapping.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Fermion to Qubit Mapping</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="pauliarray.binary.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">pauliarray.binary package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-pauliarray">Module contents</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Quantum AlgoLab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Quantum AlgoLab.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

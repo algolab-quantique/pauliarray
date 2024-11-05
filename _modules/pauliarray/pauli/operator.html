@@ -1,0 +1,1465 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pauliarray.pauli.operator &#8212; PauliArray</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../../../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pauliarray/pauli/operator';</script>
+    <link rel="icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.svg" class="logo__image only-light" alt="PauliArray - Home"/>
+    <img src="../../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="PauliArray - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../index.html">
+                    PauliArray
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/data_structures.html">Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/operations.html">Operations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/commutators.html">Commutators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/fermion_to_qubit_mapping.html">Fermion to Qubit Mapping</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api_reference/pauliarray.html">pauliarray package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.binary.html">pauliarray.binary package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.conversion.html">pauliarray.conversion package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.mapping.html">pauliarray.mapping package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.pauli.html">pauliarray.pauli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.utils.html">pauliarray.utils package</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git/issues/new?title=Issue%20on%20page%20%2F_modules/pauliarray/pauli/operator.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for pauliarray.pauli.operator</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy.typing</span> <span class="kn">import</span> <span class="n">ArrayLike</span><span class="p">,</span> <span class="n">NDArray</span>
+
+<span class="kn">import</span> <span class="nn">pauliarray.pauli.pauli_array</span> <span class="k">as</span> <span class="nn">pa</span>
+<span class="kn">import</span> <span class="nn">pauliarray.pauli.weighted_pauli_array</span> <span class="k">as</span> <span class="nn">wpa</span>
+<span class="kn">from</span> <span class="nn">pauliarray.binary</span> <span class="kn">import</span> <span class="n">bit_operations</span> <span class="k">as</span> <span class="n">bitops</span>
+<span class="kn">from</span> <span class="nn">pauliarray.binary</span> <span class="kn">import</span> <span class="n">symplectic</span>
+<span class="kn">from</span> <span class="nn">pauliarray.utils.pauli_array_library</span> <span class="kn">import</span> <span class="n">gen_complete_pauli_array_basis</span>
+
+
+<div class="viewcode-block" id="Operator">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator">[docs]</a>
+<span class="k">class</span> <span class="nc">Operator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Defines an operator as a linear combination of Pauli strings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Operator.__init__">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.__init__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weighted_paulis</span><span class="p">:</span> <span class="n">wpa</span><span class="o">.</span><span class="n">WeightedPauliArray</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the Operator with a WeightedPauliArray.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            weighted_paulis (WeightedPauliArray): A WeightedPauliArray object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span> <span class="o">=</span> <span class="n">weighted_paulis</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">num_qubits</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the number of qubits.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Number of qubits.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span><span class="o">.</span><span class="n">num_qubits</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">num_terms</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the number of terms.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: Number of terms.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span><span class="o">.</span><span class="n">size</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">wpaulis</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">wpa</span><span class="o">.</span><span class="n">WeightedPauliArray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the WeightedPauliArray.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            WeightedPauliArray: The WeightedPauliArray object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.complex]&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the weights of the Pauli terms.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            &quot;np.ndarray[np.complex]&quot;: The weights.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span><span class="o">.</span><span class="n">weights</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">paulis</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the PauliArray.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            PauliArray: The PauliArray object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span><span class="o">.</span><span class="n">paulis</span>
+
+<div class="viewcode-block" id="Operator.__str__">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.__str__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a string representation of the Operator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: String representation of the Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Operator: num_qubits = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span><span class="si">}</span><span class="s2">, num_terms = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">num_terms</span><span class="si">}</span><span class="s2">, ...&quot;</span></div>
+
+
+<div class="viewcode-block" id="Operator.__add__">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.__add__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s2">&quot;Operator&quot;</span><span class="p">,</span> <span class="n">Number</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds another Operator or a scalar to this Operator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (Union[Operator, Number]): Another Operator or a scalar.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The resulting Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Operator</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_operator</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Number</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_scalar</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">NotImplemented</span></div>
+
+
+<div class="viewcode-block" id="Operator.__mul__">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.__mul__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">any</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Multiplies this Operator with another Operator or a scalar.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (Any): Another Operator or a scalar.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: The resulting Operator or NotImplemented.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Operator</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compose_operator</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Number</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mul_scalar</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">NotImplemented</span></div>
+
+
+<div class="viewcode-block" id="Operator.__rmul__">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.__rmul__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">any</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Multiplies a scalar with this Operator from the right.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (Any): A scalar.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: The resulting Operator or NotImplemented.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Number</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mul_scalar</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">NotImplemented</span></div>
+
+
+<div class="viewcode-block" id="Operator.__eq__">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.__eq__">[docs]</a>
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;Operator&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if equal to another Operator. Two Operators are equal if after simplification their underlying WeightedPauliArrays are equal.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (Operator): Another Operator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the Operators are equal.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">simple_self</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">combine_repeated_terms</span><span class="p">()</span><span class="o">.</span><span class="n">remove_small_weights</span><span class="p">()</span>
+        <span class="n">simple_other</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">combine_repeated_terms</span><span class="p">()</span><span class="o">.</span><span class="n">remove_small_weights</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">simple_self</span><span class="o">.</span><span class="n">num_terms</span> <span class="o">!=</span> <span class="n">simple_other</span><span class="o">.</span><span class="n">num_terms</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">self_order</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">simple_self</span><span class="o">.</span><span class="n">paulis</span><span class="p">)</span>
+        <span class="n">other_order</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">simple_other</span><span class="o">.</span><span class="n">paulis</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">simple_self</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">[</span><span class="n">self_order</span><span class="p">]</span> <span class="o">==</span> <span class="n">simple_other</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">[</span><span class="n">other_order</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="Operator.copy">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.copy">[docs]</a>
+    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a copy of the Operator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: A copy of the Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Operator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="Operator.adjoint">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.adjoint">[docs]</a>
+    <span class="k">def</span> <span class="nf">adjoint</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the adjoint of the Operator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The adjoint Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="n">wpa</span><span class="o">.</span><span class="n">WeightedPauliArray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">weights</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">Operator</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Operator.take_qubits">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.take_qubits">[docs]</a>
+    <span class="k">def</span> <span class="nf">take_qubits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">,</span> <span class="nb">range</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes a subset of qubits.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            indices (Union[&quot;np.ndarray[np.int]&quot;, range, int]): Indices of the qubits to take.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The resulting Operator with the subset of qubits.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">indices</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+        <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">take_qubits</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Operator</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Operator.compress_qubits">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.compress_qubits">[docs]</a>
+    <span class="k">def</span> <span class="nf">compress_qubits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">condition</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compresses the qubits based on the given condition.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            condition (&quot;np.ndarray[np.bool]&quot;): Condition for compressing the qubits.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The resulting Operator with compressed qubits.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">compress_qubits</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Operator</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Operator.compose">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.compose">[docs]</a>
+    <span class="k">def</span> <span class="nf">compose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Composes the Operator with another Operator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (Any): Another Operator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: The resulting Operator or NotImplemented.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Operator</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">compose_operator</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">NotImplemented</span></div>
+
+
+<div class="viewcode-block" id="Operator.compose_operator">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.compose_operator">[docs]</a>
+    <span class="k">def</span> <span class="nf">compose_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;Operator&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Composes the Operator with another Operator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (Operator): Another Operator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The resulting Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span><span class="o">.</span><span class="n">compose_weighted_pauli_array</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="k">return</span> <span class="n">Operator</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="p">)</span><span class="o">.</span><span class="n">combine_repeated_terms</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Operator.mul_scalar">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.mul_scalar">[docs]</a>
+    <span class="k">def</span> <span class="nf">mul_scalar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Number</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Multiplies the Operator by a scalar.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (Number): A scalar.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The resulting Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">mul_weights</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Operator</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Operator.power">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.power">[docs]</a>
+    <span class="k">def</span> <span class="nf">power</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exponent</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">simplify</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Raises the Operator to the specified exponent.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            exponent (int): The exponent to raise the Pauli operator to.</span>
+<span class="sd">            simplify (bool): If True, the Operator is simplified at every multiplication with itself. This can improve performance. Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: A new Pauli operator resulting from raising the original operator to the exponent.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the exponent is negative.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">exponent</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The power must be a positive integer.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">exponent</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Operator</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span>
+
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">exponent</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">compose_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">simplify</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">simplify</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="Operator.tensor">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.tensor">[docs]</a>
+    <span class="k">def</span> <span class="nf">tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes the tensor product of the Operator with another Operator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (Any): Another Operator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Any: The resulting Operator or NotImplemented.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Operator</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tensor_operator</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">NotImplemented</span></div>
+
+
+<div class="viewcode-block" id="Operator.tensor_operator">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.tensor_operator">[docs]</a>
+    <span class="k">def</span> <span class="nf">tensor_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;Operator&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes the tensor product of the Operator with another Operator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (Operator): Another Operator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The resulting Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_shape</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_terms</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">num_terms</span><span class="p">)</span>
+
+        <span class="n">exp_self</span> <span class="o">=</span> <span class="n">wpa</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span><span class="n">wpa</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">new_shape</span><span class="p">)</span>
+        <span class="n">exp_other</span> <span class="o">=</span> <span class="n">wpa</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span><span class="n">wpa</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">new_shape</span><span class="p">)</span>
+
+        <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="n">exp_self</span><span class="o">.</span><span class="n">tensor_weighted_pauli_array</span><span class="p">(</span><span class="n">exp_other</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Operator</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Operator.add_operator">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.add_operator">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;Operator&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds another Operator to this Operator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (Operator): Another Operator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The resulting Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="n">wpa</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">],</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Operator</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="p">)</span><span class="o">.</span><span class="n">combine_repeated_terms</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Operator.add_scalar">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.add_scalar">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_scalar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scalar</span><span class="p">:</span> <span class="n">Number</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a scalar to this Operator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            scalar (Number): A scalar.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The resulting Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_operator</span><span class="p">(</span><span class="n">Operator</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">)</span><span class="o">.</span><span class="n">mul_scalar</span><span class="p">(</span><span class="n">scalar</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Operator.inspect">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.inspect">[docs]</a>
+    <span class="k">def</span> <span class="nf">inspect</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates a string representation of the Operator showing sum of weighted Pauli strings.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: A string representation of the Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">to_labels</span><span class="p">()</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">weights</span>
+
+        <span class="n">detail_str</span> <span class="o">=</span> <span class="s2">&quot;Operator</span><span class="se">\n</span><span class="s2">Sum of</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">detail_str</span> <span class="o">+=</span> <span class="n">wpa</span><span class="o">.</span><span class="n">WeightedPauliArray</span><span class="o">.</span><span class="n">label_table_2d</span><span class="p">(</span><span class="n">labels</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">weights</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">detail_str</span></div>
+
+
+<div class="viewcode-block" id="Operator.x">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.x">[docs]</a>
+    <span class="k">def</span> <span class="nf">x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Applies X transformations on specified qubits of the Operator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            qubits (Union[int, List[int]]): The qubits on which to apply the X transformation.</span>
+<span class="sd">            inplace (bool): If True, applies changes to self; otherwise, returns a modified copy.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The resulting Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">qubits</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">x</span><span class="p">(</span><span class="n">qubits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="Operator.h">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.h">[docs]</a>
+    <span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Applies H (Hadamard) transformations on specified qubits of the Operator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            qubits (Union[int, List[int]]): The qubits on which to apply the H transformation.</span>
+<span class="sd">            inplace (bool): If True, applies changes to self; otherwise, returns a modified copy.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The resulting Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="n">qubits</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">h</span><span class="p">(</span><span class="n">qubits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="Operator.s">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.s">[docs]</a>
+    <span class="k">def</span> <span class="nf">s</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Applies S (Phase) transformations on specified qubits of the Operator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            qubits (Union[int, List[int]]): The qubits on which to apply the S transformation.</span>
+<span class="sd">            inplace (bool): If True, applies changes to self; otherwise, returns a modified copy.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The resulting Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">qubits</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">qubits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="Operator.cx">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.cx">[docs]</a>
+    <span class="k">def</span> <span class="nf">cx</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">control_qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">target_qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Applies CX (Controlled-X) transformations on specified control and target qubits of the Operator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            control_qubits (Union[int, List[int]]): The qubits which control the CX operation.</span>
+<span class="sd">            target_qubits (Union[int, List[int]]): The qubits targeted by the CX operation.</span>
+<span class="sd">            inplace (bool): If True, applies changes to self; otherwise, returns a modified copy.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The resulting Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="n">control_qubits</span><span class="p">,</span> <span class="n">target_qubits</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">cx</span><span class="p">(</span><span class="n">control_qubits</span><span class="p">,</span> <span class="n">target_qubits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="Operator.cz">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.cz">[docs]</a>
+    <span class="k">def</span> <span class="nf">cz</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">control_qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">target_qubits</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Applies CZ (Controlled-Z) transformations on specified control and target qubits of the Operator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            control_qubits (Union[int, List[int]]): The qubits which control the CZ operation.</span>
+<span class="sd">            target_qubits (Union[int, List[int]]): The qubits targeted by the CZ operation.</span>
+<span class="sd">            inplace (bool): If True, applies changes to self; otherwise, returns a modified copy.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The resulting Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="n">control_qubits</span><span class="p">,</span> <span class="n">target_qubits</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">cz</span><span class="p">(</span><span class="n">control_qubits</span><span class="p">,</span> <span class="n">target_qubits</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="Operator.clifford_conjugate">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.clifford_conjugate">[docs]</a>
+    <span class="k">def</span> <span class="nf">clifford_conjugate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clifford</span><span class="p">:</span> <span class="s2">&quot;Operator&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Performs a Clifford conjugate transformation on the Operator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            clifford (Operator): The Clifford operator.</span>
+<span class="sd">            inplace (bool): If True, applies changes to self; otherwise, returns a modified copy.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The transformed Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_paulis</span><span class="p">,</span> <span class="n">factors</span> <span class="o">=</span> <span class="n">clifford</span><span class="o">.</span><span class="n">clifford_conjugate_pauli_array_old</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="p">)</span>
+        <span class="n">new_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">*</span> <span class="n">factors</span>
+        <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span><span class="o">.</span><span class="n">_paulis</span> <span class="o">=</span> <span class="n">new_paulis</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span><span class="o">.</span><span class="n">_weights</span> <span class="o">=</span> <span class="n">new_weights</span>
+
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="k">return</span> <span class="n">Operator</span><span class="o">.</span><span class="n">from_paulis_and_weights</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Operator.clifford_conjugate_pauli_array_old">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.clifford_conjugate_pauli_array_old">[docs]</a>
+    <span class="k">def</span> <span class="nf">clifford_conjugate_pauli_array_old</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">,</span> <span class="s2">&quot;np.ndarray[np.complex]&quot;</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transform a PauliArray using self to perform a Clifford conjugate.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (pa.PauliArray): A PauliArray</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            pa.PauliArray: The transformed PauliArray</span>
+<span class="sd">            &quot;np.ndarray[np.complex]&quot;: Residual coefficient</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_clifford</span><span class="p">()</span>
+
+        <span class="n">original_shape</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">flat_other</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+        <span class="n">prod1</span><span class="p">,</span> <span class="n">phases1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">paulis</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">compose_pauli_array</span><span class="p">(</span><span class="n">flat_other</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">])</span>
+        <span class="n">prod2</span><span class="p">,</span> <span class="n">phases2</span> <span class="o">=</span> <span class="n">prod1</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span><span class="o">.</span><span class="n">compose_pauli_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">paulis</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:])</span>
+
+        <span class="n">coefs</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">weights</span> <span class="o">*</span> <span class="n">phases1</span><span class="p">)[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">weights</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:])</span> <span class="o">*</span> <span class="n">phases2</span>
+
+        <span class="n">all_paulis</span> <span class="o">=</span> <span class="n">prod2</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">flat_other</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_terms</span><span class="o">**</span><span class="mi">2</span><span class="p">,))</span>
+        <span class="n">all_coefs</span> <span class="o">=</span> <span class="n">coefs</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">flat_other</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_terms</span><span class="o">**</span><span class="mi">2</span><span class="p">,))</span>
+
+        <span class="n">upaulis</span><span class="p">,</span> <span class="n">inverse</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">all_paulis</span><span class="p">,</span> <span class="n">return_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">ucoefs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">upaulis</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">newi</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">inverse</span><span class="p">):</span>
+            <span class="n">ucoefs</span><span class="p">[:,</span> <span class="n">newi</span><span class="p">]</span> <span class="o">+=</span> <span class="n">all_coefs</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+
+        <span class="n">selection</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">ucoefs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">new_coefs</span> <span class="o">=</span> <span class="n">ucoefs</span><span class="p">[</span><span class="n">selection</span><span class="p">]</span>
+        <span class="n">new_paulis</span> <span class="o">=</span> <span class="n">upaulis</span><span class="p">[</span><span class="n">selection</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">new_paulis</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">original_shape</span><span class="p">),</span>
+            <span class="n">new_coefs</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">original_shape</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Operator.clifford_conjugate_pauli_array">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.clifford_conjugate_pauli_array">[docs]</a>
+    <span class="k">def</span> <span class="nf">clifford_conjugate_pauli_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="p">,</span> <span class="n">NDArray</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transform a PauliArray using self to perform a Clifford conjugate.</span>
+<span class="sd">        (Faster prototype)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (pa.PauliArray): A PauliArray</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            pa.PauliArray: The transformed PauliArray</span>
+<span class="sd">            &quot;np.ndarray[np.complex]&quot;: Residual coefficient</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_clifford</span><span class="p">()</span>
+
+        <span class="c1"># flatten, will be reshape at the end</span>
+        <span class="n">original_shape</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">flat_other</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+        <span class="c1"># check the commutation between the paulis in other and in self</span>
+        <span class="n">anticommute_mask</span> <span class="o">=</span> <span class="o">~</span><span class="p">(</span><span class="n">flat_other</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span><span class="o">.</span><span class="n">commute_with</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]))</span>
+        <span class="n">anticommute_sign</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">choose</span><span class="p">(</span><span class="n">anticommute_mask</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="c1"># computes all the product between the paulis in self into a square array</span>
+        <span class="n">prod_wpaulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span><span class="o">.</span><span class="n">compose_weighted_pauli_array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">adjoint</span><span class="p">())</span>
+
+        <span class="c1"># identifies the unique paulis in the products</span>
+        <span class="n">unique_prod_paulis</span><span class="p">,</span> <span class="n">inverse</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">fast_flat_unique</span><span class="p">(</span><span class="n">prod_wpaulis</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">return_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># create a square matrix with the unique pauli index of its position in prod_wpaulis</span>
+        <span class="n">inverse</span> <span class="o">=</span> <span class="n">inverse</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">num_terms</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_terms</span><span class="p">))</span>
+
+        <span class="c1"># gathers the weights associated with the unique paulis</span>
+        <span class="n">unique_prod_paulis_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">unique_prod_paulis</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">unique_prod_paulis</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">unique_prod_paulis</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+            <span class="n">unique_prod_paulis_weights</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">prod_wpaulis</span><span class="o">.</span><span class="n">weights</span><span class="p">[</span><span class="n">inverse</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span>
+
+        <span class="c1"># identifies the active paulis</span>
+        <span class="n">all_coefs</span> <span class="o">=</span> <span class="n">anticommute_sign</span> <span class="o">@</span> <span class="n">unique_prod_paulis_weights</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">applied_mask</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">all_coefs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">active_coefs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">all_coefs</span><span class="p">[</span><span class="n">applied_mask</span><span class="p">])</span>
+        <span class="n">applied_mask2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">applied_mask</span><span class="o">.</span><span class="n">size</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">all_coefs</span><span class="o">.</span><span class="n">shape</span><span class="p">)[</span><span class="n">applied_mask</span><span class="p">],</span>
+            <span class="n">unique_prod_paulis</span><span class="o">.</span><span class="n">size</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">active_paulis</span> <span class="o">=</span> <span class="n">unique_prod_paulis</span><span class="p">[</span><span class="n">applied_mask2</span><span class="p">]</span>
+
+        <span class="c1"># performs multiplication between the active paulis and the paulis in other</span>
+        <span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_phases</span> <span class="o">=</span> <span class="n">active_paulis</span><span class="o">.</span><span class="n">compose_pauli_array</span><span class="p">(</span><span class="n">flat_other</span><span class="p">)</span>
+        <span class="n">factors</span> <span class="o">=</span> <span class="n">active_coefs</span> <span class="o">*</span> <span class="n">new_phases</span>
+
+        <span class="k">return</span> <span class="n">new_paulis</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">original_shape</span><span class="p">),</span> <span class="n">factors</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">original_shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Operator.expectation_values_from_paulis">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.expectation_values_from_paulis">[docs]</a>
+    <span class="k">def</span> <span class="nf">expectation_values_from_paulis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paulis_expectation_values</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.complex&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the PauliArray expectation value given the expectation values of the Paulis. More useful for other classes, but still here for uniformity.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            paulis_expectation_values (NDArray[float]): _description_</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            NDArray: _description_</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">wpaulis_expectation_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">expectation_values_from_paulis</span><span class="p">(</span><span class="n">paulis_expectation_values</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">wpaulis_expectation_values</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Operator.covariances_from_paulis">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.covariances_from_paulis">[docs]</a>
+    <span class="k">def</span> <span class="nf">covariances_from_paulis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">paulis_covariances</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.complex&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the PauliArray expectation value given the expectation values of the Paulis.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            paulis_covariances (NDArray[float]): _description_</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            NDArray: _description_</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">wpaulis_covariances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">covariances_from_paulis</span><span class="p">(</span><span class="n">paulis_covariances</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">wpaulis_covariances</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Operator.combine_repeated_terms">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.combine_repeated_terms">[docs]</a>
+    <span class="k">def</span> <span class="nf">combine_repeated_terms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Combine repeated terms in the sum associated with equal Pauli strings.</span>
+<span class="sd">        Inspired by : https://github.com/numpy/numpy/issues/11136</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            inplace (bool, optional): If True, modifies the present instance. Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: Operator where each Pauli strings appears only once in the sum.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">new_paulis</span><span class="p">,</span> <span class="n">inverse</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">fast_flat_unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="p">,</span> <span class="n">return_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">new_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">new_paulis</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">weights</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+        <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">new_weights</span><span class="p">,</span> <span class="n">inverse</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span> <span class="o">=</span> <span class="n">wpa</span><span class="o">.</span><span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="k">return</span> <span class="n">Operator</span><span class="o">.</span><span class="n">from_paulis_and_weights</span><span class="p">(</span><span class="n">new_paulis</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Operator.filter_weights">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.filter_weights">[docs]</a>
+    <span class="k">def</span> <span class="nf">filter_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_function</span><span class="p">:</span> <span class="nb">callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Removes Pauli strings from the Operator object based on the filter_function applied on weights.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filter_function (callable): The filter_function to apply on weights.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The filtered Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">Operator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">filter_function</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="Operator.remove_small_weights">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.remove_small_weights">[docs]</a>
+    <span class="k">def</span> <span class="nf">remove_small_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-14</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove small weights from the Operator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            threshold (float, optional): The threshold below which weights are considered small. Defaults to 1e-14.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The Operator with small weights removed.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_weights</span><span class="p">(</span><span class="k">lambda</span> <span class="n">weight</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Operator.simplify">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.simplify">[docs]</a>
+    <span class="k">def</span> <span class="nf">simplify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-14</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simplify the Operator by removing small weights, combining repeated terms, and again removing small weights.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            threshold (float, optional): The threshold below which weights are considered small. Defaults to 1e-14.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The simplified Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_small_weights</span><span class="p">(</span><span class="n">threshold</span><span class="p">)</span><span class="o">.</span><span class="n">combine_repeated_terms</span><span class="p">()</span><span class="o">.</span><span class="n">remove_small_weights</span><span class="p">(</span><span class="n">threshold</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Operator.is_scalar">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.is_scalar">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_scalar</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if the Operator is a scalar.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the Operator is a scalar.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_terms</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">zx_strings</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="Operator.is_unitary">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.is_unitary">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_unitary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if the Operator is unitary.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the Operator is unitary.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">self_prod_wpaulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compose_operator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">adjoint</span><span class="p">())</span><span class="o">.</span><span class="n">combine_repeated_terms</span><span class="p">()</span><span class="o">.</span><span class="n">remove_small_weights</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">self_prod_wpaulis</span><span class="o">.</span><span class="n">is_scalar</span><span class="p">()</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">self_prod_wpaulis</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Operator.is_clifford">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.is_clifford">[docs]</a>
+    <span class="k">def</span> <span class="nf">is_clifford</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if the Operator is a Clifford operator. For an operator to be Clifford, it first needs to be unitary.</span>
+<span class="sd">        # TODO : make sure this is robust</span>
+
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if the Operator is a Clifford operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sq_amp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simplify</span><span class="p">()</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">weights</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">sq_amp</span><span class="p">,</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_terms</span><span class="p">)))</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_unitary</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Operator.trace">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.trace">[docs]</a>
+    <span class="k">def</span> <span class="nf">trace</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.complex&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the trace of the Operator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            &quot;np.complex&quot;: The trace of the Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">paulis_traces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">traces</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">*</span> <span class="n">paulis_traces</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Operator.update_weights">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.update_weights">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_weights</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the weights of the Operator with the provided new weights.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            new_weights: The new weights to be assigned to the Operator.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">update_weights</span><span class="p">(</span><span class="n">new_weights</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Operator.update_weights_from_other">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.update_weights_from_other">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_weights_from_other</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;Operator&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the weights of the Operator from another Operator object.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            other (Operator): The Operator from which to update the weights.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">update_weights_from_other</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Operator.sort_paulis">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.sort_paulis">[docs]</a>
+    <span class="k">def</span> <span class="nf">sort_paulis</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sorts the underlying WeightedPauliArray primarily for comparison purposes.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">order</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wpaulis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">[</span><span class="n">order</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Operator.to_matrix">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.to_matrix">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts the Operator into a (n**2, n**2) matrix.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            NDArray: The matrix representation of the Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># This method does not use WeightedPauliArray.to_matrices() for performance.</span>
+
+        <span class="n">mat_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span><span class="p">)</span>
+
+        <span class="n">z_ints</span> <span class="o">=</span> <span class="n">bitops</span><span class="o">.</span><span class="n">strings_to_ints</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">z_strings</span><span class="p">)</span>
+        <span class="n">x_ints</span> <span class="o">=</span> <span class="n">bitops</span><span class="o">.</span><span class="n">strings_to_ints</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">x_strings</span><span class="p">)</span>
+
+        <span class="n">phase_powers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">bitops</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">z_strings</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">paulis</span><span class="o">.</span><span class="n">x_strings</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="n">phases</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">choose</span><span class="p">(</span><span class="n">phase_powers</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="n">j</span><span class="p">])</span>
+
+        <span class="n">matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">mat_shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndindex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">shape</span><span class="p">):</span>
+            <span class="n">row_ind</span><span class="p">,</span> <span class="n">col_ind</span><span class="p">,</span> <span class="n">matrix_elements</span> <span class="o">=</span> <span class="n">pa</span><span class="o">.</span><span class="n">PauliArray</span><span class="o">.</span><span class="n">sparse_matrix_from_zx_ints</span><span class="p">(</span>
+                <span class="n">z_ints</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">x_ints</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_qubits</span>
+            <span class="p">)</span>
+            <span class="n">matrix</span><span class="p">[</span><span class="n">row_ind</span><span class="p">,</span> <span class="n">col_ind</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">*</span> <span class="n">phases</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">*</span> <span class="n">matrix_elements</span>
+
+        <span class="k">return</span> <span class="n">matrix</span></div>
+
+
+<div class="viewcode-block" id="Operator.from_labels_and_weights">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.from_labels_and_weights">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_labels_and_weights</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an Operator from labels and weights.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            labels: The labels of the Operator.</span>
+<span class="sd">            weights: The weights associated with the labels.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The constructed Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Operator</span><span class="p">(</span><span class="n">wpa</span><span class="o">.</span><span class="n">WeightedPauliArray</span><span class="o">.</span><span class="n">from_labels_and_weights</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">weights</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Operator.from_paulis_and_weights">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.from_paulis_and_weights">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_paulis_and_weights</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">paulis</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an Operator from Pauli strings and corresponding weights.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            paulis: The Pauli strings.</span>
+<span class="sd">            weights: The weights associated with the Pauli strings.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The constructed Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Operator</span><span class="p">(</span><span class="n">wpa</span><span class="o">.</span><span class="n">WeightedPauliArray</span><span class="p">(</span><span class="n">paulis</span><span class="p">,</span> <span class="n">weights</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Operator.from_paulis">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.from_paulis">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_paulis</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">paulis</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an Operator from Pauli strings.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            paulis: The Pauli strings.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The constructed Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Operator</span><span class="p">(</span><span class="n">wpa</span><span class="o">.</span><span class="n">WeightedPauliArray</span><span class="o">.</span><span class="n">from_paulis</span><span class="p">(</span><span class="n">paulis</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Operator.from_matrix">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.from_matrix">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_matrix</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">matrix</span><span class="p">:</span> <span class="n">NDArray</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an Operator from a matrix representation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            matrix (NDArray): The matrix representation of the Operator.</span>
+<span class="sd">            threshold (float): Threshold for determining small weights.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The constructed Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">num_qubits</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">all_paulis</span> <span class="o">=</span> <span class="n">gen_complete_pauli_array_basis</span><span class="p">(</span><span class="n">num_qubits</span><span class="p">)</span>
+
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">all_paulis</span><span class="o">.</span><span class="n">size</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="n">all_mats</span> <span class="o">=</span> <span class="n">all_paulis</span><span class="o">.</span><span class="n">to_matrices</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">all_paulis</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+            <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">all_mats</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">@</span> <span class="n">matrix</span><span class="p">)</span>
+
+        <span class="n">weights</span> <span class="o">*=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">num_qubits</span><span class="p">)</span>
+
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">threshold</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">from_paulis_and_weights</span><span class="p">(</span><span class="n">all_paulis</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="n">weights</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="Operator.empty">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.empty">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">empty</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an empty Operator with a specified number of qubits.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            num_qubits (int): The number of qubits.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The empty Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Operator</span><span class="o">.</span><span class="n">from_labels_and_weights</span><span class="p">([</span><span class="s2">&quot;I&quot;</span> <span class="o">*</span> <span class="n">num_qubits</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Operator.identity">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.identity">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">identity</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">num_qubits</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an identity Operator with a specified number of qubits.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            num_qubits (int): The number of qubits.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The identity Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Operator</span><span class="o">.</span><span class="n">from_labels_and_weights</span><span class="p">([</span><span class="s2">&quot;I&quot;</span> <span class="o">*</span> <span class="n">num_qubits</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="Operator.to_npz">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.to_npz">[docs]</a>
+    <span class="k">def</span> <span class="nf">to_npz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves the Operator to a .npz file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): The name of the .npz file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wpaulis</span><span class="o">.</span><span class="n">to_npz</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Operator.from_npz">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.Operator.from_npz">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_npz</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Operator&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates an Operator from a .npz file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): The name of the .npz file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Operator: The constructed Operator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">wpa</span><span class="o">.</span><span class="n">WeightedPauliArray</span><span class="o">.</span><span class="n">from_npz</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="commutator">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.commutator">[docs]</a>
+<span class="k">def</span> <span class="nf">commutator</span><span class="p">(</span><span class="n">operator_1</span><span class="p">:</span> <span class="n">Operator</span><span class="p">,</span> <span class="n">operator_2</span><span class="p">:</span> <span class="n">Operator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Operator</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the commutator</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        [A, B] = AB - BA</span>
+
+<span class="sd">    of two Operators.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        operator_1 (Operator): The first Operator.</span>
+<span class="sd">        operator_2 (Operator): The second Operator.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Operator: The commutator of the two Operators.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">do_commute</span> <span class="o">=</span> <span class="n">operator_1</span><span class="o">.</span><span class="n">paulis</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span><span class="o">.</span><span class="n">commute_with</span><span class="p">(</span><span class="n">operator_2</span><span class="o">.</span><span class="n">paulis</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:])</span>
+
+    <span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">~</span><span class="n">do_commute</span><span class="p">)</span>
+
+    <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">operator_1</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">[</span><span class="n">idx1</span><span class="p">]</span><span class="o">.</span><span class="n">compose_weighted_pauli_array</span><span class="p">(</span><span class="n">operator_2</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">[</span><span class="n">idx2</span><span class="p">])</span>
+
+    <span class="n">new_operator</span> <span class="o">=</span> <span class="n">Operator</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">new_operator</span></div>
+
+
+
+<div class="viewcode-block" id="anticommutator">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.pauli.html#pauliarray.pauli.operator.anticommutator">[docs]</a>
+<span class="k">def</span> <span class="nf">anticommutator</span><span class="p">(</span><span class="n">operator_1</span><span class="p">:</span> <span class="n">Operator</span><span class="p">,</span> <span class="n">operator_2</span><span class="p">:</span> <span class="n">Operator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Operator</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the anticommutator</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        {A, B} = AB + BA</span>
+
+<span class="sd">    of two Operators.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        operator_1 (Operator): The first Operator.</span>
+<span class="sd">        operator_2 (Operator): The second Operator.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Operator: The anticommutator of the two Operators.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">do_commute</span> <span class="o">=</span> <span class="n">operator_1</span><span class="o">.</span><span class="n">paulis</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span><span class="o">.</span><span class="n">commute_with</span><span class="p">(</span><span class="n">operator_2</span><span class="o">.</span><span class="n">paulis</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:])</span>
+
+    <span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">do_commute</span><span class="p">)</span>
+
+    <span class="n">new_wpaulis</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">operator_1</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">[</span><span class="n">idx1</span><span class="p">]</span><span class="o">.</span><span class="n">compose_weighted_pauli_array</span><span class="p">(</span><span class="n">operator_2</span><span class="o">.</span><span class="n">wpaulis</span><span class="p">[</span><span class="n">idx2</span><span class="p">])</span>
+
+    <span class="n">new_operator</span> <span class="o">=</span> <span class="n">Operator</span><span class="p">(</span><span class="n">new_wpaulis</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">new_operator</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Quantum AlgoLab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Quantum AlgoLab.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

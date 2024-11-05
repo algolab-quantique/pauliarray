@@ -1,0 +1,599 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>pauliarray &#8212; PauliArray</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api_reference/modules';</script>
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.svg" class="logo__image only-light" alt="PauliArray - Home"/>
+    <img src="../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="PauliArray - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    PauliArray
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/data_structures.html">Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/operations.html">Operations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/commutators.html">Commutators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/fermion_to_qubit_mapping.html">Fermion to Qubit Mapping</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="pauliarray.html">pauliarray package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.binary.html">pauliarray.binary package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.conversion.html">pauliarray.conversion package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.mapping.html">pauliarray.mapping package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.pauli.html">pauliarray.pauli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.utils.html">pauliarray.utils package</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git/issues/new?title=Issue%20on%20page%20%2Fapi_reference/modules.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>pauliarray</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="pauliarray">
+<h1>pauliarray<a class="headerlink" href="#pauliarray" title="Link to this heading">#</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pauliarray.html">pauliarray package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.binary.html">pauliarray.binary package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.binary.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.binary.html#module-pauliarray.binary.bit_operations">pauliarray.binary.bit_operations module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.binary.html#module-pauliarray.binary.symplectic">pauliarray.binary.symplectic module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.binary.html#module-pauliarray.binary">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.conversion.html">pauliarray.conversion package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.conversion.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.conversion.html#module-pauliarray.conversion.openfermion">pauliarray.conversion.openfermion module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.conversion.html#module-pauliarray.conversion.pennylane">pauliarray.conversion.pennylane module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.conversion.html#module-pauliarray.conversion.qiskit">pauliarray.conversion.qiskit module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.conversion.html#module-pauliarray.conversion">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.mapping.html">pauliarray.mapping package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#module-pauliarray.mapping.fermion">pauliarray.mapping.fermion module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.mapping.html#module-pauliarray.mapping">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.pauli.html">pauliarray.pauli package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#module-pauliarray.pauli.operator">pauliarray.pauli.operator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#module-pauliarray.pauli.operator_array_type_1">pauliarray.pauli.operator_array_type_1 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#module-pauliarray.pauli.operator_array_type_2">pauliarray.pauli.operator_array_type_2 module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#module-pauliarray.pauli.pauli_array">pauliarray.pauli.pauli_array module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#module-pauliarray.pauli.weighted_pauli_array">pauliarray.pauli.weighted_pauli_array module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.pauli.html#module-pauliarray.pauli">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pauliarray.utils.html">pauliarray.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.utils.html#module-pauliarray.utils.array_operations">pauliarray.utils.array_operations module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.utils.html#module-pauliarray.utils.pauli_array_library">pauliarray.utils.pauli_array_library module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pauliarray.utils.html#module-pauliarray.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pauliarray.html#module-pauliarray">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_bits_operations">tests.test_bits_operations module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_bits_operations.TestBitsOperations"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_bits_operations.TestBitsOperations.test_dot"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations.test_dot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_bits_operations.TestBitsOperations.test_intersection"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations.test_intersection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_bits_operations.TestBitsOperations.test_kernel"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations.test_kernel()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_bits_operations.TestBitsOperations.test_kernel_2"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations.test_kernel_2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_bits_operations.TestBitsOperations.test_rank"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations.test_rank()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_bits_operations.TestBitsOperations.test_row_echelon"><code class="docutils literal notranslate"><span class="pre">TestBitsOperations.test_row_echelon()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_conversion">tests.test_conversion module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_conversion.TestPauliFromQiskit"><code class="docutils literal notranslate"><span class="pre">TestPauliFromQiskit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_conversion.TestPauliFromQiskit.test_operator_from_sparse_pauli"><code class="docutils literal notranslate"><span class="pre">TestPauliFromQiskit.test_operator_from_sparse_pauli()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_conversion.TestPauliFromQiskit.test_operator_to_sparse_pauli"><code class="docutils literal notranslate"><span class="pre">TestPauliFromQiskit.test_operator_to_sparse_pauli()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_conversion.TestPauliFromQiskit.test_pauli_array_from_pauli_list"><code class="docutils literal notranslate"><span class="pre">TestPauliFromQiskit.test_pauli_array_from_pauli_list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_conversion.TestPauliFromQiskit.test_pauli_array_to_pauli_list"><code class="docutils literal notranslate"><span class="pre">TestPauliFromQiskit.test_pauli_array_to_pauli_list()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_conversion.TestPauliFromQiskit.test_weighted_pauli_array_from_pauli_list"><code class="docutils literal notranslate"><span class="pre">TestPauliFromQiskit.test_weighted_pauli_array_from_pauli_list()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_conversion.get_qubit_operators_list"><code class="docutils literal notranslate"><span class="pre">get_qubit_operators_list()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_mapping">tests.test_mapping module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_mapping.TestJordanWignerMapping"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_mapping.TestJordanWignerMapping.test_assemble_qubit_hamiltonian_from_sparses"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_assemble_qubit_hamiltonian_from_sparses()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_mapping.TestJordanWignerMapping.test_creation_annihilation_operators"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_creation_annihilation_operators()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_mapping.TestJordanWignerMapping.test_majoranas"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_majoranas()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_mapping.TestJordanWignerMapping.test_occupation_operators"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_occupation_operators()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_mapping.TestJordanWignerMapping.test_one_body_to_pauli_operator_from_sparse"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_one_body_to_pauli_operator_from_sparse()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_mapping.TestJordanWignerMapping.test_one_body_to_pauli_operator_from_tensor"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_one_body_to_pauli_operator_from_tensor()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_mapping.TestJordanWignerMapping.test_two_body_to_pauli_operator_from_sparse"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_two_body_to_pauli_operator_from_sparse()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_mapping.TestJordanWignerMapping.test_two_body_to_pauli_operator_from_tensor"><code class="docutils literal notranslate"><span class="pre">TestJordanWignerMapping.test_two_body_to_pauli_operator_from_tensor()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_operator">tests.test_operator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_operator.TestOperator"><code class="docutils literal notranslate"><span class="pre">TestOperator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator.TestOperator.test_clifford_conjugate_pauli_array"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_clifford_conjugate_pauli_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator.TestOperator.test_combine_repeated_terms"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_combine_repeated_terms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator.TestOperator.test_compose"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_compose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator.TestOperator.test_eq"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_eq()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator.TestOperator.test_equals"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_equals()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator.TestOperator.test_from_weights_and_labels"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_from_weights_and_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator.TestOperator.test_power"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_power()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator.TestOperator.test_remove_small_weights"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_remove_small_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator.TestOperator.test_str"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator.TestOperator.test_to_npz_from_npz"><code class="docutils literal notranslate"><span class="pre">TestOperator.test_to_npz_from_npz()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_operator_array_type_1">tests.test_operator_array_type_1 module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_operator_array_type_1.TestOperatorArrayType1"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator_array_type_1.TestOperatorArrayType1.test_commutator"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_commutator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator_array_type_1.TestOperatorArrayType1.test_concatenate"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_concatenate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator_array_type_1.TestOperatorArrayType1.test_from_pauli_array"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_from_pauli_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator_array_type_1.TestOperatorArrayType1.test_get_item"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_get_item()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator_array_type_1.TestOperatorArrayType1.test_init"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_init()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator_array_type_1.TestOperatorArrayType1.test_mul_weights"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_mul_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator_array_type_1.TestOperatorArrayType1.test_remove_small_weights"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_remove_small_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator_array_type_1.TestOperatorArrayType1.test_sum"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_sum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator_array_type_1.TestOperatorArrayType1.test_x"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType1.test_x()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_operator_array_type_2">tests.test_operator_array_type_2 module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_operator_array_type_2.TestOperatorArrayType2"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator_array_type_2.TestOperatorArrayType2.test_combine_basis_paulis"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_combine_basis_paulis()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator_array_type_2.TestOperatorArrayType2.test_commutator"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_commutator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator_array_type_2.TestOperatorArrayType2.test_concatenate"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_concatenate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator_array_type_2.TestOperatorArrayType2.test_get_item"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_get_item()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator_array_type_2.TestOperatorArrayType2.test_init"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_init()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator_array_type_2.TestOperatorArrayType2.test_remove_small_weights"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_remove_small_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_operator_array_type_2.TestOperatorArrayType2.test_remove_unused_basis_paulis"><code class="docutils literal notranslate"><span class="pre">TestOperatorArrayType2.test_remove_unused_basis_paulis()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_pauli_array">tests.test_pauli_array module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray"><code class="docutils literal notranslate"><span class="pre">TestPauliArray</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_add_pauli_array"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_add_pauli_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_bitwisecommute_with"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_bitwisecommute_with()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_clifford_conjugate"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_clifford_conjugate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_commutator"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_commutator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_commute_with"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_commute_with()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_compose_pauli_array"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_compose_pauli_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_cx"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_cx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_cz"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_cz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_eq"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_eq()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_fast_flat_unique"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_fast_flat_unique()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_from_labels"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_from_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_generators"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_generators()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_generators_with_map"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_generators_with_map()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_getitem"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_getitem()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_h"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_h()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_inspect"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_inspect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_matrix_from_zx_ints"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_matrix_from_zx_ints()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_mul_weights"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_mul_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_reorder_qubits"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_reorder_qubits()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_s"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_s()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_set_item"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_set_item()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_str"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_to_labels"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_to_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_to_matrices"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_to_matrices()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_traces"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_traces()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_unique"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_unique()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_x"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_x()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArray.test_z_string_x_string_to_label"><code class="docutils literal notranslate"><span class="pre">TestPauliArray.test_z_string_x_string_to_label()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArrayFunc"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArrayFunc.test_anticommutator"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_anticommutator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArrayFunc.test_argsort"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_argsort()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArrayFunc.test_broadcast_to"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_broadcast_to()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArrayFunc.test_commutator"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_commutator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArrayFunc.test_concatenate"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_concatenate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArrayFunc.test_expand_dims"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_expand_dims()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_pauli_array.TestPauliArrayFunc.test_swapaxes"><code class="docutils literal notranslate"><span class="pre">TestPauliArrayFunc.test_swapaxes()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_symplectic">tests.test_symplectic module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_symplectic.TestSymplecticBitsOperations"><code class="docutils literal notranslate"><span class="pre">TestSymplecticBitsOperations</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_symplectic.TestSymplecticBitsOperations.test_dot"><code class="docutils literal notranslate"><span class="pre">TestSymplecticBitsOperations.test_dot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_symplectic.TestSymplecticBitsOperations.test_gram_schmidt_orthogonalization"><code class="docutils literal notranslate"><span class="pre">TestSymplecticBitsOperations.test_gram_schmidt_orthogonalization()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_symplectic.TestSymplecticBitsOperations.test_isotropic_subspace"><code class="docutils literal notranslate"><span class="pre">TestSymplecticBitsOperations.test_isotropic_subspace()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_symplectic.TestSymplecticBitsOperations.test_orthogonal_complement"><code class="docutils literal notranslate"><span class="pre">TestSymplecticBitsOperations.test_orthogonal_complement()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_weighted_pauli_array">tests.test_weighted_pauli_array module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_weighted_pauli_array.TestWeightedPauliArray"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_cx"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_cx()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_cz"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_cz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_extract"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_extract()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_from_weights_and_labels"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_from_weights_and_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_h"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_h()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_s"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_s()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_str"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_to_npz_from_npz"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_to_npz_from_npz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_weighted_pauli_array.TestWeightedPauliArray.test_x"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArray.test_x()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArrayFunc</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc.test_anticommutator"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArrayFunc.test_anticommutator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc.test_commutator"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArrayFunc.test_commutator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="tests.html#tests.test_weighted_pauli_array.TestWeightedPauliArrayFunc.test_concatenate"><code class="docutils literal notranslate"><span class="pre">TestWeightedPauliArrayFunc.test_concatenate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Quantum AlgoLab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Quantum AlgoLab.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,717 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pauliarray.binary.bit_operations &#8212; PauliArray</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../../../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pauliarray/binary/bit_operations';</script>
+    <link rel="icon" href="../../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.svg" class="logo__image only-light" alt="PauliArray - Home"/>
+    <img src="../../../_static/logo.svg" class="logo__image only-dark pst-js-only" alt="PauliArray - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../index.html">
+                    PauliArray
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/data_structures.html">Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/operations.html">Operations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/commutators.html">Commutators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/fermion_to_qubit_mapping.html">Fermion to Qubit Mapping</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api_reference/pauliarray.html">pauliarray package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.binary.html">pauliarray.binary package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.conversion.html">pauliarray.conversion package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.mapping.html">pauliarray.mapping package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.pauli.html">pauliarray.pauli package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api_reference/pauliarray.utils.html">pauliarray.utils package</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/algolab-quantique/pauliarray.git/issues/new?title=Issue%20on%20page%20%2F_modules/pauliarray/binary/bit_operations.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for pauliarray.binary.bit_operations</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy.typing</span> <span class="kn">import</span> <span class="n">NDArray</span>
+
+
+<div class="viewcode-block" id="bit_sum">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.binary.html#pauliarray.binary.bit_operations.bit_sum">[docs]</a>
+<span class="k">def</span> <span class="nf">bit_sum</span><span class="p">(</span><span class="n">bit_strings</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the sum of booleans along the last axis of the input array.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bit_strings (&quot;np.ndarray[np.bool]&quot;): Array of booleans.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: Sum of bits along the last axis.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">bit_strings</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="dot">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.binary.html#pauliarray.binary.bit_operations.dot">[docs]</a>
+<span class="k">def</span> <span class="nf">dot</span><span class="p">(</span>
+    <span class="n">bit_strings_1</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">,</span>
+    <span class="n">bit_strings_2</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the dot product between two arrays of boolean values.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bit_strings_1 (&quot;np.ndarray[np.bool]&quot;): First array of boolean values.</span>
+<span class="sd">        bit_strings_2 (&quot;np.ndarray[np.bool]&quot;): Second array of boolean values.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        &quot;np.ndarray[np.int]&quot;: Dot product of the two input arrays.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">bit_sum</span><span class="p">(</span><span class="n">bit_strings_1</span> <span class="o">*</span> <span class="n">bit_strings_2</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="matmul">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.binary.html#pauliarray.binary.bit_operations.matmul">[docs]</a>
+<span class="k">def</span> <span class="nf">matmul</span><span class="p">(</span>
+    <span class="n">bit_matrix_1</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">,</span>
+    <span class="n">bit_matrix_2</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Performs matrix multiplication over binary matrices.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bit_matrix_1 (&quot;np.ndarray[np.bool]&quot;): First binary matrix.</span>
+<span class="sd">        bit_matrix_2 (&quot;np.ndarray[np.bool]&quot;): Second binary matrix.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        &quot;np.ndarray[np.bool]&quot;: Resultant binary matrix after multiplication.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">bit_matrix_1</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="n">bit_matrix_2</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="add">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.binary.html#pauliarray.binary.bit_operations.add">[docs]</a>
+<span class="k">def</span> <span class="nf">add</span><span class="p">(</span>
+    <span class="n">bit_matrix_1</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">,</span>
+    <span class="n">bit_matrix_2</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Performs element-wise XOR operation between two binary matrices.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bit_matrix_1 (&quot;np.ndarray[np.bool]&quot;): First binary matrix.</span>
+<span class="sd">        bit_matrix_2 (&quot;np.ndarray[np.bool]&quot;): Second binary matrix.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        &quot;np.ndarray[np.bool]&quot;: Element-wise XOR result of the two input matrices.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_xor</span><span class="p">(</span><span class="n">bit_matrix_1</span><span class="p">,</span> <span class="n">bit_matrix_2</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="rank">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.binary.html#pauliarray.binary.bit_operations.rank">[docs]</a>
+<span class="k">def</span> <span class="nf">rank</span><span class="p">(</span><span class="n">bit_matrix</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the rank of a binary matrix.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bit_matrix (&quot;np.ndarray[np.bool]&quot;): Input binary matrix.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        int: Rank of the binary matrix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">bit_matrix</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span>
+
+    <span class="n">row_ech</span> <span class="o">=</span> <span class="n">row_space</span><span class="p">(</span><span class="n">bit_matrix</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">row_ech</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="inv">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.binary.html#pauliarray.binary.bit_operations.inv">[docs]</a>
+<span class="k">def</span> <span class="nf">inv</span><span class="p">(</span><span class="n">bit_matrix</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the inverse of a binary matrix.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bit_matrix (&quot;np.ndarray[np.bool]&quot;): Input binary matrix.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        &quot;np.ndarray[np.bool]&quot;: Inverse of the input binary matrix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">bit_matrix</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">bit_matrix</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="strings_to_ints">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.binary.html#pauliarray.binary.bit_operations.strings_to_ints">[docs]</a>
+<span class="k">def</span> <span class="nf">strings_to_ints</span><span class="p">(</span><span class="n">bit_strings</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.int]&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts binary strings to integers.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bit_strings (&quot;np.ndarray[np.bool]&quot;): Input array of binary strings.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        &quot;np.ndarray[np.int]&quot;: Integers obtained from input binary strings</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">power_of_twos</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">bit_strings</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">bit_sum</span><span class="p">(</span><span class="n">bit_strings</span> <span class="o">*</span> <span class="n">power_of_twos</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="row_echelon">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.binary.html#pauliarray.binary.bit_operations.row_echelon">[docs]</a>
+<span class="k">def</span> <span class="nf">row_echelon</span><span class="p">(</span><span class="n">bit_matrix</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Applies Gauss-Jordan elimination on a binary matrix to produce row echelon form.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bit_matrix (&quot;np.ndarray[np.bool]&quot;): Input binary matrix.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        &quot;np.ndarray[np.bool]&quot;: Row echelon form of the provided matrix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">re_bit_matrix</span> <span class="o">=</span> <span class="n">bit_matrix</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">n_rows</span> <span class="o">=</span> <span class="n">re_bit_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">n_cols</span> <span class="o">=</span> <span class="n">re_bit_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">row_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_rows</span><span class="p">)</span>
+
+    <span class="n">h_row</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">k_col</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">while</span> <span class="n">h_row</span> <span class="o">&lt;</span> <span class="n">n_rows</span> <span class="ow">and</span> <span class="n">k_col</span> <span class="o">&lt;</span> <span class="n">n_cols</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">re_bit_matrix</span><span class="p">[</span><span class="n">h_row</span><span class="p">:,</span> <span class="n">k_col</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">k_col</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">i_row</span> <span class="o">=</span> <span class="n">h_row</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">re_bit_matrix</span><span class="p">[</span><span class="n">h_row</span><span class="p">:,</span> <span class="n">k_col</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">i_row</span> <span class="o">!=</span> <span class="n">h_row</span><span class="p">:</span>
+                <span class="n">re_bit_matrix</span><span class="p">[[</span><span class="n">i_row</span><span class="p">,</span> <span class="n">h_row</span><span class="p">],</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">re_bit_matrix</span><span class="p">[[</span><span class="n">h_row</span><span class="p">,</span> <span class="n">i_row</span><span class="p">],</span> <span class="p">:]</span>
+
+            <span class="n">cond_rows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">re_bit_matrix</span><span class="p">[:,</span> <span class="n">k_col</span><span class="p">],</span> <span class="p">(</span><span class="n">row_range</span> <span class="o">!=</span> <span class="n">h_row</span><span class="p">))</span>
+
+            <span class="n">re_bit_matrix</span><span class="p">[</span><span class="n">cond_rows</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_xor</span><span class="p">(</span><span class="n">re_bit_matrix</span><span class="p">[</span><span class="n">cond_rows</span><span class="p">,</span> <span class="p">:],</span> <span class="n">re_bit_matrix</span><span class="p">[</span><span class="n">h_row</span><span class="p">,</span> <span class="p">:][</span><span class="kc">None</span><span class="p">,</span> <span class="p">:])</span>
+
+            <span class="n">h_row</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">k_col</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">re_bit_matrix</span></div>
+
+
+
+<div class="viewcode-block" id="kernel">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.binary.html#pauliarray.binary.bit_operations.kernel">[docs]</a>
+<span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="n">bit_matrix</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the Kernel of a two dimensions &quot;np.ndarray[np.bool]&quot;.</span>
+<span class="sd">    The Kernel of a matrix A is a matrix which the columns are formed by the vectors x such that</span>
+
+<span class="sd">    .. math::</span>
+<span class="sd">        A x = 0.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bit_matrix (&quot;np.ndarray[np.bool]&quot;): Input binary matrix.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        &quot;np.ndarray[np.bool]&quot;: Kernel of the input binary matrix.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">bit_matrix</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">assert</span> <span class="n">bit_matrix</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+
+    <span class="n">re_bit_matrix</span> <span class="o">=</span> <span class="n">bit_matrix</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="n">n_rows</span> <span class="o">=</span> <span class="n">re_bit_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">n_cols</span> <span class="o">=</span> <span class="n">re_bit_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">ext_bit_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">re_bit_matrix</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">row_ech_ext_bit_matrix</span> <span class="o">=</span> <span class="n">row_echelon</span><span class="p">(</span><span class="n">ext_bit_matrix</span><span class="p">)</span>
+
+    <span class="n">row_ech_bit_matrix</span> <span class="o">=</span> <span class="n">row_ech_ext_bit_matrix</span><span class="p">[:,</span> <span class="p">:</span><span class="n">n_cols</span><span class="p">]</span>
+    <span class="n">inverse_bit_matrix</span> <span class="o">=</span> <span class="n">row_ech_ext_bit_matrix</span><span class="p">[:,</span> <span class="n">n_cols</span><span class="p">:]</span>
+
+    <span class="n">null_rows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="o">~</span><span class="n">row_ech_bit_matrix</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">inverse_bit_matrix</span><span class="p">[</span><span class="n">null_rows</span><span class="p">,</span> <span class="p">:]</span></div>
+
+
+
+<div class="viewcode-block" id="intersection_row_space">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.binary.html#pauliarray.binary.bit_operations.intersection_row_space">[docs]</a>
+<span class="k">def</span> <span class="nf">intersection_row_space</span><span class="p">(</span>
+    <span class="n">bit_matrix_1</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">,</span> <span class="n">bit_matrix_2</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given two matrices which rows are spanning two subspace, this fonction returns rows spanning the intersection</span>
+<span class="sd">    subspace.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bit_matrix_1 (&quot;np.ndarray[np.bool]&quot;): First binary matrix.</span>
+<span class="sd">        bit_matrix_2 (&quot;np.ndarray[np.bool]&quot;): Second binary matrix.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        &quot;np.ndarray[np.bool]&quot;: Rows spanning the intersection subspace.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">bit_matrix_1</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="n">bit_matrix_2</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">assert</span> <span class="n">bit_matrix_1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">bit_matrix_2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">rs_bit_matrix_1</span> <span class="o">=</span> <span class="n">row_space</span><span class="p">(</span><span class="n">bit_matrix_1</span><span class="p">)</span>
+    <span class="n">rs_bit_matrix_2</span> <span class="o">=</span> <span class="n">row_space</span><span class="p">(</span><span class="n">bit_matrix_2</span><span class="p">)</span>
+
+    <span class="n">num_rows_1</span> <span class="o">=</span> <span class="n">rs_bit_matrix_1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">all_rows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">rs_bit_matrix_1</span><span class="p">,</span> <span class="n">rs_bit_matrix_2</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">null_row_combination</span> <span class="o">=</span> <span class="n">kernel</span><span class="p">(</span><span class="n">all_rows</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">matmul</span><span class="p">(</span><span class="n">null_row_combination</span><span class="p">[:,</span> <span class="p">:</span><span class="n">num_rows_1</span><span class="p">],</span> <span class="n">all_rows</span><span class="p">[:</span><span class="n">num_rows_1</span><span class="p">,</span> <span class="p">:])</span></div>
+
+
+
+<div class="viewcode-block" id="row_space">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.binary.html#pauliarray.binary.bit_operations.row_space">[docs]</a>
+<span class="k">def</span> <span class="nf">row_space</span><span class="p">(</span><span class="n">bits</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the row space of a binary matrix using Gauss-Jordan elimination and</span>
+<span class="sd">    removing the zero lines.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bits (&quot;np.ndarray[np.bool]&quot;): Input binary matrix.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">        &quot;np.ndarray[np.bool]&quot;: Row space of the current matrix</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">row_ech_bits</span> <span class="o">=</span> <span class="n">row_echelon</span><span class="p">(</span><span class="n">bits</span><span class="p">)</span>
+    <span class="n">null_rows</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="o">~</span><span class="n">row_ech_bits</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">row_ech_bits</span><span class="p">[</span><span class="o">~</span><span class="n">null_rows</span><span class="p">,</span> <span class="p">:]</span></div>
+
+
+
+<div class="viewcode-block" id="orthogonal_basis">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.binary.html#pauliarray.binary.bit_operations.orthogonal_basis">[docs]</a>
+<span class="k">def</span> <span class="nf">orthogonal_basis</span><span class="p">(</span><span class="n">bit_strings</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the orthogonal basis of the given set of bit strings.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bit_strings (&quot;np.ndarray[np.bool]&quot;): Input array of bit strings.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">        &quot;np.ndarray[np.bool]&quot;: Orthogonal basis of the input bit strings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">row_space</span><span class="p">(</span><span class="n">bit_strings</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="orthogonal_complement">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.binary.html#pauliarray.binary.bit_operations.orthogonal_complement">[docs]</a>
+<span class="k">def</span> <span class="nf">orthogonal_complement</span><span class="p">(</span><span class="n">bit_strings</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the orthogonal complement of the given set of bit strings.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bit_strings (&quot;np.ndarray[np.bool]&quot;): Input array of bit strings.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">        &quot;np.ndarray[np.bool]&quot;: Orthogonal basis of the input bit strings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">kernel</span><span class="p">(</span><span class="n">bit_strings</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="intersection">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.binary.html#pauliarray.binary.bit_operations.intersection">[docs]</a>
+<span class="k">def</span> <span class="nf">intersection</span><span class="p">(</span><span class="n">bit_strings_1</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">,</span> <span class="n">bit_strings_2</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the intersection of two sets of bit strings.</span>
+
+<span class="sd">    Args</span>
+<span class="sd">        bit_strings_1 (&quot;np.ndarray[np.bool]&quot;): First array of boolean values.</span>
+<span class="sd">        bit_strings_2 (&quot;np.ndarray[np.bool]&quot;): Second array of boolean values.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">        &quot;np.ndarray[np.bool]&quot;: Intersection of the input bit strings.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">intersection_row_space</span><span class="p">(</span><span class="n">bit_strings_1</span><span class="p">,</span> <span class="n">bit_strings_2</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="is_orthogonal">
+<a class="viewcode-back" href="../../../api_reference/pauliarray.binary.html#pauliarray.binary.bit_operations.is_orthogonal">[docs]</a>
+<span class="k">def</span> <span class="nf">is_orthogonal</span><span class="p">(</span><span class="n">bit_strings_1</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">,</span> <span class="n">bit_strings_2</span><span class="p">:</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;np.ndarray[np.bool]&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks if two sets of bit strings are orthogonal.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bit_strings_1 (&quot;np.ndarray[np.bool]&quot;): First array of boolean values.</span>
+<span class="sd">        bit_strings_2 (&quot;np.ndarray[np.bool]&quot;): Second array of boolean values.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">        &quot;np.ndarray[np.bool]&quot;: True if the input bit strings are orthogonal, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">bit_strings_1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">bit_strings_2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">bit_strings_1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+
+    <span class="k">return</span> <span class="o">~</span><span class="n">dot</span><span class="p">(</span><span class="n">bit_strings_1</span><span class="p">,</span> <span class="n">bit_strings_2</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Quantum AlgoLab
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Quantum AlgoLab.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
