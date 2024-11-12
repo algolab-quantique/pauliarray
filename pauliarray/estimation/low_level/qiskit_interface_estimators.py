@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, List, Tuple
 
 import numpy as np
 from numpy.typing import NDArray
@@ -24,6 +24,10 @@ class QiskitSamplerEstimator(DiagonalEstimator):
         if isinstance(state, QuantumCircuit):
             return self.estimate_paulis_on_state_circuit(paulis, state)
 
+    def batch_estimate_paulis_on_state(self, batch_paulis: List[PauliArray], batch_state: List[Any]):
+
+        return self.batch_estimate_paulis_on_state_circuit(batch_paulis, batch_state)
+
     def estimate_paulis_on_state_circuit(self, paulis: PauliArray, state_circuit: QuantumCircuit):
         """
         Estimate the expectation value of the paulis using the statevector simulator of Qiskit.
@@ -34,24 +38,41 @@ class QiskitSamplerEstimator(DiagonalEstimator):
         Returns:
             NDArray: _description_
         """
-        assert np.all(paulis.is_diagonal())
+
+        return self.batch_estimate_paulis_on_state_circuit([paulis], [state_circuit])
+
+    def batch_estimate_paulis_on_state_circuit(self, batch_paulis: List[PauliArray], batch_state: List[QuantumCircuit]):
+        """
+        Estimate the expectation value of the paulis using the statevector simulator of Qiskit.
+
+        Args:
+            state_circuit (QuantumCircuit): A state given in the form of QuantumCircuit
+
+        Returns:
+            NDArray: _description_
+        """
 
         sampler = self._qiskit_sampler
 
-        state_circuit = state_circuit.copy()
-        state_circuit.measure_all()
+        all_circuits = []
+        for state_circuit in batch_state:
+            state_circuit = state_circuit.copy()
+            state_circuit.measure_all()
+            all_circuits.append(state_circuit)
 
-        job = sampler.run([state_circuit])
-        result = job.result()[0]
+        job = sampler.run(all_circuits)
+        results = job.result()
+        batch_expectation_values = []
+        for paulis, result in zip(batch_paulis, results):
+            meas = result.data.meas
 
-        meas = result.data.meas
+            bit_strings = np.unpackbits(meas.array, axis=-1, bitorder="little", count=meas.num_bits).astype(bool)
 
-        bit_strings = np.unpackbits(meas.array, axis=-1, bitorder="little", count=meas.num_bits).astype(bool)
-
-        meas_states = bsa.BasisStateArray(bit_strings)
-        basis_states, counts = bsa.fast_flat_unique(meas_states, return_counts=True)
-        nqubit_state = NQubitState(basis_states, np.sqrt(counts)).normalise()
-        paulis_expectation_values = nqubit_state.pauli_array_expectation_values(paulis)
+            meas_states = bsa.BasisStateArray(bit_strings)
+            basis_states, counts = bsa.fast_flat_unique(meas_states, return_counts=True)
+            nqubit_state = NQubitState(basis_states, np.sqrt(counts)).normalise()
+            paulis_expectation_values = nqubit_state.pauli_array_expectation_values(paulis)
+            batch_expectation_values.append(paulis_expectation_values)
 
         return paulis_expectation_values
 

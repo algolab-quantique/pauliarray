@@ -1,5 +1,5 @@
 import abc
-from typing import Any, Callable, Literal
+from typing import Any, Callable, List, Literal, Tuple
 
 import numpy as np
 from numpy.typing import NDArray
@@ -16,7 +16,10 @@ from pauliarray.pauli.pauli_array import PauliArray
 
 class BaseEstimator(object):
     def estimate_paulis_on_state(self, paulis: PauliArray, state: Any):
-        pass
+        return NotImplemented
+
+    def batch_estimate_paulis_on_state(self, batch_paulis: List[PauliArray], batch_state: List[Any]):
+        return NotImplemented
 
 
 class DiagonalEstimator(BaseEstimator):
