@@ -3,6 +3,7 @@ from typing import Tuple
 import numpy as np
 
 import pauliarray.pauli.operator as op
+import pauliarray.pauli.operator_array_type_1 as opa
 import pauliarray.pauli.pauli_array as pa
 import pauliarray.state.basis_state_array as bsa
 from pauliarray.binary import bit_operations as bitops
@@ -45,9 +46,24 @@ class NQubitState(object):
     def num_terms(self) -> int:
         return self.basis.size
 
+    def copy(self) -> "NQubitState":
+
+        new_amplitudes = self.amplitudes.copy()
+        new_basis = self.basis.copy()
+
+        return NQubitState
+
     def adjoint(self) -> "NQubitState":
 
         new_amplitudes = np.conj(self._amplitudes)
+        new_basis = self.basis.copy()
+
+        return NQubitState(new_basis, new_amplitudes)
+
+    def normalise(self) -> "NQubitState":
+        norm = np.sqrt(np.sum(np.abs(self.amplitudes) ** 2))
+        new_amplitudes = self.amplitudes / norm
+
         new_basis = self.basis.copy()
 
         return NQubitState(new_basis, new_amplitudes)
@@ -91,11 +107,29 @@ class NQubitState(object):
 
         return NQubitState(self.basis[threshold_mask], self.amplitudes[threshold_mask])
 
-    def apply_operator(self, pauli_operator: op.Operator):
-        new_basis, phases = self.basis[:, None].apply_pauli_array(pauli_operator.paulis[None, :])
-        new_amplitudes = phases * self.amplitudes[:, None] * pauli_operator.weights[None, :]
+    def apply_operator(self, operator: op.Operator):
+        new_basis, phases = self.basis[:, None].apply_pauli_array(operator.paulis[None, :])
+        new_amplitudes = phases * self.amplitudes[:, None] * operator.weights[None, :]
 
         return NQubitState(new_basis.flatten(), new_amplitudes.flatten())
+
+    def apply_operator_array(self, operator_array: opa.OperatorArrayType1):
+        """
+        Apply each operator on the state, starting with the last one.
+
+        Args:
+            operator_array (opa.OperatorArrayType1): _description_
+        """
+
+        assert operator_array.ndim == 1
+
+        new_state = self.copy()
+
+        for i in reversed(range(operator_array.size)):
+            transformation = operator_array.get_operator(i)
+            new_state = new_state.apply_pauli_operator(transformation).simplify()
+
+        return new_state
 
     def scalar_product(self, other: "NQubitState"):
         amplitude_array = np.conj(self.amplitudes[:, None]) * other.amplitudes[None, :]
@@ -105,7 +139,7 @@ class NQubitState(object):
 
     braket = scalar_product
 
-    def pauli_operator_expectation_value(self, operator: op.Operator):
+    def operator_expectation_value(self, operator: op.Operator):
         mod_self = self.apply_operator(operator)
         return self.scalar_product(mod_self)
 
@@ -119,6 +153,7 @@ class NQubitState(object):
         Returns:
             _type_: _description_
         """
+
         ij_prod_amplitudes = np.conj(self.amplitudes[:, None]) * self.amplitudes[None, :]
         ij_bit_strings = np.logical_xor(self.bit_strings[:, None, :], self.bit_strings[None, :, :])
 
@@ -146,7 +181,7 @@ class NQubitState(object):
 
         expectation_values = np.sum(nd_ij_prod_amplitudes * nd_ij_matching_x * nd_i_phases[..., None], axis=(-1, -2))
 
-        y_phases = np.choose(np.mod(bitops.dot(paulis.z_strings, paulis.x_strings), 4), [1, 1j, -1, -1j])
+        y_phases = np.choose(np.mod(bitops.dot(paulis.z_strings, paulis.x_strings), 4), [1, -1j, -1, 1j])
 
         return expectation_values * y_phases
 
@@ -165,7 +200,7 @@ class NQubitState(object):
         )
         nd_i_phases = np.choose(np.mod(bitops.dot(nd_i_paulis.z_strings, nd_i_bit_strings), 2), [1, -1])
 
-        expectation_values = i_prod_amplitudes * nd_i_phases
+        expectation_values = np.sum(i_prod_amplitudes * nd_i_phases, axis=-1)
 
         return expectation_values
 
@@ -190,7 +225,7 @@ class NQubitState(object):
 
         nonzero_idx = np.where(np.abs(statevector) > threshold)[0]
 
-        subbasis = bsa.BasisStateArray.integer_subbasis(num_qubits, nonzero_idx)
+        subbasis = bsa.BasisStateArray.from_integers(num_qubits, nonzero_idx)
 
         return NQubitState(subbasis, statevector[nonzero_idx])
 

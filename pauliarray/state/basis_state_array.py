@@ -239,7 +239,7 @@ class BasisStateArray(object):
         return BasisStateArray(bit_strings)
 
     @classmethod
-    def integer_subbasis(cls, num_qubits: int, integers: "np.array[np.int64]") -> "BasisStateArray":
+    def from_integers(cls, num_qubits: int, integers: "np.array[np.int64]") -> "BasisStateArray":
         bin_power = 2 ** np.arange(num_qubits, dtype=np.uintc)
         bit_strings = ((integers[:, None] & bin_power[None, :]) > 0).reshape((len(integers), num_qubits))
 

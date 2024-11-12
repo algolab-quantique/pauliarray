@@ -811,9 +811,9 @@ class PauliArray(object):
         Returns:
             NDArray: The expectation values.
         """
-        assert np.all(paulis_expectation_values.shape == self.shape)
+        assert np.all(paulis_expectation_values.size == self.size)
 
-        return paulis_expectation_values
+        return paulis_expectation_values.reshape(self.shape)
 
     def covariances_from_paulis(self, paulis_covariances: NDArray[np.float64]) -> NDArray[np.float64]:
         """
@@ -994,7 +994,7 @@ class PauliArray(object):
         return cls.identities(shape, num_qubits)
 
     @classmethod
-    def random(cls, shape: Tuple[int, ...], num_qubits: int) -> "PauliArray":
+    def random(cls, shape: Tuple[int, ...], num_qubits: int, diagonal=False) -> "PauliArray":
         """
         Creates a PauliArray of a given shape and number of qubits filled with random Pauli strings.
 
@@ -1008,7 +1008,10 @@ class PauliArray(object):
         new_shape = shape + (num_qubits,)
 
         z_strings = np.random.choice([False, True], new_shape)
-        x_strings = np.random.choice([False, True], new_shape)
+        if diagonal:
+            x_strings = np.zeros(z_strings.shape, dtype=z_strings.dtype)
+        else:
+            x_strings = np.random.choice([False, True], new_shape)
 
         return PauliArray(z_strings, x_strings)
 

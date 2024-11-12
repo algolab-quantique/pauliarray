@@ -417,12 +417,12 @@ class OperatorArrayType1(object):
 
         return OperatorArrayType1(new_wpaulis)
 
-    def successive_clifford_conjugate_pauli_array(self, other: pa.PauliArray) -> Tuple[pa.PauliArray, NDArray]:
+    def successive_clifford_conjugate_pauli_array(self, paulis: pa.PauliArray) -> Tuple[pa.PauliArray, NDArray]:
         """
         Transform a PauliArray using the operators in self to perform a Clifford conjugates. The first operator is applied first.
 
         Args:
-            other (pa.PauliArray): A PauliArray
+            paulis (pa.PauliArray): A PauliArray
 
         Returns:
             pa.PauliArray: The transformed PauliArray
@@ -431,7 +431,7 @@ class OperatorArrayType1(object):
 
         assert self.ndim == 1
 
-        new_paulis = other.copy()
+        new_paulis = paulis.copy()
         phases = np.ones(new_paulis.shape, dtype=complex)
 
         for i in range(self.size):

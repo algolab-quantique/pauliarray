@@ -18,9 +18,9 @@ class TestQubitState(unittest.TestCase):
         state = NQubitState.from_labels_and_amplitudes(np.array(["00", "11"]), np.array([np.sqrt(0.5), np.sqrt(0.5)]))
         operator = Operator.from_labels_and_weights(np.array(["XX"]), np.array([1]))
 
-        state.pauli_operator_expectation_value(operator)
+        state.operator_expectation_value(operator)
 
-        self.assertTrue(np.isclose(state.pauli_operator_expectation_value(operator), 1))
+        self.assertTrue(np.isclose(state.operator_expectation_value(operator), 1))
 
     def test_pauli_array_expectation_values(self):
         paulis = PauliArray.from_labels(

@@ -1,5 +1,5 @@
 import abc
-from typing import Callable
+from typing import Any, Callable, Literal
 
 import numpy as np
 from numpy.typing import NDArray
@@ -7,6 +7,7 @@ from qiskit import QuantumCircuit
 
 import pauliarray.pauli.pauli_array as pa
 import pauliarray.state.basis_state_array as bsa
+from pauliarray.pauli.pauli_array import PauliArray
 
 # from qiskit.primitives import Sampler
 
@@ -14,119 +15,43 @@ import pauliarray.state.basis_state_array as bsa
 
 
 class BaseEstimator(object):
-    """
-    Base class for a PauliArray estimator.
-    """
+    def estimate_paulis_on_state(self, paulis: PauliArray, state: Any):
+        pass
 
-    def __init__(self, pauli_object):
-        self._pauli_object = pauli_object
 
-    @property
-    def pauli_object(self):
-        return self._pauli_object
+class DiagonalEstimator(BaseEstimator):
+    pass
 
-    @property
-    def paulis(self):
-        return self.pauli_object.paulis
 
-    @abc.abstractmethod
-    def estimate_paulis_on_state_circuit(self, state_circuit: QuantumCircuit) -> NDArray:
-        """
-        Method (to be implemented in subclass) to estimate the expectation value of Paulis in a PauliArray
+class BitwiseEstimator(DiagonalEstimator):
+    pass
 
-        Args:
-            state_circuit (QuantumCircuit): A state given in the form of QuantumCircuit
 
-        Returns:
-            NDArray: _description_
-        """
-        return
+class GeneralEstimator(BitwiseEstimator):
+    pass
 
-    def estimate_on_state_circuit(self, state_circuit: QuantumCircuit):
-        """
-        Estimate the expectation value of the Pauli Object given a quantum state stated as a quantum state.
 
-        Args:
-            state_circuit (QuantumCircuit): A state given in the form of QuantumCircuit
+# class DiagonalToGeneralEstimator(GeneralEstimator):
+#     def __init__(self, diagonal_estimator: DiagonalEstimator, diagonalisation_fct: Callable):
+#         self._diagonal_estimator = diagonal_estimator
+#         self._diagonalisation_fct = diagonalisation_fct
 
-        Returns:
-            _type_: _description_
-        """
+#     def estimate_paulis_on_state_circuit(self, paulis: PauliArray, state_circuit: QuantumCircuit):
+#         """
+#         Estimate the expectation value of the paulis using the statevector simulator of Qiskit.
 
-        paulis_expectation_values, paulis_covariances = self.estimate_paulis_on_state_circuit(state_circuit)
+#         Args:
+#             state_circuit (QuantumCircuit): A state given in the form of QuantumCircuit
 
-        pauli_object_expectation_values = self.pauli_object.expectation_values_from_paulis(paulis_expectation_values)
-        pauli_object_covariances = self.pauli_object.covariances_from_paulis(paulis_covariances)
+#         Returns:
+#             NDArray: _description_
+#         """
+#         state_circuit = state_circuit.copy()
 
-        return pauli_object_expectation_values, pauli_object_covariances
+#         state = NQubitState.from_statevector(Statevector(state_circuit).data)
 
-    @staticmethod
-    def estimate_diagonal_paulis_expectation_values_on_binary_probabilities(
-        diagonal_paulis: pa.PauliArray, binary_probabilities: dict
-    ):
-        """
-        Estimate the expectations values of diagonal Pauli Strings given probabilities of measuring different basis states.
+#         paulis_expectation_values = state.pauli_array_expectation_values(paulis)
 
-        Args:
-            diag_paulis (pa.PauliArray): Diagonal Pauli strings
-            binary_probabilities (dict): The probabilities associated of measuring basis states.
+#         paulis_covariances = np.zeros(paulis.shape + paulis.shape)
 
-        Raises:
-            ValueError: If the Pauli string are not diagonal.
-
-        Returns:
-            NDArray[np.float_]: The expectation values of the Pauli strings. Has the same shape as diag_paulis.
-        """
-        if not np.all(diagonal_paulis.is_diagonal()):
-            raise ValueError("PauliArray provided must contain only diagonal PauliStrings.")
-
-        labels = list(binary_probabilities.keys())
-        probabilities = np.array(list(binary_probabilities.values()))
-
-        basis_states = bsa.BasisStateArray.from_labels(labels)
-
-        eigenvalues = basis_states[:, None].diagonal_pauli_array_eigenvalues_values(diagonal_paulis[None, :])
-        expectation_values = np.real(np.sum(probabilities[:, None] * eigenvalues, axis=0))
-
-        return expectation_values
-
-    @staticmethod
-    def estimate_diagonal_paulis_covariances_on_binary_probabilities(
-        diagonal_paulis: pa.PauliArray, binary_probabilities: dict
-    ):
-        """
-        Estimate the covariance matrix of diagonal Pauli Strings given probabilities of measuring different basis states.
-
-        Args:
-            diag_paulis (pa.PauliArray): Diagonal Pauli strings
-            binary_probabilities (dict): The probabilities associated of measuring basis states.
-
-        Raises:
-            ValueError: If the Pauli string are not diagonal.
-
-        Returns:
-            NDArray[np.float_]: The expectation values of the Pauli strings. Has the same shape as diag_paulis.
-        """
-        if not np.all(diagonal_paulis.is_diagonal()):
-            raise ValueError("PauliArray provided must contain only diagonal PauliStrings.")
-
-        labels = list(binary_probabilities.keys())
-        probabilities = np.array(list(binary_probabilities.values()))
-
-        basis_states = bsa.BasisStateArray.from_labels(labels)
-
-        paulis_eigenvalues = basis_states[:, None].diagonal_pauli_array_eigenvalues_values(diagonal_paulis[None, :])
-        paulis_expectation_values = np.real(np.sum(probabilities[:, None] * paulis_eigenvalues, axis=0))
-
-        prod_paulis, _ = diagonal_paulis[:, None].mul_pauli_array(diagonal_paulis[None, :])
-
-        prod_paulis_eigenvalues = basis_states[:, None, None].diagonal_pauli_array_eigenvalues_values(
-            prod_paulis[None, :, :]
-        )
-        prod_paulis_expectation_values = np.real(np.sum(probabilities[:, None, None] * prod_paulis_eigenvalues, axis=0))
-
-        covariances = (
-            prod_paulis_expectation_values - paulis_expectation_values[:, None] * paulis_expectation_values[None, :]
-        )
-
-        return covariances
+#         return paulis_expectation_values, paulis_covariances
