@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, List
 
 import numpy as np
 from numpy.typing import NDArray
@@ -15,7 +15,16 @@ class NQubitStateEstimator(GeneralEstimator):
     Uses qiskit statevector simulator to compute expectation values of PauliArray.
     """
 
-    def estimate_paulis_on_state_circuit(self, paulis: PauliArray, state_circuit: QuantumCircuit):
+    def batch_estimate_paulis_on_state(self, batch_paulis: List[PauliArray], batch_state: List[Any]):
+
+        assert np.all([isinstance(state, type(batch_state[0])) for state in batch_state])
+
+        if isinstance(batch_state[0], QuantumCircuit):
+            return self.batch_estimate_paulis_on_state_circuit(batch_paulis, batch_state)
+
+        return NotImplemented
+
+    def batch_estimate_paulis_on_state_circuit(self, batch_paulis: List[PauliArray], batch_state: List[QuantumCircuit]):
         """
         Estimate the expectation value of the paulis using the statevector simulator of Qiskit.
 
@@ -25,15 +34,14 @@ class NQubitStateEstimator(GeneralEstimator):
         Returns:
             NDArray: _description_
         """
-        state_circuit = state_circuit.copy()
 
-        state = NQubitState.from_statevector(Statevector(state_circuit).data)
+        batch_expectation_values = []
+        for paulis, state_circuit in zip(batch_paulis, batch_state):
+            state = NQubitState.from_statevector(Statevector(state_circuit).data)
+            paulis_expectation_values = state.pauli_array_expectation_values(paulis)
+            batch_expectation_values.append(paulis_expectation_values)
 
-        paulis_expectation_values = state.pauli_array_expectation_values(paulis)
-
-        # paulis_covariances = np.zeros(paulis.shape + paulis.shape)
-
-        return paulis_expectation_values
+        return batch_expectation_values
 
 
 class NQubitStateDiagonalEstimator(DiagonalEstimator):
@@ -41,12 +49,16 @@ class NQubitStateDiagonalEstimator(DiagonalEstimator):
     Uses qiskit statevector simulator to compute expectation values of PauliArray.
     """
 
-    def estimate_paulis_on_state(self, paulis: PauliArray, state: Any):
+    def batch_estimate_paulis_on_state(self, batch_paulis: List[PauliArray], batch_state: List[Any]):
 
-        if isinstance(state, QuantumCircuit):
-            return self.estimate_paulis_on_state_circuit(paulis, state)
+        assert np.all([isinstance(state, type(batch_state[0])) for state in batch_state])
 
-    def estimate_paulis_on_state_circuit(self, paulis: PauliArray, state_circuit: QuantumCircuit):
+        if isinstance(batch_state[0], QuantumCircuit):
+            return self.batch_estimate_paulis_on_state_circuit(batch_paulis, batch_state)
+
+        return NotImplemented
+
+    def batch_estimate_paulis_on_state_circuit(self, batch_paulis: List[PauliArray], batch_state: List[QuantumCircuit]):
         """
         Estimate the expectation value of the paulis using the statevector simulator of Qiskit.
 
@@ -56,12 +68,12 @@ class NQubitStateDiagonalEstimator(DiagonalEstimator):
         Returns:
             NDArray: _description_
         """
-        assert np.all(paulis.is_diagonal())
+        assert np.all([np.all(paulis.is_diagonal()) for paulis in batch_paulis])
 
-        state_circuit = state_circuit.copy()
+        batch_expectation_values = []
+        for paulis, state_circuit in zip(batch_paulis, batch_state):
+            state = NQubitState.from_statevector(Statevector(state_circuit).data)
+            paulis_expectation_values = state.diagonal_pauli_array_expectation_values(paulis)
+            batch_expectation_values.append(paulis_expectation_values)
 
-        state = NQubitState.from_statevector(Statevector(state_circuit).data)
-
-        paulis_expectation_values = state.diagonal_pauli_array_expectation_values(paulis)
-
-        return paulis_expectation_values
+        return batch_expectation_values

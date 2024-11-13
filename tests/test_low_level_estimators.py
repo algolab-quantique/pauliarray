@@ -25,7 +25,7 @@ class TestStatevectorEstimator(unittest.TestCase):
 
         estimator = StatevectorEstimator()
 
-        expectation_values = estimator.estimate_paulis_on_state_circuit(paulis, state_circuit)
+        expectation_values = estimator.estimate_paulis_on_state(paulis, state_circuit)
 
         self.assertTrue(np.all(np.isclose(expectation_values, [1, 1, 0, 0])))
 
@@ -42,11 +42,11 @@ class TestNQubitStateEstimator(unittest.TestCase):
         estimator_1 = StatevectorEstimator()
 
         t0 = time.time()
-        expectation_values_0 = estimator_0.estimate_paulis_on_state_circuit(paulis, state_circuit)
+        expectation_values_0 = estimator_0.estimate_paulis_on_state(paulis, state_circuit)
         t_0 = time.time() - t0
         print(t_0)
         t0 = time.time()
-        expectation_values_1 = estimator_1.estimate_paulis_on_state_circuit(paulis, state_circuit)
+        expectation_values_1 = estimator_1.estimate_paulis_on_state(paulis, state_circuit)
         t_1 = time.time() - t0
         print(t_1)
 

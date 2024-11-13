@@ -31,26 +31,15 @@ class TestQiskitSamplerEstimator(unittest.TestCase):
         sampler_estimator = QiskitSamplerEstimator(StatevectorSampler(default_shots=n_shots))
 
         t0 = time.time()
-        vector_expectation_values = np.real(vector_estimator.estimate_paulis_on_state_circuit(paulis, state_circuit))
+        vector_expectation_values = np.real(vector_estimator.estimate_paulis_on_state(paulis, state_circuit))
         t_0 = time.time() - t0
         print(t_0)
         t0 = time.time()
-        sampler_expectation_values = sampler_estimator.estimate_paulis_on_state_circuit(paulis, state_circuit)
+        sampler_expectation_values = sampler_estimator.estimate_paulis_on_state(paulis, state_circuit)
         t_1 = time.time() - t0
         print(t_1)
 
         n_sigmas = 10 / np.sqrt(n_shots)
-        # print(n_sigmas)
-
-        # print(
-        #     np.stack(
-        #         (
-        #             np.real(vector_expectation_values).flatten(),
-        #             np.real(nqubit_expectation_values).flatten(),
-        #             np.real(sampler_expectation_values).flatten(),
-        #         )
-        #     ).T
-        # )
 
         self.assertTrue(np.all(np.abs(vector_expectation_values - sampler_expectation_values) < n_sigmas))
 
@@ -69,11 +58,11 @@ class TestQiskitEstimatorWraper(unittest.TestCase):
         estimator_wraper = QiskitEstimatorWraper(QiskitStatevectorEstimator())
 
         t0 = time.time()
-        vector_expectation_values = np.real(vector_estimator.estimate_paulis_on_state_circuit(paulis, state_circuit))
+        vector_expectation_values = np.real(vector_estimator.estimate_paulis_on_state(paulis, state_circuit))
         t_0 = time.time() - t0
         print(t_0)
         t0 = time.time()
-        sampler_expectation_values = estimator_wraper.estimate_paulis_on_state_circuit(paulis, state_circuit)
+        sampler_expectation_values = estimator_wraper.estimate_paulis_on_state(paulis, state_circuit)
         t_1 = time.time() - t0
         print(t_1)
 

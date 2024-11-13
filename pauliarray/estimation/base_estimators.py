@@ -16,7 +16,8 @@ from pauliarray.pauli.pauli_array import PauliArray
 
 class BaseEstimator(object):
     def estimate_paulis_on_state(self, paulis: PauliArray, state: Any):
-        return NotImplemented
+
+        return self.batch_estimate_paulis_on_state([paulis], [state])[0]
 
     def batch_estimate_paulis_on_state(self, batch_paulis: List[PauliArray], batch_state: List[Any]):
         return NotImplemented
@@ -32,29 +33,3 @@ class BitwiseEstimator(DiagonalEstimator):
 
 class GeneralEstimator(BitwiseEstimator):
     pass
-
-
-# class DiagonalToGeneralEstimator(GeneralEstimator):
-#     def __init__(self, diagonal_estimator: DiagonalEstimator, diagonalisation_fct: Callable):
-#         self._diagonal_estimator = diagonal_estimator
-#         self._diagonalisation_fct = diagonalisation_fct
-
-#     def estimate_paulis_on_state_circuit(self, paulis: PauliArray, state_circuit: QuantumCircuit):
-#         """
-#         Estimate the expectation value of the paulis using the statevector simulator of Qiskit.
-
-#         Args:
-#             state_circuit (QuantumCircuit): A state given in the form of QuantumCircuit
-
-#         Returns:
-#             NDArray: _description_
-#         """
-#         state_circuit = state_circuit.copy()
-
-#         state = NQubitState.from_statevector(Statevector(state_circuit).data)
-
-#         paulis_expectation_values = state.pauli_array_expectation_values(paulis)
-
-#         paulis_covariances = np.zeros(paulis.shape + paulis.shape)
-
-#         return paulis_expectation_values, paulis_covariances

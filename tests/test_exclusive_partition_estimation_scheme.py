@@ -60,7 +60,7 @@ class TestEstimationSchemeExclusivePartition(unittest.TestCase):
         print(t1 - t0)
 
         t0 = time.time()
-        ll_paulis_expectation_value = vector_estimator.estimate_paulis_on_state_circuit(paulis, state_circuit)
+        ll_paulis_expectation_value = vector_estimator.estimate_paulis_on_state(paulis, state_circuit)
         t1 = time.time()
         print(t1 - t0)
 

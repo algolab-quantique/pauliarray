@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, List
 
 import numpy as np
 from numpy.typing import NDArray
@@ -15,12 +15,16 @@ class StatevectorEstimator(GeneralEstimator):
     Uses qiskit statevector simulator to compute expectation values of PauliArray.
     """
 
-    def estimate_paulis_on_state(self, paulis: PauliArray, state: Any):
+    def batch_estimate_paulis_on_state(self, batch_paulis: List[PauliArray], batch_state: List[Any]):
 
-        if isinstance(state, QuantumCircuit):
-            return self.estimate_paulis_on_state_circuit(paulis, state)
+        assert np.all([isinstance(state, type(batch_state[0])) for state in batch_state])
 
-    def estimate_paulis_on_state_circuit(self, paulis: PauliArray, state_circuit: QuantumCircuit):
+        if isinstance(batch_state[0], QuantumCircuit):
+            return self.batch_estimate_paulis_on_state_circuit(batch_paulis, batch_state)
+
+        return NotImplemented
+
+    def batch_estimate_paulis_on_state_circuit(self, batch_paulis: List[PauliArray], batch_state: List[QuantumCircuit]):
         """
         Estimate the expectation value of the paulis using the statevector simulator of Qiskit.
 
@@ -30,16 +34,12 @@ class StatevectorEstimator(GeneralEstimator):
         Returns:
             NDArray: _description_
         """
-        state_circuit = state_circuit.copy()
 
-        statevector = Statevector(state_circuit).data
+        batch_expectation_values = []
+        for paulis, state_circuit in zip(batch_paulis, batch_state):
+            statevector = Statevector(state_circuit).data
+            matrices = paulis.to_matrices()
+            paulis_expectation_values = np.einsum("i,j,...ij->...", np.conj(statevector), statevector, matrices)
+            batch_expectation_values.append(paulis_expectation_values)
 
-        matrices = paulis.to_matrices()
-
-        # paulis_expectation_values = np.zeros(matrices.shape[:-2], dtype=complex)
-        # for idx in np.ndindex(matrices.shape[:-2]):
-        #     paulis_expectation_values[idx] = np.einsum("i,j,ij->...", np.conj(statevector), statevector, matrices[idx])
-
-        paulis_expectation_values = np.einsum("i,j,...ij->...", np.conj(statevector), statevector, matrices)
-
-        return paulis_expectation_values
+        return batch_expectation_values
