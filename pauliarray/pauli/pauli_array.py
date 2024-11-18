@@ -811,7 +811,7 @@ class PauliArray(object):
         Returns:
             NDArray: The expectation values.
         """
-        assert np.all(paulis_expectation_values.size == self.size)
+        assert paulis_expectation_values.shape == (self.size,)
 
         return paulis_expectation_values.reshape(self.shape)
 
@@ -825,9 +825,12 @@ class PauliArray(object):
         Returns:
             NDArray: The covariance array.
         """
-        assert np.all(paulis_covariances.shape == (self.shape + self.shape))
 
-        return paulis_covariances
+        print(paulis_covariances.shape)
+        print(self.shape + self.shape)
+        assert paulis_covariances.shape == (self.size, self.size)
+
+        return paulis_covariances.reshape(self.shape + self.shape)
 
     def is_diagonal(self) -> "np.ndarray[np.bool]":
         """
