@@ -183,3 +183,5 @@ class TestEstimationSchemeExclusivePartition(unittest.TestCase):
 
         # for circuit in scheme.parts_transformation:
         #     print(circuit)
+
+    # def test_h2(self):

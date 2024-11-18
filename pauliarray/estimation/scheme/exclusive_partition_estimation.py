@@ -90,70 +90,86 @@ class ExclusivePartitionEstimationScheme(object):
 
         return covariances
 
-    # def estimate_on_state(self, state: Any):
-    #     """
-    #     Estimate the expectation value of the pauli object.
+    def prepare_transformed_states(self, parts_transformation, state):
 
-    #     Args:
-    #         state_circuit (QuantumCircuit): A state given in a form compatible with the scheme
+        if isinstance(parts_transformation[0], opa.OperatorArrayType1):
 
-    #     Returns:
-    #         NDArray: _description_
-    #     """
+            nqubit_state: NQubitState = state
 
-    #     paulis = self._pauli_obj.paulis
+            transformed_states = []
+            for part_transformation in parts_transformation:
+                transformed_nqubit_state = nqubit_state.apply_operator_array(part_transformation)
+                transformed_states.append(transformed_nqubit_state)
 
-    #     parts_flat_idx, parts = self.partition(paulis)
+            return transformed_states
 
-    #     if isinstance(self._ll_estimator, DiagonalEstimator) and isinstance(self._diagonalisation_fct, Callable):
-    #         diag_parts, parts_factors, parts_transformation = self.diagonalise_parts(parts)
+        if isinstance(parts_transformation[0], QuantumCircuit):
 
-    #         if isinstance(parts_transformation[0], opa.OperatorArrayType1):
+            circuit_state: QuantumCircuit = state
 
-    #             nqubit_state: NQubitState = state
+            transformed_states = []
+            for part_transformation in parts_transformation:
+                transformed_circuit_state = circuit_state.compose(part_transformation)
+                transformed_states.append(transformed_circuit_state)
 
-    #             transformed_states = []
-    #             for part_transformation in parts_transformation:
-    #                 transformed_nqubit_state = nqubit_state.apply_operator_array(part_transformation)
-    #                 transformed_states.append(transformed_nqubit_state)
+            return transformed_states
 
-    #         if isinstance(parts_transformation[0], QuantumCircuit):
+        return NotImplemented
 
-    #             circuit_state: QuantumCircuit = state
+    def prepare_batch(self, diag_parts, transformed_states, return_cov):
 
-    #             transformed_states = []
-    #             for part_transformation in parts_transformation:
-    #                 transformed_circuit_state = circuit_state.compose(part_transformation)
-    #                 transformed_states.append(transformed_circuit_state)
+        batch_paulis = []
+        batch_state = []
+        for diag_paulis, transformed_state in zip(diag_parts, transformed_states):
+            diag_paulis: pa.PauliArray = diag_paulis
+            if return_cov:
+                ij_diag_paulis, _ = diag_paulis[:, None].compose(diag_paulis[None, :])
+                concat_paulis = pa.concatenate((diag_paulis, ij_diag_paulis.flatten()), axis=0)
+                batch_paulis.append(concat_paulis)
+            else:
+                batch_paulis.append(diag_paulis)
+            batch_state.append(transformed_state)
 
-    #         batch_paulis = []
-    #         batch_state = []
-    #         for diag_paulis, transformed_state in zip(diag_parts, transformed_states):
-    #             batch_paulis.append(diag_paulis)
-    #             batch_state.append(transformed_state)
+        return batch_paulis, batch_state
 
-    #         batch_expectation_values = self._ll_estimator.batch_estimate_paulis_on_state(batch_paulis, batch_state)
+    def extract_parts_expectation_values(self, batch_expectation_values, parts_factors):
 
-    #         parts_expectation_values = []
-    #         for part_factors, diag_paulis_expectation_values in zip(parts_factors, batch_expectation_values):
+        parts_expectation_values = []
+        for concat_paulis_expectation_values, part_factors in zip(batch_expectation_values, parts_factors):
+            n_paulis = len(part_factors)
+            diag_paulis_expectation_values = concat_paulis_expectation_values[:n_paulis]
 
-    #             part_expectation_values = part_factors * diag_paulis_expectation_values
-    #             parts_expectation_values.append(part_expectation_values)
+            part_expectation_values = part_factors * diag_paulis_expectation_values
+            parts_expectation_values.append(part_expectation_values)
 
-    #             # ij_diag_paulis = diag_paulis[:, None].compose(diag_paulis[None, :])
-    #             # ij_diag_paulis_expectation_values = self._ll_estimator.estimate_paulis_on_state(
-    #             #     ij_diag_paulis, transformed_state
-    #             # )
-    #             # ij_part_expectation_values = (
-    #             #     part_factors[:, None] * part_factors[None, :] * ij_diag_paulis_expectation_values
-    #             # )
+        return parts_expectation_values
 
-    #     paulis_expectation_values = self.assemble_paulis_expectation_values(parts_flat_idx, parts_expectation_values)
+    def extract_parts_expectation_values_and_covariances(self, batch_expectation_values, parts_factors):
 
-    #     pauli_obj_expectation_value = self._pauli_obj.expectation_values_from_paulis(paulis_expectation_values)
-    #     # pauli_obj_covariance = self._pauli_obj.covariances_from_paulis(paulis_expectation_values)
+        parts_expectation_values = []
+        parts_covariances = []
+        for concat_paulis_expectation_values, part_factors in zip(batch_expectation_values, parts_factors):
+            n_paulis = len(part_factors)
+            diag_paulis_expectation_values = concat_paulis_expectation_values[:n_paulis]
 
-    #     return pauli_obj_expectation_value
+            part_expectation_values = part_factors * diag_paulis_expectation_values
+            parts_expectation_values.append(part_expectation_values)
+
+            ij_diag_paulis_expectation_values = concat_paulis_expectation_values[n_paulis:].reshape(
+                (n_paulis, n_paulis)
+            )
+            part_covariances = (
+                part_factors[:, None]
+                * part_factors[None, :]
+                * (
+                    ij_diag_paulis_expectation_values
+                    - diag_paulis_expectation_values[:, None] * diag_paulis_expectation_values[None, :]
+                )
+            )
+
+            parts_covariances.append(part_covariances)
+
+        return parts_expectation_values, parts_covariances
 
     def estimate_on_state(self, state: Any, return_cov=False):
         """
@@ -173,68 +189,31 @@ class ExclusivePartitionEstimationScheme(object):
         if isinstance(self._ll_estimator, DiagonalEstimator) and isinstance(self._diagonalisation_fct, Callable):
             diag_parts, parts_factors, parts_transformation = self.diagonalise_parts(parts)
 
-            if isinstance(parts_transformation[0], opa.OperatorArrayType1):
+            transformed_states = self.prepare_transformed_states(parts_transformation, state)
 
-                nqubit_state: NQubitState = state
-
-                transformed_states = []
-                for part_transformation in parts_transformation:
-                    transformed_nqubit_state = nqubit_state.apply_operator_array(part_transformation)
-                    transformed_states.append(transformed_nqubit_state)
-
-            if isinstance(parts_transformation[0], QuantumCircuit):
-
-                circuit_state: QuantumCircuit = state
-
-                transformed_states = []
-                for part_transformation in parts_transformation:
-                    transformed_circuit_state = circuit_state.compose(part_transformation)
-                    transformed_states.append(transformed_circuit_state)
-
-            batch_paulis = []
-            batch_state = []
-            for diag_paulis, transformed_state in zip(diag_parts, transformed_states):
-                diag_paulis: pa.PauliArray = diag_paulis
-                if return_cov:
-                    ij_diag_paulis, _ = diag_paulis[:, None].compose(diag_paulis[None, :])
-                    concat_paulis = pa.concatenate((diag_paulis, ij_diag_paulis.flatten()), axis=0)
-                    batch_paulis.append(concat_paulis)
-                else:
-                    batch_paulis.append(diag_paulis)
-                batch_state.append(transformed_state)
-
+            batch_paulis, batch_state = self.prepare_batch(diag_parts, transformed_states, return_cov)
             batch_expectation_values = self._ll_estimator.batch_estimate_paulis_on_state(batch_paulis, batch_state)
 
-            parts_expectation_values = []
-            parts_covariances = []
-            for part_factors, concat_paulis_expectation_values in zip(parts_factors, batch_expectation_values):
-                n_paulis = len(part_factors)
-                diag_paulis_expectation_values = concat_paulis_expectation_values[:n_paulis]
+            if return_cov:
+                parts_expectation_values, parts_covariances = self.extract_parts_expectation_values_and_covariances(
+                    batch_expectation_values, parts_factors
+                )
+            else:
+                parts_expectation_values = self.extract_parts_expectation_values(
+                    batch_expectation_values, parts_factors
+                )
 
-                part_expectation_values = part_factors * diag_paulis_expectation_values
-                parts_expectation_values.append(part_expectation_values)
+            paulis_expectation_values = self.assemble_paulis_expectation_values(
+                parts_flat_idx, parts_expectation_values
+            )
+            pauli_obj_expectation_value = self._pauli_obj.expectation_values_from_paulis(paulis_expectation_values)
 
-                if return_cov:
-                    ij_diag_paulis_expectation_values = concat_paulis_expectation_values[n_paulis:].reshape(
-                        (n_paulis, n_paulis)
-                    )
-                    part_covariances = (
-                        part_factors[:, None]
-                        * part_factors[None, :]
-                        * (
-                            ij_diag_paulis_expectation_values
-                            - diag_paulis_expectation_values[:, None] * diag_paulis_expectation_values[None, :]
-                        )
-                    )
+            if return_cov:
+                paulis_covariances = self.assemble_paulis_covariances(parts_flat_idx, parts_covariances)
+                pauli_obj_covariance = self._pauli_obj.covariances_from_paulis(paulis_covariances)
 
-                    parts_covariances.append(part_covariances)
+                return pauli_obj_expectation_value, pauli_obj_covariance
 
-        paulis_expectation_values = self.assemble_paulis_expectation_values(parts_flat_idx, parts_expectation_values)
-        pauli_obj_expectation_value = self._pauli_obj.expectation_values_from_paulis(paulis_expectation_values)
-        if return_cov:
-            paulis_covariances = self.assemble_paulis_covariances(parts_flat_idx, parts_covariances)
-            pauli_obj_covariance = self._pauli_obj.covariances_from_paulis(paulis_covariances)
+            return pauli_obj_expectation_value
 
-            return pauli_obj_expectation_value, pauli_obj_covariance
-
-        return pauli_obj_expectation_value
+        return NotImplemented
