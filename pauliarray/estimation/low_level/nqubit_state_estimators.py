@@ -36,12 +36,14 @@ class NQubitStateEstimator(GeneralEstimator):
         """
 
         batch_expectation_values = []
+        batch_infos = []
         for paulis, state_circuit in zip(batch_paulis, batch_state):
             state = NQubitState.from_statevector(Statevector(state_circuit).data)
             paulis_expectation_values = state.pauli_array_expectation_values(paulis)
             batch_expectation_values.append(paulis_expectation_values)
+            batch_infos.append({})
 
-        return batch_expectation_values
+        return batch_expectation_values, batch_infos
 
 
 class NQubitStateDiagonalEstimator(DiagonalEstimator):
@@ -71,9 +73,11 @@ class NQubitStateDiagonalEstimator(DiagonalEstimator):
         assert np.all([np.all(paulis.is_diagonal()) for paulis in batch_paulis])
 
         batch_expectation_values = []
+        batch_infos = []
         for paulis, state_circuit in zip(batch_paulis, batch_state):
             state = NQubitState.from_statevector(Statevector(state_circuit).data)
             paulis_expectation_values = state.diagonal_pauli_array_expectation_values(paulis)
             batch_expectation_values.append(paulis_expectation_values)
+            batch_infos.append({})
 
-        return batch_expectation_values
+        return batch_expectation_values, batch_infos

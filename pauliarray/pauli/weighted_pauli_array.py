@@ -431,37 +431,56 @@ class WeightedPauliArray(object):
         return WeightedPauliArray(new_paulis, new_weights)
 
     def expectation_values_from_paulis(
-        self, paulis_expectation_values: NDArray[np.float64]
+        self, flat_paulis_expectation_values: NDArray[np.float64]
     ) -> "np.ndarray[np.complex128]":
         """
         Returns the WeightedPauliArray expectation value given the expectation values of the Paulis.
 
         Args:
-            paulis_expectation_values (NDArray[float]): _description_
+            flat_paulis_expectation_values (NDArray[float]): The expectation values of the underlying (flat) PauliArray.
 
         Returns:
-            NDArray: _description_
+            NDArray: The expectation values.
         """
 
-        assert np.all(paulis_expectation_values.shape == self.shape)
+        assert flat_paulis_expectation_values.shape == (self.size,)
 
-        return self.weights * paulis_expectation_values
+        return self.weights * flat_paulis_expectation_values.reshape(self.shape)
 
-    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float64]) -> "np.ndarray[np.complex128]":
+    def standard_deviations_from_paulis(
+        self, flat_paulis_covariances: NDArray[np.float64], paulis_shots: NDArray[np.int32]
+    ) -> NDArray[np.float64]:
+        """
+        Returns the PauliArray standard deviations given the covariances of the Paulis.
+
+        Args:
+            flat_paulis_covariances (NDArray[np.float64]): The covariance array of the underlying (flat) PauliArray. Must be of shape self.size + self.size
+            shots (int): The number of shots used to compute the expcation values.
+
+        Returns:
+            NDArray[np.float64]: _description_
+        """
+
+        assert flat_paulis_covariances.shape == (self.size, self.size)
+
+        flat_weights = self.weights.flatten()
+        flat_paulis_variances = np.diag(flat_paulis_covariances)
+
+        return np.sqrt(flat_weights * flat_weights.conj() * flat_paulis_variances / paulis_shots).reshape(self.shape)
+
+    def covariances_from_paulis(self, flat_paulis_covariances: NDArray[np.float64]) -> "np.ndarray[np.complex128]":
         """
         Returns the WeightedPauliArray covariances given the covariances of the Paulis.
 
         Args:
-            paulis_covariances (NDArray[float]): _description_
+            flat_paulis_covariances (NDArray[float]): The covariance array of the underlying (flat) PauliArray. Must be of shape self.size + self.size
 
         Returns:
-            NDArray: _description_
+            NDArray: The covariance array.
         """
-        assert np.all(paulis_covariances.shape == (self.shape + self.shape))
+        assert flat_paulis_covariances.shape == (self.size, self.size)
 
         flat_weights = self.weights.flatten()
-        flat_paulis_covariances = paulis_covariances.reshape((self.size, self.size))
-
         flat_wpaulis_covariances = flat_weights[:, None] * flat_weights[None, :].conj() * flat_paulis_covariances
 
         return flat_wpaulis_covariances.reshape((self.shape + self.shape))

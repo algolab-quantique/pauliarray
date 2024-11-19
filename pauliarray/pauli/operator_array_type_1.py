@@ -443,13 +443,13 @@ class OperatorArrayType1(object):
         return new_paulis, phases
 
     def expectation_values_from_paulis(
-        self, paulis_expectation_values: NDArray[np.float64]
-    ) -> "np.ndarray[np.complex128]":
+        self, flat_paulis_expectation_values: NDArray[np.float64]
+    ) -> "np.ndarray[np.float64]":
         """
         Returns the Operator array expectation value given the expectation values of the Paulis.
 
         Args:
-            paulis_expectation_values (NDArray[float]): An array of expectation values for each Paulis present in the
+            flat_paulis_expectation_values (NDArray[float]): An array of expectation values for each Paulis present in the
             OperatorArray.
 
         Returns:
@@ -457,21 +457,51 @@ class OperatorArrayType1(object):
             Paulis expectation values.
         """
 
-        return np.sum(self.wpaulis.expectation_values_from_paulis(paulis_expectation_values), axis=-1)
+        assert flat_paulis_expectation_values.shape == (self.size * self.num_terms,)
 
-    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float64]) -> "np.ndarray[np.complex128]":
+        wpaulis_expectation_values = self.wpaulis.expectation_values_from_paulis(flat_paulis_expectation_values)
+
+        return np.sum(wpaulis_expectation_values, axis=-1)
+
+    def standard_deviations_from_paulis(
+        self, flat_paulis_covariances: NDArray[np.float64], paulis_shots: NDArray[np.int32]
+    ) -> NDArray[np.float64]:
+        """
+        Returns the PauliArray standard deviations given the covariances of the Paulis.
+
+        Args:
+            flat_paulis_covariances (NDArray[np.float64]): The covariance array of the underlying (flat) PauliArray. Must be of shape self.num_terms + self.num_terms
+            shots (int): The number of shots used to compute the expcation values.
+
+        Returns:
+            NDArray[np.float64]: _description_
+        """
+
+        flat_pauli_size = self.size * self.num_terms
+
+        assert flat_paulis_covariances.shape == (flat_pauli_size, flat_pauli_size)
+
+        wpaulis_covariances = self.wpaulis.covariances_from_paulis(flat_paulis_covariances / paulis_shots)
+
+        return np.sqrt(np.sum(wpaulis_covariances))
+
+    def covariances_from_paulis(self, flat_paulis_covariances: NDArray[np.float64]) -> "np.ndarray[np.float64]":
         """
         Returns the Operator array covariances given the covariances of the Paulis.
 
         Args:
-            paulis_covariances (NDArray[float]): An array of covariances for each Paulis present in the
+            flat_paulis_covariances (NDArray[float]): An array of covariances for each Paulis present in the
             OperatorArray.
 
         Returns:
             NDArray: An array of covariances for the Operator array, derived from the given Paulis covariances.
         """
 
-        return np.sum(self.wpaulis.covariances_from_paulis(paulis_covariances), axis=(self.ndim, -1))
+        flat_pauli_size = self.size * self.num_terms
+
+        assert flat_paulis_covariances.shape == (flat_pauli_size, flat_pauli_size)
+
+        return np.sum(self.wpaulis.covariances_from_paulis(flat_paulis_covariances), axis=(self.ndim, -1))
 
     def combine_repeated_terms(self, inplace=False) -> Self:
         """

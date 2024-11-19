@@ -50,6 +50,7 @@ class QiskitSamplerEstimator(DiagonalEstimator):
         job = sampler.run(all_circuits)
         results = job.result()
         batch_expectation_values = []
+        batch_infos = []
         for paulis, result in zip(batch_paulis, results):
             meas = result.data.meas
 
@@ -60,8 +61,9 @@ class QiskitSamplerEstimator(DiagonalEstimator):
             nqubit_state = NQubitState(basis_states, np.sqrt(counts)).normalise()
             paulis_expectation_values = nqubit_state.pauli_array_expectation_values(paulis)
             batch_expectation_values.append(paulis_expectation_values)
+            batch_infos.append({"shots": result.metadata["shots"]})
 
-        return batch_expectation_values
+        return batch_expectation_values, batch_infos
 
 
 class QiskitEstimatorWraper(GeneralEstimator):
@@ -100,9 +102,11 @@ class QiskitEstimatorWraper(GeneralEstimator):
         results = job.result()
 
         batch_expectation_values = []
+        batch_infos = []
         for paulis, result in zip(batch_paulis, results):
             evs = result.data.evs
             paulis_expectation_values = evs.reshape(paulis.shape)
             batch_expectation_values.append(paulis_expectation_values)
+            batch_infos.append({})
 
-        return batch_expectation_values
+        return batch_expectation_values, batch_infos

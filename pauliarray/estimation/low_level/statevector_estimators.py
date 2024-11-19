@@ -36,10 +36,12 @@ class StatevectorEstimator(GeneralEstimator):
         """
 
         batch_expectation_values = []
+        batch_infos = []
         for paulis, state_circuit in zip(batch_paulis, batch_state):
             statevector = Statevector(state_circuit).data
             matrices = paulis.to_matrices()
             paulis_expectation_values = np.einsum("i,j,...ij->...", np.conj(statevector), statevector, matrices)
             batch_expectation_values.append(paulis_expectation_values)
+            batch_infos.append({})
 
-        return batch_expectation_values
+        return batch_expectation_values, batch_infos

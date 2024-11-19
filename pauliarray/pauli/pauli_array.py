@@ -801,36 +801,56 @@ class PauliArray(object):
 
         return new_paulis, factors
 
-    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float64]) -> NDArray[np.float64]:
+    def expectation_values_from_paulis(
+        self, flat_paulis_expectation_values: NDArray[np.float64]
+    ) -> NDArray[np.float64]:
         """
-        Returns the PauliArray expectation value given the expectation values of the Paulis. More useful for other classes, but still here for uniformity.
+        Returns the PauliArray expectation value given the expectation values of the Paulis.
 
         Args:
-            paulis_expectation_values (NDArray[float]): The expectation values of the underlying PauliArray. Must be of the same shape as self.
+            flat_paulis_expectation_values (NDArray[float]): The expectation values of the underlying (flat) PauliArray.
 
         Returns:
             NDArray: The expectation values.
         """
-        assert paulis_expectation_values.shape == (self.size,)
+        assert flat_paulis_expectation_values.shape == (self.size,)
 
-        return paulis_expectation_values.reshape(self.shape)
+        return flat_paulis_expectation_values.reshape(self.shape)
 
-    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float64]) -> NDArray[np.float64]:
+    def standard_deviations_from_paulis(
+        self, flat_paulis_covariances: NDArray[np.float64], paulis_shots: NDArray[np.int32]
+    ) -> NDArray[np.float64]:
         """
-        Returns the PauliArray covariances given the covariances of the Paulis. More useful for other classes, but still here for uniformity.
+        Returns the PauliArray standard deviations given the covariances of the Paulis.
 
         Args:
-            paulis_covariances (NDArray[float]): The covariance array of the underlying PauliArray. Must be of shape self.shape + self.shape
+            flat_paulis_covariances (NDArray[np.float64]): The covariance array of the underlying (flat) PauliArray. Must be of shape self.size + self.size
+            paulis_shots (int): The number of paulis_shots used to compute the expcation values.
+
+        Returns:
+            NDArray[np.float64]: _description_
+        """
+
+        assert flat_paulis_covariances.shape == (self.size, self.size)
+
+        paulis_variances = np.diag(flat_paulis_covariances)
+
+        return np.sqrt(paulis_variances / paulis_shots).reshape(self.shape)
+
+    def covariances_from_paulis(self, flat_paulis_covariances: NDArray[np.float64]) -> NDArray[np.float64]:
+        """
+        Returns the PauliArray covariances given the covariances of the Paulis.
+
+        Args:
+            flat_paulis_covariances (NDArray[float]): The covariance array of the underlying (flat) PauliArray. Must be of shape self.size + self.size
 
         Returns:
             NDArray: The covariance array.
         """
 
-        print(paulis_covariances.shape)
-        print(self.shape + self.shape)
-        assert paulis_covariances.shape == (self.size, self.size)
+        assert flat_paulis_covariances.shape == (self.size, self.size)
 
-        return paulis_covariances.reshape(self.shape + self.shape)
+        return flat_paulis_covariances.reshape(self.shape + self.shape)
 
     def is_diagonal(self) -> "np.ndarray[np.bool]":
         """

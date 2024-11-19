@@ -18,6 +18,7 @@ class EstimatePauliObject(Protocol):
     def with_new_paulis(self, new_paulis: pa.PauliArray) -> "EstimatePauliObject": ...
 
     def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float64]) -> NDArray[np.float64]: ...
+    def standard_deviations_from_paulis(self, flat_paulis_covariances: NDArray[np.float64], shots: int): ...
     def covariances_from_paulis(self, paulis_covariances: NDArray[np.float64]) -> NDArray[np.float64]: ...
     def partition(self, parts_flat_idx: List[NDArray[np.int64]]) -> List["EstimatePauliObject"]: ...
     def partition_with_fct(self, partition_fct: Callable) -> List["EstimatePauliObject"]: ...
@@ -37,20 +38,6 @@ class ExclusivePartitionEstimationScheme(object):
         self._ll_estimator = ll_estimator
         self._partition_fct = partition_fct
         self._diagonalisation_fct = diagonalisation_fct
-
-    def prepare(self):
-
-        paulis = self._pauli_obj.paulis
-        parts_flat_idx, parts = self.partition(paulis)
-
-        if isinstance(self._ll_estimator, DiagonalEstimator) and isinstance(self._diagonalisation_fct, Callable):
-            diag_parts, parts_factors, parts_transformation = self.diagonalise_parts(parts)
-
-            self._parts_flat_idx = parts_flat_idx
-            self._diag_parts = diag_parts
-            self._parts_factors = parts_factors
-            self._parts_transformation = parts_transformation
-            self._transformation_type = None
 
     def partition(self, pauli_obj: EstimatePauliObject):
 
@@ -89,6 +76,13 @@ class ExclusivePartitionEstimationScheme(object):
             covariances[np.ix_(part_flat_idx, part_flat_idx)] = part_covariances
 
         return covariances
+
+    def assemble_paulis_shots(self, parts_flat_idx, parts_shots):
+        paulis_shots = np.zeros(self._pauli_obj.paulis.size)
+        for part_shots, parts_flat_idx in zip(parts_shots, parts_flat_idx):
+            paulis_shots[parts_flat_idx] += part_shots
+
+        return paulis_shots
 
     def prepare_transformed_states(self, parts_transformation, state):
 
@@ -171,7 +165,7 @@ class ExclusivePartitionEstimationScheme(object):
 
         return parts_expectation_values, parts_covariances
 
-    def estimate_on_state(self, state: Any, return_cov=False):
+    def estimate_on_state(self, state: Any, return_cov=False, return_std=False):
         """
         Estimate the expectation value of the pauli object.
 
@@ -191,13 +185,19 @@ class ExclusivePartitionEstimationScheme(object):
 
             transformed_states = self.prepare_transformed_states(parts_transformation, state)
 
-            batch_paulis, batch_state = self.prepare_batch(diag_parts, transformed_states, return_cov)
-            batch_expectation_values = self._ll_estimator.batch_estimate_paulis_on_state(batch_paulis, batch_state)
+            batch_paulis, batch_state = self.prepare_batch(diag_parts, transformed_states, return_cov or return_std)
+            batch_expectation_values, batch_infos = self._ll_estimator.batch_estimate_paulis_on_state(
+                batch_paulis, batch_state
+            )
 
-            if return_cov:
+            if return_cov or return_std:
                 parts_expectation_values, parts_covariances = self.extract_parts_expectation_values_and_covariances(
                     batch_expectation_values, parts_factors
                 )
+                paulis_covariances = self.assemble_paulis_covariances(parts_flat_idx, parts_covariances)
+                if return_std:
+                    parts_shots = np.array([infos["shots"] for infos in batch_infos])
+                    paulis_shots = self.assemble_paulis_shots(parts_flat_idx, parts_shots)
             else:
                 parts_expectation_values = self.extract_parts_expectation_values(
                     batch_expectation_values, parts_factors
@@ -206,14 +206,24 @@ class ExclusivePartitionEstimationScheme(object):
             paulis_expectation_values = self.assemble_paulis_expectation_values(
                 parts_flat_idx, parts_expectation_values
             )
+
             pauli_obj_expectation_value = self._pauli_obj.expectation_values_from_paulis(paulis_expectation_values)
 
+            out = (pauli_obj_expectation_value,)
+
             if return_cov:
-                paulis_covariances = self.assemble_paulis_covariances(parts_flat_idx, parts_covariances)
                 pauli_obj_covariance = self._pauli_obj.covariances_from_paulis(paulis_covariances)
+                out += (pauli_obj_covariance,)
 
-                return pauli_obj_expectation_value, pauli_obj_covariance
+            if return_std:
+                pauli_obj_standard_deviation = self._pauli_obj.standard_deviations_from_paulis(
+                    paulis_covariances, paulis_shots
+                )
+                out += (pauli_obj_standard_deviation,)
 
-            return pauli_obj_expectation_value
+            if len(out) == 1:
+                return out[0]
+
+            return out
 
         return NotImplemented

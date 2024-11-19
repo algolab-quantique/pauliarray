@@ -590,32 +590,57 @@ class Operator(object):
 
         return new_paulis.reshape(original_shape), factors.reshape(original_shape)
 
-    def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float64]) -> "np.complex":
+    def expectation_values_from_paulis(self, flat_paulis_expectation_values: NDArray[np.float64]) -> "np.complex":
         """
-        Returns the PauliArray expectation value given the expectation values of the Paulis. More useful for other classes, but still here for uniformity.
+        Returns the Operator expectation value given the expectation values of the Paulis.
 
         Args:
-            paulis_expectation_values (NDArray[float]): _description_
+            flat_paulis_expectation_values (NDArray[float]): The expectation values of the underlying (flat) PauliArray.
 
         Returns:
-            NDArray: _description_
+            NDArray: The expectation value
         """
-        wpaulis_expectation_values = self.wpaulis.expectation_values_from_paulis(paulis_expectation_values)
 
-        return np.sum(wpaulis_expectation_values)
+        assert flat_paulis_expectation_values.shape == (self.num_terms,)
 
-    def covariances_from_paulis(self, paulis_covariances: NDArray[np.float64]) -> "np.complex":
+        flat_wpaulis_expectation_values = self.wpaulis.expectation_values_from_paulis(flat_paulis_expectation_values)
+
+        return np.sum(flat_wpaulis_expectation_values)
+
+    def standard_deviations_from_paulis(
+        self, flat_paulis_covariances: NDArray[np.float64], paulis_shots: NDArray[np.int32]
+    ) -> NDArray[np.float64]:
+        """
+        Returns the PauliArray standard deviations given the covariances of the Paulis.
+
+        Args:
+            flat_paulis_covariances (NDArray[np.float64]): The covariance array of the underlying (flat) PauliArray. Must be of shape self.num_terms + self.num_terms
+            shots (int): The number of shots used to compute the expcation values.
+
+        Returns:
+            NDArray[np.float64]: _description_
+        """
+
+        assert flat_paulis_covariances.shape == (self.num_terms, self.num_terms)
+
+        wpaulis_covariances = self.wpaulis.covariances_from_paulis(flat_paulis_covariances)
+
+        return np.sqrt(np.sum(wpaulis_covariances / paulis_shots))
+
+    def covariances_from_paulis(self, flat_paulis_covariances: NDArray[np.float64]) -> "np.complex":
         """
         Returns the PauliArray expectation value given the expectation values of the Paulis.
 
         Args:
-            paulis_covariances (NDArray[float]): _description_
+            flat_paulis_covariances (NDArray[float]): The covariance array of the underlying (flat) PauliArray. Must be of shape self.num_terms + self.num_terms
 
         Returns:
-            NDArray: _description_
+            NDArray: The covariance
         """
 
-        wpaulis_covariances = self.wpaulis.covariances_from_paulis(paulis_covariances)
+        assert flat_paulis_covariances.shape == (self.num_terms, self.num_terms)
+
+        wpaulis_covariances = self.wpaulis.covariances_from_paulis(flat_paulis_covariances)
 
         return np.sum(wpaulis_covariances)
 
