@@ -17,7 +17,9 @@ from pauliarray.pauli.pauli_array import PauliArray
 class BaseEstimator(object):
     def estimate_paulis_on_state(self, paulis: PauliArray, state: Any):
 
-        return self.batch_estimate_paulis_on_state([paulis], [state])[0]
+        batch_expectation_values, batch_infos = self.batch_estimate_paulis_on_state([paulis], [state])[0]
+
+        return batch_expectation_values[0], batch_infos[0]
 
     def batch_estimate_paulis_on_state(self, batch_paulis: List[PauliArray], batch_state: List[Any]):
         return NotImplemented
