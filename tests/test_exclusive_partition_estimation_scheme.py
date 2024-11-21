@@ -20,12 +20,6 @@ class TestEstimationSchemeExclusivePartition(unittest.TestCase):
 
         paulis = pa.PauliArray.random((3, 5), 6)
         state_circuit = random_circuit(paulis.num_qubits, 6)
-        # paulis = pa.PauliArray.from_labels(["XXXXXX", "XXYXXY", "ZZZZZZ"])
-        # state_circuit = QuantumCircuit(paulis.num_qubits)
-        # state_circuit.h(0)
-        # for q in range(1, paulis.num_qubits):
-        #     state_circuit.cx(q - 1, q)
-        # state_circuit.x([0])
 
         nqubit_estimator = NQubitStateDiagonalEstimator()
         nqubit_scheme = ExclusivePartitionEstimationScheme(

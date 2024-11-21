@@ -39,6 +39,20 @@ class ExclusivePartitionEstimationScheme(object):
         self._partition_fct = partition_fct
         self._diagonalisation_fct = diagonalisation_fct
 
+    def prepare(self):
+
+        paulis = self._pauli_obj.paulis
+
+        if isinstance(self._partition_fct, Callable):
+            parts_flat_idx, parts = self.partition(paulis)
+        else:
+            raise ValueError
+
+        if isinstance(self._ll_estimator, DiagonalEstimator) and isinstance(self._diagonalisation_fct, Callable):
+            diag_parts, parts_factors, parts_transformation = self.diagonalise_parts(parts)
+
+            transformed_states = self.prepare_transformed_states(parts_transformation, state)
+
     def partition(self, pauli_obj: EstimatePauliObject):
 
         parts_flat_idx = self._partition_fct(pauli_obj)
@@ -186,8 +200,9 @@ class ExclusivePartitionEstimationScheme(object):
             transformed_states = self.prepare_transformed_states(parts_transformation, state)
 
             batch_paulis, batch_state = self.prepare_batch(diag_parts, transformed_states, return_cov or return_std)
+
             batch_expectation_values, batch_infos = self._ll_estimator.batch_estimate_paulis_on_state(
-                batch_paulis, batch_state
+                batch_paulis, batch_state, return_infos=True
             )
 
             if return_cov or return_std:
