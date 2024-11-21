@@ -15,13 +15,18 @@ from pauliarray.pauli.pauli_array import PauliArray
 
 
 class BaseEstimator(object):
-    def estimate_paulis_on_state(self, paulis: PauliArray, state: Any):
+    def estimate_paulis_on_state(self, paulis: PauliArray, state: Any, return_infos=False):
 
-        batch_expectation_values, batch_infos = self.batch_estimate_paulis_on_state([paulis], [state])[0]
+        out = self.batch_estimate_paulis_on_state([paulis], [state], return_infos)
 
-        return batch_expectation_values[0], batch_infos[0]
+        if return_infos:
+            return out[0][0], out[1][0]
 
-    def batch_estimate_paulis_on_state(self, batch_paulis: List[PauliArray], batch_state: List[Any]):
+        return out
+
+    def batch_estimate_paulis_on_state(
+        self, batch_paulis: List[PauliArray], batch_state: List[Any], return_infos=False
+    ):
         return NotImplemented
 
 
