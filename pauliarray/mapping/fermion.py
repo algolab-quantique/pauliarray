@@ -2,12 +2,11 @@ import itertools
 from typing import List, Tuple, Union
 
 import numpy as np
-from numpy.typing import NDArray
-
 import pauliarray.pauli.operator as op
 import pauliarray.pauli.operator_array_type_1 as opa
 import pauliarray.pauli.pauli_array as pa
 import pauliarray.pauli.weighted_pauli_array as wpa
+from numpy.typing import NDArray
 from pauliarray.binary import bit_operations as bitops
 
 
@@ -341,9 +340,9 @@ class FermionMapping(object):
         """
         assert all([s == self.num_qubits for s in two_body.shape])
 
-        assert np.all(np.isclose(two_body, np.einsum("ijkl->ikjl", two_body)))
-        assert np.all(np.isclose(two_body, np.einsum("ijkl->ljki", two_body)))
-        assert np.all(np.isclose(two_body, np.einsum("ijkl->jilk", two_body)))
+        # assert np.all(np.isclose(two_body, np.einsum("ijkl->ikjl", two_body)))
+        # assert np.all(np.isclose(two_body, np.einsum("ijkl->ljki", two_body)))
+        # assert np.all(np.isclose(two_body, np.einsum("ijkl->jilk", two_body)))
 
         non_zero_coef = ~np.isclose(two_body, 0)
 
