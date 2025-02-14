@@ -1358,7 +1358,7 @@ def unique(
     else:
         axis = axis % paulis.ndim
 
-    out = np.unique(
+    unique_out = np.unique(
         paulis.zx_strings,
         axis=axis,
         return_index=return_index,
@@ -1367,14 +1367,10 @@ def unique(
     )
 
     if return_index or return_inverse or return_counts:
-        out = list(out)
-        unique_zx_strings = out[0]
-        out[0] = PauliArray.from_zx_strings(unique_zx_strings)
+        new_paulis = PauliArray.from_zx_strings(unique_out[0])
+        return (new_paulis,) + unique_out[1:]
     else:
-        unique_zx_strings = out
-        out = PauliArray.from_zx_strings(unique_zx_strings)
-
-    return out
+        return PauliArray.from_zx_strings(unique_out)
 
 
 def fast_flat_unique(
@@ -1408,21 +1404,14 @@ def fast_flat_unique(
 
     assert paulis.ndim == 1
 
-    _, index, inverse, counts = bitops.fast_flat_unique_bit_string(
-        paulis.zx_strings, return_index=True, return_inverse=True, return_counts=True
+    unique_out = bitops.fast_flat_unique_bit_string(
+        paulis.zx_strings, return_index=True, return_inverse=return_inverse, return_counts=return_counts
     )
 
-    new_paulis = paulis[index]
+    new_paulis = paulis[unique_out[1]]
+    out = (new_paulis,) + unique_out[2 - return_index :]
 
-    out = (new_paulis,)
-    if return_index:
-        out += (index,)
-    if return_inverse:
-        out += (inverse,)
-    if return_counts:
-        out += (counts,)
-
-    if len(out) == 1:
+    if return_index or return_inverse or return_counts:
+        return out
+    else:
         return out[0]
-
-    return out

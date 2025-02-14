@@ -150,20 +150,10 @@ def fast_flat_unique_bit_string(
 
     string_view = np.squeeze(np.ascontiguousarray(bit_strings).view(np.dtype((np.void, void_type_size))), axis=-1)
 
-    _, index, inverse, counts = np.unique(string_view, return_index=True, return_inverse=True, return_counts=True)
+    unique_out = np.unique(string_view, return_index=True, return_inverse=return_inverse, return_counts=return_counts)
 
-    new_bitstring = bit_strings[index, :]
-
-    out = (new_bitstring,)
-    if return_index:
-        out += (index,)
-    if return_inverse:
-        out += (inverse,)
-    if return_counts:
-        out += (counts,)
-
-    if len(out) == 1:
-        return out[0]
+    new_bitstring = bit_strings[unique_out[1], :]
+    out = (new_bitstring,) + unique_out[2 - return_index :]
 
     return out
 
