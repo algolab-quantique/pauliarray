@@ -1244,7 +1244,7 @@ def unique(
     Directly uses numpy.unique and has the same interface.
 
     Args:
-        paulis (PauliArray): The PauliArray to return.
+        paulis (PauliArray): The PauliArray.
 
         axis (Optional[int], optional):  The axis to operate on. If None, the PauliArray will be flattened.
             If an integer, the subarrays indexed by the given axis will be flattened and treated as the elements
@@ -1305,7 +1305,7 @@ def fast_flat_unique(
     Directly uses numpy.unique.
 
     Args:
-        paulis (PauliArray): The PauliArray to return. Must be flat.
+        paulis (PauliArray): The PauliArray. Must be flat.
 
         return_index (bool, optional): If True, also return the indices of PauliArray (along the specified axis,
             if provided, or in the flattened array) that result in the unique array. Defaults to False.
