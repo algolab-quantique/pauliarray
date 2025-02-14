@@ -502,7 +502,9 @@ class WeightedPauliArray(object):
         return WeightedPauliArray(random_paulis, random_weights)
 
     @classmethod
-    def from_labels_and_weights(cls, labels, weights) -> "WeightedPauliArray":
+    def from_labels_and_weights(
+        cls, labels: Union[list[str], "np.ndarray[np.str]"], weights: Union["np.ndarray[np.complex]", Number]
+    ) -> "WeightedPauliArray":
         paulis = pa.PauliArray.from_labels(labels)
 
         return WeightedPauliArray(paulis, weights)

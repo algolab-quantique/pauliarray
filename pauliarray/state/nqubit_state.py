@@ -1,4 +1,5 @@
-from typing import Tuple
+from numbers import Number
+from typing import Tuple, Union
 
 import numpy as np
 
@@ -25,10 +26,22 @@ class NQubitState(object):
 
     @property
     def amplitudes(self) -> "np.ndarray[np.complex128]":
+        """
+        Returns the amplitudes associated with basis states.
+
+        Returns:
+            "np.ndarray[np.complex128]": Array of complex number amplitudes.
+        """
         return self._amplitudes
 
     @property
     def bit_strings(self) -> "np.ndarray[np.bool]":
+        """
+        Returns the bit strings constructing the basis states.
+
+        Returns:
+            "np.ndarray[np.bool]": Array of bit strings.
+        """
         return self.basis.bit_strings
 
     @property
@@ -43,9 +56,21 @@ class NQubitState(object):
 
     @property
     def num_terms(self) -> int:
+        """
+        Returns the number of terms in state.
+
+        Returns:
+            int: The number of terms.
+        """
         return self.basis.size
 
     def adjoint(self) -> "NQubitState":
+        """
+        Returns the adjoint of current qubit state.
+
+        Returns:
+            "NQubitState": Adjoint qubit state.
+        """
 
         new_amplitudes = np.conj(self._amplitudes)
         new_basis = self.basis.copy()
@@ -79,6 +104,12 @@ class NQubitState(object):
         return np.all(self.basis == other.basis, axis=-1) and np.all(np.isclose(self.amplitudes, other.amplitudes))
 
     def combine_repeated_terms(self) -> "NQubitState":
+        """
+        Combine repeated basis state in the sum by adding their amplitudes.
+
+        Returns:
+            NQubitState: _description_
+        """
         new_basis, inverse = bsa.fast_flat_unique(self.basis, return_inverse=True)
 
         new_amplitudes = np.zeros(new_basis.shape, dtype=self.amplitudes.dtype)
@@ -87,17 +118,45 @@ class NQubitState(object):
         return NQubitState(new_basis, new_amplitudes)
 
     def remove_small_amplitudes(self, threshold: float = 1e-12) -> "NQubitState":
+        """
+        Remove small amplitudes from the NQubitState.
+
+        Args:
+            threshold (float, optional): The threshold below which amplitudes are considered small. Defaults to 1e-14.
+
+        Returns:
+            NQubitState: The Operator with small amplitudes removed.
+        """
+
         threshold_mask = np.abs(self.amplitudes) > threshold
 
         return NQubitState(self.basis[threshold_mask], self.amplitudes[threshold_mask])
 
-    def apply_operator(self, pauli_operator: op.Operator):
+    def apply_operator(self, pauli_operator: op.Operator) -> "NQubitState":
+        """
+        Apply an Operator on the NQubitState. O|psi>
+
+        Args:
+            pauli_operator (op.Operator): An operator
+
+        Returns:
+            NQubitState: The transformed quantum state.
+        """
         new_basis, phases = self.basis[:, None].apply_pauli_array(pauli_operator.paulis[None, :])
         new_amplitudes = phases * self.amplitudes[:, None] * pauli_operator.weights[None, :]
 
         return NQubitState(new_basis.flatten(), new_amplitudes.flatten())
 
-    def scalar_product(self, other: "NQubitState"):
+    def scalar_product(self, other: "NQubitState") -> complex:
+        """
+        Performs a scalar product with an other NQubitState. <self|other>
+
+        Args:
+            other (NQubitState): An other NQubitState
+
+        Returns:
+            complex: The value of the scale product
+        """
         amplitude_array = np.conj(self.amplitudes[:, None]) * other.amplitudes[None, :]
         matching_state_array = self.basis[:, None].scalar_product(other.basis[None, :])
 
@@ -105,19 +164,30 @@ class NQubitState(object):
 
     braket = scalar_product
 
-    def pauli_operator_expectation_value(self, operator: op.Operator):
+    def pauli_operator_expectation_value(self, operator: op.Operator) -> complex:
+        """
+        Computes the expectation value of an Operator of the (self) quantum state. <self|O|self>
+
+        Args:
+            operator (op.Operator): An operator
+
+        Returns:
+            complex: The expectation value.
+        """
         mod_self = self.apply_operator(operator)
         return self.scalar_product(mod_self)
 
-    def pauli_array_expectation_values(self, paulis: pa.PauliArray):
+    def pauli_array_expectation_values(self, paulis: pa.PauliArray) -> "np.ndarray[np.complex]":
         """
-        \bra{\phi_i} Z^{z_{nd}} X^{x_{nd}} \ket{\phi_j}
+        Computes the expectation value for all pauli strings in a PauliArray.
+
+        $$(-i)^{z_{nd}x_{nd}}\bra{\phi_i} Z^{z_{nd}} X^{x_{nd}} \ket{\phi_j}$$
 
         Args:
-            paulis (pa.PauliArray): _description_
+            paulis (pa.PauliArray): Pauli strings
 
         Returns:
-            _type_: _description_
+            np.ndarray[np.complex]: The expectation values.
         """
         ij_prod_amplitudes = np.conj(self.amplitudes[:, None]) * self.amplitudes[None, :]
         ij_bit_strings = np.logical_xor(self.bit_strings[:, None, :], self.bit_strings[None, :, :])
@@ -150,18 +220,29 @@ class NQubitState(object):
 
         return expectation_values * y_phases
 
-    def diagonal_pauli_array_expectation_values(self, paulis: pa.PauliArray):
+    def diagonal_pauli_array_expectation_values(self, diag_: pa.PauliArray):
+        """
+        Computes the expectation value for all diagonal pauli strings in a PauliArray. Specialized function that is more efficient for diagonal pauli strings.
 
-        assert np.all(paulis.is_diagonal())
+        $$(-i)^{z_{nd}x_{nd}}\bra{\phi_i} Z^{z_{nd}} X^{x_{nd}} \ket{\phi_j}$$
+
+        Args:
+            diag_ (pa.PauliArray): Pauli strings
+
+        Returns:
+            np.ndarray[np.complex]: The expectation values.
+        """
+
+        assert np.all(diag_.is_diagonal())
 
         i_prod_amplitudes = np.conj(self.amplitudes) * self.amplitudes
 
-        nd_i_shape = paulis.shape + (self.num_terms,)
+        nd_i_shape = diag_.shape + (self.num_terms,)
 
-        nd_i_paulis = pa.broadcast_to(pa.expand_dims(paulis, (paulis.ndim,)), nd_i_shape)
+        nd_i_paulis = pa.broadcast_to(pa.expand_dims(diag_, (diag_.ndim,)), nd_i_shape)
 
         nd_i_bit_strings = np.broadcast_to(
-            np.expand_dims(self.bit_strings, tuple(range(0, paulis.ndim))), nd_i_shape + (self.num_qubits,)
+            np.expand_dims(self.bit_strings, tuple(range(0, diag_.ndim))), nd_i_shape + (self.num_qubits,)
         )
         nd_i_phases = np.choose(np.mod(bitops.dot(nd_i_paulis.z_strings, nd_i_bit_strings), 2), [1, -1])
 
@@ -186,6 +267,16 @@ class NQubitState(object):
 
     @classmethod
     def from_statevector(cls, statevector: "np.array[np.complex128]", threshold: float = 1e-12) -> "NQubitState":
+        """
+        Constructs a NQubitState directly from a state vector.
+
+        Args:
+            statevector (np.array[np.complex128]): The 2**n amplitudes of the state.
+            threshold (float, optional): A threshold under which the basis state is not included in the description of the quantum state. Defaults to 1e-12.
+
+        Returns:
+            NQubitState: The quantum state
+        """
         num_qubits = int(np.log2(statevector.size))
 
         nonzero_idx = np.where(np.abs(statevector) > threshold)[0]
@@ -195,7 +286,19 @@ class NQubitState(object):
         return NQubitState(subbasis, statevector[nonzero_idx])
 
     @classmethod
-    def from_labels_and_amplitudes(cls, labels, amplitudes) -> "NQubitState":
+    def from_labels_and_amplitudes(
+        cls, labels: Union[list[str], "np.ndarray[np.str]"], amplitudes: Union["np.ndarray[np.complex]", Number]
+    ) -> "NQubitState":
+        """
+        Constructs a NQubitState from basis state labels and amplitudes.
+
+        Args:
+            labels (_type_): _description_
+            amplitudes (_type_): _description_
+
+        Returns:
+            NQubitState: _description_
+        """
         basis_states = bsa.BasisStateArray.from_labels(labels)
 
         return cls(basis_states, amplitudes)
