@@ -21,6 +21,11 @@ class NQubitState(object):
 
     @property
     def basis(self) -> bsa.BasisStateArray:
+        """
+        Returns the basis states.
+        Returns:
+            bsa.BasisStateArray: Basis states.
+        """
         return self._basis
 
     @property
