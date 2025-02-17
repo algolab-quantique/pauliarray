@@ -1,14 +1,10 @@
-from typing import Callable, List, Protocol
+from typing import Callable, List
 
 import networkx as nx
 import numpy as np
 from numpy.typing import NDArray
 
-import pauliarray.pauli.pauli_array as pa
-
-
-class HasPaulis(Protocol):
-    paulis: pa.PauliArray
+from pauliarray.utils.protocols import HasPaulis
 
 
 def _commutation_adjacency_to_overlap_parts_idx_networkx(commutation_adjacency) -> List[List[int]]:

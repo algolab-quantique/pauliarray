@@ -1,14 +1,11 @@
-from typing import Callable, List, Protocol
+from typing import Callable, List
 
 import networkx as nx
 import numpy as np
 
 import pauliarray.pauli.pauli_array as pa
 from pauliarray.binary import bit_operations as bitops
-
-
-class HasPaulis(Protocol):
-    paulis: pa.PauliArray
+from pauliarray.utils.protocols import HasPaulis
 
 
 def _commutation_adjacency_to_exclusive_parts_idx_networkx(
