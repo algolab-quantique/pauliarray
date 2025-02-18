@@ -169,7 +169,7 @@ Let's check that this is true. This may take a while.
 
 .. code:: python
 
-    jw_mapping = JordanWigner(num_spin_orbitals)
+    rd_mapping = JordanWigner(num_spin_orbitals)
     pa_jw_qubit_hamiltonien = rd_mapping.assemble_qubit_hamiltonian_from_sparses(one_body_tuple, two_body_tuple)
 
     eigvals_jw = np.linalg.eigvals(pa_jw_qubit_hamiltonien.to_matrix())
