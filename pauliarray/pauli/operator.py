@@ -646,7 +646,7 @@ class Operator(object):
 
     def combine_repeated_terms(self, inplace=False) -> "Operator":
         """
-        Combine repeated terms in the sum associated with equal Pauli strings.
+        Combine repeated Pauli strings in the sum by adding their weights.
         Inspired by : https://github.com/numpy/numpy/issues/11136
 
         Args:
@@ -810,7 +810,7 @@ class Operator(object):
         return matrix
 
     @classmethod
-    def from_labels_and_weights(cls, labels, weights) -> "Operator":
+    def from_labels_and_weights(cls, labels: Union[list[str], "np.ndarray[np.str]"], weights) -> "Operator":
         """
         Creates an Operator from labels and weights.
 

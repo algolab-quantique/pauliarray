@@ -1336,7 +1336,7 @@ def unique(
     Directly uses numpy.unique and has the same interface.
 
     Args:
-        paulis (PauliArray): The PauliArray to return.
+        paulis (PauliArray): The PauliArray.
 
         axis (Optional[int], optional):  The axis to operate on. If None, the PauliArray will be flattened.
             If an integer, the subarrays indexed by the given axis will be flattened and treated as the elements
@@ -1367,7 +1367,7 @@ def unique(
     else:
         axis = axis % paulis.ndim
 
-    out = np.unique(
+    unique_out = np.unique(
         paulis.zx_strings,
         axis=axis,
         return_index=return_index,
@@ -1376,14 +1376,10 @@ def unique(
     )
 
     if return_index or return_inverse or return_counts:
-        out = list(out)
-        unique_zx_strings = out[0]
-        out[0] = PauliArray.from_zx_strings(unique_zx_strings)
+        new_paulis = PauliArray.from_zx_strings(unique_out[0])
+        return (new_paulis,) + unique_out[1:]
     else:
-        unique_zx_strings = out
-        out = PauliArray.from_zx_strings(unique_zx_strings)
-
-    return out
+        return PauliArray.from_zx_strings(unique_out)
 
 
 def fast_flat_unique(
@@ -1397,7 +1393,7 @@ def fast_flat_unique(
     Directly uses numpy.unique.
 
     Args:
-        paulis (PauliArray): The PauliArray to return. Must be flat.
+        paulis (PauliArray): The PauliArray. Must be flat.
 
         return_index (bool, optional): If True, also return the indices of PauliArray (along the specified axis,
             if provided, or in the flattened array) that result in the unique array. Defaults to False.
@@ -1417,24 +1413,14 @@ def fast_flat_unique(
 
     assert paulis.ndim == 1
 
-    zx_strings = paulis.zx_strings
-    void_type_size = 2 * zx_strings.dtype.itemsize * paulis.num_qubits
+    unique_out = bitops.fast_flat_unique_bit_string(
+        paulis.zx_strings, return_index=True, return_inverse=return_inverse, return_counts=return_counts
+    )
 
-    zx_view = np.squeeze(np.ascontiguousarray(zx_strings).view(np.dtype((np.void, void_type_size))), axis=-1)
+    new_paulis = paulis[unique_out[1]]
+    out = (new_paulis,) + unique_out[2 - return_index :]
 
-    _, index, inverse, counts = np.unique(zx_view, return_index=True, return_inverse=True, return_counts=True)
-
-    new_paulis = paulis[index]
-
-    out = (new_paulis,)
-    if return_index:
-        out += (index,)
-    if return_inverse:
-        out += (inverse,)
-    if return_counts:
-        out += (counts,)
-
-    if len(out) == 1:
+    if return_index or return_inverse or return_counts:
+        return out
+    else:
         return out[0]
-
-    return out

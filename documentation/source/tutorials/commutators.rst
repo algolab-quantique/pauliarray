@@ -76,7 +76,7 @@ When trying to find the ground state of a Hamiltonian such as :math:`\hat{H}_\te
     \hat{H}_\text{Drive} = -\sum_{i} \hat{X}_i = - \sum_{k} \hat{P}^{(D)}_k
     .
 
-The ground state of this Hamltonian is :math:`\ket{+}^{\otimes n}`. This Hamiltonian can be constructed in the following way.
+This Hamiltonian can be constructed in the following way.
 
 .. code:: python
 
@@ -97,6 +97,7 @@ The ground state of this Hamltonian is :math:`\ket{+}^{\otimes n}`. This Hamilto
     (-1.0000 +0.0000j) IXIII
     (-1.0000 +0.0000j) XIIII
 
+The ground state of this Hamltonian is :math:`\ket{+}^{\otimes n}`. 
 
 ---------------------------------
 Commutator

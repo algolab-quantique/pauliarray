@@ -11,6 +11,10 @@ BIT_LABELS = "01"
 
 
 class BasisStateArray(object):
+    """
+    Defines an array of computationnal basis states.
+    """
+
     def __init__(self, bit_strings: "np.ndarray[np.bool]"):
 
         bit_strings = np.atleast_2d(bit_strings)
@@ -136,6 +140,13 @@ class BasisStateArray(object):
         return self.reshape(shape)
 
     def apply_pauli_array(self, paulis: pa.PauliArray) -> Tuple["BasisStateArray", "np.ndarray[np.complex128]"]:
+        """
+        Transform each basis state by applying a PauliArray element wise on it.
+
+        Returns:
+            BasisStateArray: The resulting BasisState.
+            "np.ndarray[np.complex]": The resulting phases.
+        """
 
         assert self.num_qubits == paulis.num_qubits
         assert is_broadcastable(self.shape, paulis.shape)
@@ -153,24 +164,52 @@ class BasisStateArray(object):
         return new_basis_states, phases
 
     def scalar_product(self, other: "BasisStateArray") -> "np.ndarray[np.bool]":
+        """
+        Performs a scale product between the basis states in both BasisStateArray element wise.
+        Since all computationnal basis states are orthonormal, the result is 1 if the basis states are equal and 0 otherwise.
+
+        Args:
+            other (BasisStateArray): An other broadcastable BasisStateArray
+
+        Returns:
+            np.ndarray[np.bool]: The resulting scalar product.
+        """
 
         assert self.num_qubits == other.num_qubits
         assert is_broadcastable(self.shape, other.shape)
 
         return self == other
 
-    def diagonal_pauli_array_eigenvalues_values(self, paulis: pa.PauliArray) -> "np.ndarray[np.complex128]":
-        assert np.all(paulis.is_diagonal())
+    def diagonal_pauli_array_eigenvalues_values(self, diag_paulis: pa.PauliArray) -> "np.ndarray[np.complex128]":
+        """
+        Computes the eigenvalues of diagonal pauli strings for the basis states. This is done element wise so the PauliArray has to be broadcastable with the BasisStateArray.
 
-        assert self.num_qubits == paulis.num_qubits
-        assert is_broadcastable(self.shape, paulis.shape)
+        Args:
+            diag_paulis (pa.PauliArray): A broadcastable PauliArray of diagonal Pauli strings.
 
-        eigenvalues = 1 - 2 * np.mod(bitops.dot(paulis.z_strings, self.bit_strings), 2)
+        Returns:
+            np.ndarray[np.complex128]: The eigenvalues.
+        """
+        assert np.all(diag_paulis.is_diagonal())
+
+        assert self.num_qubits == diag_paulis.num_qubits
+        assert is_broadcastable(self.shape, diag_paulis.shape)
+
+        eigenvalues = 1 - 2 * np.mod(bitops.dot(diag_paulis.z_strings, self.bit_strings), 2)
 
         return eigenvalues
 
-    def pauli_array_expectation_value(self, pauli_array: pa.PauliArray) -> "np.ndarray[np.complex128]":
-        mod_self, phase = self.apply_pauli_array(pauli_array)
+    def pauli_array_expectation_value(self, paulis: pa.PauliArray) -> "np.ndarray[np.complex128]":
+        """
+        Computes the expectation values of pauli strings for the basis states. This is done element wise so the PauliArray has to be broadcastable with the BasisStateArray.
+
+        Args:
+            paulis (pa.PauliArray): A broadcastable PauliArray.
+
+        Returns:
+            np.ndarray[np.complex128]: The expectation values.
+        """
+        mod_self, phase = self.apply_pauli_array(paulis)
 
         return phase * mod_self.scalar_product(self)
 
@@ -213,7 +252,16 @@ class BasisStateArray(object):
         return labels
 
     @classmethod
-    def from_labels(cls, labels) -> "BasisStateArray":
+    def from_labels(cls, labels: Union[list[str], "np.ndarray[np.str]"]) -> "BasisStateArray":
+        """
+        Constructs a BasisStateArray from labels.
+
+        Args:
+            labels (Union[list[str], "np.ndarray[np.str]"]): The list of labels.
+
+        Returns:
+            BasisStateArray: The basis states.
+        """
         if type(labels) not in (list, np.ndarray):
             labels = [labels]
 
@@ -231,6 +279,15 @@ class BasisStateArray(object):
 
     @classmethod
     def complete_basis(cls, num_qubits: int) -> "BasisStateArray":
+        """
+        Constructs a BasisStateArray containing all the basis states for a given number of qubits.
+
+        Args:
+            num_qubits (int): The number of qubits.
+
+        Returns:
+            BasisStateArray: The complete basis state basis.
+        """
         bin_power = 2 ** np.arange(num_qubits, dtype=np.uintc)
         bit_strings = ((np.arange(2 ** (num_qubits), dtype=np.uintc)[:, None] & bin_power[None, :]) > 0).reshape(
             (2**num_qubits, num_qubits)
@@ -240,6 +297,16 @@ class BasisStateArray(object):
 
     @classmethod
     def from_integers(cls, num_qubits: int, integers: "np.array[np.int64]") -> "BasisStateArray":
+        """
+        Converts an array of intergers to basis state using their binary representation.
+
+        Args:
+            num_qubits (int): The number of qubits. Only the [num_qubits] first bits of the integer should be non zeros.
+            integers (np.array[np.int64]): The integers
+
+        Returns:
+            BasisStateArray: The basis states.
+        """
         bin_power = 2 ** np.arange(num_qubits, dtype=np.uintc)
         bit_strings = ((integers[:, None] & bin_power[None, :]) > 0).reshape((len(integers), num_qubits))
 
@@ -253,6 +320,32 @@ def unique(
     return_inverse: bool = False,
     return_counts: bool = False,
 ) -> Union[BasisStateArray, Tuple[BasisStateArray, "np.ndarray[np.int64]"]]:
+    """
+    Finds unique elements in a BasisStateArray.
+    Directly uses numpy.unique and has the same interface.
+
+    Args:
+        states (BasisStateArray): The BasisStateArray.
+
+        axis (Optional[int], optional):  The axis to operate on. If None, the BasisStateArray will be flattened.
+            If an integer, the subarrays indexed by the given axis will be flattened and treated as the elements
+            of a 1-D array with the dimension of the given axis. Object arrays or structured arrays that contain
+            objects are not supported if the axis kwarg is used. Defaults to None.
+
+        return_index (bool, optional): If True, also return the indices of BasisStateArray (along the specified axis, if provided, or in the flattened array) that result in the unique array. Defaults to False.
+
+        return_inverse (bool, optional): If True, also return the indices of the unique array
+            (for the specified axis, if provided) that can be used to reconstruct array. Defaults to False.
+
+        return_counts (bool, optional): If True, also return the number of times each unique item appears in array.
+            Defaults to False.
+
+    Returns:
+        BasisStateArray: The unique Pauli strings (or BasisStateArray along an axis) in a BasisStateArray
+        NDArray, optional: Index to get unique from the orginal BasisStateArray
+        NDArray, optional: Innverse to reconstrut the original BasisStateArray from unique
+        NDArray, optional: The number of each unique in the original BasisStateArray
+    """
 
     if axis is None:
         states = states.flatten()
@@ -287,6 +380,27 @@ def fast_flat_unique(
     return_inverse: bool = False,
     return_counts: bool = False,
 ) -> Union[BasisStateArray, Tuple[BasisStateArray, "np.ndarray[np.int64]"]]:
+    """
+    Faster version of unique for BasisStateArray. Only works with flat BasisStateArray.
+    Directly uses numpy.unique.
+
+    Args:
+        paulis (BasisStateArray): The BasisStateArray. Must be flat.
+
+        return_index (bool, optional): If True, also return the indices of BasisStateArray (along the specified axis, if provided, or in the flattened array) that result in the unique array. Defaults to False.
+
+        return_inverse (bool, optional): If True, also return the indices of the unique array
+            (for the specified axis, if provided) that can be used to reconstruct array. Defaults to False.
+
+        return_counts (bool, optional): If True, also return the number of times each unique item appears in array.
+            Defaults to False.
+
+    Returns:
+        BasisStateArray: The unique Pauli strings in a BasisStateArray
+        NDArray, optional: Index to get unique from the orginal BasisStateArray
+        NDArray, optional: Innverse to reconstrut the original BasisStateArray from unique
+        NDArray, optional: The number of each unique in the original BasisStateArray
+    """
 
     assert states.ndim == 1
 

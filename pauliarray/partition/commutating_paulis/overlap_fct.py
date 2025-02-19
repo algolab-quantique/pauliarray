@@ -14,14 +14,14 @@ class HasPaulis(Protocol):
 
 def _commutation_adjacency_to_overlap_parts_idx_networkx(commutation_adjacency) -> List[List[int]]:
     """
-    Uses Networkx greedy_color to
+    Uses Networkx find_cliques to identify indices of all commuting elements cliques.
 
     Args:
-        commutation_adjacency (_type_): _description_
-        strategy (str, optional): _description_. Defaults to "largest_first".
+        commutation_adjacency (_type_): A adjacency matrix with element ij to True if element i and j commute.
+        strategy (str, optional): Strategy to be passed to Networkx find_cliques. Defaults to "largest_first".
 
     Returns:
-        List[List[int]]: _description_
+        List[List[int]]: List of all cliques given by indices
     """
 
     graph = nx.from_numpy_array(commutation_adjacency)

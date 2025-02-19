@@ -46,7 +46,16 @@ def split_zx_strings(zx_strings: "np.ndarray[np.bool]") -> tuple["np.ndarray[np.
     return z_strings, x_strings
 
 
-def zx_strings_to_active_bits(zx_strings: "np.ndarray[np.bool]"):
+def zx_strings_to_active_bits(zx_strings: "np.ndarray[np.bool]") -> "np.ndarray[np.bool]":
+    """
+    Identify qubits where a Pauli operator is applied.
+
+    Args:
+        zx_strings (np.ndarray[np.bool]): The zx_strings for a PauliArray
+
+    Returns:
+        np.ndarray[np.bool]: The active bits.
+    """
 
     z_strings, x_strings = split_zx_strings(zx_strings)
 
@@ -437,6 +446,39 @@ def transform_lagrangian_colagrangian(
         np.bool_
     )
     new_colag_zx_strings = np.mod(lag_transformation.astype(np.uint8) @ colag_zx_strings.astype(np.uint8), 2).astype(
+        np.bool_
+    )
+
+    return new_lag_zx_strings, new_colag_zx_strings
+
+
+def simplify_lagrangian_colagrangian(
+    lag_zx_strings: NDArray[np.bool_], colag_zx_strings: NDArray[np.bool_]
+) -> Tuple[NDArray[np.bool_], NDArray[np.bool_]]:
+    """
+    Finds and apply a transformation on a pair of Lagragian and co-Lagrangian subspaces to simplify the co-Lagrangian subspace.
+
+    Args:
+        lag_zx_strings (NDArray[np.bool_]): _description_
+        colag_zx_strings (NDArray[np.bool_]): _description_
+
+    Returns:
+        Tuple[NDArray[np.bool_], NDArray[np.bool_]]: _description_
+    """
+
+    num_qubits = lag_zx_strings.shape[0]
+
+    tmp_strings = np.concatenate((colag_zx_strings, np.eye(num_qubits, dtype=bool)), axis=-1)
+    row_tmp_strings = bitops.row_echelon(tmp_strings)
+
+    transformation = row_tmp_strings[:, -num_qubits:]
+
+    co_transformation = (bitops.inv(transformation)).T
+
+    new_lag_zx_strings = np.mod(co_transformation.astype(np.uint8) @ lag_zx_strings.astype(np.uint8), 2).astype(
+        np.bool_
+    )
+    new_colag_zx_strings = np.mod(transformation.astype(np.uint8) @ colag_zx_strings.astype(np.uint8), 2).astype(
         np.bool_
     )
 
