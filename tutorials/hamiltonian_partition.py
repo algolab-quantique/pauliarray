@@ -12,15 +12,13 @@ from pauliarray.diagonalisation.commutating_paulis.with_operators import (
     general_to_diagonal as general_to_diagonal_with_operator,
 )
 from pauliarray.mapping.fermion import BravyiKitaev, JordanWigner, Parity
-from pauliarray.partition.commutating_paulis.exclusive_fct import (  # partition_same_z,
+from pauliarray.partition.commutating_paulis.exclusive_fct import (
     partition_general_commutating,
     partition_same_x,
     partition_same_x_plus_special,
 )
 
-diag_part, factors_part, transformations_part_circuits = general_to_diagonal_with_circuit(
-    pa.PauliArray.from_labels("III")
-)
+# In this tutorial we will see how PauliArray can be used to partition an Hamiltonian into group of commutating
 
 # %%
 
