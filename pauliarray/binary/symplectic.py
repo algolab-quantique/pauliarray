@@ -46,7 +46,7 @@ def split_zx_strings(zx_strings: "np.ndarray[np.bool]") -> tuple["np.ndarray[np.
     return z_strings, x_strings
 
 
-def flip_zx(zx_strings: "np.ndarray[np.bool]") -> "np.ndarray[np.bool]":
+def flip_zx_strings(zx_strings: "np.ndarray[np.bool]") -> "np.ndarray[np.bool]":
     """
     Flips an input zx string into an xz string.
 
@@ -78,7 +78,7 @@ def dot(
     Returns:
         "np.ndarray[np.int]": Dot product of the two input arrays.
     """
-    return bitops.dot(zx_strings_1, flip_zx(zx_strings_2))
+    return bitops.dot(zx_strings_1, flip_zx_strings(zx_strings_2))
 
 
 # Subspaces (Isotropic, Coisotropic, Lagrandian)
@@ -168,7 +168,7 @@ def orthogonal_complement(zx_strings: "np.ndarray[np.bool]") -> "np.ndarray[np.b
     Returns:
         "np.ndarray[np.bool]": A list of zx_strings defining the orthogonal completement.
     """
-    return flip_zx(bitops.orthogonal_complement(zx_strings))
+    return flip_zx_strings(bitops.orthogonal_complement(zx_strings))
 
 
 def isotropic_subspace(orthogonal_zx_strings: "np.ndarray[np.bool]") -> "np.ndarray[np.bool]":
@@ -268,6 +268,39 @@ def conjugate_subspace(isotropic_zx_strings: "np.ndarray[np.bool]") -> "np.ndarr
         conj_subspace[i, :] = possible_conjugates[np.argmin(bitops.bit_sum(possible_conjugates))]
 
     return conj_subspace
+
+
+def simplify_lagrangian_colagrangian(
+    lag_zx_strings: NDArray[np.bool_], colag_zx_strings: NDArray[np.bool_]
+) -> Tuple[NDArray[np.bool_], NDArray[np.bool_]]:
+    """
+    Finds and apply a transformation on a pair of Lagragian and co-Lagrangian subspaces to simplify the co-Lagrangian subspace.
+
+    Args:
+        lag_zx_strings (NDArray[np.bool_]): _description_
+        colag_zx_strings (NDArray[np.bool_]): _description_
+
+    Returns:
+        Tuple[NDArray[np.bool_], NDArray[np.bool_]]: _description_
+    """
+
+    num_qubits = lag_zx_strings.shape[0]
+
+    tmp_strings = np.concatenate((colag_zx_strings, np.eye(num_qubits, dtype=bool)), axis=-1)
+    row_tmp_strings = bitops.row_echelon(tmp_strings)
+
+    transformation = row_tmp_strings[:, -num_qubits:]
+
+    co_transformation = (bitops.inv(transformation)).T
+
+    new_lag_zx_strings = np.mod(co_transformation.astype(np.uint8) @ lag_zx_strings.astype(np.uint8), 2).astype(
+        np.bool_
+    )
+    new_colag_zx_strings = np.mod(transformation.astype(np.uint8) @ colag_zx_strings.astype(np.uint8), 2).astype(
+        np.bool_
+    )
+
+    return new_lag_zx_strings, new_colag_zx_strings
 
 
 def gram_schmidt_orthogonalization(zx_strings: "np.ndarray[np.bool]") -> "np.ndarray[np.bool]":

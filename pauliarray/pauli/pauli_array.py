@@ -1,5 +1,5 @@
 from numbers import Number
-from typing import TYPE_CHECKING, Any, List, Optional, Tuple, Union
+from typing import TYPE_CHECKING, Any, Callable, List, Optional, Tuple, Union
 
 import numpy as np
 from numpy.typing import NDArray
@@ -99,6 +99,12 @@ class PauliArray(object):
     @property
     def paulis(self) -> "PauliArray":
         return self
+
+    @property
+    def wpaulis(self) -> "WeightedPauliArray":
+        from pauliarray.pauli.weighted_pauli_array import WeightedPauliArray
+
+        return WeightedPauliArray.from_paulis(self)
 
     @property
     def x_strings(self) -> "np.ndarray[np.bool]":
@@ -255,6 +261,59 @@ class PauliArray(object):
         new_x_strings = self._x_strings.remove(index)
 
         return PauliArray(new_z_strings, new_x_strings)
+
+    def partition(self, parts_flat_idx: List[NDArray[np.int_]]) -> List["PauliArray"]:
+        """
+        Returns a list of PauliArray
+
+        Args:
+            parts_flat_idx [List[NDArray[np.int_]]]: List of parts given in linear indices
+
+        Returns:
+            List[PauliArray]: Parts
+        """
+
+        flat_paulis = self.flatten()
+
+        parts = []
+        for part_flat_idx in parts_flat_idx:
+            parts.append(flat_paulis[part_flat_idx])
+
+        return parts
+
+    def partition_with_fct(self, partition_fct: Callable) -> List["PauliArray"]:
+        """
+        Returns a list of PauliArray
+
+        Args:
+            partition_fct [Callable]: ...
+
+        Returns:
+            List[PauliArray]: Parts
+        """
+
+        parts_flat_idx = partition_fct(self.paulis)
+
+        return self.partition(parts_flat_idx)
+
+    def weighted_partition(
+        self, parts_flat_idx: List[NDArray[np.int_]], parts_weight: NDArray[np.float64]
+    ) -> List["WeightedPauliArray"]:
+
+        # if parts_weight is None:
+        #     parts_weight = np.ones(len(parts_flat_idx))
+
+        flat_wpaulis = self.wpaulis.flatten()
+
+        paulis_total_weighted = np.zeros(flat_wpaulis.size)
+        for part_flat_idx, part_weight in zip(parts_flat_idx, parts_weight):
+            paulis_total_weighted[part_flat_idx] += part_weight
+
+        parts = []
+        for part_flat_idx, part_weight in zip(parts_flat_idx, parts_weight):
+            parts.append(flat_wpaulis[part_flat_idx].mul_weights(parts_weight / paulis_total_weighted[part_flat_idx]))
+
+        return parts
 
     def extract(self, condition: Union[NDArray, list]) -> "PauliArray":
         """
@@ -909,8 +968,8 @@ class PauliArray(object):
         Creates a new PauliArray of a given shape and number of qubits filled with identities.
 
         Args:
-            shape (_type_): The shape of new the PauliArray.
-            num_qubits (_type_): The number of qubits of the new PauliArray.
+            shape (Tuple[int, ...]): The shape of new the PauliArray.
+            num_qubits (int): The number of qubits of the new PauliArray.
 
         Returns:
             PauliArray: The created PauliArray .
@@ -933,8 +992,8 @@ class PauliArray(object):
         Creates a PauliArray of a given shape and number of qubits filled with random Pauli strings.
 
         Args:
-            shape (_type_): Shape of new PauliArray.
-            num_qubits (_type_): Number of qubits of new PauliArray.
+            shape (Tuple[int, ...]): Shape of new PauliArray.
+            num_qubits (int): Number of qubits of new PauliArray.
 
         Returns:
             new_PauliArray (PauliArray): The PauliArray created.
@@ -1275,7 +1334,7 @@ def unique(
     else:
         axis = axis % paulis.ndim
 
-    out = np.unique(
+    unique_out = np.unique(
         paulis.zx_strings,
         axis=axis,
         return_index=return_index,
@@ -1284,14 +1343,10 @@ def unique(
     )
 
     if return_index or return_inverse or return_counts:
-        out = list(out)
-        unique_zx_strings = out[0]
-        out[0] = PauliArray.from_zx_strings(unique_zx_strings)
+        new_paulis = PauliArray.from_zx_strings(unique_out[0])
+        return (new_paulis,) + unique_out[1:]
     else:
-        unique_zx_strings = out
-        out = PauliArray.from_zx_strings(unique_zx_strings)
-
-    return out
+        return PauliArray.from_zx_strings(unique_out)
 
 
 def fast_flat_unique(
@@ -1325,24 +1380,14 @@ def fast_flat_unique(
 
     assert paulis.ndim == 1
 
-    zx_strings = paulis.zx_strings
-    void_type_size = 2 * zx_strings.dtype.itemsize * paulis.num_qubits
+    unique_out = bitops.fast_flat_unique_bit_string(
+        paulis.zx_strings, return_index=True, return_inverse=return_inverse, return_counts=return_counts
+    )
 
-    zx_view = np.squeeze(np.ascontiguousarray(zx_strings).view(np.dtype((np.void, void_type_size))), axis=-1)
+    new_paulis = paulis[unique_out[1]]
+    out = (new_paulis,) + unique_out[2 - return_index :]
 
-    _, index, inverse, counts = np.unique(zx_view, return_index=True, return_inverse=True, return_counts=True)
-
-    new_paulis = paulis[index]
-
-    out = (new_paulis,)
-    if return_index:
-        out += (index,)
-    if return_inverse:
-        out += (inverse,)
-    if return_counts:
-        out += (counts,)
-
-    if len(out) == 1:
+    if return_index or return_inverse or return_counts:
+        return out
+    else:
         return out[0]
-
-    return out
