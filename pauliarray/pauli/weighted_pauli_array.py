@@ -5,6 +5,7 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 import pauliarray.pauli.pauli_array as pa
+from pauliarray.utils import label_utils
 from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable, is_concatenatable
 
 if TYPE_CHECKING:
@@ -160,6 +161,25 @@ class WeightedPauliArray(object):
 
         return WeightedPauliArray(new_paulis, new_weights)
 
+    def partition(self, parts_flat_idx: List[NDArray[np.int_]]) -> List["WeightedPauliArray"]:
+        """
+        Returns a list of WeightedPauliArray
+
+        Args:
+            parts_flat_idx [List[NDArray[np.int_]]]: List of parts given in linear indices
+
+        Returns:
+            List[PauliArray]: Parts
+        """
+
+        flat_wpaulis = self.flatten()
+
+        parts = []
+        for part_flat_idx in parts_flat_idx:
+            parts.append(flat_wpaulis[part_flat_idx])
+
+        return parts
+
     def extract(self, condition: Union[NDArray, list]) -> "WeightedPauliArray":
         """
         Return the Pauli strings from the WeightedPauliArray object that satisfy some condition.
@@ -259,14 +279,14 @@ class WeightedPauliArray(object):
             return "Empty PauliArray"
 
         if self.ndim == 1:
-            label_table = self.label_table_1d(self.paulis.to_labels(), self.weights)
+            label_table = label_utils.weighted_table_1d(self.paulis.to_labels(), self.weights)
             return f"PauliArray\n{label_table}"
 
         if self.ndim == 2:
-            label_table = self.label_table_2d(self.paulis.to_labels(), self.weights)
+            label_table = label_utils.weighted_table_2d(self.paulis.to_labels(), self.weights)
             return f"PauliArray\n{label_table}"
 
-        label_table = self.label_table_nd(self.paulis.to_labels(), self.weights)
+        label_table = label_utils.weighted_table_nd(self.paulis.to_labels(), self.weights)
         return f"PauliArray\n{label_table}"
 
     def x(self, qubits: Union[int, List[int]], inplace: bool = True) -> "WeightedPauliArray":
@@ -486,11 +506,11 @@ class WeightedPauliArray(object):
     @classmethod
     def random(cls, shape: Tuple[int, ...], num_qubits: int) -> "WeightedPauliArray":
         """
-        Creates a PauliArray of a given shape and number of qubits filled with random Pauli strings.
+        Creates a WeightedPauliArray of a given shape and number of qubits filled with random Pauli strings and weights.
 
         Args:
-            shape (_type_): Shape of new PauliArray.
-            num_qubits (_type_): Number of qubits of new PauliArray.
+            shape (Tuple[int, ...]): Shape of new PauliArray.
+            num_qubits (int): Number of qubits of new PauliArray.
 
         Returns:
             new_PauliArray (PauliArray): The PauliArray created.
@@ -501,7 +521,9 @@ class WeightedPauliArray(object):
         return WeightedPauliArray(random_paulis, random_weights)
 
     @classmethod
-    def from_labels_and_weights(cls, labels, weights) -> "WeightedPauliArray":
+    def from_labels_and_weights(
+        cls, labels: Union[list[str], "np.ndarray[np.str]"], weights: Union["np.ndarray[np.complex]", Number]
+    ) -> "WeightedPauliArray":
         paulis = pa.PauliArray.from_labels(labels)
 
         return WeightedPauliArray(paulis, weights)
@@ -536,42 +558,6 @@ class WeightedPauliArray(object):
             weights = np.load(f)
 
         return WeightedPauliArray(pa.PauliArray.from_zx_strings(zx_strings), weights)
-
-    @staticmethod
-    def label_table_1d(labels, weights) -> str:
-
-        pauli_str_len = len(max(labels, key=len))
-
-        row_strs = []
-        for label, weight in zip(labels, weights):
-            row_strs.append(f"({weight.real:+7.4f} {weight.imag:+7.4f}j) {label:{pauli_str_len}s}")
-
-        return "\n".join(row_strs)
-
-    @staticmethod
-    def label_table_2d(labels, weights) -> str:
-
-        pauli_str_len = len(max(labels, key=len))
-
-        row_strs = []
-        for i in range(labels.shape[0]):
-            col_strs = []
-            for label, weight in zip(labels[i, :], weights[i, :]):
-                col_strs.append(f"({weight.real:+7.4f} {weight.imag:+7.4f}j) {label:{pauli_str_len}s}")
-            row_strs.append("  ".join(col_strs))
-
-        return "\n".join(row_strs)
-
-    @staticmethod
-    def label_table_nd(labels, weights) -> str:
-
-        slice_strs = []
-        for idx in np.ndindex(labels.shape[:-2]):
-            slice_str = "Slice (" + ",".join([str(i) for i in idx]) + ",:,:)\n"
-            slice_str += WeightedPauliArray.label_table_2d(labels[idx], weights[idx])
-            slice_strs.append(slice_str)
-
-        return "\n".join(slice_strs)
 
 
 def broadcast_to(wpaulis: WeightedPauliArray, shape: Tuple[int, ...]) -> "WeightedPauliArray":
