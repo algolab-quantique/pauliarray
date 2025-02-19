@@ -4,9 +4,9 @@ Fermion to Qubit Mapping
 
 In this tutorial we will see how to map a fermionic Hamiltonian to a qubit Hamiltonian using PauliArray. We will also make a comparison with similar tools provided in Qiskit and show that PauliArray accomplishes the same task much faster.
 
----------------------------------
-Fermionic Hamiltonian with Qiskit
----------------------------------
+----------------------------------
+Fermionic Hamiltonian using Qiskit
+----------------------------------
 
 As a starting point, we will use Qiskit to generate the fermionic Hamiltonian (:code:`FermioncOp`) for the :math:`\text{N}_2` molecule.
 
@@ -26,9 +26,9 @@ As a starting point, we will use Qiskit to generate the fermionic Hamiltonian (:
     hamiltonian = problem.hamiltonian
     second_q_hamiltonian = problem.hamiltonian.second_q_op()
 
----------------------------------
-Jordan Wigner Mapping with Qiskit
----------------------------------
+----------------------------------
+Jordan Wigner Mapping using Qiskit
+----------------------------------
 
 Carrying out the mapping with Qiskit is pretty straight forward. The result is a :code:`SparsePauliOp`. We can measure the time it takes to complete the process.
 
@@ -55,9 +55,9 @@ Carrying out the mapping with Qiskit is pretty straight forward. The result is a
 
 As a not so rigorous benchmark, it takes about 2.1 sec to an Apple M2 to complete the mapping for the :math:`\text{N}_2` molecule involving 20 qubits and 2951 Pauli strings.
 
--------------------------------------
-Jordan Wigner Mapping with PauliArray
--------------------------------------
+--------------------------------------
+Jordan Wigner Mapping using PauliArray
+--------------------------------------
 
 The process is pretty similar using PauliArray except we need to convert the :code:`FermioncOp` into arguments compatible with the :code:`FermionMapping`. We also need to specify the number of qubits to initialize the :code:`JordanWigner` mapping. The result is a :code:`Operator`.
 
@@ -160,8 +160,8 @@ To initialize the mapping, we only need to provide this matrix to :code:`Fermion
 
     from pauliarray.mapping.fermion import FermionMapping
 
-    mapping = FermionMapping(mapping_matrix)
-    pa_rd_qubit_hamiltonien = mapping.assemble_qubit_hamiltonian_from_sparses(one_body_tuple, two_body_tuple)
+    rd_mapping = FermionMapping(mapping_matrix)
+    pa_rd_qubit_hamiltonien = rd_mapping.assemble_qubit_hamiltonian_from_sparses(one_body_tuple, two_body_tuple)
 
 Finally, to confirm that such a mapping is valid we can compare the qubit Hamiltonian it produces with the one we get from Jordan-Wigner mapping. These two Hamiltonians are expressing the same operator but in different basis. Therefore, their eigenvalues should be equals.
 
@@ -169,8 +169,8 @@ Let's check that this is true. This may take a while.
 
 .. code:: python
 
-    rd_mapping = JordanWigner(num_spin_orbitals)
-    pa_jw_qubit_hamiltonien = rd_mapping.assemble_qubit_hamiltonian_from_sparses(one_body_tuple, two_body_tuple)
+    jw_mapping = JordanWigner(num_spin_orbitals)
+    pa_jw_qubit_hamiltonien = jw_mapping.assemble_qubit_hamiltonian_from_sparses(one_body_tuple, two_body_tuple)
 
     eigvals_jw = np.linalg.eigvals(pa_jw_qubit_hamiltonien.to_matrix())
     eigvals_rd = np.linalg.eigvals(pa_rd_qubit_hamiltonien.to_matrix())
