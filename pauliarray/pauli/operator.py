@@ -8,6 +8,7 @@ import pauliarray.pauli.pauli_array as pa
 import pauliarray.pauli.weighted_pauli_array as wpa
 from pauliarray.binary import bit_operations as bitops
 from pauliarray.binary import symplectic
+from pauliarray.utils import label_utils
 from pauliarray.utils.pauli_array_library import gen_complete_pauli_array_basis
 
 
@@ -363,7 +364,7 @@ class Operator(object):
         weights = self.wpaulis.weights
 
         detail_str = "Operator\nSum of\n"
-        detail_str += wpa.WeightedPauliArray.label_table_2d(labels[:, None], weights[:, None])
+        detail_str += label_utils.weighted_table_1d(labels, weights)
 
         return detail_str
 
@@ -605,7 +606,7 @@ class Operator(object):
 
     def combine_repeated_terms(self, inplace=False) -> "Operator":
         """
-        Combine repeated terms in the sum associated with equal Pauli strings.
+        Combine repeated Pauli strings in the sum by adding their weights.
         Inspired by : https://github.com/numpy/numpy/issues/11136
 
         Args:
@@ -769,7 +770,7 @@ class Operator(object):
         return matrix
 
     @classmethod
-    def from_labels_and_weights(cls, labels, weights) -> "Operator":
+    def from_labels_and_weights(cls, labels: Union[list[str], "np.ndarray[np.str]"], weights) -> "Operator":
         """
         Creates an Operator from labels and weights.
 

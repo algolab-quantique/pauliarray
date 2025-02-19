@@ -3,9 +3,10 @@ run-name: Build triggered by Pull Request ${{github.event.number}} on branch mai
 
 on:
   pull_request:
-    types: [opened, closed]
+    types: [opened, edited, closed]
     branches:
     - main
+  workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
