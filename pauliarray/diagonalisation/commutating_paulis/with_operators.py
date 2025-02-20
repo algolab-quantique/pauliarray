@@ -158,9 +158,14 @@ def diagonalise_with_operators(pauli_obj: HasPaulis, force_single_qubit_generato
 
     paulis = pauli_obj.paulis
 
-    (diagonal_paulis, factors), transformations = general_to_diagonal(
-        paulis, force_single_qubit_generators=force_single_qubit_generators
+    flat_paulis = paulis.flatten()
+
+    (flat_diagonal_paulis, flat_factors), transformations = general_to_diagonal(
+        flat_paulis, force_single_qubit_generators=force_single_qubit_generators
     )
+
+    diagonal_paulis = flat_diagonal_paulis.reshape(paulis.shape)
+    factors = flat_factors.reshape(paulis.shape)
 
     diagonal_pauli_obj = pauli_obj.replace_paulis(diagonal_paulis).mul_weights(factors)
 

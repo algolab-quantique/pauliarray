@@ -782,6 +782,16 @@ class Operator(object):
 
         return Operator.from_paulis_and_weights(new_paulis, self.weights)
 
+    def is_diagonal(self) -> bool:
+        """
+        Checks if all the Pauli strings are diagonal i.e. if all Pauli strings are I or Z.
+
+        Returns:
+            bool: True if the all the Pauli string are diagonal, False otherwise.
+        """
+
+        return np.all(self.paulis.is_diagonal())
+
     def sort_paulis(self):
         """
         Sorts the underlying WeightedPauliArray primarily for comparison purposes.

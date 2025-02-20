@@ -272,6 +272,15 @@ class OperatorArrayType1(object):
 
         return OperatorArrayType1(wpa.WeightedPauliArray(new_paulis, self.weights))
 
+    def is_diagonal(self) -> "np.ndarray[np.bool]":
+        """
+        Checks if the Operators are diagonal i.e. if all its Pauli strings are I or Z.
+
+        Returns:
+            NDArray[bool]: True if the Operator is diagonal, False otherwise.
+        """
+        return np.all(self.paulis.is_diagonal(), axis=-1)
+
     def get_operator(self, *idx) -> op.Operator:
         """
         Returns a single operator in operator array.

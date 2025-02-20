@@ -1,18 +1,32 @@
-from typing import List, Protocol, Tuple
+from typing import List, Protocol, Tuple, Union
 
 import numpy as np
 from numpy.typing import NDArray
+from qiskit import qasm3
 from qiskit.circuit import QuantumCircuit
 from scipy.optimize import linear_sum_assignment
 
 import pauliarray.pauli.pauli_array as pa
 from pauliarray.binary.bit_operations import pack_diagonal
 from pauliarray.diagonalisation.commutating_paulis.utils import single_qubit_cummutating_generators
+from pauliarray.utils.protocols import HasPaulis
 
 
 def general_to_diagonal(
     paulis: pa.PauliArray, force_single_qubit_generators=False
-) -> Tuple[pa.PauliArray, NDArray[np.complex128], List[str]]:
+) -> Tuple[pa.PauliArray, NDArray[np.complex128], str]:
+    """
+    Converts a 1D PauliArray of commuting Pauli strings into bitwise commuting pauli strings and factors. Also returns the OpenQasm3 circuit which performs the conversion.
+
+    Args:
+        paulis (PauliArray): 1D PauliArray of commuting Pauli strings
+        force_single_qubit_generators(bool): For already bitwise commuting qubits, the transformation will apply a single qubit rotation to make it diagonal. This prevents some unnecessary n-qubits rotations.
+
+    Returns:
+        PauliArray: 1D PauliArray of bitwise commuting Pauli strings
+        NDArray[np.complex128]: Phase factors resulting from the transformation
+        str: The transformation given as a OpemQasm3 quantum circuit
+    """
 
     circuit = QuantumCircuit(paulis.num_qubits)
 
@@ -97,7 +111,25 @@ def general_to_diagonal(
     diag_paulis = wpaulis.paulis
     factors = wpaulis.weights
 
-    return diag_paulis, factors, circuit
+    return (diag_paulis, factors), qasm3.dumps(circuit)
 
 
-diagonalise_with_circuits = general_to_diagonal
+def diagonalise_with_circuits(pauli_obj: HasPaulis, force_single_qubit_generators=False) -> Union[
+    Tuple[Tuple[pa.PauliArray, NDArray[np.complex128]], str],
+    Tuple[HasPaulis, str],
+]:
+
+    paulis = pauli_obj.paulis
+
+    flat_paulis = paulis.flatten()
+
+    (flat_diagonal_paulis, flat_factors), transformations = general_to_diagonal(
+        flat_paulis, force_single_qubit_generators=force_single_qubit_generators
+    )
+
+    diagonal_paulis = flat_diagonal_paulis.reshape(paulis.shape)
+    factors = flat_factors.reshape(paulis.shape)
+
+    diagonal_pauli_obj = pauli_obj.replace_paulis(diagonal_paulis).mul_weights(factors)
+
+    return (diagonal_pauli_obj, transformations)

@@ -1,16 +1,16 @@
 from typing import Any, List, Tuple
 
 import numpy as np
-from numpy.typing import NDArray
-from qiskit import QuantumCircuit
-from qiskit.primitives import BaseEstimatorV2, BaseSamplerV2
-from qiskit.quantum_info import Statevector
-
 import pauliarray.state.basis_state_array as bsa
+from numpy.typing import NDArray
 from pauliarray.conversion.qiskit import pauli_array_to_pauli_list
 from pauliarray.estimation.base_estimators import DiagonalEstimator, GeneralEstimator
 from pauliarray.pauli.pauli_array import PauliArray
 from pauliarray.state.nqubit_state import NQubitState
+from qiskit import QuantumCircuit
+from qiskit.primitives import BaseEstimatorV2, BaseSamplerV2
+from qiskit.quantum_info import Statevector
+from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
 
 
 class QiskitSamplerEstimator(DiagonalEstimator):
@@ -51,7 +51,13 @@ class QiskitSamplerEstimator(DiagonalEstimator):
             state_circuit.measure_all()
             all_circuits.append(state_circuit)
 
-        job = sampler.run(all_circuits)
+        if hasattr(sampler, "backend"):
+            pass_manager = generate_preset_pass_manager(backend=sampler.backend, optimization_level=1)
+            isa_circuits = pass_manager.run(all_circuits)
+        else:
+            isa_circuits = all_circuits
+
+        job = sampler.run(isa_circuits)
         results = job.result()
         batch_expectation_values = []
         batch_infos = []

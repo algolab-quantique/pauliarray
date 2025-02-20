@@ -1,2 +1,3 @@
 numpy
 qiskit
+qiskit_qasm3_import

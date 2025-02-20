@@ -85,7 +85,7 @@ class ExclusivePartitionEstimationScheme(object):
         parts_factors = []
         parts_transformation = []
         for part in parts:
-            diag_paulis, factors, transformation = self._diagonalisation_fct(part.paulis)
+            (diag_paulis, factors), transformation = self._diagonalisation_fct(part.paulis)
             diag_parts.append(part.replace_paulis(diag_paulis))
             parts_factors.append(factors)
             parts_transformation.append(transformation)

@@ -2,6 +2,8 @@ import unittest
 
 import numpy as np
 
+import pauliarray.pauli.operator as op
+import pauliarray.pauli.operator_array_type_1 as opa
 import pauliarray.pauli.pauli_array as pa
 import pauliarray.pauli.weighted_pauli_array as wpa
 from pauliarray.diagonalisation.commutating_paulis.with_operators import (
@@ -78,14 +80,6 @@ cases_paulis = [
 
 class TestDiagonalisationWithOperators(unittest.TestCase):
 
-    def test_trivial_cummutating_generators(self):
-
-        for paulis in cases_paulis:
-            print(paulis.inspect())
-            gen_paulis = single_qubit_cummutating_generators(paulis)
-
-            print(gen_paulis.inspect())
-
     def test_general_to_diagonal(self):
 
         for paulis in cases_paulis:
@@ -97,10 +91,6 @@ class TestDiagonalisationWithOperators(unittest.TestCase):
             self.assertTrue(np.all(diag_paulis == transformed_paulis))
             self.assertTrue(np.all(np.isclose(factors, transformed_factors)))
             self.assertTrue(np.all(diag_paulis.is_diagonal()))
-
-            print(paulis.inspect())
-            print(transformations.inspect())
-            print(diag_paulis.inspect())
 
     def test_diagonalise_with_operators_paulis(self):
 
@@ -118,7 +108,7 @@ class TestDiagonalisationWithOperators(unittest.TestCase):
 
         for paulis in cases_paulis:
 
-            wpaulis = wpa.WeightedPauliArray(paulis, np.ones(paulis.shape))
+            wpaulis = wpa.WeightedPauliArray(paulis, np.random.random(paulis.shape))
 
             diag_wpaulis, transformations = diagonalise_with_operators(wpaulis)
 
@@ -126,3 +116,31 @@ class TestDiagonalisationWithOperators(unittest.TestCase):
 
             self.assertTrue(np.all(diag_wpaulis == transformed_wpaulis))
             self.assertTrue(np.all(diag_wpaulis.is_diagonal()))
+
+    def test_diagonalise_with_operators_operator(self):
+
+        for paulis in cases_paulis:
+
+            operator = op.Operator(wpa.WeightedPauliArray(paulis, np.random.random(paulis.shape)))
+
+            diag_operator, transformations = diagonalise_with_operators(operator)
+
+            transformed_operator = transformations.successive_clifford_conjugate_pauli_obj(operator)
+
+            self.assertTrue(np.all(diag_operator == transformed_operator))
+            self.assertTrue(np.all(diag_operator.is_diagonal()))
+
+    def test_diagonalise_with_operators_operator_array(self):
+
+        for paulis in cases_paulis:
+
+            wpaulis = wpa.WeightedPauliArray(paulis, np.random.random(paulis.shape))
+
+            operators = opa.OperatorArrayType1(wpaulis)
+
+            diag_operators, transformations = diagonalise_with_operators(operators)
+
+            transformed_operators = transformations.successive_clifford_conjugate_pauli_obj(operators)
+
+            self.assertTrue(np.all(diag_operators == transformed_operators))
+            self.assertTrue(np.all(diag_operators.is_diagonal()))

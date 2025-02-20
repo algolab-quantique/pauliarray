@@ -42,11 +42,11 @@ one_body_tuple, two_body_tuple = extract_fermionic_op(second_q_hamiltonian)
 mapping = JordanWigner(num_spin_orbitals)
 # mapping = Parity(num_spin_orbitals)
 # mapping = BravyiKitaev(num_spin_orbitals)
-qubit_hamiltonien = mapping.assemble_qubit_hamiltonian_from_sparses(one_body_tuple, two_body_tuple)
+qubit_hamiltonian = mapping.assemble_qubit_hamiltonian_from_sparses(one_body_tuple, two_body_tuple)
 
 # %%
 
-hamiltonian_parts = qubit_hamiltonien.partition_with_fct(partition_same_x_plus_special)
+hamiltonian_parts = qubit_hamiltonian.partition_with_fct(partition_same_x_plus_special)
 num_parts = len(hamiltonian_parts)
 
 print(f"{num_parts=}")

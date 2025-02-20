@@ -7,7 +7,9 @@ from qiskit.circuit.random import random_circuit
 from qiskit.primitives.statevector_sampler import StatevectorSampler
 
 import pauliarray.pauli.pauli_array as pa
-from pauliarray.diagonalisation.commutating_paulis.with_circuits import diagonalise_with_circuits
+from pauliarray.diagonalisation.commutating_paulis.with_qiskit_circuits import (
+    general_to_diagonal as general_to_diagonal_with_qiskit_circuits,
+)
 from pauliarray.estimation.low_level.nqubit_state_estimators import NQubitStateDiagonalEstimator
 from pauliarray.estimation.low_level.qiskit_interface_estimators import QiskitSamplerEstimator
 from pauliarray.estimation.low_level.statevector_estimators import StatevectorEstimator
@@ -16,24 +18,24 @@ from pauliarray.partition.commutating_paulis.exclusive_fct import partition_gene
 
 
 class TestEstimationSchemeExclusivePartition(unittest.TestCase):
-    def test_on_paulis(self):
+    def test_on_paulis_with_qiskit_circuits(self):
 
         paulis = pa.PauliArray.random((3, 5), 6)
         state_circuit = random_circuit(paulis.num_qubits, 6)
 
         nqubit_estimator = NQubitStateDiagonalEstimator()
         nqubit_scheme = ExclusivePartitionEstimationScheme(
-            paulis, nqubit_estimator, partition_general_commutating, diagonalise_with_circuits
+            paulis, nqubit_estimator, partition_general_commutating, general_to_diagonal_with_qiskit_circuits
         )
 
         vector_estimator = StatevectorEstimator()
         vector_scheme = ExclusivePartitionEstimationScheme(
-            paulis, vector_estimator, partition_general_commutating, diagonalise_with_circuits
+            paulis, vector_estimator, partition_general_commutating, general_to_diagonal_with_qiskit_circuits
         )
         n_shots = int(1e5)
         sampler_estimator = QiskitSamplerEstimator(StatevectorSampler(default_shots=n_shots))
         sampler_scheme = ExclusivePartitionEstimationScheme(
-            paulis, sampler_estimator, partition_general_commutating, diagonalise_with_circuits
+            paulis, sampler_estimator, partition_general_commutating, general_to_diagonal_with_qiskit_circuits
         )
 
         print()
@@ -41,17 +43,17 @@ class TestEstimationSchemeExclusivePartition(unittest.TestCase):
         t0 = time.time()
         nqubit_paulis_expectation_value = nqubit_scheme.estimate_on_state(state_circuit)
         t1 = time.time()
-        print(t1 - t0)
+        print("nqubit_scheme", t1 - t0)
 
         t0 = time.time()
         vector_paulis_expectation_value = vector_scheme.estimate_on_state(state_circuit)
         t1 = time.time()
-        print(t1 - t0)
+        print("vector_scheme", t1 - t0)
 
         t0 = time.time()
         sampler_paulis_expectation_value = sampler_scheme.estimate_on_state(state_circuit)
         t1 = time.time()
-        print(t1 - t0)
+        print("sampler_scheme", t1 - t0)
 
         print(sampler_paulis_expectation_value)
 
@@ -65,6 +67,8 @@ class TestEstimationSchemeExclusivePartition(unittest.TestCase):
         # print(nqubit_paulis_expectation_value)
         # print(vector_paulis_expectation_value)
         # print(ll_paulis_expectation_value)
+
+        print("Paulis expectation values")
 
         print(
             np.stack(
@@ -106,7 +110,7 @@ class TestEstimationSchemeExclusivePartition(unittest.TestCase):
         qiskit_statevector_sampler = StatevectorSampler(default_shots=n_shots)
         sampler_estimator = QiskitSamplerEstimator(qiskit_statevector_sampler)
         sampler_scheme = ExclusivePartitionEstimationScheme(
-            paulis, sampler_estimator, partition_general_commutating, diagonalise_with_circuits
+            paulis, sampler_estimator, partition_general_commutating, general_to_diagonal_with_qiskit_circuits
         )
 
         print()
