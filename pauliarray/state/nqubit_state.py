@@ -2,7 +2,6 @@ from numbers import Number
 from typing import Tuple, Union
 
 import numpy as np
-
 import pauliarray.pauli.operator as op
 import pauliarray.pauli.operator_array_type_1 as opa
 import pauliarray.pauli.pauli_array as pa
@@ -76,7 +75,7 @@ class NQubitState(object):
         new_amplitudes = self.amplitudes.copy()
         new_basis = self.basis.copy()
 
-        return NQubitState
+        return NQubitState(new_basis, new_amplitudes)
 
     def adjoint(self) -> "NQubitState":
         """
@@ -154,7 +153,7 @@ class NQubitState(object):
 
         return NQubitState(self.basis[threshold_mask], self.amplitudes[threshold_mask])
 
-    def apply_operator(self, operator: op.Operator):
+    def apply_operator(self, operator: op.Operator) -> "NQubitState":
         """
         Apply an Operator on the NQubitState. O|psi>
 
@@ -183,7 +182,7 @@ class NQubitState(object):
 
         for i in reversed(range(operator_array.size)):
             transformation = operator_array.get_operator(i)
-            new_state = new_state.apply_pauli_operator(transformation).simplify()
+            new_state = new_state.apply_operator(transformation)  # .simplify()
 
         return new_state
 

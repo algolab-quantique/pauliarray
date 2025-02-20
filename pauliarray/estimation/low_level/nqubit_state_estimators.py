@@ -66,8 +66,36 @@ class NQubitStateDiagonalEstimator(DiagonalEstimator):
 
         if isinstance(batch_state[0], QuantumCircuit):
             return self.batch_estimate_paulis_on_state_circuit(batch_paulis, batch_state, return_infos)
+        elif isinstance(batch_state[0], NQubitState):
+            return self.batch_estimate_paulis_on_nqubit_state(batch_paulis, batch_state, return_infos)
 
         return NotImplemented
+
+    def batch_estimate_paulis_on_nqubit_state(
+        self, batch_paulis: List[PauliArray], batch_state: List[NQubitState], return_infos=False
+    ):
+        """
+        Estimate the expectation value of the paulis using the statevector simulator of Qiskit.
+
+        Args:
+            state_circuit (QuantumCircuit): A state given in the form of QuantumCircuit
+
+        Returns:
+            NDArray: _description_
+        """
+        assert np.all([np.all(paulis.is_diagonal()) for paulis in batch_paulis])
+
+        batch_expectation_values = []
+        batch_infos = []
+        for paulis, state in zip(batch_paulis, batch_state):
+            paulis_expectation_values = state.diagonal_pauli_array_expectation_values(paulis)
+            batch_expectation_values.append(paulis_expectation_values)
+            batch_infos.append({})
+
+        if return_infos:
+            return batch_expectation_values, batch_infos
+
+        return batch_expectation_values
 
     def batch_estimate_paulis_on_state_circuit(
         self, batch_paulis: List[PauliArray], batch_state: List[QuantumCircuit], return_infos=False
@@ -81,6 +109,7 @@ class NQubitStateDiagonalEstimator(DiagonalEstimator):
         Returns:
             NDArray: _description_
         """
+        # TODO : call batch_estimate_paulis_on_nqubit_state
         assert np.all([np.all(paulis.is_diagonal()) for paulis in batch_paulis])
 
         batch_expectation_values = []

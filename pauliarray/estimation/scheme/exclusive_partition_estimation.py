@@ -1,14 +1,13 @@
 from typing import Any, Callable, List, Protocol, Tuple, Union
 
 import numpy as np
-from numpy.typing import NDArray
-from qiskit import QuantumCircuit
-
 import pauliarray.pauli.operator_array_type_1 as opa
 import pauliarray.pauli.pauli_array as pa
+from numpy.typing import NDArray
 from pauliarray.estimation.base_estimators import BaseEstimator, DiagonalEstimator, GeneralEstimator
 from pauliarray.pauli.pauli_array import PauliArray
 from pauliarray.state.nqubit_state import NQubitState
+from qiskit import QuantumCircuit
 
 
 class EstimatePauliObject(Protocol):
@@ -163,7 +162,7 @@ class ExclusivePartitionEstimationScheme(object):
 
         parts_transformation = self._parts_transformation
 
-        if isinstance(parts_transformation[0], opa.OperatorArrayType1):
+        if isinstance(parts_transformation[0], opa.OperatorArrayType1) and isinstance(state, NQubitState):
 
             nqubit_state: NQubitState = state
 
@@ -174,7 +173,7 @@ class ExclusivePartitionEstimationScheme(object):
 
             return transformed_states
 
-        if isinstance(parts_transformation[0], QuantumCircuit):
+        if isinstance(parts_transformation[0], QuantumCircuit) and isinstance(state, QuantumCircuit):
 
             circuit_state: QuantumCircuit = state
 
