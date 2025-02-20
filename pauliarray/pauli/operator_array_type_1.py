@@ -7,6 +7,7 @@ import pauliarray.pauli.operator as op
 import pauliarray.pauli.pauli_array as pa
 import pauliarray.pauli.weighted_pauli_array as wpa
 from pauliarray.utils.array_operations import broadcast_shape, broadcasted_index, is_broadcastable, is_concatenatable
+from pauliarray.utils.protocols import HasPaulis
 
 if TYPE_CHECKING:
     from pauliarray.pauli.operator import Operator
@@ -267,6 +268,10 @@ class OperatorArrayType1(object):
 
         return self.add_operator_array_type_1(other_operators)
 
+    def replace_paulis(self, new_paulis):
+
+        return OperatorArrayType1(wpa.WeightedPauliArray(new_paulis, self.weights))
+
     def get_operator(self, *idx) -> op.Operator:
         """
         Returns a single operator in operator array.
@@ -402,7 +407,7 @@ class OperatorArrayType1(object):
 
     def clifford_conjugate(self, clifford: "Operator", inplace: bool = True) -> Self:
         """
-        Performs a Clifford transformation.
+        Applies a Clifford transformation to self.
 
         Args:
             clifford (Operator) : Must represent a Clifford transformation with the correct number of qubits.
@@ -441,6 +446,37 @@ class OperatorArrayType1(object):
             phases *= factors
 
         return new_paulis, phases
+
+    def successive_clifford_conjugate_pauli_obj(
+        self, pauli_obj: HasPaulis
+    ) -> Union[Tuple[pa.PauliArray, NDArray], HasPaulis]:
+        """
+        Transform a PauliArray using the operators in self to perform a Clifford conjugates. The first operator is applied first.
+
+        Args:
+            paulis (pa.PauliArray): A PauliArray
+
+        Returns:
+            pa.PauliArray: The transformed PauliArray
+            "np.ndarray[np.complex128]": Residual coefficient
+        """
+
+        assert self.ndim == 1
+
+        paulis = pauli_obj.paulis
+
+        new_paulis = paulis.copy()
+        phase_factors = np.ones(new_paulis.shape, dtype=complex)
+
+        for i in range(self.size):
+            transformation = self.get_operator(i)
+
+            new_paulis, factors = transformation.clifford_conjugate_pauli_array(new_paulis)
+            phase_factors *= factors
+
+        new_pauli_obj = pauli_obj.replace_paulis(new_paulis).mul_weights(phase_factors)
+
+        return new_pauli_obj
 
     def expectation_values_from_paulis(
         self, flat_paulis_expectation_values: NDArray[np.float64]

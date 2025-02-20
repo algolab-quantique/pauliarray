@@ -27,11 +27,11 @@ def gen_random_pauli_array(shape, number_of_qubits: int) -> pa.PauliArray:
     Generates random Pauli strings
 
     Args:
-        shape (_type_): The shape of the PauliArray
+        shape (tuple): The shape of the PauliArray
         number_of_qubits (int): The number of qubits
 
     Returns:
-        pa.PauliArray: _description_
+        PauliArray: _description_
     """
     z_strings = np.random.choice(a=[False, True], size=shape + (number_of_qubits,))
     x_strings = np.random.choice(a=[False, True], size=shape + (number_of_qubits,))

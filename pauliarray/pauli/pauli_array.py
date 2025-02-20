@@ -2,7 +2,7 @@ from numbers import Number
 from typing import TYPE_CHECKING, Any, Callable, List, Optional, Tuple, Union
 
 import numpy as np
-from numpy.typing import NDArray
+from numpy.typing import ArrayLike, NDArray
 
 from pauliarray.binary import bit_operations as bitops
 from pauliarray.binary import symplectic
@@ -448,23 +448,30 @@ class PauliArray(object):
 
         return PauliArray(new_z_strings, new_x_strings), phases
 
-    def mul_weights(self, other: Union[Number, NDArray]) -> "WeightedPauliArray":
+    def mul_weights(self, weights: ArrayLike) -> Tuple["PauliArray", "np.ndarray[np.complex128]"]:
         """
-        Apply a weight to each Pauli string to form a WeightedPauliArray
+        Multiply the PauliArray to an array of numbers. Since a PauliArray does not have weight information this function return the PauliArray and the weights. Broadcast operation may have been perform. To create a WeightedPauliArray, use the class instead.
 
         Args:
-            other (Union[Number, NDArray]): A number or an array of number. Must be broadcastable.
+            weights (ArrayLike): An array of number. Must be broadcastable.
 
         Returns:
-            WeightedPauliArray: The result of the weight application.
+            PauliArray: The PauliArray may be broadcasted.
+            np.ndarray[np.complex128]: The weights may be broadcasted.
         """
 
-        from pauliarray.pauli.weighted_pauli_array import WeightedPauliArray
+        weights = np.array(weights)
 
-        new_weights = np.broadcast_to(other, self.shape).astype(np.complex128)
-        new_paulis = self.paulis.copy()
+        new_shape = broadcast_shape(self.shape, weights.shape)
 
-        return WeightedPauliArray(new_paulis, new_weights)
+        new_weights = np.broadcast_to(weights, new_shape).astype(np.complex128)
+        new_paulis = broadcast_to(self.paulis, new_shape)
+
+        return new_paulis, new_weights
+
+    def mul_scalar(self, scalar: Number) -> "WeightedPauliArray":
+
+        return self.mul_weights(np.array([scalar]))
 
     def tensor(self, other: Any) -> Any:
 
@@ -906,7 +913,7 @@ class PauliArray(object):
 
         return phases[..., None, None] * matrices
 
-    def with_new_paulis(self, new_paulis):
+    def replace_paulis(self, new_paulis):
 
         return new_paulis.copy()
 

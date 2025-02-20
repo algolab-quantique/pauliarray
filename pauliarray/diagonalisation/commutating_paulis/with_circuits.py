@@ -10,12 +10,6 @@ from pauliarray.binary.bit_operations import pack_diagonal
 from pauliarray.diagonalisation.commutating_paulis.utils import single_qubit_cummutating_generators
 
 
-class HasPaulis(Protocol):
-    paulis: pa.PauliArray
-
-    def with_new_paulis(self, new_paulis: pa.PauliArray) -> "HasPaulis": ...
-
-
 def general_to_diagonal(
     paulis: pa.PauliArray, force_single_qubit_generators=False
 ) -> Tuple[pa.PauliArray, NDArray[np.complex128], List[str]]:

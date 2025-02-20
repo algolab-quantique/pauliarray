@@ -3,8 +3,10 @@ import unittest
 import numpy as np
 
 import pauliarray.pauli.pauli_array as pa
+import pauliarray.pauli.weighted_pauli_array as wpa
 from pauliarray.diagonalisation.commutating_paulis.with_operators import (
     bitwise_to_diagonal,
+    diagonalise_with_operators,
     general_to_bitwise,
     general_to_diagonal,
     single_qubit_cummutating_generators,
@@ -88,7 +90,7 @@ class TestDiagonalisationWithOperators(unittest.TestCase):
 
         for paulis in cases_paulis:
 
-            diag_paulis, factors, transformations = general_to_diagonal(paulis)
+            (diag_paulis, factors), transformations = general_to_diagonal(paulis)
 
             transformed_paulis, transformed_factors = transformations.successive_clifford_conjugate_pauli_array(paulis)
 
@@ -100,13 +102,27 @@ class TestDiagonalisationWithOperators(unittest.TestCase):
             print(transformations.inspect())
             print(diag_paulis.inspect())
 
-    def test_general_to_diagonal_2(self):
+    def test_diagonalise_with_operators_paulis(self):
 
         for paulis in cases_paulis:
-            diag_paulis, factors, transformations = general_to_diagonal(paulis)
+
+            (diag_paulis, factors), transformations = diagonalise_with_operators(paulis)
 
             transformed_paulis, transformed_factors = transformations.successive_clifford_conjugate_pauli_array(paulis)
 
             self.assertTrue(np.all(diag_paulis == transformed_paulis))
             self.assertTrue(np.all(np.isclose(factors, transformed_factors)))
             self.assertTrue(np.all(diag_paulis.is_diagonal()))
+
+    def test_diagonalise_with_operators_wpaulis(self):
+
+        for paulis in cases_paulis:
+
+            wpaulis = wpa.WeightedPauliArray(paulis, np.ones(paulis.shape))
+
+            diag_wpaulis, transformations = diagonalise_with_operators(wpaulis)
+
+            transformed_wpaulis = transformations.successive_clifford_conjugate_pauli_obj(wpaulis)
+
+            self.assertTrue(np.all(diag_wpaulis == transformed_wpaulis))
+            self.assertTrue(np.all(diag_wpaulis.is_diagonal()))

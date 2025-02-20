@@ -176,14 +176,17 @@ class TestPauliArray(unittest.TestCase):
     def test_mul_weights(self):
 
         paulis = pa.PauliArray.from_labels(["ZYYY", "XYZY", "YYZI"])
-        wpaulis_1 = paulis.mul_weights(2)
-        wpaulis_2 = paulis.mul_weights([2, 3, 4])
+        paulis_1, weights_1 = paulis.mul_scalar(2)
+        paulis_2, weights_2 = paulis.mul_weights([2, 3, 4])
 
         expected_wpaulis_1 = wpa.WeightedPauliArray.from_labels_and_weights(["ZYYY", "XYZY", "YYZI"], [2, 2, 2])
         expected_wpaulis_2 = wpa.WeightedPauliArray.from_labels_and_weights(["ZYYY", "XYZY", "YYZI"], [2, 3, 4])
 
-        self.assertTrue(np.all(wpaulis_1 == expected_wpaulis_1))
-        self.assertTrue(np.all(wpaulis_2 == expected_wpaulis_2))
+        self.assertTrue(np.all(weights_1 == expected_wpaulis_1.weights))
+        self.assertTrue(np.all(weights_2 == expected_wpaulis_2.weights))
+
+        self.assertTrue(np.all(paulis_1 == expected_wpaulis_1.paulis))
+        self.assertTrue(np.all(paulis_2 == expected_wpaulis_2.paulis))
 
     def test_to_matrices(self):
         paulis_1 = pa.PauliArray.from_labels(["IX", "XX"])

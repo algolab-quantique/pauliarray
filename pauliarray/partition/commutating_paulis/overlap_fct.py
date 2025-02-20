@@ -4,12 +4,8 @@ import networkx as nx
 import numpy as np
 from numpy.typing import NDArray
 
-import pauliarray.pauli.pauli_array as pa
 from pauliarray.binary import bit_operations as bitops
-
-
-class HasPaulis(Protocol):
-    paulis: pa.PauliArray
+from pauliarray.utils.protocols import HasPaulis
 
 
 def _commutation_adjacency_to_overlap_parts_idx_networkx(commutation_adjacency) -> List[List[int]]:

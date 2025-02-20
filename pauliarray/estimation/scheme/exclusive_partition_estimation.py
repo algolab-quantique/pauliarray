@@ -15,7 +15,7 @@ class EstimatePauliObject(Protocol):
 
     paulis: pa.PauliArray
 
-    def with_new_paulis(self, new_paulis: pa.PauliArray) -> "EstimatePauliObject": ...
+    def replace_paulis(self, new_paulis: pa.PauliArray) -> "EstimatePauliObject": ...
 
     def expectation_values_from_paulis(self, paulis_expectation_values: NDArray[np.float64]) -> NDArray[np.float64]: ...
     def standard_deviations_from_paulis(self, flat_paulis_covariances: NDArray[np.float64], shots: int): ...
@@ -86,7 +86,7 @@ class ExclusivePartitionEstimationScheme(object):
         parts_transformation = []
         for part in parts:
             diag_paulis, factors, transformation = self._diagonalisation_fct(part.paulis)
-            diag_parts.append(part.with_new_paulis(diag_paulis))
+            diag_parts.append(part.replace_paulis(diag_paulis))
             parts_factors.append(factors)
             parts_transformation.append(transformation)
 

@@ -495,6 +495,10 @@ class WeightedPauliArray(object):
 
         self.update_weights(other.weights)
 
+    def replace_paulis(self, new_paulis):
+
+        return WeightedPauliArray(new_paulis, self.weights)
+
     def is_diagonal(self) -> "np.ndarray[np.bool]":
         """
         Checks if the Pauli strings are diagonal i.e. if all Pauli strings are I or Z.

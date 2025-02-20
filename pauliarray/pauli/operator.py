@@ -266,7 +266,12 @@ class Operator(object):
         new_wpaulis = self.wpaulis[:, None].compose_weighted_pauli_array(other.wpaulis[None, :])
         return Operator(new_wpaulis).combine_repeated_terms()
 
-    def mul_scalar(self, other: Number):
+    def mul_weights(self, other: Union[Number, NDArray]) -> "Operator":
+
+        new_wpaulis = self.wpaulis.mul_weights(other)
+        return Operator(new_wpaulis)
+
+    def mul_scalar(self, other: Number) -> "Operator":
         """
         Multiplies the Operator by a scalar.
 
@@ -276,8 +281,8 @@ class Operator(object):
         Returns:
             Operator: The resulting Operator.
         """
-        new_wpaulis = self.wpaulis.mul_weights(other)
-        return Operator(new_wpaulis)
+
+        return self.mul_weights(other)
 
     def power(self, exponent: int, simplify: bool = False) -> "Operator":
         """
@@ -772,6 +777,10 @@ class Operator(object):
             None
         """
         self.wpaulis.update_weights_from_other(other.wpaulis)
+
+    def replace_paulis(self, new_paulis):
+
+        return Operator.from_paulis_and_weights(new_paulis, self.weights)
 
     def sort_paulis(self):
         """

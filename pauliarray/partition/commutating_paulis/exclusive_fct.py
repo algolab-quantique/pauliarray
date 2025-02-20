@@ -6,10 +6,7 @@ from numpy.typing import NDArray
 
 import pauliarray.pauli.pauli_array as pa
 from pauliarray.binary import bit_operations as bitops
-
-
-class HasPaulis(Protocol):
-    paulis: pa.PauliArray
+from pauliarray.utils.protocols import HasPaulis
 
 
 def _commutation_adjacency_to_exclusive_parts_idx_networkx(
@@ -46,7 +43,7 @@ def partition_bitwise_commutating(
     Partition a PauliArray based on bitwise commutation.
 
     Args:
-        paulis (pa.PauliArray): Pauli strings to partition.
+        paulis (PauliArray): Pauli strings to partition.
         commutation_adjacency_to_parts_idx (Callable): A function which takes a commutation adjacency matrix and returns a list of parts given as linear indices
 
     Returns:

@@ -1,4 +1,4 @@
-from typing import List, Protocol, Tuple
+from typing import List, Protocol, Tuple, Union
 
 import numpy as np
 from numpy.typing import NDArray
@@ -7,25 +7,23 @@ import pauliarray.pauli.operator_array_type_1 as opa
 import pauliarray.pauli.pauli_array as pa
 from pauliarray.binary import symplectic
 from pauliarray.diagonalisation.commutating_paulis.utils import single_qubit_cummutating_generators
-
-
-class HasPaulis(Protocol):
-    paulis: pa.PauliArray
-
-    def with_new_paulis(self, new_paulis: pa.PauliArray) -> "HasPaulis": ...
+from pauliarray.utils.protocols import HasPaulis
 
 
 def general_to_bitwise(
     paulis: pa.PauliArray, force_single_qubit_generators=False
-) -> Tuple[pa.PauliArray, NDArray[np.complex128], opa.OperatorArrayType1]:
+) -> Tuple[Tuple[pa.PauliArray, NDArray[np.complex128]], opa.OperatorArrayType1]:
     """
-    Converts a PauliArray of commuting Pauli strings into bitwise commuting pauli strings and factors. Also returns the transformation which performs the conversion.
+    Converts a 1D PauliArray of commuting Pauli strings into bitwise commuting pauli strings and factors. Also returns the transformation which performs the conversion.
 
     Args:
-        paulis (pa.PauliArray): _description_
+        paulis (PauliArray): 1D PauliArray of commuting Pauli strings
+        force_single_qubit_generators(bool): For already bitwise commuting qubits, the transformation will apply a single qubit rotation to make it diagonal. This prevents some unnecessary n-qubits rotations.
 
     Returns:
-        Tuple[pa.PauliArray, NDArray[np.complex128], opa.OperatorArrayType1]: _description_
+        PauliArray: 1D PauliArray of bitwise commuting Pauli strings
+        NDArray[np.complex128]: Phase factors resulting from the transformation
+        OperatorArrayType1: The transformation given as a 1D OperatorArrayType1 where the first one is applied first on the original Pauli Array
     """
 
     assert paulis.ndim == 1
@@ -47,7 +45,7 @@ def general_to_bitwise(
     commuting_operators = opa.OperatorArrayType1.from_pauli_array(commuting_generators)
     conjugate_operators = opa.OperatorArrayType1.from_pauli_array(conjugate_generators)
 
-    transformations = np.sqrt(0.5) * commuting_operators.add_operator_array_type_1(conjugate_operators)
+    transformations = commuting_operators.add_operator_array_type_1(conjugate_operators).mul_weights(np.sqrt(0.5))
 
     new_paulis, factors = transformations.successive_clifford_conjugate_pauli_array(paulis)
 
@@ -58,15 +56,17 @@ def general_to_bitwise(
 
 def bitwise_to_diagonal(
     paulis: pa.PauliArray,
-) -> Tuple[pa.PauliArray, NDArray[np.complex128], opa.OperatorArrayType1]:
+) -> Tuple[Tuple[pa.PauliArray, NDArray[np.complex128]], opa.OperatorArrayType1]:
     """
-    Converts a PauliArray of bitwise commuting Pauli strings into diagonal commuting pauli strings and factors. Also returns the transformation which performs the conversion.
+    Converts a 1D PauliArray of bitwise commuting Pauli strings into diagonal commuting pauli strings and factors. Also returns the transformation which performs the conversion.
 
     Args:
-        paulis (pa.PauliArray): _description_
+        paulis (pa.PauliArray): 1D PauliArray of bitwise commuting Pauli strings
 
     Returns:
-        Tuple[pa.PauliArray, NDArray[np.complex128], opa.OperatorArrayType1]: _description_
+        PauliArray: 1D PauliArray of diagonal Pauli strings
+        NDArray[np.complex128]: Phase factors resulting from the transformation
+        OperatorArrayType1: The transformation given as a 1D OperatorArrayType1 where the first one is applied first on the original Pauli Array
     """
 
     assert paulis.ndim == 1
@@ -114,7 +114,7 @@ def bitwise_to_diagonal(
     commuting_operators = opa.OperatorArrayType1.from_pauli_array(commuting_generators)
     conjugate_operators = opa.OperatorArrayType1.from_pauli_array(conjugate_generators)
 
-    transformations = np.sqrt(0.5) * commuting_operators.add_operator_array_type_1(conjugate_operators)
+    transformations = commuting_operators.add_operator_array_type_1(conjugate_operators).mul_weights(np.sqrt(0.5))
 
     new_paulis, factors = transformations.successive_clifford_conjugate_pauli_array(paulis)
 
@@ -125,7 +125,19 @@ def bitwise_to_diagonal(
 
 def general_to_diagonal(
     paulis: pa.PauliArray, force_single_qubit_generators=False
-) -> Tuple[pa.PauliArray, NDArray[np.complex128], opa.OperatorArrayType1]:
+) -> Tuple[Tuple[pa.PauliArray, NDArray[np.complex128]], opa.OperatorArrayType1]:
+    """
+    Converts a 1D PauliArray of commuting Pauli strings into diagonal commuting pauli strings and factors. Also returns the transformation which performs the conversion.
+
+    Args:
+        paulis (pa.PauliArray): 1D PauliArray of commuting Pauli strings
+        force_single_qubit_generators(bool): For already bitwise commuting qubits, the transformation will apply a single qubit rotation to make it diagonal. This prevents some unnecessary n-qubits rotations.
+
+    Returns:
+        PauliArray: 1D PauliArray of diagonal Pauli strings
+        NDArray[np.complex128]: Phase factors resulting from the transformation
+        OperatorArrayType1: The transformation given as a 1D OperatorArrayType1 where the first one is applied first on the original Pauli Array
+    """
 
     bitwise_paulis, factors, general_to_bitwise_ops = general_to_bitwise(
         paulis, force_single_qubit_generators=force_single_qubit_generators
@@ -136,7 +148,20 @@ def general_to_diagonal(
 
     transformations = opa.concatenate((general_to_bitwise_ops, bitwise_to_diagonal_ops), axis=0)
 
-    return diagonal_paulis, factors, transformations
+    return (diagonal_paulis, factors), transformations
 
 
-diagonalise_with_operators = general_to_diagonal
+def diagonalise_with_operators(pauli_obj: HasPaulis, force_single_qubit_generators=False) -> Union[
+    Tuple[Tuple[pa.PauliArray, NDArray[np.complex128]], opa.OperatorArrayType1],
+    Tuple[HasPaulis, opa.OperatorArrayType1],
+]:
+
+    paulis = pauli_obj.paulis
+
+    (diagonal_paulis, factors), transformations = general_to_diagonal(
+        paulis, force_single_qubit_generators=force_single_qubit_generators
+    )
+
+    diagonal_pauli_obj = pauli_obj.replace_paulis(diagonal_paulis).mul_weights(factors)
+
+    return (diagonal_pauli_obj, transformations)
