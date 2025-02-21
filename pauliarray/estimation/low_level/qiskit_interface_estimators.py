@@ -96,7 +96,7 @@ class QiskitEstimatorWraper(GeneralEstimator):
         return NotImplemented
 
     def batch_estimate_paulis_on_state_circuit(
-        self, batch_paulis: List[PauliArray], batch_state: List[QuantumCircuit], return_infos=False
+        self, batch_paulis: List[PauliArray], batch_state_circuits: List[QuantumCircuit], return_infos=False
     ):
         """
         Estimate the expectation value of the paulis using the statevector simulator of Qiskit.
@@ -110,10 +110,16 @@ class QiskitEstimatorWraper(GeneralEstimator):
 
         estimator = self._qiskit_estimator
 
+        if hasattr(estimator, "backend"):
+            pass_manager = generate_preset_pass_manager(backend=estimator.backend, optimization_level=1)
+            isa_batch_state_circuits = pass_manager.run(batch_state_circuits)
+        else:
+            isa_batch_state_circuits = batch_state_circuits
+
         pubs = []
-        for paulis, state_circuit in zip(batch_paulis, batch_state):
+        for paulis, isa_state_circuit in zip(batch_paulis, isa_batch_state_circuits):
             pauli_list = pauli_array_to_pauli_list(paulis.flatten())
-            pubs.append((state_circuit, pauli_list))
+            pubs.append((isa_state_circuit, pauli_list))
 
         job = estimator.run(pubs)
         results = job.result()

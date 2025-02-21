@@ -2,11 +2,20 @@ import unittest
 
 import numpy as np
 from qiskit import transpile
+from qiskit.quantum_info import Operator
 
 import pauliarray.pauli.pauli_array as pa
-from pauliarray.diagonalisation.commutating_paulis.with_circuits import general_to_diagonal
+from pauliarray.diagonalisation.commutating_paulis.with_qiskit_circuits import general_to_diagonal
 
 cases_paulis = [
+    pa.PauliArray.from_labels(
+        [
+            "IIIZ",
+            "IIZZ",
+            "IZZZ",
+            "ZZZZ",
+        ]
+    ),
     pa.PauliArray.from_labels(
         [
             "XXXX",
@@ -59,47 +68,39 @@ cases_paulis = [
             "IYYIIIIIZ",
         ]
     ),
-    pa.PauliArray.from_labels(
-        [
-            "XZZZZXXZZZZX",
-            "YZZZZYXZZZZX",
-            "XZZZZXYZZZZY",
-            "YZZZZYYZZZZY",
-        ]
-    ),
+    # pa.PauliArray.from_labels(
+    #     [
+    #         "XZZZZXXZZZZX",
+    #         "YZZZZYXZZZZX",
+    #         "XZZZZXYZZZZY",
+    #         "YZZZZYYZZZZY",
+    #     ]
+    # ),
 ]
+
+
+def assert_unitaries_equivalent(unitary_matrix_1, unitary_matrix_2):
+
+    test_phase_id_matrix = unitary_matrix_1.T.conj() @ unitary_matrix_2
+
+    assert np.all(
+        np.isclose(test_phase_id_matrix.T.conj() @ test_phase_id_matrix, np.eye(test_phase_id_matrix.shape[0]))
+    )
 
 
 class TestDiagonalisationWithCircuits(unittest.TestCase):
 
     def test_general_to_diagonal(self):
 
-        for paulis in cases_paulis[0:1]:
+        for paulis in cases_paulis:
 
-            diag_paulis, factors, circuit = general_to_diagonal(paulis, force_single_qubit_generators=True)
+            (diag_paulis, factors), circuit = general_to_diagonal(paulis, force_single_qubit_generators=True)
 
-            t_circuit = transpile(circuit)
+            paulis_matrices = paulis.to_matrices()
+            diag_paulis_matrices = diag_paulis.to_matrices()
 
-            print(circuit)
+            for pauli_matrix, diag_pauli_matrix, factor in zip(paulis_matrices, diag_paulis_matrices, factors):
+                transformation_matrix = Operator(circuit).to_matrix()
+                transformed_pauli_matrix = transformation_matrix.T.conj() @ pauli_matrix @ transformation_matrix
 
-            generators = paulis.generators()
-
-            print(generators.inspect())
-
-            # paulis.cx([0, 2], [1, 3])
-            # paulis.h([0, 2])
-
-            print(generators.inspect())
-            print(generators.x_strings.astype(int))
-            print(generators.z_strings.astype(int))
-            # diag_paulis, factors, transformations = general_to_diagonal(paulis)
-
-            # transformed_paulis, transformed_factors = transformations.successive_clifford_conjugate_pauli_array(paulis)
-
-            # self.assertTrue(np.all(diag_paulis == transformed_paulis))
-            # self.assertTrue(np.all(np.isclose(factors, transformed_factors)))
-            # self.assertTrue(np.all(diag_paulis.is_diagonal()))
-
-            # print(paulis.inspect())
-            # print(transformations.inspect())
-            # print(diag_paulis.inspect())
+                assert_unitaries_equivalent(transformed_pauli_matrix, factor * diag_pauli_matrix)

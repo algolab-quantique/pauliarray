@@ -6,6 +6,7 @@ import unittest
 import numpy as np
 from qiskit import QuantumCircuit
 from qiskit.circuit.random import random_circuit
+from qiskit.primitives.backend_estimator_v2 import BackendEstimatorV2
 from qiskit.primitives.backend_sampler_v2 import BackendSamplerV2
 from qiskit.primitives.statevector_sampler import StatevectorSampler
 from qiskit.quantum_info import Statevector
@@ -24,7 +25,7 @@ from pauliarray.diagonalisation.commutating_paulis.with_qiskit_circuits import (
     general_to_diagonal as general_to_diagonal_with_qiskit_circuits,
 )
 from pauliarray.estimation.low_level.nqubit_state_estimators import NQubitStateDiagonalEstimator
-from pauliarray.estimation.low_level.qiskit_interface_estimators import QiskitSamplerEstimator
+from pauliarray.estimation.low_level.qiskit_interface_estimators import QiskitEstimatorWraper, QiskitSamplerEstimator
 from pauliarray.estimation.low_level.statevector_estimators import StatevectorEstimator
 from pauliarray.estimation.scheme.exclusive_partition_estimation import ExclusivePartitionEstimationScheme
 from pauliarray.mapping.fermion import BravyiKitaev, JordanWigner, Parity
@@ -102,13 +103,20 @@ scheme_scenarios = [
         nqubit_state,
     ),
     (
-        QiskitSamplerEstimator(BackendSamplerV2(backend=AerSimulator(shots=1e6))),
+        QiskitEstimatorWraper(BackendEstimatorV2(backend=AerSimulator(shots=1e6))),
         partition_same_x,
         general_to_diagonal_with_qiskit_circuits,
         state_circuit,
     ),
+    # (
+    #     QiskitSamplerEstimator(BackendSamplerV2(backend=AerSimulator(shots=1e6))),
+    #     partition_same_x,
+    #     general_to_diagonal_with_qiskit_circuits,
+    #     state_circuit,
+    # ),
 ]
 
+QiskitEstimatorWraper
 
 for scheme_scenario in scheme_scenarios:
 
