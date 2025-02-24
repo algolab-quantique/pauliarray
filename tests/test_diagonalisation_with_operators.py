@@ -17,6 +17,12 @@ from pauliarray.diagonalisation.commutating_paulis.with_operators import (
 cases_paulis = [
     pa.PauliArray.from_labels(
         [
+            "XX",
+            "YY",
+        ]
+    ),
+    pa.PauliArray.from_labels(
+        [
             "XXXX",
             "XXYY",
             "YYXX",
@@ -92,7 +98,7 @@ class TestDiagonalisationWithOperators(unittest.TestCase):
             self.assertTrue(np.all(np.isclose(factors, transformed_factors)))
             self.assertTrue(np.all(diag_paulis.is_diagonal()))
 
-    def test_diagonalise_with_operators_paulis(self):
+    def test_diagonalise_with_operators_on_paulis(self):
 
         for paulis in cases_paulis:
 
@@ -104,7 +110,7 @@ class TestDiagonalisationWithOperators(unittest.TestCase):
             self.assertTrue(np.all(np.isclose(factors, transformed_factors)))
             self.assertTrue(np.all(diag_paulis.is_diagonal()))
 
-    def test_diagonalise_with_operators_wpaulis(self):
+    def test_diagonalise_with_operators_on_wpaulis(self):
 
         for paulis in cases_paulis:
 
@@ -117,7 +123,7 @@ class TestDiagonalisationWithOperators(unittest.TestCase):
             self.assertTrue(np.all(diag_wpaulis == transformed_wpaulis))
             self.assertTrue(np.all(diag_wpaulis.is_diagonal()))
 
-    def test_diagonalise_with_operators_operator(self):
+    def test_diagonalise_with_operators_on_operator(self):
 
         for paulis in cases_paulis:
 
@@ -130,7 +136,7 @@ class TestDiagonalisationWithOperators(unittest.TestCase):
             self.assertTrue(np.all(diag_operator == transformed_operator))
             self.assertTrue(np.all(diag_operator.is_diagonal()))
 
-    def test_diagonalise_with_operators_operator_array(self):
+    def test_diagonalise_with_operators_on_operator_array(self):
 
         for paulis in cases_paulis:
 

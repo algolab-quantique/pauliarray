@@ -1,13 +1,15 @@
 from typing import Any, Callable, List, Protocol, Tuple, Union
 
 import numpy as np
+from numpy.typing import NDArray
+from qiskit import QuantumCircuit
+from qiskit.quantum_info import Statevector
+
 import pauliarray.pauli.operator_array_type_1 as opa
 import pauliarray.pauli.pauli_array as pa
-from numpy.typing import NDArray
 from pauliarray.estimation.base_estimators import BaseEstimator, DiagonalEstimator, GeneralEstimator
 from pauliarray.pauli.pauli_array import PauliArray
 from pauliarray.state.nqubit_state import NQubitState
-from qiskit import QuantumCircuit
 
 
 class EstimatePauliObject(Protocol):
@@ -108,6 +110,7 @@ class ExclusivePartitionEstimationScheme(object):
         transformed_states = self.prepare_transformed_states(state)
 
         batch_paulis, batch_state = self.prepare_batch(transformed_states)
+
         batch_expectation_values = self._ll_estimator.batch_estimate_paulis_on_state(batch_paulis, batch_state)
 
         parts_expectation_values = self.extract_parts_expectation_values(batch_expectation_values)
@@ -162,9 +165,15 @@ class ExclusivePartitionEstimationScheme(object):
 
         parts_transformation = self._parts_transformation
 
-        if isinstance(parts_transformation[0], opa.OperatorArrayType1) and isinstance(state, NQubitState):
+        if isinstance(parts_transformation[0], opa.OperatorArrayType1):
 
-            nqubit_state: NQubitState = state
+            if isinstance(state, QuantumCircuit):
+                circuit_state: QuantumCircuit = state
+                nqubit_state = NQubitState.from_statevector(Statevector(circuit_state).data)
+            elif isinstance(state, NQubitState):
+                nqubit_state: NQubitState = state
+            else:
+                return NotImplemented
 
             transformed_states = []
             for part_transformation in parts_transformation:

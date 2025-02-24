@@ -83,6 +83,7 @@ class NQubitStateDiagonalEstimator(DiagonalEstimator):
         Returns:
             NDArray: _description_
         """
+
         assert np.all([np.all(paulis.is_diagonal()) for paulis in batch_paulis])
 
         batch_expectation_values = []
@@ -109,6 +110,7 @@ class NQubitStateDiagonalEstimator(DiagonalEstimator):
         Returns:
             NDArray: _description_
         """
+
         # TODO : call batch_estimate_paulis_on_nqubit_state
         assert np.all([np.all(paulis.is_diagonal()) for paulis in batch_paulis])
 

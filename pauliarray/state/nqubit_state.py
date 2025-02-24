@@ -2,6 +2,7 @@ from numbers import Number
 from typing import Tuple, Union
 
 import numpy as np
+
 import pauliarray.pauli.operator as op
 import pauliarray.pauli.operator_array_type_1 as opa
 import pauliarray.pauli.pauli_array as pa
@@ -153,6 +154,18 @@ class NQubitState(object):
 
         return NQubitState(self.basis[threshold_mask], self.amplitudes[threshold_mask])
 
+    def simplify(self, threshold: float = 1e-14) -> "NQubitState":
+        """
+        Simplify the NQubitState by removing small amplitude, combining repeated basis state, and again removing small amplitudes.
+
+        Args:
+            threshold (float, optional): The threshold below which amplitudes are considered small. Defaults to 1e-14.
+
+        Returns:
+            Operator: The simplified Operator.
+        """
+        return self.remove_small_amplitudes(threshold).combine_repeated_terms().remove_small_amplitudes(threshold)
+
     def apply_operator(self, operator: op.Operator) -> "NQubitState":
         """
         Apply an Operator on the NQubitState. O|psi>
@@ -163,14 +176,14 @@ class NQubitState(object):
         Returns:
             NQubitState: The transformed quantum state.
         """
-        new_basis, phases = self.basis[:, None].apply_pauli_array(operator.paulis[None, :])
-        new_amplitudes = phases * self.amplitudes[:, None] * operator.weights[None, :]
+        new_basis, phase_factors = self.basis[:, None].apply_pauli_array(operator.paulis[None, :])
+        new_amplitudes = phase_factors * self.amplitudes[:, None] * operator.weights[None, :]
 
         return NQubitState(new_basis.flatten(), new_amplitudes.flatten())
 
     def apply_operator_array(self, operator_array: opa.OperatorArrayType1):
         """
-        Apply each operator on the state, starting with the last one.
+        Apply each operator on the state. The first operator is applied first.
 
         Args:
             operator_array (opa.OperatorArrayType1): _description_
@@ -180,9 +193,9 @@ class NQubitState(object):
 
         new_state = self.copy()
 
-        for i in reversed(range(operator_array.size)):
+        for i in range(operator_array.size):
             transformation = operator_array.get_operator(i)
-            new_state = new_state.apply_operator(transformation)  # .simplify()
+            new_state = new_state.apply_operator(transformation).simplify()
 
         return new_state
 
@@ -260,29 +273,29 @@ class NQubitState(object):
 
         return expectation_values * y_phases
 
-    def diagonal_pauli_array_expectation_values(self, diag_: pa.PauliArray):
+    def diagonal_pauli_array_expectation_values(self, diag_paulis: pa.PauliArray):
         """
         Computes the expectation value for all diagonal pauli strings in a PauliArray. Specialized function that is more efficient for diagonal pauli strings.
 
         $$(-i)^{z_{nd}x_{nd}}\bra{\phi_i} Z^{z_{nd}} X^{x_{nd}} \ket{\phi_j}$$
 
         Args:
-            diag_ (pa.PauliArray): Pauli strings
+            diag_paulis (pa.PauliArray): Pauli strings
 
         Returns:
             np.ndarray[np.complex]: The expectation values.
         """
 
-        assert np.all(diag_.is_diagonal())
+        assert np.all(diag_paulis.is_diagonal())
 
         i_prod_amplitudes = np.conj(self.amplitudes) * self.amplitudes
 
-        nd_i_shape = diag_.shape + (self.num_terms,)
+        nd_i_shape = diag_paulis.shape + (self.num_terms,)
 
-        nd_i_paulis = pa.broadcast_to(pa.expand_dims(diag_, (diag_.ndim,)), nd_i_shape)
+        nd_i_paulis = pa.broadcast_to(pa.expand_dims(diag_paulis, (diag_paulis.ndim,)), nd_i_shape)
 
         nd_i_bit_strings = np.broadcast_to(
-            np.expand_dims(self.bit_strings, tuple(range(0, diag_.ndim))), nd_i_shape + (self.num_qubits,)
+            np.expand_dims(self.bit_strings, tuple(range(0, diag_paulis.ndim))), nd_i_shape + (self.num_qubits,)
         )
         nd_i_phases = np.choose(np.mod(bitops.dot(nd_i_paulis.z_strings, nd_i_bit_strings), 2), [1, -1])
 

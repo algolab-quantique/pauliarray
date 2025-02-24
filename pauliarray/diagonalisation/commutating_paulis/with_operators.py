@@ -139,16 +139,16 @@ def general_to_diagonal(
         OperatorArrayType1: The transformation given as a 1D OperatorArrayType1 where the first one is applied first on the original Pauli Array
     """
 
-    bitwise_paulis, factors, general_to_bitwise_ops = general_to_bitwise(
+    bitwise_paulis, g_to_b_factors, general_to_bitwise_ops = general_to_bitwise(
         paulis, force_single_qubit_generators=force_single_qubit_generators
     )
-    diagonal_paulis, add_factors, bitwise_to_diagonal_ops = bitwise_to_diagonal(bitwise_paulis)
+    diagonal_paulis, b_to_d_add_factors, bitwise_to_diagonal_ops = bitwise_to_diagonal(bitwise_paulis)
 
-    factors *= add_factors
+    g_to_d_factors = g_to_b_factors * b_to_d_add_factors
 
     transformations = opa.concatenate((general_to_bitwise_ops, bitwise_to_diagonal_ops), axis=0)
 
-    return (diagonal_paulis, factors), transformations
+    return (diagonal_paulis, g_to_d_factors), transformations
 
 
 def diagonalise_with_operators(pauli_obj: HasPaulis, force_single_qubit_generators=False) -> Union[

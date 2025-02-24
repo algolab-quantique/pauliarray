@@ -1,16 +1,17 @@
 from typing import Any, List, Tuple
 
 import numpy as np
-import pauliarray.state.basis_state_array as bsa
 from numpy.typing import NDArray
-from pauliarray.conversion.qiskit import pauli_array_to_pauli_list
-from pauliarray.estimation.base_estimators import DiagonalEstimator, GeneralEstimator
-from pauliarray.pauli.pauli_array import PauliArray
-from pauliarray.state.nqubit_state import NQubitState
 from qiskit import QuantumCircuit
 from qiskit.primitives import BaseEstimatorV2, BaseSamplerV2
 from qiskit.quantum_info import Statevector
 from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
+
+import pauliarray.state.basis_state_array as bsa
+from pauliarray.conversion.qiskit import pauli_array_to_pauli_list
+from pauliarray.estimation.base_estimators import DiagonalEstimator, GeneralEstimator
+from pauliarray.pauli.pauli_array import PauliArray
+from pauliarray.state.nqubit_state import NQubitState
 
 
 class QiskitSamplerEstimator(DiagonalEstimator):
@@ -118,8 +119,7 @@ class QiskitEstimatorWraper(GeneralEstimator):
 
         pubs = []
         for paulis, isa_state_circuit in zip(batch_paulis, isa_batch_state_circuits):
-            pauli_list = pauli_array_to_pauli_list(paulis.flatten())
-            pubs.append((isa_state_circuit, pauli_list))
+            pubs.append((isa_state_circuit, pauli_array_to_pauli_list(paulis.flatten())))
 
         job = estimator.run(pubs)
         results = job.result()

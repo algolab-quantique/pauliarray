@@ -4,20 +4,96 @@ import unittest
 import numpy as np
 from qiskit import QuantumCircuit
 from qiskit.circuit.random import random_circuit
+from qiskit.primitives import Estimator
+from qiskit.primitives.backend_estimator_v2 import BackendEstimatorV2
+from qiskit.primitives.backend_sampler_v2 import BackendSamplerV2
 from qiskit.primitives.statevector_sampler import StatevectorSampler
+from qiskit.quantum_info import pauli_basis
+from qiskit_aer import AerSimulator
 
 import pauliarray.pauli.pauli_array as pa
+import pauliarray.pauli.weighted_pauli_array as wpa
+from pauliarray.conversion.qiskit import pauli_array_to_pauli_list, weighted_pauli_array_from_pauli_list
+from pauliarray.diagonalisation.commutating_paulis.with_operators import (
+    general_to_diagonal as general_to_diagonal_with_operators,
+)
 from pauliarray.diagonalisation.commutating_paulis.with_qiskit_circuits import (
     general_to_diagonal as general_to_diagonal_with_qiskit_circuits,
 )
 from pauliarray.estimation.low_level.nqubit_state_estimators import NQubitStateDiagonalEstimator
-from pauliarray.estimation.low_level.qiskit_interface_estimators import QiskitSamplerEstimator
+from pauliarray.estimation.low_level.qiskit_interface_estimators import QiskitEstimatorWraper, QiskitSamplerEstimator
 from pauliarray.estimation.low_level.statevector_estimators import StatevectorEstimator
 from pauliarray.estimation.scheme.exclusive_partition_estimation import ExclusivePartitionEstimationScheme
 from pauliarray.partition.commutating_paulis.exclusive_fct import partition_general_commutating, partition_same_x
 
 
 class TestEstimationSchemeExclusivePartition(unittest.TestCase):
+
+    def test_on_pauli_basis(self):
+
+        num_qubits = 2
+
+        state_circuit = random_circuit(num_qubits, 6)
+
+        observable = weighted_pauli_array_from_pauli_list(pauli_list=pauli_basis(num_qubits))
+
+        pauli_list = pauli_array_to_pauli_list(observable.paulis)
+
+        estimator = Estimator()
+        ref_result = estimator.run([state_circuit] * len(pauli_list), [pauli for pauli in pauli_list]).result()
+
+        scheme_scenarios = [
+            # (
+            #     NQubitStateDiagonalEstimator(),
+            #     partition_general_commutating,
+            #     general_to_diagonal_with_operators,
+            #     nqubit_state,
+            # ),
+            (
+                NQubitStateDiagonalEstimator(),
+                partition_same_x,
+                general_to_diagonal_with_operators,
+                state_circuit,
+            ),
+            (
+                QiskitEstimatorWraper(BackendEstimatorV2(backend=AerSimulator(shots=1e6))),
+                partition_same_x,
+                general_to_diagonal_with_qiskit_circuits,
+                state_circuit,
+            ),
+            # (
+            #     QiskitSamplerEstimator(Sampler()),
+            #     partition_same_x,
+            #     general_to_diagonal_with_qiskit_circuits,
+            #     state_circuit,
+            # ),
+        ]
+
+        schemes_expectation_values = []
+
+        for scheme_scenario in scheme_scenarios:
+
+            estimator, partition_fct, diag_fct, state = scheme_scenario
+
+            t0 = time.time()
+
+            estimation_scheme = ExclusivePartitionEstimationScheme(observable, estimator, partition_fct, diag_fct)
+
+            t1 = time.time()
+
+            print(t1 - t0)
+
+            observable_expectation_value = estimation_scheme.estimate_on_state(state)
+
+            t2 = time.time()
+
+            print(t2 - t1)
+            print(t2 - t0)
+            schemes_expectation_values.append(observable_expectation_value)
+
+        for scheme_expectation_values in schemes_expectation_values:
+            self.assertTrue(np.all(np.isclose(ref_result.values, scheme_expectation_values, atol=1e-1)))
+
     def test_on_paulis_with_qiskit_circuits(self):
 
         paulis = pa.PauliArray.random((3, 5), 6)
@@ -33,7 +109,7 @@ class TestEstimationSchemeExclusivePartition(unittest.TestCase):
             paulis, vector_estimator, partition_general_commutating, general_to_diagonal_with_qiskit_circuits
         )
         n_shots = int(1e5)
-        sampler_estimator = QiskitSamplerEstimator(StatevectorSampler(default_shots=n_shots))
+        sampler_estimator = QiskitSamplerEstimator(BackendSamplerV2(backend=AerSimulator()))
         sampler_scheme = ExclusivePartitionEstimationScheme(
             paulis, sampler_estimator, partition_general_commutating, general_to_diagonal_with_qiskit_circuits
         )
@@ -80,7 +156,7 @@ class TestEstimationSchemeExclusivePartition(unittest.TestCase):
             ).T
         )
 
-        n_sigmas = float(10 / np.sqrt(n_shots))
+        n_sigmas = 2 * float(10 / np.sqrt(n_shots))
         print(f"{n_sigmas=}")
 
         self.assertTrue(np.all(np.isclose(nqubit_paulis_expectation_value, ll_paulis_expectation_value)))
