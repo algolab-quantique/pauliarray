@@ -43,12 +43,6 @@ class TestEstimationSchemeExclusivePartition(unittest.TestCase):
         ref_result = estimator.run([state_circuit] * len(pauli_list), [pauli for pauli in pauli_list]).result()
 
         scheme_scenarios = [
-            # (
-            #     NQubitStateDiagonalEstimator(),
-            #     partition_general_commutating,
-            #     general_to_diagonal_with_operators,
-            #     nqubit_state,
-            # ),
             (
                 NQubitStateDiagonalEstimator(),
                 partition_same_x,
@@ -61,38 +55,17 @@ class TestEstimationSchemeExclusivePartition(unittest.TestCase):
                 general_to_diagonal_with_qiskit_circuits,
                 state_circuit,
             ),
-            # (
-            #     QiskitSamplerEstimator(Sampler()),
-            #     partition_same_x,
-            #     general_to_diagonal_with_qiskit_circuits,
-            #     state_circuit,
-            # ),
         ]
-
-        schemes_expectation_values = []
 
         for scheme_scenario in scheme_scenarios:
 
             estimator, partition_fct, diag_fct, state = scheme_scenario
 
-            t0 = time.time()
-
             estimation_scheme = ExclusivePartitionEstimationScheme(observable, estimator, partition_fct, diag_fct)
-
-            t1 = time.time()
-
-            print(t1 - t0)
 
             observable_expectation_value = estimation_scheme.estimate_on_state(state)
 
-            t2 = time.time()
-
-            print(t2 - t1)
-            print(t2 - t0)
-            schemes_expectation_values.append(observable_expectation_value)
-
-        for scheme_expectation_values in schemes_expectation_values:
-            self.assertTrue(np.all(np.isclose(ref_result.values, scheme_expectation_values, atol=1e-1)))
+            self.assertTrue(np.all(np.isclose(ref_result.values, observable_expectation_value, atol=1e-1)))
 
     def test_on_paulis_with_qiskit_circuits(self):
 
@@ -108,8 +81,8 @@ class TestEstimationSchemeExclusivePartition(unittest.TestCase):
         vector_scheme = ExclusivePartitionEstimationScheme(
             paulis, vector_estimator, partition_general_commutating, general_to_diagonal_with_qiskit_circuits
         )
-        n_shots = int(1e5)
-        sampler_estimator = QiskitSamplerEstimator(BackendSamplerV2(backend=AerSimulator()))
+        num_shots = int(1e5)
+        sampler_estimator = QiskitSamplerEstimator(BackendSamplerV2(backend=AerSimulator(shots=num_shots)))
         sampler_scheme = ExclusivePartitionEstimationScheme(
             paulis, sampler_estimator, partition_general_commutating, general_to_diagonal_with_qiskit_circuits
         )
@@ -140,10 +113,6 @@ class TestEstimationSchemeExclusivePartition(unittest.TestCase):
 
         print()
 
-        # print(nqubit_paulis_expectation_value)
-        # print(vector_paulis_expectation_value)
-        # print(ll_paulis_expectation_value)
-
         print("Paulis expectation values")
 
         print(
@@ -156,7 +125,7 @@ class TestEstimationSchemeExclusivePartition(unittest.TestCase):
             ).T
         )
 
-        n_sigmas = 2 * float(10 / np.sqrt(n_shots))
+        n_sigmas = 2 * float(10 / np.sqrt(num_shots))
         print(f"{n_sigmas=}")
 
         self.assertTrue(np.all(np.isclose(nqubit_paulis_expectation_value, ll_paulis_expectation_value)))
