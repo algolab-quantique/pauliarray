@@ -111,18 +111,12 @@ class NQubitStateDiagonalEstimator(DiagonalEstimator):
             NDArray: _description_
         """
 
-        # TODO : call batch_estimate_paulis_on_nqubit_state
         assert np.all([np.all(paulis.is_diagonal()) for paulis in batch_paulis])
 
-        batch_expectation_values = []
-        batch_infos = []
-        for paulis, state_circuit in zip(batch_paulis, batch_state):
+        nqubit_batch_state = []
+
+        for state_circuit in batch_state:
             state = NQubitState.from_statevector(Statevector(state_circuit).data)
-            paulis_expectation_values = state.diagonal_pauli_array_expectation_values(paulis)
-            batch_expectation_values.append(paulis_expectation_values)
-            batch_infos.append({})
+            nqubit_batch_state.append(state)
 
-        if return_infos:
-            return batch_expectation_values, batch_infos
-
-        return batch_expectation_values
+        return self.batch_estimate_paulis_on_nqubit_state(batch_paulis, nqubit_batch_state, return_infos)

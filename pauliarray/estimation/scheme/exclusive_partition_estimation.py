@@ -49,9 +49,16 @@ class ExclusivePartitionEstimationScheme(object):
         self._parts_transformation = None
 
         if auto_prepare:
-            self.prepare()
+            self.prepare_partition_and_diagonalisation()
 
-    def prepare(self):
+    def prepare_partition_and_diagonalisation(self):
+        """
+        Initialise the estimator by partionning the observable and diagonalising its parts.
+
+        Raises:
+            ValueError: _description_
+            ValueError: _description_
+        """
 
         paulis = self._pauli_obj.paulis
 
