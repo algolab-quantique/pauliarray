@@ -116,7 +116,7 @@ class NQubitStateDiagonalEstimator(DiagonalEstimator):
         nqubit_batch_state = []
 
         for state_circuit in batch_state:
-            state = NQubitState.from_statevector(Statevector(state_circuit).data)
+            state = NQubitState.from_qiskit_quantum_circuit(state_circuit)
             nqubit_batch_state.append(state)
 
         return self.batch_estimate_paulis_on_nqubit_state(batch_paulis, nqubit_batch_state, return_infos)

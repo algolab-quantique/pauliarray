@@ -13,6 +13,7 @@ from qiskit_aer import AerSimulator
 
 import pauliarray.pauli.pauli_array as pa
 import pauliarray.pauli.weighted_pauli_array as wpa
+import pauliarray.state.nqubit_state as nqs
 from pauliarray.conversion.qiskit import pauli_array_to_pauli_list, weighted_pauli_array_from_pauli_list
 from pauliarray.diagonalisation.commutating_paulis.with_operators import (
     general_to_diagonal as general_to_diagonal_with_operators,
@@ -34,6 +35,7 @@ class TestEstimationSchemeExclusivePartition(unittest.TestCase):
         num_qubits = 2
 
         state_circuit = random_circuit(num_qubits, 6)
+        nqubit_state = nqs.NQubitState.from_qiskit_quantum_circuit(state_circuit)
 
         observable = weighted_pauli_array_from_pauli_list(pauli_list=pauli_basis(num_qubits))
 
@@ -47,7 +49,7 @@ class TestEstimationSchemeExclusivePartition(unittest.TestCase):
                 NQubitStateDiagonalEstimator(),
                 partition_same_x,
                 general_to_diagonal_with_operators,
-                state_circuit,
+                nqubit_state,
             ),
             (
                 QiskitEstimatorWraper(BackendEstimatorV2(backend=AerSimulator(shots=1e6))),
@@ -71,6 +73,7 @@ class TestEstimationSchemeExclusivePartition(unittest.TestCase):
 
         paulis = pa.PauliArray.random((3, 5), 6)
         state_circuit = random_circuit(paulis.num_qubits, 6)
+        nqubit_state = nqs.NQubitState.from_qiskit_quantum_circuit(state_circuit)
 
         nqubit_estimator = NQubitStateDiagonalEstimator()
         nqubit_scheme = ExclusivePartitionEstimationScheme(
@@ -125,7 +128,7 @@ class TestEstimationSchemeExclusivePartition(unittest.TestCase):
             ).T
         )
 
-        n_sigmas = 2 * float(10 / np.sqrt(num_shots))
+        n_sigmas = 3 * float(1 / np.sqrt(num_shots))
         print(f"{n_sigmas=}")
 
         self.assertTrue(np.all(np.isclose(nqubit_paulis_expectation_value, ll_paulis_expectation_value)))

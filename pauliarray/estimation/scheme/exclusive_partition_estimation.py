@@ -35,6 +35,16 @@ class ExclusivePartitionEstimationScheme(object):
         diagonalisation_fct: Union[None, Callable],
         auto_prepare=True,
     ):
+        """
+
+
+        Args:
+            pauli_obj (EstimatePauliObject): _description_
+            ll_estimator (BaseEstimator): _description_
+            partition_fct (Callable): _description_
+            diagonalisation_fct (Union[None, Callable]): _description_
+            auto_prepare (bool, optional): _description_. Defaults to True.
+        """
 
         self._pauli_obj = pauli_obj
         self._ll_estimator = ll_estimator
@@ -103,7 +113,7 @@ class ExclusivePartitionEstimationScheme(object):
     # processing
     def estimate_on_state(self, state: Any):
         """
-        Estimate the expectation value of the pauli object.
+        Estimate the expectation value of the pauli object. The state must be given in a form comptabiel with both the diagonalisation function and the estimator.
 
         Args:
             state_circuit (QuantumCircuit): A state given in a form compatible with the scheme
@@ -172,15 +182,9 @@ class ExclusivePartitionEstimationScheme(object):
 
         parts_transformation = self._parts_transformation
 
-        if isinstance(parts_transformation[0], opa.OperatorArrayType1):
+        if isinstance(parts_transformation[0], opa.OperatorArrayType1) and isinstance(state, NQubitState):
 
-            if isinstance(state, QuantumCircuit):
-                circuit_state: QuantumCircuit = state
-                nqubit_state = NQubitState.from_statevector(Statevector(circuit_state).data)
-            elif isinstance(state, NQubitState):
-                nqubit_state: NQubitState = state
-            else:
-                return NotImplemented
+            nqubit_state: NQubitState = state
 
             transformed_states = []
             for part_transformation in parts_transformation:

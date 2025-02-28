@@ -339,6 +339,23 @@ class NQubitState(object):
         return NQubitState(subbasis, statevector[nonzero_idx])
 
     @classmethod
+    def from_qiskit_quantum_circuit(cls, circuit: "qiskit.QuantumCircuit", threshold: float = 1e-12) -> "NQubitState":
+        """
+        Constructs a NQubitState directly from a state vector.
+
+        Args:
+            circuit (qiskit.QuantumCircuit): A quantum circuit
+            threshold (float, optional): A threshold under which the basis state is not included in the description of the quantum state. Defaults to 1e-12.
+
+        Returns:
+            NQubitState: The quantum state
+        """
+
+        from qiskit.quantum_info import Statevector
+
+        return cls.from_statevector(Statevector(circuit).data, threshold)
+
+    @classmethod
     def from_labels_and_amplitudes(
         cls, labels: Union[list[str], "np.ndarray[np.str]"], amplitudes: Union["np.ndarray[np.complex]", Number]
     ) -> "NQubitState":
