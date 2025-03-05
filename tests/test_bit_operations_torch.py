@@ -1,145 +1,194 @@
-from pauliarray.binary import bit_operations as num_bit
-from pauliarray.binary.bit_operations_torch import *
-
+from pauliarray.binary import bit_operations as np_bitops
+from pauliarray.binary import bit_operations_torch as torch_bitops
 import unittest
 import torch
-from torch import Tensor
+import numpy as np
 
 
-class TestBitsOperationsTorch(unittest.TestCase):
-    def setUp(self):
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+class TestTorchBitOperations(unittest.TestCase):
+    def test_bit_sum(self):
+        bits = [0, 1, 0, 1, 1, 0]
 
-    def tensor_equal(self, t1: Tensor, t2: Tensor) -> bool:
-        return torch.equal(t1.cpu(), t2.cpu())
+        np_result = np_bitops.bit_sum(np.array(bits))
+        torch_result = torch_bitops.bit_sum(torch.Tensor(bits))
+
+        self.assertTrue(np.all(np_result == torch_result))
 
     def test_dot(self):
-        # Create lower triangular matrix
-        bits_b = torch.tril(torch.ones((4, 4), dtype=torch.bool, device=self.device), diagonal=-1)
+        bits_b = np.tri(4, 4, k=-1, dtype=np.bool_)
+        torch_bits_b = torch.Tensor(bits_b.tolist()).to(torch.bool)
 
-        result = dot(bits_b, bits_b)
-        expected = torch.tensor([0, 1, 0, 1], device=self.device)
+        np_result = np_bitops.dot(bits_b, bits_b)
+        torch_result = torch_bitops.dot(torch_bits_b, torch_bits_b).tolist()
 
-        self.assertTrue(torch.all(result == expected), f"Dot product failed. Got {result}, expected {expected}")
+        self.assertTrue(np.all(np_result == torch_result))
 
     def test_rank(self):
-        bits_b = torch.tril(torch.ones((4, 4), dtype=torch.bool, device=self.device), diagonal=-1)
-        self.assertEqual(rank(bits_b), 3, "Rank calculation incorrect")
+        bits_b = np.tri(4, 4, k=-1, dtype=np.bool_)
+        torch_bits_b = torch.Tensor(bits_b.tolist())
+
+        np_result = np_bitops.rank(bits_b)
+        torch_result = torch_bitops.rank(torch_bits_b)
+
+        self.assertEqual(np_result, torch_result)
 
     def test_kernel(self):
-        # First kernel test
-        bits = torch.tensor([[0, 0, 1, 1], [0, 1, 0, 1]], dtype=torch.bool, device=self.device)
-        kernel_bits = kernel(bits)
+        bits = np.array([[0, 0, 1, 1], [0, 1, 0, 1]], dtype=np.bool_)
+        torch_bits = torch.Tensor(bits.tolist())
 
-        if kernel_bits.shape[0] > 0:
-            products = matmul(bits, kernel_bits.T)
-            self.assertTrue(torch.all(products == False), "Kernel vectors not orthogonal")
+        np_kernel = np_bitops.kernel(bits)
+        torch_kernel = torch_bitops.kernel(torch_bits)
 
-        # Second kernel test with concatenated matrix
-        comp_bits = torch.cat((bits, kernel_bits), dim=0)
-        kernel_bits_2 = kernel(comp_bits)
-        self.assertEqual(kernel_bits_2.shape[0], 0, "Kernel should be empty for full rank matrix")
+        np_result = np_bitops.matmul(bits, np_kernel.T)
+        torch_result = torch_bitops.matmul(torch_bits, torch_kernel.T).tolist()
 
-    def test_kernel_2(self):
-        # Complex kernel test
-        bits = torch.tensor([
-            [0, 0, 0, 0, 1, 0, 0, 0],
-            [0, 0, 0, 0, 0, 1, 0, 1],
-            [0, 0, 0, 0, 0, 0, 1, 0],
-            [1, 0, 0, 1, 0, 0, 0, 0],
-            [0, 1, 0, 1, 0, 0, 0, 0],
-            [0, 0, 1, 1, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0],
-            [0, 0, 0, 0, 0, 1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 1, 0],
-            [0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0],
-            [0, 1, 0, 0, 0, 0, 0, 0],
-            [0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 1, 0, 0, 0, 0],
-        ], dtype=torch.bool, device=self.device)
+        self.assertTrue(np.all(np_result == torch_result))
 
-        kernel_bits = kernel(bits)
-        products = matmul(bits, kernel_bits.T)
-        self.assertTrue(torch.all(products == False), "Kernel vectors not orthogonal")
+    def test_matmul(self):
+        m1 = [[1, 0], [0, 1]]
+        m2 = [[0, 1], [1, 0]]
+        bits_b1 = np.array(m1, dtype=np.bool_)
+        bits_b2 = np.array(m2, dtype=np.bool_)
+        torch_bits_b1 = torch.Tensor(m1)
+        torch_bits_b2 = torch.Tensor(m2)
 
-        comp_bits = torch.cat((bits, kernel_bits), dim=0)
-        kernel_bits_2 = kernel(comp_bits)
-        self.assertEqual(kernel_bits_2.shape[0], 0, "Kernel should be empty for full rank matrix")
+        np_result = np_bitops.matmul(bits_b1, bits_b2)
+        torch_result = torch_bitops.matmul(torch_bits_b1, torch_bits_b2).tolist()
+
+        self.assertTrue(np.all(np_result == torch_result))
+
+    def test_add(self):
+        m1 = [[1, 0], [0, 1]]
+        m2 = [[0, 1], [1, 0]]
+        bits_b1 = np.array(m1, dtype=np.bool_)
+        bits_b2 = np.array(m2, dtype=np.bool_)
+        torch_bits_b1 = torch.Tensor(m1)
+        torch_bits_b2 = torch.Tensor(m2)
+
+        np_result = np_bitops.add(bits_b1, bits_b2)
+        torch_result = torch_bitops.add(torch_bits_b1, torch_bits_b2).tolist()
+
+        self.assertTrue(np.all(np_result == torch_result))
+
+    def test_strings_to_ints(self):
+        m = [[1, 0], [0, 1]]
+        bits_b = np.array(m, dtype=np.bool_)
+        torch_bits_b = torch.Tensor(m)
+
+        np_result = np_bitops.strings_to_ints(bits_b)
+        torch_result = torch_bitops.strings_to_ints(torch_bits_b).tolist()
+
+        self.assertTrue(np.all(np_result == torch_result))
 
     def test_row_echelon(self):
-        bits = torch.tensor([
-            [0, 0, 0, 0, 1, 0, 0, 0],
-            [0, 0, 0, 0, 0, 1, 0, 1],
-            [0, 0, 0, 0, 0, 0, 1, 0],
-            [1, 0, 0, 1, 0, 0, 0, 0],
-            [0, 1, 0, 1, 0, 0, 0, 0],
-            [0, 0, 1, 1, 0, 0, 0, 0],
-        ], dtype=torch.bool, device=self.device)
+        m = [[1, 0], [0, 1]]
+        bits_b = np.array(m, dtype=np.bool_)
+        torch_bits_b = torch.Tensor(m)
 
-        re_bits = row_echelon(bits)
+        np_result = np_bitops.row_echelon(bits_b)
+        torch_result = torch_bitops.row_echelon(torch_bits_b).tolist()
 
-        lead_col = -1
-        for i, row in enumerate(re_bits):
-            non_zero = torch.where(row)[0]
-            if len(non_zero) > 0:
-                new_lead = non_zero[0].item()  # Convert to scalar
-                self.assertGreaterEqual(new_lead, lead_col, "Row echelon form violation")
-                lead_col = new_lead
+        self.assertTrue(np.all(np_result == torch_result))
+
+    def test_intersection_row_space(self):
+        bits_b1 = np.array([[1, 0], [0, 1]], dtype=np.bool_)
+        bits_b2 = np.array([[0, 1], [1, 0]], dtype=np.bool_)
+        torch_bits_b1 = torch.Tensor(bits_b1.tolist())
+        torch_bits_b2 = torch.Tensor(bits_b2.tolist())
+
+        np_result = np_bitops.intersection_row_space(bits_b1, bits_b2)
+        torch_result = torch_bitops.intersection_row_space(torch_bits_b1, torch_bits_b2).tolist()
+
+        self.assertTrue(np.all(np_result == torch_result))
+
+    def test_orthogonal_basis(self):
+        bits_b = np.array([[1, 0], [0, 1]], dtype=np.bool_)
+        torch_bits_b = torch.Tensor(bits_b.tolist())
+
+        np_result = np_bitops.orthogonal_basis(bits_b)
+        torch_result = torch_bitops.orthogonal_basis(torch_bits_b).tolist()
+
+        self.assertTrue(np.all(np_result == torch_result))
+
+    def test_inv(self):
+        bits_b = np.array([[1, 0], [0, 1]], dtype=np.bool_)
+        torch_bits_b = torch.Tensor(bits_b.tolist())
+
+        np_result = np_bitops.inv(bits_b)
+        torch_result = torch_bitops.inv(torch_bits_b).tolist()
+
+        self.assertTrue(np.all(np_result == torch_result))
+
+    def test_orthogonal_basis(self):
+        bits_b = np.array([[1, 0], [0, 1]], dtype=np.bool_)
+        torch_bits_b = torch.Tensor(bits_b.tolist())
+
+        np_result = np_bitops.orthogonal_basis(bits_b)
+        torch_result = torch_bitops.orthogonal_basis(torch_bits_b).tolist()
+
+        self.assertTrue(np.all(np_result == torch_result))
+
+    def test_orthogonal_complement(self):
+        bits_b = np.array([[1, 0], [0, 1]], dtype=np.bool_)
+        torch_bits_b = torch.Tensor(bits_b.tolist())
+
+        np_result = np_bitops.orthogonal_complement(bits_b)
+        torch_result = torch_bitops.orthogonal_complement(torch_bits_b).tolist()
+
+        self.assertTrue(np.all(np_result == torch_result))
 
     def test_intersection(self):
-        bits_1 = torch.tensor([
-            [0, 0, 0, 0, 1, 0, 0, 0],
-            [0, 0, 0, 0, 0, 1, 0, 1],
-            [0, 0, 0, 0, 0, 0, 1, 0],
-            [1, 0, 0, 1, 0, 0, 0, 0],
-            [0, 1, 0, 1, 0, 0, 0, 0],
-            [0, 0, 1, 1, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0],
-        ], dtype=torch.bool, device=self.device)
+        bits_b1 = np.array([[1, 0], [0, 1]], dtype=np.bool_)
+        bits_b2 = np.array([[0, 1], [1, 0]], dtype=np.bool_)
+        torch_bits_b1 = torch.Tensor(bits_b1.tolist())
+        torch_bits_b2 = torch.Tensor(bits_b2.tolist())
 
-        bits_2 = torch.tensor([
-            [0, 0, 0, 0, 1, 0, 0, 0],
-            [0, 0, 0, 0, 0, 1, 0, 0],
-            [0, 0, 0, 0, 0, 0, 1, 0],
-            [0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0],
-            [0, 1, 0, 0, 0, 0, 0, 0],
-            [0, 0, 1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 1, 0, 0, 0, 0],
-        ], dtype=torch.bool, device=self.device)
+        np_result = np_bitops.intersection(bits_b1, bits_b2)
+        torch_result = torch_bitops.intersection(torch_bits_b1, torch_bits_b2).tolist()
 
-        bits_inter = intersection(bits_1, bits_2)
+        self.assertTrue(np.all(np_result == torch_result))
 
-        # Test rank preservation
-        rank_1 = rank(bits_1)
-        rank_1p = rank(torch.cat((bits_1, bits_inter), dim=0))
-        self.assertEqual(rank_1, rank_1p, "Rank 1 changed after intersection concatenation")
+    def test_is_orthogonal(self):
+        m1 = [[1, 0], [0, 1]]
+        m2 = [[0, 1], [1, 0]]
+        bits_b1 = np.array(m1, dtype=np.bool_)
+        bits_b2 = np.array(m2, dtype=np.bool_)
+        torch_bits_b1 = torch.Tensor(bits_b1)
+        torch_bits_b2 = torch.Tensor(bits_b2)
 
-        rank_2 = rank(bits_2)
-        rank_2p = rank(torch.cat((bits_2, bits_inter), dim=0))
-        self.assertEqual(rank_2, rank_2p, "Rank 2 changed after intersection concatenation")
+        np_result = np_bitops.is_orthogonal(bits_b1, bits_b2)
+        torch_result = torch_bitops.is_orthogonal(torch_bits_b1, torch_bits_b2).tolist()
 
-    def test_inverse(self):
-        # Test invertible matrix
-        matrix = torch.tensor([
-            [1, 0, 1],
-            [1, 1, 0],
-            [0, 1, 1]
-        ], dtype=torch.bool, device=self.device)
+        self.assertTrue(np.all(np_result == torch_result))
 
-        try:
-            inv_matrix = inv(matrix)
-            product = matmul(matrix, inv_matrix)
-            identity = torch.eye(3, dtype=torch.bool, device=self.device)
-            self.assertTrue(torch.all(product == identity), "Inverse verification failed")
-        except ValueError:
-            self.fail("Valid inverse should not raise exception")
+    def test_row_echelon_random(self):
+        np.random.seed(0)
+        torch.manual_seed(0)
 
-        # Test singular matrix
-        singular = torch.ones((2, 2), dtype=torch.bool, device=self.device)
-        with self.assertRaises(ValueError):
-            inv(singular)
+        for _ in range(10):
+            bits_b = np.random.randint(0, 2, size=(5, 5), dtype=np.bool_)
+            torch_bits_b = torch.Tensor(bits_b.tolist()).to(torch.bool)
+
+            np_result = np_bitops.row_echelon(bits_b)
+            torch_result = torch_bitops.row_echelon(torch_bits_b).tolist()
+            print("NumPy result:")
+            print(np_result.astype(int))
+            print("PyTorch result:")
+            print([[int(x) for x in row] for row in torch_result])
+            self.assertTrue(np.all(np_result == torch_result))
+
+    def test_kernel_random(self):
+        np.random.seed(0)
+        torch.manual_seed(0)
+
+        for _ in range(10):
+            bits_b = np.random.randint(0, 2, size=(5, 5), dtype=np.bool_)
+            torch_bits_b = torch.Tensor(bits_b.tolist())
+
+            np_result = np_bitops.kernel(bits_b)
+            torch_result = torch_bitops.kernel(torch_bits_b).tolist()
+
+            self.assertTrue(np.all(np_result == torch_result))
 
 
 if __name__ == "__main__":

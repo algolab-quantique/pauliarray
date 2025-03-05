@@ -2,12 +2,12 @@ import torch
 from torch import Tensor
 
 
-def bit_sum(bit_strings: Tensor) -> Tensor:
-    return bit_strings.to(torch.int32).sum(dim=-1)
+def bit_sum(bit_strings: Tensor) -> int:
+    return bit_strings.to(torch.int32).sum(dim=-1).item()
 
 
 def dot(a: Tensor, b: Tensor) -> Tensor:
-    return (a & b).to(torch.int32).sum(dim=-1) % 2
+    return (a * b).to(torch.int32).sum(dim=-1)
 
 
 def matmul(a: Tensor, b: Tensor) -> Tensor:
@@ -38,14 +38,13 @@ def strings_to_ints(bit_strings: torch.Tensor) -> torch.Tensor:
 
 
 def row_echelon(matrix: torch.Tensor) -> torch.Tensor:
-    device = matrix.device
     re_matrix = matrix.clone().to(torch.bool)
     n_rows, n_cols = re_matrix.shape
     current_row = 0
     pivot_col = 0
 
-    # Transform into row echelon form without sorting during elimination
     while current_row < n_rows and pivot_col < n_cols:
+        # Find rows with 1s in the current column
         rows_with_ones = torch.where(re_matrix[current_row:, pivot_col])[0]
         if rows_with_ones.numel() == 0:
             pivot_col += 1
@@ -53,24 +52,21 @@ def row_echelon(matrix: torch.Tensor) -> torch.Tensor:
 
         target_row = rows_with_ones[0] + current_row
         if target_row != current_row:
-            re_matrix[[current_row, target_row]] = re_matrix[[target_row, current_row]]
+            # Explicit swap
+            temp = re_matrix[current_row].clone()
+            re_matrix[current_row] = re_matrix[target_row].clone()
+            re_matrix[target_row] = temp
 
-        # Eliminate below the pivot
-        mask = (re_matrix[:, pivot_col]) & (torch.arange(n_rows, device=device) > current_row)
-        if mask.any():
-            re_matrix[mask] = re_matrix[mask] != re_matrix[current_row]  # XOR for bool
+        # Explicit elimination
+        pivot_row = re_matrix[current_row]
+        for row in range(n_rows):
+            if row != current_row and re_matrix[row, pivot_col]:
+                re_matrix[row] = re_matrix[row] ^ pivot_row
 
         current_row += 1
         pivot_col += 1
 
-    # Sort rows by leading 1 position after elimination
-    lead_positions = torch.full((n_rows,), n_cols, device=device, dtype=torch.long)
-    for i in range(n_rows):
-        ones = torch.where(re_matrix[i])[0]
-        if ones.numel() > 0:
-            lead_positions[i] = ones[0]
-    _, indices = torch.sort(lead_positions)
-    return re_matrix[indices]
+    return re_matrix
 
 
 def kernel(bit_matrix: torch.Tensor) -> torch.Tensor:
@@ -116,11 +112,8 @@ def intersection_row_space(
 
 def row_space(bit_matrix: Tensor) -> Tensor:
     re_matrix = row_echelon(bit_matrix)
-    print("Row echelon form:\n", re_matrix.int())  # Convert to int for readability
     mask = torch.any(re_matrix, dim=1)
-    print("Filter mask:", mask)
     filtered = re_matrix[mask]
-    print("Filtered row space:\n", filtered.int())
     return filtered
 
 
