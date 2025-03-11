@@ -25,11 +25,17 @@ def rank(bit_matrix: Tensor) -> int:
 
 
 def inv(bit_matrix: torch.Tensor) -> torch.Tensor:
-    assert bit_matrix.dim() == 2
-    float_matrix = bit_matrix.float()
-    inverse = torch.inverse(float_matrix)
-    binary_inverse = (inverse > 0.5).int()
-    return binary_inverse
+    """
+    Computes the inverse of a binary matrix using PyTorch with higher precision.
+    """
+    assert bit_matrix.dim() == 2, "Input must be a 2D tensor."
+
+    # Convert boolean tensor to float64 for higher precision inversion
+    float_matrix = bit_matrix.double()
+    inv_float = torch.inverse(float_matrix)
+
+    # Convert non-zero entries to boolean
+    return inv_float.bool()
 
 
 def strings_to_ints(bit_strings: torch.Tensor) -> torch.Tensor:
@@ -38,35 +44,35 @@ def strings_to_ints(bit_strings: torch.Tensor) -> torch.Tensor:
 
 
 def row_echelon(matrix: torch.Tensor) -> torch.Tensor:
-    re_matrix = matrix.clone().to(torch.bool)
-    n_rows, n_cols = re_matrix.shape
-    current_row = 0
-    pivot_col = 0
+    re_bit_matrix = matrix.clone().to(torch.bool).to(matrix.device)
+    n_rows, n_cols = re_bit_matrix.shape
+    h_row = 0
+    k_col = 0
+    row_range = torch.arange(n_rows).to(matrix.device)
 
-    while current_row < n_rows and pivot_col < n_cols:
-        # Find rows with 1s in the current column
-        rows_with_ones = torch.where(re_matrix[current_row:, pivot_col])[0]
-        if rows_with_ones.numel() == 0:
-            pivot_col += 1
-            continue
+    while h_row < n_rows and k_col < n_cols:
+        if torch.all(re_bit_matrix[h_row:, k_col] == 0):
+            k_col += 1
+        else:
+            nonzero_indices = re_bit_matrix[h_row:, k_col].nonzero(as_tuple=True)[0]
+            if nonzero_indices.numel() > 0:
+                i_row = h_row + nonzero_indices[0]
+            else:
+                k_col += 1
+                continue
 
-        target_row = rows_with_ones[0] + current_row
-        if target_row != current_row:
-            # Explicit swap
-            temp = re_matrix[current_row].clone()
-            re_matrix[current_row] = re_matrix[target_row].clone()
-            re_matrix[target_row] = temp
+            if i_row != h_row:
+                re_bit_matrix[[i_row, h_row], :] = re_bit_matrix[[h_row, i_row], :]
 
-        # Explicit elimination
-        pivot_row = re_matrix[current_row]
-        for row in range(n_rows):
-            if row != current_row and re_matrix[row, pivot_col]:
-                re_matrix[row] = re_matrix[row] ^ pivot_row
+            cond_rows = torch.logical_and(re_bit_matrix[:, k_col], row_range != h_row)
 
-        current_row += 1
-        pivot_col += 1
+            re_bit_matrix[cond_rows, :] = torch.logical_xor(re_bit_matrix[cond_rows, :],
+                                                            re_bit_matrix[h_row, :][None, :])
 
-    return re_matrix
+            h_row += 1
+            k_col += 1
+
+    return re_bit_matrix
 
 
 def kernel(bit_matrix: torch.Tensor) -> torch.Tensor:
@@ -88,7 +94,11 @@ def kernel(bit_matrix: torch.Tensor) -> torch.Tensor:
 
     null_rows = torch.all(~row_ech_bit_matrix, dim=1)
 
-    return inverse_bit_matrix[null_rows, :]
+    result = inverse_bit_matrix[null_rows, :]
+    if result.shape[0] == 0:
+        result = torch.tensor([], dtype=torch.bool, device=bit_matrix.device)
+
+    return result
 
 
 def intersection_row_space(
@@ -140,3 +150,4 @@ def is_orthogonal(bit_strings_1: torch.Tensor, bit_strings_2: torch.Tensor) -> t
     assert bit_strings_1.shape[-1] % 2 == 0
 
     return ~(dot(bit_strings_1, bit_strings_2))
+
