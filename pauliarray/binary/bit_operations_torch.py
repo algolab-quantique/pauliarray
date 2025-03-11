@@ -24,18 +24,15 @@ def rank(bit_matrix: Tensor) -> int:
     return rs.shape[0]
 
 
-def inv(bit_matrix: torch.Tensor) -> torch.Tensor:
-    """
-    Computes the inverse of a binary matrix using PyTorch with higher precision.
-    """
-    assert bit_matrix.dim() == 2, "Input must be a 2D tensor."
+def inv(matrix: torch.Tensor) -> torch.Tensor:
+    if matrix.ndim != 2:
+        raise ValueError("Input matrix must be 2-dimensional.")
 
-    # Convert boolean tensor to float64 for higher precision inversion
-    float_matrix = bit_matrix.double()
-    inv_float = torch.inverse(float_matrix)
+    n_rows, n_cols = matrix.shape
+    if n_rows != n_cols:
+        raise ValueError("Input matrix must be square.")
 
-    # Convert non-zero entries to boolean
-    return inv_float.bool()
+    return torch.linalg.inv(matrix.to(torch.float32)).to(torch.bool)
 
 
 def strings_to_ints(bit_strings: torch.Tensor) -> torch.Tensor:
@@ -46,31 +43,31 @@ def strings_to_ints(bit_strings: torch.Tensor) -> torch.Tensor:
 def row_echelon(matrix: torch.Tensor) -> torch.Tensor:
     re_bit_matrix = matrix.clone().to(torch.bool).to(matrix.device)
     n_rows, n_cols = re_bit_matrix.shape
+    row_range = torch.arange(n_rows, device=matrix.device)
     h_row = 0
     k_col = 0
-    row_range = torch.arange(n_rows).to(matrix.device)
 
     while h_row < n_rows and k_col < n_cols:
-        if torch.all(re_bit_matrix[h_row:, k_col] == 0):
+        column = re_bit_matrix[h_row:, k_col]
+        if torch.all(column == 0):
             k_col += 1
-        else:
-            nonzero_indices = re_bit_matrix[h_row:, k_col].nonzero(as_tuple=True)[0]
-            if nonzero_indices.numel() > 0:
-                i_row = h_row + nonzero_indices[0]
-            else:
-                k_col += 1
-                continue
+            continue
 
-            if i_row != h_row:
-                re_bit_matrix[[i_row, h_row], :] = re_bit_matrix[[h_row, i_row], :]
+        i_row = h_row + torch.argmax(column.to(torch.int8))
 
-            cond_rows = torch.logical_and(re_bit_matrix[:, k_col], row_range != h_row)
+        if i_row != h_row:
+            temp = re_bit_matrix[h_row].clone()
+            re_bit_matrix[h_row] = re_bit_matrix[i_row]
+            re_bit_matrix[i_row] = temp
 
-            re_bit_matrix[cond_rows, :] = torch.logical_xor(re_bit_matrix[cond_rows, :],
-                                                            re_bit_matrix[h_row, :][None, :])
+        mask = torch.logical_and(re_bit_matrix[:, k_col], row_range != h_row)
 
-            h_row += 1
-            k_col += 1
+        if mask.any():
+            pivot_row = re_bit_matrix[h_row].unsqueeze(0)  # Shape: (1, n_cols)
+            re_bit_matrix[mask] = torch.logical_xor(re_bit_matrix[mask], pivot_row)
+
+        h_row += 1
+        k_col += 1
 
     return re_bit_matrix
 
