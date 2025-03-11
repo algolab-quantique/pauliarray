@@ -32,7 +32,7 @@ def inv(matrix: torch.Tensor) -> torch.Tensor:
     if n_rows != n_cols:
         raise ValueError("Input matrix must be square.")
 
-    return torch.linalg.inv(matrix.to(torch.float32)).to(torch.bool)
+    return torch.linalg.inv(matrix.to(torch.int8)).to(torch.bool)
 
 
 def strings_to_ints(bit_strings: torch.Tensor) -> torch.Tensor:
@@ -101,20 +101,27 @@ def kernel(bit_matrix: torch.Tensor) -> torch.Tensor:
 def intersection_row_space(
     bit_matrix_1: torch.Tensor, bit_matrix_2: torch.Tensor
 ) -> torch.Tensor:
-
     assert bit_matrix_1.dim() == bit_matrix_2.dim() == 2
     assert bit_matrix_1.shape[1] == bit_matrix_2.shape[1]
+
+    # Ensure inputs are boolean
+    bit_matrix_1 = bit_matrix_1.bool()
+    bit_matrix_2 = bit_matrix_2.bool()
 
     rs_bit_matrix_1 = row_space(bit_matrix_1)
     rs_bit_matrix_2 = row_space(bit_matrix_2)
 
     num_rows_1 = rs_bit_matrix_1.shape[0]
 
-    all_rows = torch.cat((rs_bit_matrix_1, rs_bit_matrix_2), 0).to(torch.int32)
+    all_rows = torch.cat((rs_bit_matrix_1, rs_bit_matrix_2), dim=0)
 
-    null_row_combination = kernel(all_rows.T).to(torch.int32)
+    null_row_combination = kernel(all_rows.T)
 
-    return torch.matmul(null_row_combination[:, :num_rows_1], all_rows[:num_rows_1, :])
+    result = torch.matmul(
+        null_row_combination[:, :num_rows_1].to(torch.int8),
+        all_rows[:num_rows_1, :].to(torch.int8)
+    ) % 2
+    return result.bool()
 
 
 def row_space(bit_matrix: Tensor) -> Tensor:
@@ -147,4 +154,3 @@ def is_orthogonal(bit_strings_1: torch.Tensor, bit_strings_2: torch.Tensor) -> t
     assert bit_strings_1.shape[-1] % 2 == 0
 
     return ~(dot(bit_strings_1, bit_strings_2))
-

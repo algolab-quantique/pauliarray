@@ -1,8 +1,9 @@
-from pauliarray.binary import bit_operations as np_bitops
-from pauliarray.binary import bit_operations_torch as torch_bitops
 import unittest
 import torch
 import numpy as np
+
+from pauliarray.binary import bit_operations as np_bitops
+from pauliarray.binary import bit_operations_torch as torch_bitops
 
 TESTS_PER_FUNCTION = 50
 UNDER_ARRAY_SIZE = 5
@@ -123,15 +124,15 @@ class TestTorchBitOperations(unittest.TestCase):
 
     def test_orthogonal_complement(self):
         bits_b = np.array([[1, 0], [0, 1]], dtype=np.bool_)
-        torch_bits_b = torch.Tensor(bits_b.tolist())
+        torch_bits_b = torch.tensor(bits_b, dtype=torch.bool)
 
         np_result = np_bitops.orthogonal_complement(bits_b)
         torch_result = torch_bitops.orthogonal_complement(torch_bits_b)
 
-        if torch_result.numel() == 0:
-            torch_result = torch.zeros((0, bits_b.shape[1]), dtype=torch.bool)
-
-        self.assertTrue(np.all(np_result == torch_result.tolist()))
+        if np_result.size == 0 and torch_result.numel() == 0:
+            self.assertTrue(True)  # Both are empty
+        else:
+            self.assertTrue(np.all(np_result == torch_result.tolist()))
 
     def test_intersection(self):
         for _ in range(TESTS_PER_FUNCTION):
