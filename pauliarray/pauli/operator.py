@@ -792,8 +792,13 @@ class Operator(object):
 
         non_identity_mask = ~self.paulis.is_identity()
 
-        new_paulis = self.paulis[~non_identity_mask]
-        new_weights = self.weights[~non_identity_mask]
+        print(non_identity_mask)
+
+        new_paulis = self.paulis[non_identity_mask]
+        new_weights = self.weights[non_identity_mask]
+
+        print(new_paulis)
+        print(new_weights)
 
         return Operator.from_paulis_and_weights(new_paulis, new_weights)
 
