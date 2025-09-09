@@ -782,6 +782,21 @@ class Operator(object):
 
         return Operator.from_paulis_and_weights(new_paulis, self.weights)
 
+    def to_traceless(self) -> "Operator":
+        """
+        Remove identity Pauli strings from the summation to make the operator traceless
+
+        Returns:
+            Operator: Traceless operator.
+        """
+
+        non_identity_mask = ~self.paulis.is_identity()
+
+        new_paulis = self.paulis[~non_identity_mask]
+        new_weights = self.weights[~non_identity_mask]
+
+        return Operator.from_paulis_and_weights(new_paulis, new_weights)
+
     def is_diagonal(self) -> bool:
         """
         Checks if all the Pauli strings are diagonal i.e. if all Pauli strings are I or Z.

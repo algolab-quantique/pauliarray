@@ -2,9 +2,8 @@ from numbers import Number
 from typing import TYPE_CHECKING, Any, Callable, List, Literal, Tuple, Union
 
 import numpy as np
-from numpy.typing import ArrayLike, NDArray
-
 import pauliarray.pauli.pauli_array as pa
+from numpy.typing import ArrayLike, NDArray
 from pauliarray.utils import label_utils
 from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable, is_concatenatable
 
@@ -554,7 +553,7 @@ class WeightedPauliArray(object):
             new_PauliArray (PauliArray): The PauliArray created.
         """
         random_paulis = pa.PauliArray.random(shape, num_qubits)
-        random_weights = np.random.rand(*shape)
+        random_weights = 2 * np.random.rand(*shape) - 1
 
         return WeightedPauliArray(random_paulis, random_weights)
 

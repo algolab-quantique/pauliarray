@@ -2,11 +2,10 @@ import itertools
 from typing import List, Tuple, Union
 
 import numpy as np
-from numpy.typing import NDArray
-
 import pauliarray.pauli.operator as op
 import pauliarray.pauli.operator_array_type_1 as opa
 import pauliarray.pauli.pauli_array as pa
+from numpy.typing import NDArray
 from pauliarray.binary import bit_operations as bitops
 
 
