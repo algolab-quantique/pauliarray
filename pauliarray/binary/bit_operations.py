@@ -66,6 +66,23 @@ def add(
     return np.logical_xor(bit_matrix_1, bit_matrix_2)
 
 
+def mul(
+    bit_matrix_1: "np.ndarray[np.bool]",
+    bit_matrix_2: "np.ndarray[np.bool]",
+) -> "np.ndarray[np.bool]":
+    """
+    Performs element-wise AND operation between two binary matrices.
+
+    Args:
+        bit_matrix_1 ("np.ndarray[np.bool]"): First binary matrix.
+        bit_matrix_2 ("np.ndarray[np.bool]"): Second binary matrix.
+
+    Returns:
+        "np.ndarray[np.bool]": Element-wise XOR result of the two input matrices.
+    """
+    return np.logical_and(bit_matrix_1, bit_matrix_2)
+
+
 def rank(bit_matrix: "np.ndarray[np.bool]") -> int:
     """
     Computes the rank of a binary matrix.

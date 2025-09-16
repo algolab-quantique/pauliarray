@@ -371,19 +371,32 @@ class PauliArray(object):
         new_z_strings = bitops.add(self.z_strings, other.z_strings)
         new_x_strings = bitops.add(self.x_strings, other.x_strings)
 
-        self_phase_power = bitops.dot(self.z_strings, self.x_strings).astype(np.int8)
-        other_phase_power = bitops.dot(other.z_strings, other.x_strings).astype(np.int8)
-        new_phase_power = bitops.dot(new_z_strings, new_x_strings).astype(np.int8)
-        commutation_phase_power = 2 * bitops.dot(self.x_strings, other.z_strings).astype(np.int8)
+        and_z_strings = bitops.mul(self.z_strings, other.z_strings)
+        and_x_strings = bitops.mul(self.x_strings, other.x_strings)
 
-        phase_power = np.mod(
-            commutation_phase_power + self_phase_power + other_phase_power - new_phase_power,
-            4,
+        mod_2_power = (
+            bitops.dot(self.x_strings, other.z_strings).astype(np.int8)
+            + bitops.dot(and_z_strings, new_x_strings).astype(np.int8)
+            + bitops.dot(new_z_strings, and_x_strings).astype(np.int8)
         )
+        mod_4_power = bitops.dot(self.z_strings, other.x_strings).astype(np.int8) + bitops.dot(
+            self.x_strings, other.z_strings
+        ).astype(np.int8)
 
-        phases = np.choose(phase_power, [1, -1j, -1, 1j])
+        # self_phase_power = bitops.dot(self.z_strings, self.x_strings).astype(np.int8)
+        # other_phase_power = bitops.dot(other.z_strings, other.x_strings).astype(np.int8)
+        # new_phase_power = bitops.dot(new_z_strings, new_x_strings).astype(np.int8)
+        # commutation_phase_power = 2 * bitops.dot(self.x_strings, other.z_strings).astype(np.int8)
 
-        return PauliArray(new_z_strings, new_x_strings), phases
+        # phase_power = np.mod(
+        #     commutation_phase_power + self_phase_power + other_phase_power - new_phase_power,
+        #     4,
+        # )
+
+        mod_2_phases = np.choose(mod_2_power, [1, -1], mode="wrap")
+        mod_4_phases = np.choose(mod_4_power, [1, 1j, -1, -1j], mode="wrap")
+
+        return PauliArray(new_z_strings, new_x_strings), mod_2_phases * mod_4_phases
 
     def mul_weights(self, other: Union[Number, NDArray]) -> "WeightedPauliArray":
         """
@@ -947,7 +960,7 @@ class PauliArray(object):
 
     @staticmethod
     def labels_to_z_strings_x_strings(
-        labels: Union[list[str], "np.ndarray[np.str]"]
+        labels: Union[list[str], "np.ndarray[np.str]"],
     ) -> Tuple["np.ndarray[np.bool]", "np.ndarray[np.bool]"]:
         """
         Returns z strings and x strings created from labels.
