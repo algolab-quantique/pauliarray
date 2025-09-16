@@ -379,9 +379,11 @@ class PauliArray(object):
             + bitops.dot(and_z_strings, new_x_strings).astype(np.int8)
             + bitops.dot(new_z_strings, and_x_strings).astype(np.int8)
         )
-        mod_4_power = bitops.dot(self.z_strings, other.x_strings).astype(np.int8) + bitops.dot(
-            self.x_strings, other.z_strings
-        ).astype(np.int8)
+        mod_4_power = (
+            bitops.dot(self.z_strings, other.x_strings).astype(np.int8)
+            + bitops.dot(self.x_strings, other.z_strings).astype(np.int8)
+            + 2 * mod_2_power
+        )
 
         # self_phase_power = bitops.dot(self.z_strings, self.x_strings).astype(np.int8)
         # other_phase_power = bitops.dot(other.z_strings, other.x_strings).astype(np.int8)
@@ -393,10 +395,10 @@ class PauliArray(object):
         #     4,
         # )
 
-        mod_2_phases = np.choose(mod_2_power, [1, -1], mode="wrap")
+        # mod_2_phases = np.choose(mod_2_power, [1, -1], mode="wrap")
         mod_4_phases = np.choose(mod_4_power, [1, 1j, -1, -1j], mode="wrap")
 
-        return PauliArray(new_z_strings, new_x_strings), mod_2_phases * mod_4_phases
+        return PauliArray(new_z_strings, new_x_strings), mod_4_phases
 
     def mul_weights(self, other: Union[Number, NDArray]) -> "WeightedPauliArray":
         """
