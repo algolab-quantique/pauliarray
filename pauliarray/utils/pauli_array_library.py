@@ -1,9 +1,8 @@
 import numpy as np
-
 import pauliarray.pauli.pauli_array as pa
 
 
-def gen_complete_pauli_array_basis(number_of_qubits: int) -> pa.PauliArray:
+def gen_complete_pauli_array_basis(number_of_qubits: int, exclude_identity=True) -> pa.PauliArray:
     """
     Generates a PauliArray containining all the Pauli strings for n qubits.
 
@@ -19,7 +18,13 @@ def gen_complete_pauli_array_basis(number_of_qubits: int) -> pa.PauliArray:
     )
     z_bits = np.broadcast_to(bits[None, :], (2**number_of_qubits, 2**number_of_qubits, number_of_qubits))
     x_bits = np.broadcast_to(bits[:, None], (2**number_of_qubits, 2**number_of_qubits, number_of_qubits))
-    return pa.PauliArray(z_bits, x_bits).flatten()
+
+    paulis = pa.PauliArray(z_bits, x_bits).flatten()
+
+    if exclude_identity:
+        return paulis[1:]
+
+    return paulis
 
 
 def gen_random_pauli_array(shape, number_of_qubits: int) -> pa.PauliArray:
