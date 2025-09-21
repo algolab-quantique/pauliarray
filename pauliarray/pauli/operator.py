@@ -2,10 +2,9 @@ from numbers import Number
 from typing import Any, Callable, List, Literal, Tuple, Union
 
 import numpy as np
-from numpy.typing import ArrayLike, NDArray
-
 import pauliarray.pauli.pauli_array as pa
 import pauliarray.pauli.weighted_pauli_array as wpa
+from numpy.typing import ArrayLike, NDArray
 from pauliarray.binary import bit_operations as bitops
 from pauliarray.binary import symplectic
 from pauliarray.utils import label_utils
@@ -809,13 +808,26 @@ class Operator(object):
 
     def sort_paulis(self):
         """
-        Sorts the underlying WeightedPauliArray primarily for comparison purposes.
+        Sorts the underlying WeightedPauliArray by string primarily for comparison purposes.
 
         Returns:
             None
         """
         order = pa.argsort(self.paulis)
-        self._wpaulis = self.wpaulis[order]
+
+        return Operator(self.wpaulis[order])
+
+    def sort_by_weights(self):
+        """
+        Sorts the underlying WeightedPauliArray by weights primarily for comparison purposes.
+
+        Returns:
+            None
+        """
+
+        order = np.argsort(-np.abs(self.weights))
+
+        return Operator(self.wpaulis[order])
 
     def to_matrix(self) -> NDArray:
         """
@@ -906,6 +918,9 @@ class Operator(object):
             weights[i] = np.trace(all_mats[i, :, :] @ matrix)
 
         weights *= 1 / (2**num_qubits)
+
+        if threshold is None:
+            return cls.from_paulis_and_weights(all_paulis, weights)
 
         mask = np.abs(weights) > threshold
 

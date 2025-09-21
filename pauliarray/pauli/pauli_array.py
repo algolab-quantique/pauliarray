@@ -3,7 +3,6 @@ from typing import TYPE_CHECKING, Any, Callable, List, Optional, Tuple, Union
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
-
 from pauliarray.binary import bit_operations as bitops
 from pauliarray.binary import symplectic
 from pauliarray.utils import label_utils
@@ -1047,7 +1046,7 @@ class PauliArray(object):
 
     @staticmethod
     def labels_to_z_strings_x_strings(
-        labels: Union[list[str], "np.ndarray[np.str]"]
+        labels: Union[list[str], "np.ndarray[np.str]"],
     ) -> Tuple["np.ndarray[np.bool]", "np.ndarray[np.bool]"]:
         """
         Returns z strings and x strings created from labels.
@@ -1253,15 +1252,28 @@ def anticommutator(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArr
     """
     assert is_broadcastable(paulis_1.shape, paulis_2.shape)
 
-    anticommutators, phases = paulis_1.compose_pauli_array(paulis_2)
+    shape = broadcast_shape(paulis_1.shape, paulis_2.shape)
+
     do_commute = paulis_1.commute_with(paulis_2)
 
-    anticommutators.z_strings[~do_commute] = 0
-    anticommutators.x_strings[~do_commute] = 0
+    idxs = np.where(do_commute)
 
-    coefs = 2 * phases * do_commute
+    idx1 = tuple(
+        [idx if paulis_1.shape[dim] > 1 else np.zeros(idx.shape, dtype=np.int_) for dim, idx in enumerate(idxs)]
+    )
+    idx2 = tuple(
+        [idx if paulis_2.shape[dim] > 1 else np.zeros(idx.shape, dtype=np.int_) for dim, idx in enumerate(idxs)]
+    )
 
-    return anticommutators, coefs
+    non_zero_commutators, non_zeros_coefs = paulis_1[*idx1].compose_pauli_array(paulis_2[*idx2])
+
+    commutators = PauliArray.identities(shape, paulis_1.num_qubits)
+    coefs = np.zeros(shape, dtype=np.complex128)
+
+    commutators[*idxs] = non_zero_commutators
+    coefs[*idxs] = 2 * non_zeros_coefs
+
+    return commutators, coefs
 
 
 def concatenate(paulis: Tuple[PauliArray, ...], axis: int) -> PauliArray:

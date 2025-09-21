@@ -2,7 +2,7 @@ import numpy as np
 import pauliarray.pauli.pauli_array as pa
 
 
-def gen_complete_pauli_array_basis(number_of_qubits: int, exclude_identity=True) -> pa.PauliArray:
+def gen_complete_pauli_array_basis(number_of_qubits: int, exclude_identity=False) -> pa.PauliArray:
     """
     Generates a PauliArray containining all the Pauli strings for n qubits.
 
