@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING, Any, Callable, List, Optional, Tuple, Union
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
+
 from pauliarray.binary import bit_operations as bitops
 from pauliarray.binary import symplectic
 from pauliarray.utils import label_utils
@@ -875,6 +876,16 @@ class PauliArray(object):
             NDArray[bool]: True if the Pauli string is identity, False otherwise.
         """
         return ~np.logical_or(np.any(self.x_strings, axis=-1), np.any(self.z_strings, axis=-1))
+
+    def trace(self) -> "np.ndarray[np.int]":
+        """
+        Returns the trace of each Pauli string, which is 0 expect if the Pauli string is Identity, then it is 2**numqubits
+
+        Returns:
+            np.ndarray[np.int]: The array of traces of the Pauli strings
+        """
+
+        return 2**self.num_qubits * self.is_identity().astype(float)
 
     def to_labels(self) -> "np.ndarray[np.str]":
         """
