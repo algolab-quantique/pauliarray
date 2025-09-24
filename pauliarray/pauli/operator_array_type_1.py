@@ -1,11 +1,10 @@
 from typing import TYPE_CHECKING, Any, Callable, List, Self, Tuple, Union
 
 import numpy as np
-from numpy.typing import ArrayLike, NDArray
-
 import pauliarray.pauli.operator as op
 import pauliarray.pauli.pauli_array as pa
 import pauliarray.pauli.weighted_pauli_array as wpa
+from numpy.typing import ArrayLike, NDArray
 from pauliarray.utils.array_operations import broadcast_shape, broadcasted_index, is_broadcastable, is_concatenatable
 from pauliarray.utils.protocols import HasPaulis
 
@@ -431,7 +430,9 @@ class OperatorArrayType1(object):
 
         return OperatorArrayType1(new_wpaulis)
 
-    def successive_clifford_conjugate_pauli_array(self, paulis: pa.PauliArray) -> Tuple[pa.PauliArray, NDArray]:
+    def successive_clifford_conjugate_pauli_array(
+        self, paulis: pa.PauliArray, inverse: bool = False
+    ) -> Tuple[pa.PauliArray, NDArray]:
         """
         Transform a PauliArray using the operators in self to perform a Clifford conjugates. The first operator is applied first.
 
@@ -448,16 +449,23 @@ class OperatorArrayType1(object):
         new_paulis = paulis.copy()
         phases = np.ones(new_paulis.shape, dtype=complex)
 
-        for i in range(self.size):
-            transformation = self.get_operator(i)
+        if inverse:
+            for i in range(self.size - 1, -1, -1):
+                transformation = self.get_operator(i)
 
-            new_paulis, factors = transformation.clifford_conjugate_pauli_array(new_paulis)
-            phases *= factors
+                new_paulis, factors = transformation.clifford_conjugate_pauli_array(new_paulis)
+                phases *= factors
+        else:
+            for i in range(self.size):
+                transformation = self.get_operator(i)
+
+                new_paulis, factors = transformation.clifford_conjugate_pauli_array(new_paulis)
+                phases *= factors
 
         return new_paulis, phases
 
     def successive_clifford_conjugate_pauli_obj(
-        self, pauli_obj: HasPaulis
+        self, pauli_obj: HasPaulis, inverse: bool = False
     ) -> Union[Tuple[pa.PauliArray, NDArray], HasPaulis]:
         """
         Transform a PauliArray using the operators in self to perform a Clifford conjugates. The first operator is applied first.
@@ -477,11 +485,19 @@ class OperatorArrayType1(object):
         new_paulis = paulis.copy()
         phase_factors = np.ones(new_paulis.shape, dtype=complex)
 
-        for i in range(self.size):
-            transformation = self.get_operator(i)
+        if inverse:
+            for i in range(self.size - 1, -1, -1):
+                transformation = self.get_operator(i)
 
-            new_paulis, factors = transformation.clifford_conjugate_pauli_array(new_paulis)
-            phase_factors *= factors
+                new_paulis, factors = transformation.clifford_conjugate_pauli_array(new_paulis)
+                phase_factors *= factors
+        else:
+
+            for i in range(self.size):
+                transformation = self.get_operator(i)
+
+                new_paulis, factors = transformation.clifford_conjugate_pauli_array(new_paulis)
+                phase_factors *= factors
 
         new_pauli_obj = pauli_obj.replace_paulis(new_paulis).mul_weights(phase_factors)
 

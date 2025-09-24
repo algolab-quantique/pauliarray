@@ -41,6 +41,7 @@ def gen_complete_diagonal_pauli_array_basis(number_of_qubits: int, exclude_ident
     bits = ((np.arange(2 ** (number_of_qubits), dtype=np.uintc)[:, None] & bin_power[None, :]) > 0).reshape(
         (2**number_of_qubits, number_of_qubits)
     )
+
     z_bits = bits
     x_bits = np.zeros_like(z_bits)
 
