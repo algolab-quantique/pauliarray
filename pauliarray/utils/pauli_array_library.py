@@ -27,6 +27,31 @@ def gen_complete_pauli_array_basis(number_of_qubits: int, exclude_identity=False
     return paulis
 
 
+def gen_complete_diagonal_pauli_array_basis(number_of_qubits: int, exclude_identity=False) -> pa.PauliArray:
+    """
+    Generates a PauliArray containining all the diagonal Pauli strings for n qubits.
+
+    Args:
+        number_of_qubits (int): The number of qubits
+
+    Returns:
+        PauliArray: A complete basis
+    """
+    bin_power = 2 ** np.arange(number_of_qubits, dtype=np.uintc)
+    bits = ((np.arange(2 ** (number_of_qubits), dtype=np.uintc)[:, None] & bin_power[None, :]) > 0).reshape(
+        (2**number_of_qubits, number_of_qubits)
+    )
+    z_bits = bits
+    x_bits = np.zeros_like(z_bits)
+
+    paulis = pa.PauliArray(z_bits, x_bits).flatten()
+
+    if exclude_identity:
+        return paulis[1:]
+
+    return paulis
+
+
 def gen_random_pauli_array(shape, number_of_qubits: int) -> pa.PauliArray:
     """
     Generates random Pauli strings
