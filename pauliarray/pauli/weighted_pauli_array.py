@@ -2,8 +2,9 @@ from numbers import Number
 from typing import TYPE_CHECKING, Any, Callable, List, Literal, Tuple, Union
 
 import numpy as np
-import pauliarray.pauli.pauli_array as pa
 from numpy.typing import ArrayLike, NDArray
+
+import pauliarray.pauli.pauli_array as pa
 from pauliarray.utils import label_utils
 from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable, is_concatenatable
 
@@ -506,6 +507,16 @@ class WeightedPauliArray(object):
             NDArray[bool]: True if the Pauli string is diagonal, False otherwise.
         """
         return self._paulis.is_diagonal()
+
+    def trace(self) -> "np.ndarray[np.int]":
+        """
+        Returns the trace of each Pauli string, which is 0 expect if the Pauli string is Identity, then it is 2**numqubits
+
+        Returns:
+            np.ndarray[np.int]: The array of traces of the Pauli strings
+        """
+
+        return 2**self.num_qubits * self.weights * self.paulis.is_identity().astype(float)
 
     def to_matrices(self) -> NDArray:
         """
