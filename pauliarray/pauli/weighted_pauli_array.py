@@ -2,8 +2,9 @@ from numbers import Number
 from typing import TYPE_CHECKING, Any, Callable, List, Literal, Tuple, Union
 
 import numpy as np
-import pauliarray.pauli.pauli_array as pa
 from numpy.typing import ArrayLike, NDArray
+
+import pauliarray.pauli.pauli_array as pa
 from pauliarray.utils import label_utils
 from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable, is_concatenatable
 
@@ -287,6 +288,16 @@ class WeightedPauliArray(object):
 
     def bitwise_commute_with(self, other: "WeightedPauliArray") -> "np.ndarray[np.bool]":
         return self.paulis.bitwise_commute_with(other.paulis)
+
+    def traces(self) -> NDArray:
+        """
+        Return the traces of the Pauli Strings which are 2^n * weight if Identity and 0 otherwise.
+
+        Returns:
+            "np.ndarray[np.int]": Traces of the Pauli Strings
+        """
+
+        return self.weights * self.paulis.traces()
 
     def inspect(self) -> str:
         if self.ndim == 0:
