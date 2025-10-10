@@ -518,6 +518,16 @@ class WeightedPauliArray(object):
         """
         return self._paulis.is_diagonal()
 
+    def trace(self) -> "np.ndarray[np.int]":
+        """
+        Returns the trace of each Pauli string, which is 0 expect if the Pauli string is Identity, then it is 2**numqubits
+
+        Returns:
+            np.ndarray[np.int]: The array of traces of the Pauli strings
+        """
+
+        return 2**self.num_qubits * self.weights * self.paulis.is_identity().astype(float)
+
     def to_matrices(self) -> NDArray:
         """
         Returns the WeightedPauliArray as a numpy matrix.
