@@ -572,7 +572,7 @@ class PauliArray(object):
             "np.ndarray[np.int]": Traces of the Pauli Strings
         """
 
-        return 2**self.num_qubits * (self.num_ids == self.num_qubits)
+        return 2**self.num_qubits * self.is_identity().astype(float)
 
     def generators(self) -> "PauliArray":
         """

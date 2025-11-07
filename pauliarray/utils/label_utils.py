@@ -28,6 +28,8 @@ def table_nd(labels) -> str:
 
 def weighted_table_1d(labels, weights) -> str:
 
+    if len(labels) == 0:
+        return ""
     pauli_str_len = len(max(labels, key=len))
 
     row_strs = []

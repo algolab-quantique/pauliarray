@@ -6,6 +6,7 @@ from numpy.typing import ArrayLike, NDArray
 
 import pauliarray.pauli.operator as op
 import pauliarray.pauli.pauli_array as pa
+import pauliarray.pauli.weighted_pauli_array as wpa
 from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable, is_concatenatable
 
 
@@ -18,6 +19,7 @@ class OperatorArrayType2(object):
             basis_paulis (pa.PauliArray): The basis Pauli arrays.
             weights ("np.ndarray[np.complex]"): The weights associated with the Pauli arrays.
         """
+
         assert basis_paulis.size == weights.shape[-1]
 
         self._basis_paulis = basis_paulis
@@ -222,7 +224,7 @@ class OperatorArrayType2(object):
         """
         tmp_weights = self.weights[..., :, None] * other.weights[..., None, :]
 
-        new_pauli_basis, factors = self.basis_paulis[:, None].mul_pauli_array(other.basis_paulis[None, :])
+        new_pauli_basis, factors = self.basis_paulis[:, None].compose_pauli_array(other.basis_paulis[None, :])
 
         new_shape = tmp_weights.shape[:-2] + (tmp_weights.shape[-1] * tmp_weights.shape[-2],)
         new_weights = (tmp_weights * factors).reshape(new_shape)
@@ -264,6 +266,18 @@ class OperatorArrayType2(object):
         new_operator_array = OperatorArrayType2(new_pauli_basis, new_weights).combine_basis_paulis()
 
         return new_operator_array
+
+    def traces(self) -> "np.ndarray[np.complex]":
+        """
+        Return the traces of the Operators.
+
+        Returns:
+            "np.ndarray[np.int]": Traces of the Operators
+        """
+
+        basis_traces = self.basis_paulis.traces()
+
+        return np.einsum("...i,i->...", self.weights, basis_traces)
 
     def filter_weights(self, filter_function: Callable) -> Self:
         """
@@ -483,20 +497,38 @@ class OperatorArrayType2(object):
     @classmethod
     def from_pauli_array(cls, paulis: pa.PauliArray) -> Self:
         """
-        Constructs an OperatorArrayType2 instance from a Pauli array.
+        Constructs an OperatorArrayType2 instance from a PauliArray, where each Pauli becomes an operator in the OperatorArray.
 
         Args:
-            paulis (pa.PauliArray): A Pauli array object.
+            paulis (pa.PauliArray): A PauliArray object.
 
         Returns:
             OperatorArrayType2: A new OperatorArrayType2 instance.
         """
         weights = np.eye(paulis.size, dtype=complex)
         weights.reshape(paulis.shape + (paulis.size,))
-        return cls(weights, paulis.copy())
+
+        return cls(paulis.copy(), weights)
+
+    @classmethod
+    def from_weighted_pauli_array(cls, wpaulis: wpa.WeightedPauliArray) -> Self:
+        """
+        Constructs an OperatorArrayType2 instance from a WeightedPauliArray, where each WeightedPauli becomes an operator in the OperatorArray.
+
+        Args:
+            wpaulis (pa.PauliArray): A PauliArray object.
+
+        Returns:
+            OperatorArrayType2: A new OperatorArrayType2 instance.
+        """
+        weights = np.eye(wpaulis.size, dtype=complex)
+        weights.reshape(wpaulis.shape + (wpaulis.size,))
+        weights = weights * wpaulis.weights
+
+        return cls(wpaulis.paulis.copy(), weights)
 
 
-def commutator(operators_1: Self, operators_2: Self) -> Self:
+def commutator(operators_1: OperatorArrayType2, operators_2: OperatorArrayType2) -> OperatorArrayType2:
     r"""
     Computes the commutator
 
@@ -527,7 +559,7 @@ def commutator(operators_1: Self, operators_2: Self) -> Self:
     return OperatorArrayType2(commutators, weights).combine_basis_paulis()
 
 
-def concatenate(operatorss: Tuple[Self, ...], axis: int) -> Self:
+def concatenate(operatorss: Tuple[OperatorArrayType2, ...], axis: int) -> OperatorArrayType2:
     """
     Concatenates multiple operator arrays along the specified axis.
 
