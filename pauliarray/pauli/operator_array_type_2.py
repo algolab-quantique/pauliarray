@@ -272,7 +272,7 @@ class OperatorArrayType2(object):
         Return the traces of the Operators.
 
         Returns:
-            "np.ndarray[np.int]": Traces of the Operators
+            "np.ndarray[np.complex]": Traces of the Operators
         """
 
         basis_traces = self.basis_paulis.traces()

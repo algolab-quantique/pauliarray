@@ -268,6 +268,18 @@ class OperatorArrayType1(object):
 
         return self.add_operator_array_type_1(other_operators)
 
+    def traces(self) -> "np.ndarray[np.complex]":
+        """
+        Return the traces of the Operators.
+
+        Returns:
+            "np.ndarray[np.complex]": Traces of the Operators
+        """
+
+        paulis_traces = self.paulis.traces()
+
+        return np.sum(self.weights * paulis_traces, axis=-1)
+
     def replace_paulis(self, new_paulis):
 
         return OperatorArrayType1(wpa.WeightedPauliArray(new_paulis, self.weights))
