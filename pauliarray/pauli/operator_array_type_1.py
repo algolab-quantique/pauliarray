@@ -1,11 +1,10 @@
 from typing import TYPE_CHECKING, Any, Callable, List, Self, Tuple, Union
 
 import numpy as np
-from numpy.typing import ArrayLike, NDArray
-
 import pauliarray.pauli.operator as op
 import pauliarray.pauli.pauli_array as pa
 import pauliarray.pauli.weighted_pauli_array as wpa
+from numpy.typing import ArrayLike, NDArray
 from pauliarray.utils.array_operations import broadcast_shape, broadcasted_index, is_broadcastable, is_concatenatable
 from pauliarray.utils.protocols import HasPaulis
 
