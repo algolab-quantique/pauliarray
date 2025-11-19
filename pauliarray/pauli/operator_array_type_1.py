@@ -1,10 +1,11 @@
 from typing import TYPE_CHECKING, Any, Callable, List, Self, Tuple, Union
 
 import numpy as np
+from numpy.typing import ArrayLike, NDArray
+
 import pauliarray.pauli.operator as op
 import pauliarray.pauli.pauli_array as pa
 import pauliarray.pauli.weighted_pauli_array as wpa
-from numpy.typing import ArrayLike, NDArray
 from pauliarray.utils.array_operations import broadcast_shape, broadcasted_index, is_broadcastable, is_concatenatable
 from pauliarray.utils.protocols import HasPaulis
 
@@ -732,6 +733,19 @@ class OperatorArrayType1(object):
             OperatorArrayType1: A new instance of OperatorArrayType1 according to given operators.
         """
         return cls(cls._operator_ndarray_to_wpaulis(operators))
+
+    @classmethod
+    def from_operator(cls, operator: op.Operator) -> Self:
+        """
+        Constructs an OperatorArrayType1 instance from a single operator.
+
+        Args:
+            operator (op.Operator): An operator object.
+
+        Returns:
+            OperatorArrayType1: A new OperatorArrayType1 instance.
+        """
+        return cls.from_operator_ndarray(np.array([operator], dtype=op.Operator))
 
     @staticmethod
     def _operator_ndarray_to_wpaulis(operators) -> wpa.WeightedPauliArray:
