@@ -3,7 +3,6 @@ from typing import TYPE_CHECKING, Any, Callable, List, Optional, Tuple, Union
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
-
 from pauliarray.binary import bit_operations as bitops
 from pauliarray.binary import symplectic
 from pauliarray.utils import label_utils
@@ -1132,9 +1131,12 @@ def argsort(paulis: PauliArray, axis: int = -1) -> "np.ndarray[np.int]":
     Returns:
         NDArray: Indices which sorts the Pauli Strings.
     """
-    zx_ints = bitops.strings_to_ints(paulis.zx_strings)
+    z_ints = bitops.strings_to_ints(paulis.z_strings)
+    x_ints = bitops.strings_to_ints(paulis.x_strings)
 
-    return np.argsort(zx_ints, axis)
+    tot_ints = z_ints + x_ints * 2**paulis.num_qubits
+
+    return np.argsort(tot_ints, axis)
 
 
 def broadcast_to(paulis: PauliArray, shape: Tuple[int, ...]) -> "PauliArray":

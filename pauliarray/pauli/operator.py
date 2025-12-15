@@ -347,7 +347,7 @@ class Operator(object):
 
         return Operator(new_wpaulis)
 
-    def add_operator(self, other: "Operator") -> "Operator":
+    def add_operator(self, other: "Operator", simplify=True) -> "Operator":
         """
         Adds another Operator to this Operator.
 
@@ -358,7 +358,10 @@ class Operator(object):
             Operator: The resulting Operator.
         """
         new_wpaulis = wpa.concatenate([self.wpaulis, other.wpaulis], 0)
-        return Operator(new_wpaulis).combine_repeated_terms()
+        if simplify:
+            return Operator(new_wpaulis).combine_repeated_terms()
+
+        return Operator(new_wpaulis)
 
     def add_scalar(self, scalar: Number) -> "Operator":
         """
@@ -992,6 +995,18 @@ class Operator(object):
             Operator: The constructed Operator.
         """
         return cls(wpa.WeightedPauliArray.from_npz(filename))
+
+
+def sum_operators(operators: List[Operator], simplify=True) -> Operator:
+
+    if simplify:
+        new_operator = operators[0]
+        for operator in operators[1:]:
+            new_operator = new_operator.add_operator(operator)
+        return new_operator
+
+    new_wpaulis = wpa.concatenate([operator.wpaulis for operator in operators], 0)
+    return Operator(new_wpaulis)
 
 
 def commutator(operator_1: Operator, operator_2: Operator) -> Operator:
