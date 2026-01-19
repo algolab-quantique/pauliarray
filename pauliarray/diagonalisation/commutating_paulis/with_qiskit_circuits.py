@@ -6,7 +6,7 @@ from qiskit.circuit import QuantumCircuit
 
 import pauliarray.pauli.pauli_array as pa
 from pauliarray.binary.bit_operations import pack_diagonal
-from pauliarray.diagonalisation.commutating_paulis.utils import single_qubit_cummutating_generators
+from pauliarray.diagonalisation.commutating_paulis.utils import single_qubit_cummuting_generators
 
 
 def general_to_diagonal(
@@ -32,7 +32,7 @@ def general_to_diagonal(
     assert generators_paulis.ndim == 1
 
     if force_single_qubit_generators:
-        trivial_generators_paulis = single_qubit_cummutating_generators(generators_paulis)
+        trivial_generators_paulis = single_qubit_cummuting_generators(generators_paulis)
         generators_paulis = pa.concatenate((generators_paulis, trivial_generators_paulis), axis=0)
 
     wpaulis = paulis.wpaulis
@@ -56,7 +56,6 @@ def general_to_diagonal(
     end_block_z = start_index
 
     # apply hadamard
-
     tmp = x_table[:, end_block_x:end_block_z].copy()
     x_table[:, end_block_x:end_block_z] = z_table[:, end_block_x:end_block_z].copy()
     z_table[:, end_block_x:end_block_z] = tmp
@@ -102,8 +101,8 @@ def general_to_diagonal(
     x_table[_is, _is] = False
     z_table[_is, _is] = True
     if len(_is) > 0:
-        wpaulis.h(qubit_order[np.arange(end_block_z)])
-        circuit.h(qubit_order[np.arange(end_block_z)])
+        wpaulis.h(qubit_order[_is])
+        circuit.h(qubit_order[_is])
 
     diag_paulis = wpaulis.paulis
     factors = wpaulis.weights

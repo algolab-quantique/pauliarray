@@ -6,7 +6,7 @@ from numpy.typing import NDArray
 import pauliarray.pauli.operator_array_type_1 as opa
 import pauliarray.pauli.pauli_array as pa
 from pauliarray.binary import symplectic
-from pauliarray.diagonalisation.commutating_paulis.utils import single_qubit_cummutating_generators
+from pauliarray.diagonalisation.commutating_paulis.utils import single_qubit_cummuting_generators
 from pauliarray.utils.protocols import HasPaulis
 
 
@@ -30,7 +30,7 @@ def general_to_bitwise(
     assert np.all(paulis[:, None].commute_with(paulis[None, :]))
 
     if force_single_qubit_generators:
-        gen_paulis = single_qubit_cummutating_generators(paulis)
+        gen_paulis = single_qubit_cummuting_generators(paulis)
         ext_paulis = pa.concatenate((paulis, gen_paulis), axis=0)
         zx_strings = ext_paulis.zx_strings
     else:

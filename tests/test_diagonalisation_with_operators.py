@@ -11,7 +11,7 @@ from pauliarray.diagonalisation.commutating_paulis.with_operators import (
     diagonalise_with_operators,
     general_to_bitwise,
     general_to_diagonal,
-    single_qubit_cummutating_generators,
+    single_qubit_cummuting_generators,
 )
 
 cases_paulis = [

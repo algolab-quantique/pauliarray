@@ -3,7 +3,7 @@ import numpy as np
 import pauliarray.pauli.pauli_array as pa
 
 
-def single_qubit_cummutating_generators(paulis: pa.PauliArray):
+def single_qubit_cummuting_generators(paulis: pa.PauliArray):
     """
     Identify single qubit commutation generators in a list of Pauli strings. Such a generator exist if a qubit is acted upon at most by the identity and a single Pauli for every Pauli string.
 
