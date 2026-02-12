@@ -2,9 +2,10 @@ from numbers import Number
 from typing import Any, Callable, List, Literal, Tuple, Union
 
 import numpy as np
+from numpy.typing import ArrayLike, NDArray
+
 import pauliarray.pauli.pauli_array as pa
 import pauliarray.pauli.weighted_pauli_array as wpa
-from numpy.typing import ArrayLike, NDArray
 from pauliarray.binary import bit_operations as bitops
 from pauliarray.binary import symplectic
 from pauliarray.utils import label_utils
@@ -808,6 +809,22 @@ class Operator(object):
         """
 
         return np.all(self.paulis.is_diagonal())
+
+    def commute_with(self, other: "Operator", threshold=1e-14) -> bool:
+        """
+        Returns True if the Operator commutes an other Operator passed as parameter,
+        returns False otherwise.
+
+        Args:
+            other (Operator): The Operator to check commutation with.
+
+        Returns:
+            bool: True if the operators commutes, and false otherwise.
+        """
+
+        comm_operator = commutator(self, other).simplify(threshold=threshold)
+
+        return comm_operator.is_scalar() and comm_operator.weights[0] == 0
 
     def sort_paulis(self):
         """
