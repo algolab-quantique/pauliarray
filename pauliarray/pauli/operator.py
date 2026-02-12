@@ -826,6 +826,22 @@ class Operator(object):
 
         return comm_operator.is_scalar() and comm_operator.weights[0] == 0
 
+    def anticommute_with(self, other: "Operator", threshold=1e-14) -> bool:
+        """
+        Returns True if the Operator commutes an other Operator passed as parameter,
+        returns False otherwise.
+
+        Args:
+            other (Operator): The Operator to check commutation with.
+
+        Returns:
+            bool: True if the operators commutes, and false otherwise.
+        """
+
+        comm_operator = anticommutator(self, other).simplify(threshold=threshold)
+
+        return comm_operator.is_scalar() and comm_operator.weights[0] == 0
+
     def sort_paulis(self):
         """
         Sorts the underlying WeightedPauliArray by string primarily for comparison purposes.
