@@ -97,7 +97,7 @@ def inv(bit_matrix: "np.ndarray[np.bool]") -> "np.ndarray[np.bool]":
     """
     assert bit_matrix.ndim == 2
 
-    return np.linalg.inv(bit_matrix.astype(np.uint8)).astype(bool)
+    return np.mod(np.linalg.inv(bit_matrix.astype(np.uint8)), 2).astype(bool)
 
 
 def strings_to_ints(bit_strings: "np.ndarray[np.bool]") -> "np.ndarray[np.int]":
