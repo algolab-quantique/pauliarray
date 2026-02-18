@@ -600,9 +600,11 @@ class PauliArray(object):
             NDArray: Element [idx,j] = True if generator j is used to construct self[idx]
         """
 
-        generators = self.generators()
+        generator_zx_strings, combinaison_map = bitops.row_space_with_map(self.flatten().zx_strings)
 
-        combinaison_map = np.any(self.zx_strings[..., None, :] * generators.zx_strings[None, :, :], axis=-1)
+        generators = PauliArray(
+            generator_zx_strings[..., : self.num_qubits], generator_zx_strings[..., self.num_qubits :]
+        )
 
         return generators, combinaison_map
 

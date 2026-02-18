@@ -2,10 +2,9 @@ from numbers import Number
 from typing import Any, Callable, List, Literal, Tuple, Union
 
 import numpy as np
-from numpy.typing import ArrayLike, NDArray
-
 import pauliarray.pauli.pauli_array as pa
 import pauliarray.pauli.weighted_pauli_array as wpa
+from numpy.typing import ArrayLike, NDArray
 from pauliarray.binary import bit_operations as bitops
 from pauliarray.binary import symplectic
 from pauliarray.utils import label_utils
@@ -156,6 +155,21 @@ class Operator(object):
         other_order = pa.argsort(simple_other.paulis)
 
         return np.all(simple_self.wpaulis[self_order] == simple_other.wpaulis[other_order])
+
+    def close_to(self, other: "Operator", threshold=1e-12) -> bool:
+
+        simple_self = self.combine_repeated_terms().remove_small_weights(threshold)
+        simple_other = other.combine_repeated_terms().remove_small_weights(threshold)
+
+        if simple_self.num_terms != simple_other.num_terms:
+            return False
+
+        self_order = pa.argsort(simple_self.paulis)
+        other_order = pa.argsort(simple_other.paulis)
+
+        return np.all(simple_self.paulis[self_order] == simple_other.paulis[other_order]) and np.all(
+            np.isclose(simple_self.weights[self_order], simple_other.weights[other_order], atol=threshold)
+        )
 
     def copy(self) -> "Operator":
         """
@@ -824,7 +838,7 @@ class Operator(object):
 
         comm_operator = commutator(self, other).simplify(threshold=threshold)
 
-        return comm_operator.is_scalar() and comm_operator.weights[0] == 0
+        return comm_operator.is_scalar() and (comm_operator.weights[0] == 0)
 
     def anticommute_with(self, other: "Operator", threshold=1e-14) -> bool:
         """
@@ -976,7 +990,7 @@ class Operator(object):
         return Operator.from_labels_and_weights(["I" * num_qubits], np.zeros(1))
 
     @classmethod
-    def random(cls, num_terms: int, num_qubits: int) -> "Operator":
+    def random(cls, num_terms: int, num_qubits: int, complex_weights=False) -> "Operator":
         """
         Creates a random Operator.
 
@@ -988,6 +1002,12 @@ class Operator(object):
             new_PauliArray (PauliArray): The PauliArray created.
         """
         random_wpaulis = wpa.WeightedPauliArray.random((num_terms,), num_qubits)
+
+        if complex_weights:
+
+            random_phases = 2 * np.pi * np.random.rand(*random_wpaulis.shape)
+
+            return Operator(random_wpaulis.mul_weights(np.exp(-1j * random_phases)))
 
         return Operator(random_wpaulis)
 
@@ -1062,7 +1082,7 @@ def commutator(operator_1: Operator, operator_2: Operator) -> Operator:
 
     idx1, idx2 = np.where(~do_commute)
 
-    new_wpaulis = 2 * operator_1.wpaulis[idx1].compose_weighted_pauli_array(operator_2.wpaulis[idx2])
+    new_wpaulis = operator_1.wpaulis[idx1].compose_weighted_pauli_array(operator_2.wpaulis[idx2]).mul_weights(2)
 
     new_operator = Operator(new_wpaulis)
 
