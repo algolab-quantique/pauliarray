@@ -958,6 +958,29 @@ class Operator(object):
         return cls(wpa.WeightedPauliArray.from_npz(filename))
 
 
+def sum(operators: List[Operator], simplify: bool = True) -> Operator:
+    """
+    Add the Operators in the list
+
+    Args:
+        operators (List[Operator]): A list of Operators
+        simplify (bool, optional): Apply simplification. Defaults to True.
+
+    Returns:
+        Operator: The sum of all Operators
+    """
+
+    if simplify:
+        new_operator = operators[0]
+        for operator in operators[1:]:
+            new_operator = new_operator.add_operator(operator)
+        return new_operator
+
+    new_wpaulis = wpa.concatenate([operator.wpaulis for operator in operators], 0)
+
+    return Operator(new_wpaulis)
+
+
 def commutator(operator_1: Operator, operator_2: Operator) -> Operator:
     r"""
     Computes the commutator
