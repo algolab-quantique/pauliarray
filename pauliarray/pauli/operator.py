@@ -727,6 +727,10 @@ class Operator(object):
         """
         return self.remove_small_weights(threshold).combine_repeated_terms().remove_small_weights(threshold)
 
+    def is_hermitian(self) -> bool:
+
+        return np.all(np.isclose(self.weights.imag, 0))
+
     def is_scalar(self) -> bool:
         """
         Check if the Operator is a scalar.
@@ -735,6 +739,10 @@ class Operator(object):
             bool: True if the Operator is a scalar.
         """
         return self.num_terms == 1 and np.sum(self.wpaulis[0].paulis.zx_strings) == 0
+
+    def is_zero(self, threshold=1e-12) -> bool:
+
+        return self.is_scalar and np.sum(np.abs(self.weights)) < threshold
 
     def is_unitary(self) -> bool:
         """
