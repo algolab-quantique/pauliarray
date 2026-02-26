@@ -1,5 +1,5 @@
 from numbers import Number
-from typing import Any, List, Literal, Tuple, Union
+from typing import Any, Callable, List, Literal, Self, Tuple, Union
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
@@ -84,7 +84,7 @@ class Operator(object):
         """
         return f"Operator: num_qubits = {self.num_qubits}, num_terms = {self.num_terms}, ..."
 
-    def __add__(self, other: Union["Operator", Number]) -> "Operator":
+    def __add__(self, other: Union[Self, Number]) -> Self:
         """
         Adds another Operator or a scalar to this Operator.
 
@@ -135,7 +135,7 @@ class Operator(object):
 
         return NotImplemented
 
-    def __eq__(self, other: "Operator") -> bool:
+    def __eq__(self, other: Self) -> bool:
         """
         Checks if equal to another Operator. Two Operators are equal if after simplification their underlying WeightedPauliArrays are equal.
 
@@ -156,7 +156,7 @@ class Operator(object):
 
         return np.all(simple_self.wpaulis[self_order] == simple_other.wpaulis[other_order])
 
-    def copy(self) -> "Operator":
+    def copy(self) -> Self:
         """
         Returns a copy of the Operator.
 
@@ -165,7 +165,7 @@ class Operator(object):
         """
         return Operator(self._wpaulis.copy())
 
-    def adjoint(self) -> "Operator":
+    def adjoint(self) -> Self:
         """
         Returns the adjoint of the Operator.
 
@@ -175,7 +175,91 @@ class Operator(object):
         new_wpaulis = wpa.WeightedPauliArray(self.wpaulis.paulis.copy(), np.conj(self.wpaulis.weights))
         return Operator(new_wpaulis)
 
-    def take_qubits(self, indices: Union["np.ndarray[np.int]", range, int]) -> "Operator":
+    def replace_paulis(self, new_paulis: pa.PauliArray, inplace: bool = False) -> Self:
+        """
+        Replace the Paulis in the object by the new ones.
+
+        Args:
+            new_paulis (PauliArray): The new Paulis
+            inplace (bool, optional): If True replace inside the current instance. If False returns a new instance. Defaults to False.
+
+        Returns:
+            Operator: The object with replaced Paulis
+        """
+
+        assert new_paulis.shape == self.wpaulis.shape
+
+        if inplace:
+            self._wpaulis._paulis = new_paulis.copy()
+            return self
+
+        return Operator.from_paulis_and_weights(new_paulis.copy(), self.weights.copy())
+
+    def replace_weights(self, new_weights: NDArray, inplace: bool = False) -> Self:
+        """
+        Replace the Weights in the object by the new ones.
+
+        Args:
+            new_weights (NDArray): The new Weights
+            inplace (bool, optional): If True replace inside the current instance. If False returns a new instance. Defaults to False.
+
+        Returns:
+            Operator: The object with replaced weights
+        """
+
+        assert new_weights.shape == self.wpaulis.shape
+
+        if inplace:
+            self._wpaulis._weights = new_weights.copy()
+            return self
+
+        return Operator.from_paulis_and_weights(self.paulis.copy(), new_weights.copy())
+
+    def replace_paulis_and_weights(
+        self, new_paulis: pa.PauliArray, new_weights: NDArray, inplace: bool = False
+    ) -> Self:
+        """
+        Replace the Paulis and Weights in the object by the new ones.
+
+        Args:
+            new_paulis (PauliArray): The new Paulis
+            new_weights (NDArray): The new Weights
+            inplace (bool, optional): If True replace inside the current instance. If False returns a new instance. Defaults to False.
+
+        Returns:
+            Operator: The object with replaced Paulis and weights
+        """
+
+        assert new_paulis.shape == self.wpaulis.shape
+        assert new_weights.shape == self.wpaulis.shape
+
+        if inplace:
+            self._wpaulis._paulis = new_paulis.copy()
+            self._wpaulis._weights = new_weights.copy()
+            return self
+
+        return Operator.from_paulis_and_weights(new_paulis.copy(), new_weights.copy())
+
+    def clifford_transform_paulis(self, clifford_fct: Callable, *args, inplace=False) -> Self:
+        """
+        Transform the Paulis using a Clifford transformation (from transformation.cliffords)
+
+        Args:
+            clifford_fct (Callable): A Clifford function (from transformation.cliffords)
+            *args: The arguments of the Clifford function, such as the qubits on which to apply.
+            inplace (bool, optional): If True replace the existing Paulis. Defaults to False.
+
+        Returns:
+            Operator: The transformed Operator
+            "np.ndarray[np.complex]": The factors resulting from the transformation
+        """
+
+        new_paulis, factors = clifford_fct(self.paulis, *args)
+        new_weights = self.weights * factors
+
+        return self.replace_paulis_and_weights(new_paulis, new_weights, inplace)
+
+    def take_qubits(self, indices: Union["np.ndarray[np.int]", range, int]) -> Self:
         """
         Takes a subset of qubits.
 
@@ -192,7 +276,7 @@ class Operator(object):
 
         return Operator(new_wpaulis)
 
-    def compress_qubits(self, condition: "np.ndarray[np.bool]") -> "Operator":
+    def compress_qubits(self, condition: "np.ndarray[np.bool]") -> Self:
         """
         Compresses the qubits based on the given condition.
 
@@ -220,7 +304,7 @@ class Operator(object):
 
         return NotImplemented
 
-    def compose_operator(self, other: "Operator") -> "Operator":
+    def compose_operator(self, other: Self) -> Self:
         """
         Composes the Operator with another Operator.
 
@@ -246,7 +330,7 @@ class Operator(object):
         new_wpaulis = self.wpaulis.mul_weights(other)
         return Operator(new_wpaulis)
 
-    def power(self, exponent: int, simplify: bool = False) -> "Operator":
+    def power(self, exponent: int, simplify: bool = False) -> Self:
         """
         Raises the Operator to the specified exponent.
 
@@ -291,7 +375,7 @@ class Operator(object):
 
         return NotImplemented
 
-    def tensor_operator(self, other: "Operator") -> "Operator":
+    def tensor_operator(self, other: Self) -> Self:
         """
         Takes the tensor product of the Operator with another Operator.
 
@@ -310,7 +394,7 @@ class Operator(object):
 
         return Operator(new_wpaulis)
 
-    def add_operator(self, other: "Operator") -> "Operator":
+    def add_operator(self, other: Self) -> Self:
         """
         Adds another Operator to this Operator.
 
@@ -323,7 +407,7 @@ class Operator(object):
         new_wpaulis = wpa.concatenate([self.wpaulis, other.wpaulis], 0)
         return Operator(new_wpaulis).combine_repeated_terms()
 
-    def add_scalar(self, scalar: Number) -> "Operator":
+    def add_scalar(self, scalar: Number) -> Self:
         """
         Adds a scalar to this Operator.
 
@@ -350,98 +434,7 @@ class Operator(object):
 
         return detail_str
 
-    def x(self, qubits: Union[int, List[int]], inplace: bool = True) -> "Operator":
-        """
-        Applies X transformations on specified qubits of the Operator.
-
-        Args:
-            qubits (Union[int, List[int]]): The qubits on which to apply the X transformation.
-            inplace (bool): If True, applies changes to self; otherwise, returns a modified copy.
-
-        Returns:
-            Operator: The resulting Operator.
-        """
-        if not inplace:
-            return self.copy().x(qubits)
-
-        self.wpaulis.x(qubits, inplace=True)
-        return self
-
-    def h(self, qubits: Union[int, List[int]], inplace: bool = True) -> "Operator":
-        """
-        Applies H (Hadamard) transformations on specified qubits of the Operator.
-
-        Args:
-            qubits (Union[int, List[int]]): The qubits on which to apply the H transformation.
-            inplace (bool): If True, applies changes to self; otherwise, returns a modified copy.
-
-        Returns:
-            Operator: The resulting Operator.
-        """
-        if not inplace:
-            return self.copy().h(qubits)
-
-        self.wpaulis.h(qubits, inplace=True)
-        return self
-
-    def s(self, qubits: Union[int, List[int]], inplace: bool = True) -> "Operator":
-        """
-        Applies S (Phase) transformations on specified qubits of the Operator.
-
-        Args:
-            qubits (Union[int, List[int]]): The qubits on which to apply the S transformation.
-            inplace (bool): If True, applies changes to self; otherwise, returns a modified copy.
-
-        Returns:
-            Operator: The resulting Operator.
-        """
-        if not inplace:
-            return self.copy().s(qubits)
-
-        self.wpaulis.s(qubits, inplace=True)
-        return self
-
-    def cx(
-        self, control_qubits: Union[int, List[int]], target_qubits: Union[int, List[int]], inplace: bool = True
-    ) -> "Operator":
-        """
-        Applies CX (Controlled-X) transformations on specified control and target qubits of the Operator.
-
-        Args:
-            control_qubits (Union[int, List[int]]): The qubits which control the CX operation.
-            target_qubits (Union[int, List[int]]): The qubits targeted by the CX operation.
-            inplace (bool): If True, applies changes to self; otherwise, returns a modified copy.
-
-        Returns:
-            Operator: The resulting Operator.
-        """
-        if not inplace:
-            return self.copy().cx(control_qubits, target_qubits)
-
-        self.wpaulis.cx(control_qubits, target_qubits, inplace=True)
-        return self
-
-    def cz(
-        self, control_qubits: Union[int, List[int]], target_qubits: Union[int, List[int]], inplace: bool = True
-    ) -> "Operator":
-        """
-        Applies CZ (Controlled-Z) transformations on specified control and target qubits of the Operator.
-
-        Args:
-            control_qubits (Union[int, List[int]]): The qubits which control the CZ operation.
-            target_qubits (Union[int, List[int]]): The qubits targeted by the CZ operation.
-            inplace (bool): If True, applies changes to self; otherwise, returns a modified copy.
-
-        Returns:
-            Operator: The resulting Operator.
-        """
-        if not inplace:
-            return self.copy().cz(control_qubits, target_qubits)
-
-        self.wpaulis.cz(control_qubits, target_qubits, inplace=True)
-        return self
-
-    def clifford_conjugate(self, clifford: "Operator", inplace: bool = True) -> "Operator":
+    def clifford_conjugate(self, clifford: Self, inplace: bool = True) -> Self:
         """
         Performs a Clifford conjugate transformation on the Operator.
 
@@ -586,7 +579,7 @@ class Operator(object):
 
         return np.sum(wpaulis_covariances)
 
-    def combine_repeated_terms(self, inplace=False) -> "Operator":
+    def combine_repeated_terms(self, inplace=False) -> Self:
         """
         Combine repeated terms in the sum associated with equal Pauli strings.
         Inspired by : https://github.com/numpy/numpy/issues/11136
@@ -610,7 +603,7 @@ class Operator(object):
 
         return Operator.from_paulis_and_weights(new_paulis, new_weights)
 
-    def filter_weights(self, filter_function: callable) -> "Operator":
+    def filter_weights(self, filter_function: callable) -> Self:
         """
         Removes Pauli strings from the Operator object based on the filter_function applied on weights.
 
@@ -623,7 +616,7 @@ class Operator(object):
 
         return Operator(self.wpaulis.extract(filter_function(self.weights)))
 
-    def remove_small_weights(self, threshold: float = 1e-14) -> "Operator":
+    def remove_small_weights(self, threshold: float = 1e-14) -> Self:
         """
         Remove small weights from the Operator.
 
@@ -635,7 +628,7 @@ class Operator(object):
         """
         return self.filter_weights(lambda weight: np.abs(weight) > threshold)
 
-    def simplify(self, threshold: float = 1e-14) -> "Operator":
+    def simplify(self, threshold: float = 1e-14) -> Self:
         """
         Simplify the Operator by removing small weights, combining repeated terms, and again removing small weights.
 
@@ -703,7 +696,7 @@ class Operator(object):
         """
         self.wpaulis.update_weights(new_weights)
 
-    def update_weights_from_other(self, other: "Operator"):
+    def update_weights_from_other(self, other: Self):
         """
         Updates the weights of the Operator from another Operator object.
 
@@ -752,7 +745,7 @@ class Operator(object):
         return matrix
 
     @classmethod
-    def from_labels_and_weights(cls, labels, weights) -> "Operator":
+    def from_labels_and_weights(cls, labels, weights) -> Self:
         """
         Creates an Operator from labels and weights.
 
@@ -766,7 +759,7 @@ class Operator(object):
         return Operator(wpa.WeightedPauliArray.from_labels_and_weights(labels, weights))
 
     @classmethod
-    def from_paulis_and_weights(cls, paulis, weights) -> "Operator":
+    def from_paulis_and_weights(cls, paulis, weights) -> Self:
         """
         Creates an Operator from Pauli strings and corresponding weights.
 
@@ -780,7 +773,7 @@ class Operator(object):
         return Operator(wpa.WeightedPauliArray(paulis, weights))
 
     @classmethod
-    def from_paulis(cls, paulis) -> "Operator":
+    def from_paulis(cls, paulis) -> Self:
         """
         Creates an Operator from Pauli strings.
 
@@ -820,7 +813,7 @@ class Operator(object):
         return cls.from_paulis_and_weights(all_paulis[mask], weights[mask])
 
     @classmethod
-    def empty(cls, num_qubits) -> "Operator":
+    def empty(cls, num_qubits) -> Self:
         """
         Creates an empty Operator with a specified number of qubits.
 
@@ -833,7 +826,7 @@ class Operator(object):
         return Operator.from_labels_and_weights(["I" * num_qubits], np.zeros(1))
 
     @classmethod
-    def identity(cls, num_qubits) -> "Operator":
+    def identity(cls, num_qubits) -> Self:
         """
         Creates an identity Operator with a specified number of qubits.
 
@@ -858,7 +851,7 @@ class Operator(object):
         self.wpaulis.to_npz(filename)
 
     @classmethod
-    def from_npz(cls, filename) -> "Operator":
+    def from_npz(cls, filename) -> Self:
         """
         Creates an Operator from a .npz file.
 

@@ -6,7 +6,7 @@ from numpy.typing import ArrayLike, NDArray
 
 import pauliarray.pauli.operator as op
 import pauliarray.pauli.pauli_array as pa
-from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable, is_concatenatable
+from pauliarray.utils.array_operations import broadcast_shape, broadcasted_index, is_broadcastable, is_concatenatable
 
 
 class OperatorArrayType2(object):
@@ -93,6 +93,88 @@ class OperatorArrayType2(object):
         """
         return len(self.shape)
 
+    def replace_paulis(self, new_paulis: pa.PauliArray, inplace=False) -> Self:
+        """
+        Replace the Paulis in the object by the new ones.
+
+        Args:
+            new_paulis (PauliArray): The new Paulis
+            inplace (bool, optional): If True replace inside the current instance. If False returns a new instance. Defaults to False.
+
+        Returns:
+            OperatorArrayType2: The object with replaced Paulis
+        """
+
+        assert new_paulis.shape == self._basis_paulis.shape
+
+        if inplace:
+            self._basis_paulis = new_paulis.copy()
+            return self
+
+        return OperatorArrayType2(new_paulis.copy(), self.weights.copy())
+
+    def replace_weights(self, new_weights: NDArray, inplace=False) -> Self:
+        """
+        Replace the Weights in the object by the new ones.
+
+        Args:
+            new_weights (NDArray): The new Weights
+            inplace (bool, optional): If True replace inside the current instance. If False returns a new instance. Defaults to False.
+
+        Returns:
+            OperatorArrayType2: The object with replaced weights
+        """
+
+        assert new_weights.shape == self.weights.shape
+
+        if inplace:
+            self._weights = new_weights.copy()
+            return self
+
+        return OperatorArrayType2(self.basis_paulis.copy(), new_weights)
+
+    def replace_paulis_and_weights(self, new_paulis: pa.PauliArray, new_weights: NDArray, inplace=False) -> Self:
+        """
+        Replace the Paulis and Weights in the object by the new ones.
+
+        Args:
+            new_paulis (PauliArray): The new Paulis
+            new_weights (NDArray): The new Weights
+            inplace (bool, optional): If True replace inside the current instance. If False returns a new instance. Defaults to False.
+
+        Returns:
+            OperatorArrayType2: The object with replaced Paulis and weights
+        """
+
+        assert new_paulis.shape == self._basis_paulis.shape
+        assert new_weights.shape == self.weights.shape
+
+        if inplace:
+            self._basis_paulis = new_paulis.copy()
+            self._weights = new_weights.copy()
+            return self
+
+        return OperatorArrayType2(new_paulis.copy(), new_weights)
+
+    def clifford_transform_paulis(self, clifford_fct: Callable, *args, inplace=False) -> Self:
+        """
+        Transform the Paulis using a Clifford transformation (from transformation.cliffords)
+
+        Args:
+            clifford_fct (Callable): A Clifford function (from transformation.cliffords)
+            *args: The arguments of the Clifford function, such as the qubits on which to apply.
+            inplace (bool, optional): If True replace the existing Paulis. Defaults to False.
+
+        Returns:
+            OperatorArrayType2: The transformed OperatorArrayType2
+            "np.ndarray[np.complex]": The factors resulting from the transformation
+        """
+
+        new_paulis, factors = clifford_fct(self.paulis, *args)
+        new_weights = np.einsum("...i,i->...i", self.weights, factors)
+
+        return self.replace_paulis_and_weights(new_paulis, new_weights, inplace)
+
     def __getitem__(self, key) -> Self:
         """
         Gets an item from the weights using the provided key.
@@ -104,6 +186,27 @@ class OperatorArrayType2(object):
             OperatorArrayType2: A new OperatorArrayType2 object with the indexed weights.
         """
         return OperatorArrayType2(self.basis_paulis.copy(), self.weights[key])
+
+    def __eq__(self, other: Self) -> "np.ndarray[np.bool]":
+        """
+        Checks element-wise if the operators in the array are equal to the other.
+
+        Args:
+            other (OperatorArrayType1): Another OperatorArrayType1. Must be broadcastable.
+
+        Returns:
+            "np.ndarray[np.bool]": An array indicating where the operators are equal.
+        """
+        new_shape = broadcast_shape(self.shape, other.shape)
+
+        eq_array = np.empty(new_shape, dtype=np.bool_)
+        for idx in np.ndindex(new_shape):
+            idx1 = broadcasted_index(self.shape, idx)
+            idx2 = broadcasted_index(other.shape, idx)
+
+            eq_array[idx] = self.get_operator(*idx1) == other.get_operator(*idx2)
+
+        return eq_array
 
     def _mul(self, other: Union[Number, ArrayLike]) -> Self:
         """
@@ -193,6 +296,22 @@ class OperatorArrayType2(object):
         """
         other = np.array(other)
         new_weights = self.weights * other[..., None]
+        return OperatorArrayType2(self.basis_paulis.copy(), new_weights)
+
+    def mul_basis_paulis(self, other: NDArray) -> Self:
+        """
+        Multiplies the weights associated to eac Pauli in the basis.
+
+        Args:
+            other (NDArray): The array to multiply the Paulis by.
+
+        Returns:
+            OperatorArrayType2: A new OperatorArrayType2 object with the multiplied weights.
+        """
+
+        assert self.basis_paulis.shape == other.shape
+
+        new_weights = np.einsum("...i,i->...i", self.weights, other)
         return OperatorArrayType2(self.basis_paulis.copy(), new_weights)
 
     def compose(self, other: Any) -> Any:
@@ -310,6 +429,16 @@ class OperatorArrayType2(object):
 
         new_weights = self.weights[..., keep_basis]
         self._weights = new_weights
+
+        return self
+
+    def reorder_basis_paulis(self, basis_order) -> Self:
+
+        new_basis_paulis = self.basis_paulis[basis_order]
+        new_weights = self.weights[..., basis_order]
+
+        self._weights = new_weights
+        self._basis_paulis = new_basis_paulis
 
         return self
 
