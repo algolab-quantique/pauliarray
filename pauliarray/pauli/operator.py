@@ -647,6 +647,16 @@ class Operator(object):
         """
         return self.remove_small_weights(threshold).combine_repeated_terms().remove_small_weights(threshold)
 
+    def is_auto_adjoint(self) -> bool:
+        """
+        Check if the Operator is auto adjoint (hermitian)
+
+        Returns:
+            bool: True if the Operator is auto adjoint (hermitian).
+        """
+
+        return np.all(np.isclose(self.weights.imag, 0))
+
     def is_scalar(self) -> bool:
         """
         Check if the Operator is a scalar.
@@ -655,6 +665,26 @@ class Operator(object):
             bool: True if the Operator is a scalar.
         """
         return self.num_terms == 1 and np.sum(self.wpaulis[0].paulis.zx_strings) == 0
+
+    def is_zero(self, threshold=1e-12) -> bool:
+        """
+        Check if the Operator is 0 up to a threshold.
+
+        Returns:
+            bool: True if the Operator is 0 up to a threshold.
+        """
+
+        return self.is_scalar and np.sum(np.abs(self.weights)) < threshold
+
+    def is_identity(self, threshold=1e-12) -> bool:
+        """
+        Check if the Operator is 1 up to a threshold.
+
+        Returns:
+            bool: True if the Operator is 0 up to a threshold.
+        """
+
+        return self.is_scalar and np.abs(np.sum(np.abs(self.weights)) - 1) < threshold
 
     def is_unitary(self) -> bool:
         """
@@ -666,6 +696,16 @@ class Operator(object):
         self_prod_wpaulis = self.compose_operator(self.adjoint()).combine_repeated_terms().remove_small_weights()
 
         return self_prod_wpaulis.is_scalar() and np.isclose(self_prod_wpaulis.wpaulis[0].weights, 1)
+
+    def is_diagonal(self) -> bool:
+        """
+        Checks if all the Pauli strings are diagonal i.e. if all Pauli strings are I or Z.
+
+        Returns:
+            bool: True if the all the Pauli string are diagonal, False otherwise.
+        """
+
+        return np.all(self.paulis.is_diagonal())
 
     def is_clifford(self) -> bool:
         """
@@ -680,6 +720,38 @@ class Operator(object):
 
         return bool(np.all(np.isclose(sq_amp, 1 / self.num_terms))) and self.is_unitary()
 
+    def commute_with(self, other: "Operator", threshold=1e-14) -> bool:
+        """
+        Returns True if the Operator commutes an other Operator passed as parameter,
+        returns False otherwise.
+
+        Args:
+            other (Operator): The Operator to check commutation with.
+
+        Returns:
+            bool: True if the operators commutes, and false otherwise.
+        """
+
+        comm_operator = commutator(self, other).simplify(threshold=threshold)
+
+        return comm_operator.is_scalar() and (comm_operator.weights[0] == 0)
+
+    def anticommute_with(self, other: "Operator", threshold=1e-14) -> bool:
+        """
+        Returns True if the Operator commutes an other Operator passed as parameter,
+        returns False otherwise.
+
+        Args:
+            other (Operator): The Operator to check commutation with.
+
+        Returns:
+            bool: True if the operators commutes, and false otherwise.
+        """
+
+        comm_operator = anticommutator(self, other).simplify(threshold=threshold)
+
+        return comm_operator.is_scalar() and comm_operator.weights[0] == 0
+
     def trace(self) -> "np.complex":
         """
         Returns the trace of the Operator.
@@ -690,6 +762,21 @@ class Operator(object):
         paulis_traces = self.paulis.traces()
 
         return np.sum(self.weights * paulis_traces)
+
+    def to_traceless(self) -> "Operator":
+        """
+        Remove identity Pauli strings from the summation to make the operator traceless
+
+        Returns:
+            Operator: Traceless operator.
+        """
+
+        non_identity_mask = ~self.paulis.is_identity()
+
+        new_paulis = self.paulis[non_identity_mask]
+        new_weights = self.weights[non_identity_mask]
+
+        return Operator.from_paulis_and_weights(new_paulis, new_weights)
 
     def update_weights(self, new_weights):
         """
