@@ -421,6 +421,18 @@ class OperatorArrayType2(object):
 
         return op.Operator.from_paulis_and_weights(paulis, weights)
 
+    def traces(self) -> "np.ndarray[np.complex]":
+        """
+        Return the traces of the Operators.
+
+        Returns:
+            "np.ndarray[np.complex]": Traces of the Operators
+        """
+
+        basis_traces = self.basis_paulis.traces()
+
+        return np.einsum("...i,i->...", self.weights, basis_traces)
+
     def sum(self, axis: Union[Tuple[int, ...], None] = None) -> op.Operator:
         """
         Sums the operators along the specified axis.

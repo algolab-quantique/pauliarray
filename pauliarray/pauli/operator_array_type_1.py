@@ -281,6 +281,18 @@ class OperatorArrayType1(object):
 
         return op.Operator(self.wpaulis[idx])
 
+    def traces(self) -> "np.ndarray[np.complex]":
+        """
+        Return the traces of the Operators.
+
+        Returns:
+            "np.ndarray[np.complex]": Traces of the Operators
+        """
+
+        paulis_traces = self.paulis.traces()
+
+        return np.sum(self.weights * paulis_traces, axis=-1)
+
     def inspect(self) -> str:
         """
         Creates a string describing the operator array.
