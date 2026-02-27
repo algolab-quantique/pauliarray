@@ -107,24 +107,6 @@ def inv(bit_matrix: "np.ndarray[np.bool]") -> "np.ndarray[np.bool]":
     return inv_matrix.astype(bool)
 
 
-def inv2(bit_matrix: "np.ndarray[np.bool]") -> "np.ndarray[np.bool]":
-    """
-    Computes the inverse of a binary matrix. (DOES NOT ALWAYS WORK!!!)
-
-    Args:
-        bit_matrix ("np.ndarray[np.bool]"): Input binary matrix.
-
-    Returns:
-        "np.ndarray[np.bool]": Inverse of the input binary matrix.
-    """
-    assert bit_matrix.ndim == 2
-    assert bit_matrix.shape[0] == bit_matrix.shape[1]
-
-    int_inv_matrix = np.linalg.inv(bit_matrix.astype(np.uint8))
-
-    return np.mod(int_inv_matrix, 2).astype(bool)
-
-
 def strings_to_ints(bit_strings: "np.ndarray[np.bool]") -> "np.ndarray[np.int]":
     """
     Converts binary strings to integers.
