@@ -7,8 +7,14 @@ from numpy.typing import NDArray
 import pauliarray.pauli.operator as op
 import pauliarray.pauli.operator_array_type_1 as opa
 import pauliarray.pauli.pauli_array as pa
-import pauliarray.pauli.weighted_pauli_array as wpa
 from pauliarray.binary import bit_operations as bitops
+from pauliarray.binary.matrix_library import (
+    build_bravyi_kitaev_matrix,
+    build_heavyside_matrix,
+    build_identity_matrix,
+    build_parity_matrix,
+)
+from pauliarray.mapping import majorana
 
 
 class FermionMapping(object):
@@ -38,9 +44,8 @@ class FermionMapping(object):
         self.mapping_matrix = mapping_matrix
         self.name = name
 
-        self._mapping_matrix_inv = None
-        self._heavyside_matrix = None
-        self._parity_matrix = None
+        self.mapping_matrix_inv = bitops.inv(mapping_matrix)
+        self.heavyside_matrix = build_heavyside_matrix(self.num_qubits)
 
     @property
     def num_qubits(self) -> int:
@@ -52,75 +57,6 @@ class FermionMapping(object):
         """
         return self.mapping_matrix.shape[0]
 
-    @property
-    def mapping_matrix_inv(self):
-        """
-        Returns the inverse of the mapping matrix. Computes it if not already computed.
-
-        Returns:
-            "np.ndarray[np.bool]": The inverse of the mapping matrix.
-        """
-        if self._mapping_matrix_inv is None:
-            self._mapping_matrix_inv = bitops.inv(self.mapping_matrix)
-
-        return self._mapping_matrix_inv
-
-    @property
-    def heavyside_matrix(self) -> "np.ndarray[np.bool]":
-        """
-        Returns the Heavyside matrix. Computes it if not already computed.
-
-        Returns:
-            "np.ndarray[np.bool]": The Heavyside matrix.
-        """
-        if self._heavyside_matrix is None:
-            self._heavyside_matrix = np.tri(self.num_qubits, k=-1, dtype=np.bool_)
-
-        return self._heavyside_matrix
-
-    @property
-    def parity_matrix(self) -> "np.ndarray[np.bool]":
-        """
-        Returns the parity matrix. Computes it if not already computed.
-
-        Returns:
-            "np.ndarray[np.bool]": The parity matrix.
-        """
-        if self._parity_matrix is None:
-            self._parity_matrix = np.tri(self.num_qubits, dtype=np.bool_)
-
-        return self._parity_matrix
-
-    def majoranas(self) -> Tuple[pa.PauliArray, pa.PauliArray]:
-        r"""
-        In a fermion-to-qubit mapping, each creation/annihilation operator is a sum of two majorana operators,
-
-        .. math::
-
-            0.5 * (P_\text{real} + P_\text{imag})
-
-        each being a Pauli string. This methods construct these majorana operators.
-
-        Returns:
-            PauliArray: The Pauli strings for :math:`P_\text{real}`
-            PauliArray: The Pauli strings for :math:`P_\text{imag}`
-        """
-
-        mapping_matrix = self.mapping_matrix
-        mapping_matrix_inv = self.mapping_matrix_inv
-
-        heavyside_matrix = self.heavyside_matrix
-        parity_matrix = self.parity_matrix
-
-        real_z_strings = bitops.matmul(heavyside_matrix, mapping_matrix_inv)
-        imag_z_strings = bitops.matmul(parity_matrix, mapping_matrix_inv)
-        real_x_strings = imag_x_strings = mapping_matrix.transpose()
-
-        real_majoranas = pa.PauliArray(real_z_strings, real_x_strings)
-        imag_majoranas = pa.PauliArray(imag_z_strings, imag_x_strings)
-
-        return real_majoranas, imag_majoranas
-
     def assemble_creation_annihilation_operators(self) -> Tuple[opa.OperatorArrayType1, opa.OperatorArrayType1]:
         """
         Constructs the creation and annihilation operators for all available states and returns them as OperatorArrays.
@@ -129,7 +65,7 @@ class FermionMapping(object):
             OperatorArrayType1: The creation operators
             OperatorArrayType1: The annihilation operators
         """
-        real_majoranas, imag_majoranas = self.majoranas()
+        real_majoranas, imag_majoranas = majorana.assemble_real_imag_majoranas(self.mapping_matrix)
 
         real_operators = opa.OperatorArrayType1.from_pauli_array(real_majoranas)
         imag_operators = opa.OperatorArrayType1.from_pauli_array(imag_majoranas)
@@ -611,7 +547,7 @@ class JordanWigner(FermionMapping):
         Args:
             num_qubits (int): The number of qubits to be used in the mapping.
         """
-        FermionMapping.__init__(self, np.eye(num_qubits, dtype=np.bool_), "jordan-wigner")
+        FermionMapping.__init__(self, build_identity_matrix(num_qubits), "jordan-wigner")
 
     @property
     def __name__(self):
@@ -632,7 +568,7 @@ class Parity(FermionMapping):
         Args:
             num_qubits (int): The number of qubits to be used in the mapping.
         """
-        FermionMapping.__init__(self, np.tri(num_qubits, dtype=np.bool_), "parity")
+        FermionMapping.__init__(self, build_parity_matrix(num_qubits), "parity")
 
     @property
     def __name__(self):
@@ -653,27 +589,7 @@ class BravyiKitaev(FermionMapping):
         Args:
             num_qubits (int): The number of qubits to be used in the mapping.
         """
-        FermionMapping.__init__(self, self._build_bravyi_kitaev_mapping_matrix(num_qubits), "bravyi-kitaev")
-
-    def _build_bravyi_kitaev_mapping_matrix(self, num_qubits: int) -> "np.ndarray[np.bool]":
-        """
-        Constructs the Bravyi-Kitaev mapping matrix for the given number of qubits.
-
-        Args:
-            num_qubits (int): The number of qubits.
-
-        Returns:
-            "np.ndarray[np.bool]": The Bravyi-Kitaev mapping matrix.
-        """
-        mapping_matrix = np.eye(num_qubits, dtype=np.bool_)
-
-        for i in range(1, num_qubits + 1, 2):
-            if np.log2(i + 1) % 1 == 0:
-                mapping_matrix[i, : i + 1] = True
-            else:
-                mapping_matrix[i, 2 ** int(np.log2(i + 1)) : i + 1] = True
-
-        return mapping_matrix
+        FermionMapping.__init__(self, build_bravyi_kitaev_matrix(num_qubits), "bravyi-kitaev")
 
     @property
     def __name__(self):
