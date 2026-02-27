@@ -7,8 +7,8 @@ from pauliarray.binary.matrix_library import build_identity_matrix
 from pauliarray.mapping import majorana
 
 
-class TestJordanWignerMapping(unittest.TestCase):
-    def test_majoranas(self):
+class TestMajorana(unittest.TestCase):
+    def test_assemble_real_imag_majoranas(self):
         mapping_matrix = build_identity_matrix(4)
         real_majoranas, imag_majoranas = majorana.assemble_real_imag_majoranas(mapping_matrix)
 
