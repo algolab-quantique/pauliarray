@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import numpy as np
 from numpy.typing import NDArray
 
@@ -94,8 +96,15 @@ def inv(bit_matrix: "np.ndarray[np.bool]") -> "np.ndarray[np.bool]":
         "np.ndarray[np.bool]": Inverse of the input binary matrix.
     """
     assert bit_matrix.ndim == 2
+    assert bit_matrix.shape[0] == bit_matrix.shape[1]
 
-    return np.linalg.inv(bit_matrix.astype(np.int8)).astype(bool)
+    exp_matrix = np.concatenate((bit_matrix, np.identity(bit_matrix.shape[0], dtype=bool)), axis=1)
+
+    re_exp_matrix = row_echelon(exp_matrix)
+
+    inv_matrix = re_exp_matrix[:, bit_matrix.shape[0] :]
+
+    return inv_matrix.astype(bool)
 
 
 def strings_to_ints(bit_strings: "np.ndarray[np.bool]") -> "np.ndarray[np.int]":
@@ -149,6 +158,50 @@ def row_echelon(bit_matrix: "np.ndarray[np.bool]") -> "np.ndarray[np.bool]":
             k_col += 1
 
     return re_bit_matrix
+
+
+def row_echelon_with_map(bit_matrix: "np.ndarray[np.bool]") -> Tuple["np.ndarray[np.bool]", "np.ndarray[np.bool]"]:
+    """
+    Applies Gauss-Jordan elimination on a binary matrix to produce row echelon form.
+
+    Args:
+        bit_matrix ("np.ndarray[np.bool]"): Input binary matrix.
+
+    Returns:
+        "np.ndarray[np.bool]": Row echelon form of the provided matrix.
+        "np.ndarray[np.bool]": The map matrix constains the information on which lines were combined.
+    """
+    re_bit_matrix = bit_matrix.copy()
+
+    map_matrix = np.identity(bit_matrix.shape[0], dtype=bool)
+
+    n_rows = re_bit_matrix.shape[0]
+    n_cols = re_bit_matrix.shape[1]
+
+    row_range = np.arange(n_rows)
+
+    h_row = 0
+    k_col = 0
+
+    while h_row < n_rows and k_col < n_cols:
+        if np.all(re_bit_matrix[h_row:, k_col] == 0):
+            k_col += 1
+        else:
+            i_row = h_row + np.argmax(re_bit_matrix[h_row:, k_col])
+            if i_row != h_row:
+                re_bit_matrix[[i_row, h_row], :] = re_bit_matrix[[h_row, i_row], :]
+                map_matrix[[i_row, h_row], :] = map_matrix[[h_row, i_row], :]
+
+            cond_rows = np.logical_and(re_bit_matrix[:, k_col], (row_range != h_row))
+
+            re_bit_matrix[cond_rows, :] = np.logical_xor(re_bit_matrix[cond_rows, :], re_bit_matrix[h_row, :][None, :])
+
+            map_matrix[cond_rows, :] = np.logical_xor(map_matrix[cond_rows, :], map_matrix[h_row, :][None, :])
+
+            h_row += 1
+            k_col += 1
+
+    return re_bit_matrix, map_matrix
 
 
 def kernel(bit_matrix: "np.ndarray[np.bool]") -> "np.ndarray[np.bool]":
@@ -229,6 +282,28 @@ def row_space(bits: "np.ndarray[np.bool]") -> "np.ndarray[np.bool]":
     null_rows = np.all(~row_ech_bits, axis=1)
 
     return row_ech_bits[~null_rows, :]
+
+
+def row_space_with_map(bits: "np.ndarray[np.bool]") -> Tuple["np.ndarray[np.bool]", "np.ndarray[np.bool]"]:
+    """
+    Computes the row space of a binary matrix using Gauss-Jordan elimination and
+    removing the zero lines.
+
+    Args:
+        bits ("np.ndarray[np.bool]"): Input binary matrix.
+
+    Returns
+        row_ech_bits ("np.ndarray[np.bool]"): Row space of the current matrix
+        map_matrix ("np.ndarray[np.bool]"): Map matrix. The ith line of the `map_matrix` says which of the lines in `row_ech_bits` are involved in the ith line of `bits`.
+    """
+
+    row_ech_bits, inv_map_matrix = row_echelon_with_map(bits)
+
+    map_matrix = inv(inv_map_matrix)
+
+    null_rows = np.all(~row_ech_bits, axis=1)
+
+    return row_ech_bits[~null_rows, :], map_matrix[:, ~null_rows]
 
 
 def orthogonal_basis(bit_strings: "np.ndarray[np.bool]") -> "np.ndarray[np.bool]":

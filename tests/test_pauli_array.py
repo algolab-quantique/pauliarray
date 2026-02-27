@@ -79,9 +79,8 @@ class TestPauliArray(unittest.TestCase):
         generators = paulis_1.generators()
 
     def test_generators_with_map(self):
-        a_paulis = pa.PauliArray.from_labels(
-            ["II", "IX", "IY", "IZ", "XI", "XX", "XY", "XZ", "YI", "YX", "YY", "YZ", "ZI", "ZX", "ZY", "ZZ"]
-        )
+
+        a_paulis = pa.PauliArray.random((24,), 4)
 
         generators, combinaison_map = a_paulis.generators_with_map()
 

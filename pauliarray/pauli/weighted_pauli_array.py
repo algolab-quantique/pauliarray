@@ -254,6 +254,16 @@ class WeightedPauliArray(object):
     def bitwise_commute_with(self, other: "WeightedPauliArray") -> "np.ndarray[np.bool]":
         return self.paulis.bitwise_commute_with(other.paulis)
 
+    def traces(self) -> NDArray:
+        """
+        Return the traces of the Weighted Pauli Strings which are 2^n * weight if Identity and 0 otherwise.
+
+        Returns:
+            "np.ndarray[np.int]": Traces of the Pauli Strings
+        """
+
+        return self.weights * self.paulis.traces()
+
     def inspect(self) -> str:
         if self.ndim == 0:
             return "Empty PauliArray"

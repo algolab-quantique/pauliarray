@@ -281,6 +281,18 @@ class OperatorArrayType1(object):
 
         return op.Operator(self.wpaulis[idx])
 
+    def traces(self) -> "np.ndarray[np.complex]":
+        """
+        Return the traces of the Operators.
+
+        Returns:
+            "np.ndarray[np.complex]": Traces of the Operators
+        """
+
+        paulis_traces = self.paulis.traces()
+
+        return np.sum(self.weights * paulis_traces, axis=-1)
+
     def inspect(self) -> str:
         """
         Creates a string describing the operator array.
@@ -616,6 +628,19 @@ class OperatorArrayType1(object):
             OperatorArrayType1: A new instance of OperatorArrayType1 according to given operators.
         """
         return cls(cls._operator_ndarray_to_wpaulis(operators))
+
+    @classmethod
+    def from_operator(cls, operator: op.Operator) -> Self:
+        """
+        Constructs an OperatorArrayType1 instance from a single operator.
+
+        Args:
+            operator (op.Operator): An operator object.
+
+        Returns:
+            OperatorArrayType1: A new OperatorArrayType1 instance.
+        """
+        return cls.from_operator_ndarray(np.array([operator], dtype=op.Operator))
 
     @staticmethod
     def _operator_ndarray_to_wpaulis(operators) -> wpa.WeightedPauliArray:

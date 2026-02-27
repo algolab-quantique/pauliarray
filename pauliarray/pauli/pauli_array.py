@@ -531,11 +531,13 @@ class PauliArray(object):
             NDArray: Element [idx,j] = True if generator j is used to construct self[idx]
         """
 
-        generators = self.generators()
+        generator_zx_strings, composition_map = bitops.row_space_with_map(self.flatten().zx_strings)
 
-        combinaison_map = np.any(self.zx_strings[..., None, :] * generators.zx_strings[None, :, :], axis=-1)
+        generators = PauliArray(
+            generator_zx_strings[..., : self.num_qubits], generator_zx_strings[..., self.num_qubits :]
+        )
 
-        return generators, combinaison_map
+        return generators, composition_map
 
     def inspect(self) -> str:
         """
@@ -947,7 +949,7 @@ class PauliArray(object):
 
     @staticmethod
     def labels_to_z_strings_x_strings(
-        labels: Union[list[str], "np.ndarray[np.str]"]
+        labels: Union[list[str], "np.ndarray[np.str]"],
     ) -> Tuple["np.ndarray[np.bool]", "np.ndarray[np.bool]"]:
         """
         Returns z strings and x strings created from labels.
