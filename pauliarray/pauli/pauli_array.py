@@ -1007,7 +1007,7 @@ class PauliArray(object):
 
     @staticmethod
     def labels_to_z_strings_x_strings(
-        labels: Union[list[str], "np.ndarray[np.str]"]
+        labels: Union[list[str], "np.ndarray[np.str]"],
     ) -> Tuple["np.ndarray[np.bool]", "np.ndarray[np.bool]"]:
         """
         Returns z strings and x strings created from labels.

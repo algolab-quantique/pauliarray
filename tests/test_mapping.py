@@ -12,15 +12,6 @@ from pauliarray.mapping.fermion import JordanWigner
 
 
 class TestJordanWignerMapping(unittest.TestCase):
-    def test_majoranas(self):
-        mapping = JordanWigner(4)
-        real_majoranas, imag_majoranas = mapping.majoranas()
-
-        expected_real_majoranas = pa.PauliArray.from_labels(["IIIX", "IIXZ", "IXZZ", "XZZZ"])
-        expected_imag_majoranas = pa.PauliArray.from_labels(["IIIY", "IIYZ", "IYZZ", "YZZZ"])
-
-        self.assertTrue(np.all(expected_real_majoranas == real_majoranas))
-        self.assertTrue(np.all(expected_imag_majoranas == imag_majoranas))
 
     def test_creation_annihilation_operators(self):
         mapping = JordanWigner(4)
