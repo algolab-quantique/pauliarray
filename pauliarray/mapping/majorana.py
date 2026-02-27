@@ -12,6 +12,11 @@ def assemble_real_imag_majoranas(mapping_matrix: NDArray[np.bool_]) -> Tuple[pa.
     r"""
     In a majorana-to-pauli strings mapping, each real/imag majorana operator is a Pauli string. This function construct these majorana operators.
 
+    Args:
+        mapping_matrix : NDArray[np.bool]
+            A square boolean numpy array representing the mapping matrix.
+            The number of Majoarana is twice the size of that matrix.
+
     Returns:
         PauliArray: The Pauli strings for :math:`P_\text{real}`
         PauliArray: The Pauli strings for :math:`P_\text{imag}`
