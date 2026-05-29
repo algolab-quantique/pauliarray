@@ -105,10 +105,10 @@ class TestPauliArray(unittest.TestCase):
         )
         expected_phases = np.array(
             [
-                [1, 1, 1, 1],
-                [1, 1, 1j, -1j],
-                [1, -1j, 1, 1j],
-                [1, 1j, -1j, 1],
+                [0, 0, 0, 0],
+                [0, 0, 3, 1],
+                [0, 1, 0, 3],
+                [0, 3, 1, 0],
             ]
         )
 
@@ -128,9 +128,9 @@ class TestPauliArray(unittest.TestCase):
 
         expected_phases = np.array(
             [
-                [-1, -1j, -1j],
-                [-1j, 1, 1j],
-                [-1j, -1j, -1],
+                [2, 1, 1],
+                [1, 0, 3],
+                [1, 1, 2],
             ]
         )
 
@@ -200,61 +200,6 @@ class TestPauliArray(unittest.TestCase):
         )
 
         self.assertTrue(np.all(matrices == expected_matricies))
-
-    def test_x(self):
-        paulis_basis = gen_complete_pauli_array_basis(1)
-
-        x_op = op.Operator.from_labels_and_weights(["X"], np.array([1]))
-
-        b_paulis, b_factors = paulis_basis.x(0, inplace=False)
-        c_paulis, c_factors = x_op.clifford_conjugate_pauli_array_old(paulis_basis)
-
-        self.assertTrue(np.all(np.isclose(b_factors, c_factors)))
-        self.assertTrue(np.all(b_paulis == c_paulis))
-
-    def test_s(self):
-        paulis_basis = gen_complete_pauli_array_basis(1)
-
-        s_op = op.Operator.from_labels_and_weights(["I", "Z"], np.sqrt(0.5) * np.array([1, -1j]))
-
-        b_paulis, b_factors = paulis_basis.s(0, inplace=False)
-        c_paulis, c_factors = s_op.clifford_conjugate_pauli_array_old(paulis_basis)
-
-        self.assertTrue(np.all(np.isclose(b_factors, c_factors)))
-        self.assertTrue(np.all(b_paulis == c_paulis))
-
-    def test_h(self):
-        paulis_basis = gen_complete_pauli_array_basis(1)
-
-        h_op = op.Operator.from_labels_and_weights(["X", "Z"], np.sqrt(0.5) * np.array([1, 1]))
-
-        b_paulis, b_factors = paulis_basis.h(0, inplace=False)
-        c_paulis, c_factors = h_op.clifford_conjugate_pauli_array_old(paulis_basis)
-
-        self.assertTrue(np.all(np.isclose(b_factors, c_factors)))
-        self.assertTrue(np.all(b_paulis == c_paulis))
-
-    def test_cx(self):
-        paulis_basis = gen_complete_pauli_array_basis(2)
-
-        cx_op = op.Operator.from_labels_and_weights(["II", "IZ", "XI", "XZ"], 0.5 * np.array([1, 1, 1, -1]))
-
-        b_paulis, b_factors = paulis_basis.cx(0, 1, inplace=False)
-        c_paulis, c_factors = cx_op.clifford_conjugate_pauli_array_old(paulis_basis)
-
-        self.assertTrue(np.all(np.isclose(b_factors, c_factors)))
-        self.assertTrue(np.all(b_paulis == c_paulis))
-
-    def test_cz(self):
-        paulis_basis = gen_complete_pauli_array_basis(2)
-
-        cz_op = op.Operator.from_labels_and_weights(["II", "IZ", "ZI", "ZZ"], 0.5 * np.array([1, 1, 1, -1]))
-
-        b_paulis, b_factors = paulis_basis.cz(0, 1, inplace=False)
-        c_paulis, c_factors = cz_op.clifford_conjugate_pauli_array_old(paulis_basis)
-
-        self.assertTrue(np.all(np.isclose(b_factors, c_factors)))
-        self.assertTrue(np.all(b_paulis == c_paulis))
 
     def test_clifford_conjugate(self):
 

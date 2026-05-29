@@ -1,3 +1,4 @@
+import re
 from numbers import Number
 from typing import TYPE_CHECKING, Any, List, Literal, Tuple, Union
 
@@ -384,12 +385,44 @@ class PhasedPauliArray(object):
         return PhasedPauliArray(random_paulis, random_phases)
 
     @classmethod
-    def from_labels_and_weights(cls, labels, phases) -> "PhasedPauliArray":
+    def from_labels(cls, labels) -> "PhasedPauliArray":
 
-        return NotImplemented
-        paulis = pa.PauliArray.from_labels(labels)
+        phases, pauli_labels = cls.split_phases_pauli_labels(labels)
+
+        paulis = pa.PauliArray.from_labels(pauli_labels)
 
         return PhasedPauliArray(paulis, phases)
+
+    @staticmethod
+    def split_phase_pauli_label(label):
+
+        ms = re.match("([+-]{0,1})([1]{0,1})([ij]{0,1})([IXYZ]*)", label)
+
+        if not bool(ms):
+            raise ValueError("A label cannot be interpreted")
+
+        sign_bit = ms.group(1) == "-"
+        imag_bit = len(ms.group(3)) > 0
+        pauli_label = ms.group(4)
+
+        phase = [0, 3, 2, 1][imag_bit + 2 * sign_bit]
+
+        return phase, pauli_label
+
+    @staticmethod
+    def split_phases_pauli_labels(labels):
+
+        labels = np.atleast_1d(np.array(labels, dtype=str))
+
+        num_qubits = len(PhasedPauliArray.split_phase_pauli_label(labels.flat[0])[1])
+
+        phases = np.zeros(labels.shape, dtype=np.uint)
+        pauli_labels = np.zeros(labels.shape, dtype=f"U{num_qubits}")
+
+        for idx, label in np.ndenumerate(labels):
+            phases[idx], pauli_labels[idx] = PhasedPauliArray.split_phase_pauli_label(label)
+
+        return phases, pauli_labels
 
     @classmethod
     def from_z_strings_and_x_strings_and_phases(
@@ -405,7 +438,7 @@ class PhasedPauliArray(object):
 
     @classmethod
     def from_paulis(cls, paulis: pa.PauliArray) -> "PhasedPauliArray":
-        phases = np.ones(paulis.shape, dtype=np.uint)
+        phases = np.zeros(paulis.shape, dtype=np.uint)
 
         return PhasedPauliArray(paulis.copy(), phases)
 
@@ -465,7 +498,7 @@ class PhasedPauliArray(object):
         return "\n".join(slice_strs)
 
 
-def broadcast_to(wpaulis: PhasedPauliArray, shape: Tuple[int, ...]) -> "PhasedPauliArray":
+def broadcast_to(ppaulis: PhasedPauliArray, shape: Tuple[int, ...]) -> "PhasedPauliArray":
     """
     Returns the given PhasedPauliArray broadcasted to a given shape.
 
@@ -477,13 +510,13 @@ def broadcast_to(wpaulis: PhasedPauliArray, shape: Tuple[int, ...]) -> "PhasedPa
         new_pauli_array (PhasedPauliArray): The PhasedPauliArray with a new shape.
     """
 
-    new_paulis = pa.broadcast_to(wpaulis.paulis, shape)
-    new_phases = np.broadcast_to(wpaulis.phases, shape)
+    new_paulis = pa.broadcast_to(ppaulis.paulis, shape)
+    new_phases = np.broadcast_to(ppaulis.phases, shape)
 
     return PhasedPauliArray(new_paulis, new_phases)
 
 
-def expand_dims(wpaulis: PhasedPauliArray, axis=Union[int, Tuple[int, ...]]) -> "PhasedPauliArray":
+def expand_dims(ppaulis: PhasedPauliArray, axis=Union[int, Tuple[int, ...]]) -> "PhasedPauliArray":
     """
     Expands the shape of a PhasedPauliArray.
 
@@ -497,8 +530,8 @@ def expand_dims(wpaulis: PhasedPauliArray, axis=Union[int, Tuple[int, ...]]) -> 
         expanded_pauli_array (PhasedPauliArray) : The expanded PhasedPauliArray.
     """
 
-    new_paulis = pa.expand_dims(wpaulis.paulis, axis)
-    new_phases = np.expand_dims(wpaulis.phases, axis)
+    new_paulis = pa.expand_dims(ppaulis.paulis, axis)
+    new_phases = np.expand_dims(ppaulis.phases, axis)
 
     return PhasedPauliArray(new_paulis, new_phases)
 
@@ -556,8 +589,8 @@ def concatenate(wpauli_arrays: Tuple[PhasedPauliArray, ...], axis: int) -> Phase
 
     assert is_concatenatable(wpauli_arrays, axis)
 
-    weights_list = tuple(wpaulis.phases for wpaulis in wpauli_arrays)
-    paulis_list = tuple(wpaulis.paulis for wpaulis in wpauli_arrays)
+    weights_list = tuple(ppaulis.phases for ppaulis in wpauli_arrays)
+    paulis_list = tuple(ppaulis.paulis for ppaulis in wpauli_arrays)
 
     new_phases = np.concatenate(weights_list, axis)
     new_paulis = pa.concatenate(paulis_list, axis)
@@ -565,7 +598,7 @@ def concatenate(wpauli_arrays: Tuple[PhasedPauliArray, ...], axis: int) -> Phase
     return PhasedPauliArray(new_paulis, new_phases)
 
 
-def swapaxes(wpaulis: PhasedPauliArray, axis1: int, axis2: int):
+def swapaxes(ppaulis: PhasedPauliArray, axis1: int, axis2: int):
     """
     Swap axes of a PhasedPauliArray
 
@@ -578,16 +611,16 @@ def swapaxes(wpaulis: PhasedPauliArray, axis1: int, axis2: int):
         PhasedPauliArray: The WeightedPauliArrays with axes swaped.
     """
 
-    assert axis1 < wpaulis.ndim
-    assert axis2 < wpaulis.ndim
+    assert axis1 < ppaulis.ndim
+    assert axis2 < ppaulis.ndim
 
-    new_phases = np.swapaxes(wpaulis.phases, axis1, axis2)
-    new_paulis = pa.swapaxes(wpaulis.paulis, axis1, axis2)
+    new_paulis = pa.swapaxes(ppaulis.paulis, axis1, axis2)
+    new_phases = np.swapaxes(ppaulis.phases, axis1, axis2)
 
     return PhasedPauliArray(new_paulis, new_phases)
 
 
-def moveaxis(wpaulis: PhasedPauliArray, source: int, destination: int):
+def moveaxis(ppaulis: PhasedPauliArray, source: int, destination: int):
     """
     Move an axis of a PhasedPauliArray
 
@@ -600,10 +633,10 @@ def moveaxis(wpaulis: PhasedPauliArray, source: int, destination: int):
         PhasedPauliArray: The WeightedPauliArrays with axis moved.
     """
 
-    assert source < wpaulis.ndim
-    assert destination < wpaulis.ndim
+    assert source < ppaulis.ndim
+    assert destination < ppaulis.ndim
 
-    new_phases = np.moveaxis(wpaulis.phases, source, destination)
-    new_paulis = pa.moveaxis(wpaulis.paulis, source, destination)
+    new_paulis = pa.moveaxis(ppaulis.paulis, source, destination)
+    new_phases = np.moveaxis(ppaulis.phases, source, destination)
 
     return PhasedPauliArray(new_paulis, new_phases)
