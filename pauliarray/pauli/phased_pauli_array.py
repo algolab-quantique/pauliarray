@@ -243,14 +243,14 @@ class PhasedPauliArray(object):
             return "Empty PauliArray"
 
         if self.ndim == 1:
-            label_table = self.label_table_1d(self.paulis.to_labels(), self.phases)
+            label_table = self.label_table_1d(self.to_labels(), self.phases)
             return f"PauliArray\n{label_table}"
 
         if self.ndim == 2:
-            label_table = self.label_table_2d(self.paulis.to_labels(), self.phases)
+            label_table = self.label_table_2d(self.to_labels(), self.phases)
             return f"PauliArray\n{label_table}"
 
-        label_table = self.label_table_nd(self.paulis.to_labels(), self.phases)
+        label_table = self.label_table_nd(self.to_labels(), self.phases)
         return f"PauliArray\n{label_table}"
 
     def clifford_conjugate(self, clifford: "Operator", inplace: bool = True) -> "PhasedPauliArray":
@@ -331,6 +331,21 @@ class PhasedPauliArray(object):
             NDArray[bool]: True if the Pauli string is diagonal, False otherwise.
         """
         return self._paulis.is_diagonal()
+
+    def to_labels(self) -> "np.ndarray[np.str]":
+        """
+        Returns the labels of all zx strings.
+
+        Returns:
+            "np.ndarray[np.str]": An array containing the labels of all Pauli strings.
+        """
+
+        pauli_labels = self.paulis.to_labels()
+        phase_labels = np.array(["  ", "-i", " -", " i"])[self.phases]
+
+        labels = np.char.add(phase_labels, pauli_labels)
+
+        return labels
 
     def to_matrices(self) -> NDArray:
         """

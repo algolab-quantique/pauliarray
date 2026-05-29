@@ -121,6 +121,17 @@ class TestPhasedPauliArray(unittest.TestCase):
 
         os.remove("wpaulis.npz")
 
+    def test_to_label(self):
+        ppaulis = ppa.PhasedPauliArray.from_labels(
+            [["IIIX", "+IIIY", "-IIIZ"], ["iIIIX", "+iIIIY", "-iIIIZ"], ["jIIIX", "+jIIIY", "-jIIIZ"]]
+        )
+
+        ref_labels = np.array(
+            [["  IIIX", "  IIIY", " -IIIZ"], [" iIIIX", " iIIIY", "-iIIIZ"], [" iIIIX", " iIIIY", "-iIIIZ"]]
+        )
+
+        assert np.all(ppaulis.to_labels() == ref_labels)
+
 
 class TestPhasedPauliArrayFunc(unittest.TestCase):
     def test_concatenate(self):
