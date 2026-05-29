@@ -363,7 +363,7 @@ class PauliArray(object):
 
         Returns:
             PauliArray: The result of the composition.
-            "np.ndarray[np.complex]" : Phases resulting from the composition.
+            "np.ndarray[np.unit]" : Mod 4 phases resulting from the composition.
         """
         assert self.num_qubits == other.num_qubits
         assert is_broadcastable(self.shape, other.shape)
@@ -376,12 +376,10 @@ class PauliArray(object):
         new_phase_power = bitops.dot(new_z_strings, new_x_strings).astype(np.int8)
         commutation_phase_power = 2 * bitops.dot(self.x_strings, other.z_strings).astype(np.int8)
 
-        phase_power = np.mod(
+        phases = np.mod(
             commutation_phase_power + self_phase_power + other_phase_power - new_phase_power,
             4,
         )
-
-        phases = np.choose(phase_power, [1, -1j, -1, 1j])
 
         return PauliArray(new_z_strings, new_x_strings), phases
 
@@ -947,7 +945,7 @@ class PauliArray(object):
 
     @staticmethod
     def labels_to_z_strings_x_strings(
-        labels: Union[list[str], "np.ndarray[np.str]"]
+        labels: Union[list[str], "np.ndarray[np.str]"],
     ) -> Tuple["np.ndarray[np.bool]", "np.ndarray[np.bool]"]:
         """
         Returns z strings and x strings created from labels.

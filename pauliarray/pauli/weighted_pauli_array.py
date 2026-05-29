@@ -211,7 +211,10 @@ class WeightedPauliArray(object):
 
     def compose_weighted_pauli_array(self, other: "WeightedPauliArray") -> "WeightedPauliArray":
         new_paulis, phases = self._paulis.compose_pauli_array(other.paulis)
-        new_weights = self._weights * other.weights * phases
+
+        phase_factors = np.choose(phases, [1, -1j, -1, 1j])
+
+        new_weights = self._weights * other.weights * phase_factors
 
         return WeightedPauliArray(new_paulis, new_weights)
 

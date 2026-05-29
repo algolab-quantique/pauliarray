@@ -476,6 +476,8 @@ class Operator(object):
             "np.ndarray[np.complex]": Residual coefficient
         """
 
+        return NotImplemented
+
         assert self.is_clifford()
 
         original_shape = other.shape
@@ -517,6 +519,8 @@ class Operator(object):
             pa.PauliArray: The transformed PauliArray
             "np.ndarray[np.complex]": Residual coefficient
         """
+
+        return NotImplemented
 
         assert self.is_clifford()
 
