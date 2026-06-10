@@ -7,6 +7,8 @@ from numpy.typing import ArrayLike, NDArray
 import pauliarray.pauli.pauli_array as pa
 from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable, is_concatenatable
 
+from pauliarray.utils import labels_to_table
+
 if TYPE_CHECKING:
     from pauliarray.pauli.operator import Operator
     from pauliarray.pauli.operator_array_type_1 import OperatorArrayType1
@@ -256,125 +258,44 @@ class WeightedPauliArray(object):
 
     def bitwise_commute_with(self, other: "WeightedPauliArray") -> "np.ndarray[np.bool]":
         return self.paulis.bitwise_commute_with(other.paulis)
+    
+    def to_labels(self) -> "np.ndarray[np.str]":
+        """
+        Returns the labels of all zx strings.
+
+        Returns:
+            "np.ndarray[np.str]": An array containing the labels of all Pauli strings.
+        """
+
+        pauli_labels = self.paulis.to_labels()
+        weight_labels = [f"({weight.real:+7.4f} {weight.imag:+7.4f}j) " for weight in self.weights]
+
+        labels = np.char.add(weight_labels, pauli_labels)
+
+        return labels
 
     def inspect(self) -> str:
+        """
+        Returns an inspection string showing all labels of the PauliArray.
+
+        Returns:
+            str: The inspection string.
+        """
         if self.ndim == 0:
             return "Empty PauliArray"
 
         if self.ndim == 1:
-            label_table = self.label_table_1d(self.paulis.to_labels(), self.weights)
+            label_table = labels_to_table.label_table_1d(self.to_labels())
             return f"PauliArray\n{label_table}"
 
         if self.ndim == 2:
-            label_table = self.label_table_2d(self.paulis.to_labels(), self.weights)
+            label_table = labels_to_table.label_table_2d(self.to_labels())
             return f"PauliArray\n{label_table}"
 
-        label_table = self.label_table_nd(self.paulis.to_labels(), self.weights)
-        return f"PauliArray\n{label_table}"
+        label_table = labels_to_table.label_table_nd(self.to_labels())
+        
+        return f"WeightedPauliArray\n{label_table}"
 
-    def x(self, qubits: Union[int, List[int]], inplace: bool = True) -> "WeightedPauliArray":
-        """
-        Apply X transformations on qubits of WeightedPauliStrings. This leaves the PauliStrings unchanged but produce
-        phase factors -1 when operators are Y or Z.
-
-        Args:
-            qubits (int or list[int]): The qubits on which to apply the X.
-            inplace (bool): Apply the changes to self if True. Return a modified copy if False.
-
-        Returns:
-            self_copy (WeightedPauliArray): A modified copy of self, only if inplace=True
-        """
-
-        if not inplace:
-            return self.copy().x(qubits)
-
-        _, factors = self.paulis.x(qubits, inplace=True)
-        self._weights *= factors
-        return self
-
-    def h(self, qubits: Union[int, List[int]], inplace: bool = True) -> "WeightedPauliArray":
-        """
-        Apply H transformations on qubits of WeightedPauliStrings. This exchanges X for Z and vice-versa and Y into -Y.
-
-        Args:
-            qubits (int or list[int]): The qubits on which to apply the H.
-            inplace (bool): Apply the changes to self if True. Return a modified copy if False.
-
-        Returns:
-            self_copy (WeightedPauliArray): A modified copy of self, only if inplace=True
-        """
-        if not inplace:
-            return self.copy().h(qubits)
-
-        _, factors = self.paulis.h(qubits, inplace=True)
-        self._weights *= factors
-        return self
-
-    def s(self, qubits: Union[int, List[int]], inplace: bool = True) -> "WeightedPauliArray":
-        """
-        Apply S transformations on qubits of WeightedPauliStrings. This exchanges X for Y and vice-versa with respective factors.
-
-        Args:
-            qubits (int or list[int]): The qubits on which to apply the S.
-            inplace (bool): Apply the changes to self if True. Return a modified copy if False.
-
-        Returns:
-            self_copy (WeightedPauliArray): A modified copy of self, only if inplace=True
-        """
-        if not inplace:
-            return self.copy().s(qubits)
-
-        _, factors = self.paulis.s(qubits, inplace=True)
-        self._weights *= factors
-        return self
-
-    def cx(
-        self,
-        control_qubits: Union[int, List[int]],
-        target_qubits: Union[int, List[int]],
-        inplace: bool = True,
-    ) -> "WeightedPauliArray":
-        """
-        Apply CX transformations on qubits of WeightedPauliStrings. The order of the CX is set by the order of the qubits.
-
-        Args:
-            control_qubits (int or list[int]): The qubits which controls the CZ.
-            target_qubits (int or list[int]): The qubits target by CZ.
-            inplace (bool): Apply the changes to self if True. Return a modified copy if False.
-
-        Returns:
-            self_copy (WeightedPauliArray): A modified copy of self, only if inplace=True
-        """
-        if not inplace:
-            return self.copy().cx(control_qubits, target_qubits)
-
-        _, factors = self.paulis.cx(control_qubits, target_qubits, inplace=True)
-        self._weights *= factors
-        return self
-
-    def cz(
-        self,
-        control_qubits: Union[int, List[int]],
-        target_qubits: Union[int, List[int]],
-        inplace: bool = True,
-    ) -> "WeightedPauliArray":
-        """
-        Apply CZ transformations on qubits of WeightedPauliStrings. The order of the CZ is set by the order of the qubits.
-
-        Args:
-            control_qubits (int or list[int]): The qubits which controls the CZ.
-            target_qubits (int or list[int]): The qubits target by CZ.
-            inplace (bool): Apply the changes to self if True. Return a modified copy if False.
-
-        Returns:
-            self_copy (WeightedPauliArray): A modified copy of self, only if inplace=True
-        """
-        if not inplace:
-            return self.copy().cz(control_qubits, target_qubits)
-
-        _, factors = self.paulis.cz(control_qubits, target_qubits, inplace=True)
-        self._weights *= factors
-        return self
 
     def clifford_conjugate(self, clifford: "Operator", inplace: bool = True) -> "WeightedPauliArray":
         """

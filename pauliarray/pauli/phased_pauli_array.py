@@ -8,6 +8,8 @@ from numpy.typing import ArrayLike, NDArray
 import pauliarray.pauli.pauli_array as pa
 from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable, is_concatenatable
 
+from pauliarray.utils import labels_to_table
+
 if TYPE_CHECKING:
     from pauliarray.pauli.operator import Operator
     from pauliarray.pauli.operator_array_type_1 import OperatorArrayType1
@@ -239,19 +241,26 @@ class PhasedPauliArray(object):
         return self.paulis.bitwise_commute_with(other.paulis)
 
     def inspect(self) -> str:
+        """
+        Returns an inspection string showing all labels of the PauliArray.
+
+        Returns:
+            str: The inspection string.
+        """
         if self.ndim == 0:
             return "Empty PauliArray"
 
         if self.ndim == 1:
-            label_table = self.label_table_1d(self.to_labels(), self.phases)
+            label_table = labels_to_table.label_table_1d(self.to_labels())
             return f"PauliArray\n{label_table}"
 
         if self.ndim == 2:
-            label_table = self.label_table_2d(self.to_labels(), self.phases)
+            label_table = labels_to_table.label_table_2d(self.to_labels())
             return f"PauliArray\n{label_table}"
 
-        label_table = self.label_table_nd(self.to_labels(), self.phases)
-        return f"PauliArray\n{label_table}"
+        label_table = labels_to_table.label_table_nd(self.to_labels())
+        
+        return f"PhasedPauliArray\n{label_table}"
 
     def clifford_conjugate(self, clifford: "Operator", inplace: bool = True) -> "PhasedPauliArray":
         """
@@ -341,7 +350,7 @@ class PhasedPauliArray(object):
         """
 
         pauli_labels = self.paulis.to_labels()
-        phase_labels = np.array(["  ", "-i", " -", " i"])[self.phases]
+        phase_labels = np.array(["     ", "(-i) ", "(-1) ", "( i) "])[self.phases]
 
         labels = np.char.add(phase_labels, pauli_labels)
 
@@ -470,47 +479,6 @@ class PhasedPauliArray(object):
 
         return PhasedPauliArray(pa.PauliArray.from_zx_strings(zx_strings), phases)
 
-    @staticmethod
-    def label_table_1d(pauli_labels, phase_labels) -> str:
-
-        return NotImplemented
-
-        pauli_str_len = len(max(pauli_labels, key=len))
-
-        row_strs = []
-        for label, weight in zip(pauli_labels, phase_labels):
-            row_strs.append(f"({weight.real:+7.4f} {weight.imag:+7.4f}j) {label:{pauli_str_len}s}")
-
-        return "\n".join(row_strs)
-
-    @staticmethod
-    def label_table_2d(labels, phases) -> str:
-
-        return NotImplemented
-
-        pauli_str_len = len(max(labels, key=len))
-
-        row_strs = []
-        for i in range(labels.shape[0]):
-            col_strs = []
-            for label, weight in zip(labels[i, :], phases[i, :]):
-                col_strs.append(f"({weight.real:+7.4f} {weight.imag:+7.4f}j) {label:{pauli_str_len}s}")
-            row_strs.append("  ".join(col_strs))
-
-        return "\n".join(row_strs)
-
-    @staticmethod
-    def label_table_nd(labels, phases) -> str:
-
-        return NotImplemented
-
-        slice_strs = []
-        for idx in np.ndindex(labels.shape[:-2]):
-            slice_str = "Slice (" + ",".join([str(i) for i in idx]) + ",:,:)\n"
-            slice_str += PhasedPauliArray.label_table_2d(labels[idx], phases[idx])
-            slice_strs.append(slice_str)
-
-        return "\n".join(slice_strs)
 
 
 def broadcast_to(ppaulis: PhasedPauliArray, shape: Tuple[int, ...]) -> "PhasedPauliArray":
