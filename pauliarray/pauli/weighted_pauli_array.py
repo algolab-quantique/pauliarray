@@ -1,5 +1,5 @@
 from numbers import Number
-from typing import TYPE_CHECKING, Any, List, Literal, Tuple, Union
+from typing import TYPE_CHECKING, Any, Callable, List, Literal, Self, Tuple, Union
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
@@ -52,13 +52,96 @@ class WeightedPauliArray(object):
     def paulis(self) -> pa.PauliArray:
         return self._paulis
 
+    def replace_paulis(self, new_paulis: pa.PauliArray, inplace: bool = False) -> Self:
+        """
+        Replace the Paulis in the object by the new ones.
+
+        Args:
+            new_paulis (PauliArray): The new Paulis
+            inplace (bool, optional): If True replace inside the current instance. If False returns a new instance. Defaults to False.
+
+        Returns:
+            WeightedPauliArray: The object with replaced Paulis
+        """
+
+        assert new_paulis.shape == self.shape
+
+        if inplace:
+            self._paulis = new_paulis.copy()
+            return self
+
+        return WeightedPauliArray(new_paulis.copy(), self.weights.copy())
+
+    def replace_weights(self, new_weights: NDArray, inplace: bool = False) -> Self:
+        """
+        Replace the Weights in the object by the new ones.
+
+        Args:
+            new_weights (NDArray): The new Weights
+            inplace (bool, optional): If True replace inside the current instance. If False returns a new instance. Defaults to False.
+
+        Returns:
+            WeightedPauliArray: The object with replaced weights
+        """
+
+        assert new_weights.shape == self.shape
+
+        if inplace:
+            self._weights = new_weights.copy()
+            return self
+
+        return WeightedPauliArray(self.paulis.copy(), new_weights.copy())
+
+    def replace_paulis_and_weights(
+        self, new_paulis: pa.PauliArray, new_weights: NDArray, inplace: bool = False
+    ) -> Self:
+        """
+        Replace the Paulis and Weights in the object by the new ones.
+
+        Args:
+            new_paulis (PauliArray): The new Paulis
+            new_weights (NDArray): The new Weights
+            inplace (bool, optional): If True replace inside the current instance. If False returns a new instance. Defaults to False.
+
+        Returns:
+            WeightedPauliArray: The object with replaced Paulis and weights
+        """
+
+        assert new_paulis.shape == self.shape
+        assert new_weights.shape == self.shape
+        if inplace:
+            self._paulis = new_paulis.copy()
+            self._weights = new_weights.copy()
+            return self
+
+        return WeightedPauliArray(new_paulis.copy(), new_weights.copy())
+
+    def clifford_transform_paulis(self, clifford_fct: Callable, *args, inplace=False) -> Self:
+        """
+        Transform the Paulis using a Clifford transformation (from transformation.cliffords)
+
+        Args:
+            clifford_fct (Callable): A Clifford function (from transformation.cliffords)
+            *args: The arguments of the Clifford function, such as the qubits on which to apply.
+            inplace (bool, optional): If True replace the existing Paulis. Defaults to False.
+
+        Returns:
+            WeightedPauliArray: The transformed WeightedPauliArray
+            "np.ndarray[np.complex]": The factors resulting from the transformation
+        """
+
+        new_paulis, factors = clifford_fct(self.paulis, *args)
+        new_weights = self.weights * factors
+
+        return self.replace_paulis_and_weights(new_paulis, new_weights, inplace)
+
     def __getitem__(self, key):
         new_paulis = self._paulis[key]
         new_weights = self._weights[key]
 
         return WeightedPauliArray(new_paulis, new_weights)
 
-    def __setitem__(self, key, value: "WeightedPauliArray"):
+    def __setitem__(self, key, value: Self):
         if isinstance(value, WeightedPauliArray):
             self._weights[key] = value._weights
             self._paulis[key] = value._paulis
@@ -68,7 +151,7 @@ class WeightedPauliArray(object):
     def __str__(self):
         return f"WeightedPauliArray: num_qubits = {self.num_qubits}, shape = {str(self.shape)}, ..."
 
-    def __eq__(self, other: "WeightedPauliArray") -> "np.ndarray[np.bool]":
+    def __eq__(self, other: Self) -> "np.ndarray[np.bool]":
         """
         Checks element-wise if the other WeightedPauliArray is equal.
 
@@ -83,7 +166,7 @@ class WeightedPauliArray(object):
 
         return np.logical_and(eq_paulis, eq_weights)
 
-    def _mul(self, other: Union[Number, ArrayLike, "WeightedPauliArray"]) -> "WeightedPauliArray":
+    def _mul(self, other: Union[Number, ArrayLike, Self]) -> Self:
         if isinstance(other, Number):
             return self.mul_weights(other)
         elif isinstance(other, WeightedPauliArray):
@@ -93,7 +176,7 @@ class WeightedPauliArray(object):
 
     __mul__ = __rmul__ = _mul
 
-    def copy(self) -> "WeightedPauliArray":
+    def copy(self) -> Self:
         """
         Returns a copy of the WeightedPauliArray.
 
@@ -102,10 +185,10 @@ class WeightedPauliArray(object):
         """
         return WeightedPauliArray(self._paulis.copy(), self._weights.copy())
 
-    def adjoint(self) -> "WeightedPauliArray":
+    def adjoint(self) -> Self:
         return WeightedPauliArray(self.paulis, np.conj(self.weights))
 
-    def reshape(self, shape: Tuple[int, ...]) -> "WeightedPauliArray":
+    def reshape(self, shape: Tuple[int, ...]) -> Self:
         """
         Reshape the WeightedPauliArray
 
@@ -123,7 +206,7 @@ class WeightedPauliArray(object):
 
         return WeightedPauliArray(new_paulis, new_weights)
 
-    def flatten(self) -> "WeightedPauliArray":
+    def flatten(self) -> Self:
         """
         Returns a copy of the WeightedPauliArray flattened into one dimension.
 
@@ -135,7 +218,7 @@ class WeightedPauliArray(object):
 
         return self.reshape(shape)
 
-    def squeeze(self) -> "WeightedPauliArray":
+    def squeeze(self) -> Self:
         """
         Returns a WeightedPauliArray with axes of length one removed.
 
@@ -147,7 +230,7 @@ class WeightedPauliArray(object):
 
         return WeightedPauliArray(new_paulis, new_weights)
 
-    def remove(self, index: int) -> "WeightedPauliArray":
+    def remove(self, index: int) -> Self:
         """
         Returns a WeightedPauliArray with removed item at given index.
 
@@ -162,7 +245,7 @@ class WeightedPauliArray(object):
 
         return WeightedPauliArray(new_paulis, new_weights)
 
-    def extract(self, condition: Union[NDArray, list]) -> "WeightedPauliArray":
+    def extract(self, condition: Union[NDArray, list]) -> Self:
         """
         Return the Pauli strings from the WeightedPauliArray object that satisfy some condition.
 
@@ -189,7 +272,7 @@ class WeightedPauliArray(object):
 
         return WeightedPauliArray(new_paulis, new_weights)
 
-    def take_qubits(self, indices: Union["np.ndarray[np.int]", range, int]) -> "WeightedPauliArray":
+    def take_qubits(self, indices: Union["np.ndarray[np.int]", range, int]) -> Self:
         if isinstance(indices, int):
             indices = np.array([indices], dtype=int)
 
@@ -198,7 +281,7 @@ class WeightedPauliArray(object):
 
         return WeightedPauliArray(new_paulis, new_weights)
 
-    def compress_qubits(self, condition: "np.ndarray[np.bool]") -> "WeightedPauliArray":
+    def compress_qubits(self, condition: "np.ndarray[np.bool]") -> Self:
         new_weights = self.weights.copy()
         new_paulis = self.paulis.compress_qubits(condition)
 
@@ -211,7 +294,7 @@ class WeightedPauliArray(object):
 
         return NotImplemented
 
-    def compose_weighted_pauli_array(self, other: "WeightedPauliArray") -> "WeightedPauliArray":
+    def compose_weighted_pauli_array(self, other: Self) -> Self:
         new_paulis, phases = self._paulis.compose_pauli_array(other.paulis)
 
         phase_factors = np.choose(phases, [1, -1j, -1, 1j])
@@ -220,7 +303,7 @@ class WeightedPauliArray(object):
 
         return WeightedPauliArray(new_paulis, new_weights)
 
-    def mul_weights(self, other: Union[Number, NDArray]) -> "WeightedPauliArray":
+    def mul_weights(self, other: Union[Number, NDArray]) -> Self:
         new_weights = self.weights * other
         new_paulis = pa.broadcast_to(self.paulis, new_weights.shape)
 
@@ -233,13 +316,13 @@ class WeightedPauliArray(object):
 
         return NotImplemented
 
-    def tensor_weighted_pauli_array(self, other: "WeightedPauliArray") -> "WeightedPauliArray":
+    def tensor_weighted_pauli_array(self, other: Self) -> Self:
         new_paulis = self.paulis.tensor_pauli_array(other.paulis)
         new_weights = self.weights * other.weights
 
         return WeightedPauliArray(new_paulis, new_weights)
 
-    def add_weighted_pauli_array(self, other: "WeightedPauliArray") -> "OperatorArrayType1":
+    def add_weighted_pauli_array(self, other: Self) -> "OperatorArrayType1":
 
         from pauliarray.pauli.operator_array_type_1 import OperatorArrayType1
 
@@ -253,10 +336,10 @@ class WeightedPauliArray(object):
 
         return OperatorArrayType1.from_weighted_pauli_array(new_wpaulis, -1)
 
-    def commute_with(self, other: "WeightedPauliArray") -> "np.ndarray[np.bool]":
+    def commute_with(self, other: Self) -> "np.ndarray[np.bool]":
         return self.paulis.commute_with(other.paulis)
 
-    def bitwise_commute_with(self, other: "WeightedPauliArray") -> "np.ndarray[np.bool]":
+    def bitwise_commute_with(self, other: Self) -> "np.ndarray[np.bool]":
         return self.paulis.bitwise_commute_with(other.paulis)
     
     def to_labels(self) -> "np.ndarray[np.str]":
@@ -360,7 +443,7 @@ class WeightedPauliArray(object):
 
         self._weights = new_weights.copy()
 
-    def update_weights_from_other(self, other: "WeightedPauliArray"):
+    def update_weights_from_other(self, other: Self):
         assert np.all(self.paulis == other.paulis)
 
         self.update_weights(other.weights)
@@ -385,14 +468,14 @@ class WeightedPauliArray(object):
         return self.weights[..., None, None] * self.paulis.to_matrices()
 
     @classmethod
-    def new(cls, shape: Tuple[int, ...], num_qubits: int) -> "WeightedPauliArray":
+    def new(cls, shape: Tuple[int, ...], num_qubits: int) -> Self:
         weights = np.zeros(shape, dtype=np.complex128)
         paulis = pa.PauliArray.identities(shape, num_qubits)
 
         return WeightedPauliArray(paulis, weights)
 
     @classmethod
-    def empty(cls, num_qubits: int) -> "WeightedPauliArray":
+    def empty(cls, num_qubits: int) -> Self:
         """
         Returns an empty WeightedPauliArray with the number of qubits already set.
 
@@ -408,7 +491,7 @@ class WeightedPauliArray(object):
         return WeightedPauliArray(paulis, weights)
 
     @classmethod
-    def random(cls, shape: Tuple[int, ...], num_qubits: int) -> "WeightedPauliArray":
+    def random(cls, shape: Tuple[int, ...], num_qubits: int) -> Self:
         """
         Creates a PauliArray of a given shape and number of qubits filled with random Pauli strings.
 
@@ -425,7 +508,7 @@ class WeightedPauliArray(object):
         return WeightedPauliArray(random_paulis, random_weights)
 
     @classmethod
-    def from_labels_and_weights(cls, labels, weights) -> "WeightedPauliArray":
+    def from_labels_and_weights(cls, labels, weights) -> Self:
         paulis = pa.PauliArray.from_labels(labels)
 
         return WeightedPauliArray(paulis, weights)
@@ -436,14 +519,14 @@ class WeightedPauliArray(object):
         z_strings: "np.ndarray[np.bool]",
         x_strings: "np.ndarray[np.bool]",
         weights: "np.ndarray[np.complex]",
-    ) -> "WeightedPauliArray":
+    ) -> Self:
 
         paulis = pa.PauliArray(z_strings, x_strings)
 
         return WeightedPauliArray(paulis, weights)
 
     @classmethod
-    def from_paulis(cls, paulis: pa.PauliArray) -> "WeightedPauliArray":
+    def from_paulis(cls, paulis: pa.PauliArray) -> Self:
         weights = np.ones(paulis.shape, dtype=complex)
 
         return WeightedPauliArray(paulis.copy(), weights)
@@ -454,7 +537,7 @@ class WeightedPauliArray(object):
             np.save(f, self.weights)
 
     @classmethod
-    def from_npz(cls, filename) -> "WeightedPauliArray":
+    def from_npz(cls, filename) -> Self:
         with open(filename, "rb") as f:
             zx_strings = np.load(f)
             weights = np.load(f)
@@ -498,7 +581,7 @@ class WeightedPauliArray(object):
         return "\n".join(slice_strs)
 
 
-def broadcast_to(wpaulis: WeightedPauliArray, shape: Tuple[int, ...]) -> "WeightedPauliArray":
+def broadcast_to(wpaulis: WeightedPauliArray, shape: Tuple[int, ...]) -> Self:
     """
     Returns the given WeightedPauliArray broadcasted to a given shape.
 
@@ -516,7 +599,7 @@ def broadcast_to(wpaulis: WeightedPauliArray, shape: Tuple[int, ...]) -> "Weight
     return WeightedPauliArray(new_paulis, new_weights)
 
 
-def expand_dims(wpaulis: WeightedPauliArray, axis=Union[int, Tuple[int, ...]]) -> "WeightedPauliArray":
+def expand_dims(wpaulis: WeightedPauliArray, axis=Union[int, Tuple[int, ...]]) -> Self:
     """
     Expands the shape of a WeightedPauliArray.
 

@@ -67,6 +67,90 @@ class OperatorArrayType1(object):
         """Weights of the Pauli terms in the operator array."""
         return self._wpaulis.weights
 
+    def replace_paulis(self, new_paulis: pa.PauliArray, inplace: bool = False) -> Self:
+        """
+        Replace the Paulis in the object by the new ones.
+
+        Args:
+            new_paulis (PauliArray): The new Paulis
+            inplace (bool, optional): If True replace inside the current instance. If False returns a new instance. Defaults to False.
+
+        Returns:
+            OperatorArrayType1: The object with replaced Paulis
+        """
+
+        assert new_paulis.shape == self.wpaulis.shape
+
+        if inplace:
+            self._wpaulis._paulis = new_paulis.copy()
+            return self
+
+        return OperatorArrayType1(wpa.WeightedPauliArray(new_paulis.copy(), self.weights.copy()))
+
+    def replace_weights(self, new_weights: NDArray, inplace: bool = False) -> Self:
+        """
+        Replace the Weights in the object by the new ones.
+
+        Args:
+            new_weights (NDArray): The new Weights
+            inplace (bool, optional): If True replace inside the current instance. If False returns a new instance. Defaults to False.
+
+        Returns:
+            OperatorArrayType1: The object with replaced weights
+        """
+
+        assert new_weights.shape == self.wpaulis.shape
+
+        if inplace:
+            self._wpaulis._weights = new_weights.copy()
+            return self
+
+        return OperatorArrayType1(wpa.WeightedPauliArray(self.paulis.copy(), new_weights.copy()))
+
+    def replace_paulis_and_weights(
+        self, new_paulis: pa.PauliArray, new_weights: NDArray, inplace: bool = False
+    ) -> Self:
+        """
+        Replace the Paulis and Weights in the object by the new ones.
+
+        Args:
+            new_paulis (PauliArray): The new Paulis
+            new_weights (NDArray): The new Weights
+            inplace (bool, optional): If True replace inside the current instance. If False returns a new instance. Defaults to False.
+
+        Returns:
+            OperatorArrayType1: The object with replaced Paulis and weights
+        """
+
+        assert new_paulis.shape == self.wpaulis.shape
+        assert new_weights.shape == self.wpaulis.shape
+
+        if inplace:
+            self._wpaulis._paulis = new_paulis.copy()
+            self._wpaulis._weights = new_weights.copy()
+            return self
+
+        return OperatorArrayType1(wpa.WeightedPauliArray(new_paulis.copy(), new_weights.copy()))
+
+    def clifford_transform_paulis(self, clifford_fct: Callable, *args, inplace=False) -> Self:
+        """
+        Transform the Paulis using a Clifford transformation (from transformation.cliffords)
+
+        Args:
+            clifford_fct (Callable): A Clifford function (from transformation.cliffords)
+            *args: The arguments of the Clifford function, such as the qubits on which to apply.
+            inplace (bool, optional): If True replace the existing Paulis. Defaults to False.
+
+        Returns:
+            OperatorArrayType1: The transformed OperatorArrayType1
+            "np.ndarray[np.complex]": The factors resulting from the transformation
+        """
+
+        new_paulis, factors = clifford_fct(self.paulis, *args)
+        new_weights = self.weights * factors
+
+        return self.replace_paulis_and_weights(new_paulis, new_weights, inplace)
+
     def __str__(self) -> str:
         """String representation of current operator array"""
         return f"OperatorUniformArray: num_qubits = {self.num_qubits}, num_terms = {self.num_terms}, ..."
@@ -295,110 +379,6 @@ class OperatorArrayType1(object):
             detail_str += f"\n ---{idx}--- " + operator.inspect()
 
         return detail_str
-
-    def x(self, qubits: Union[int, List[int]], inplace: bool = True) -> Self:
-        """
-        Applies X transformations on qubits of Operators. This leaves the Pauli Strings unchanged but produce
-        phase factors -1 when operators are Y or Z.
-
-        Args:
-            qubits (int or list[int]): The qubits on which to apply the X.
-            inplace (bool, optional): Applies the changes to self if True. Returns a modified copy if False.
-            Defaults to True.
-
-        Returns:
-            OperatorArrayType1: A modified self if inplace=True, else returns a new modified instance of
-            OperatorArrayType1.
-        """
-
-        if not inplace:
-            return self.copy().x(qubits)
-
-        self.wpaulis.x(qubits, inplace=True)
-        return self
-
-    def h(self, qubits: Union[int, List[int]], inplace: bool = True) -> Self:
-        """
-        Applies a H transformation on qubits of OperatorArray. This exchanges X matrices for Z matrices and vice-versa.
-        It exchanges Y matrices into -Y matrices.
-
-        Args:
-            qubits (Union[int, List[int]]): The qubits to apply the H transformation to.
-            inplace (bool, optional): Applies the changes to self if True. Returns a modified copy if False.
-            Defaults to True.
-
-        Returns:
-            OperatorArrayType1: A modified self if inplace=True, else returns a new modified instance of
-            OperatorArrayType1.
-        """
-        if not inplace:
-            return self.copy().h(qubits)
-
-        self.wpaulis.h(qubits, inplace=True)
-        return self
-
-    def s(self, qubits: Union[int, List[int]], inplace: bool = True) -> Self:
-        """
-        Applies S transformations on qubits of Operator. This exchanges X for Y and vice-versa with respective factors.
-
-        Args:
-            qubits (int or list[int]): The qubits on which to apply the S.
-            inplace (bool, optional): Applies the changes to self if True. Returns a modified copy if False.
-            Defaults to True.
-
-        Returns:
-            OperatorArrayType1: A modified self if inplace=True, else returns a new modified instance of
-            OperatorArrayType1.
-        """
-        if not inplace:
-            return self.copy().s(qubits)
-
-        self.wpaulis.s(qubits, inplace=True)
-        return self
-
-    def cx(
-        self, control_qubits: Union[int, List[int]], target_qubits: Union[int, List[int]], inplace: bool = True
-    ) -> Self:
-        """
-        Applies CX transformations on qubits of Operator. The order of the CX is set by the order of the qubits.
-
-        Args:
-            control_qubits (int or list[int]): The qubits which controls the CZ.
-            target_qubits (int or list[int]): The qubits target by CZ.
-            inplace (bool, optional): Applies the changes to self if True. Returns a modified copy if False.
-            Defaults to True.
-
-        Returns:
-            OperatorArrayType1: A modified self if inplace=True, else returns a new modified instance of
-            OperatorArrayType1.
-        """
-        if not inplace:
-            return self.copy().cx(control_qubits, target_qubits)
-
-        self.wpaulis.cx(control_qubits, target_qubits, inplace=True)
-        return self
-
-    def cz(
-        self, control_qubits: Union[int, List[int]], target_qubits: Union[int, List[int]], inplace: bool = True
-    ) -> Self:
-        """
-        Applies CZ transformations on qubits of Operator. The order of the CZ is set by the order of the qubits.
-
-        Args:
-            control_qubits (int or list[int]): The qubits which controls the CZ.
-            target_qubits (int or list[int]): The qubits target by CZ.
-            inplace (bool, optional): Applies the changes to self if True. Returns a modified copy if False.
-            Defaults to True.
-
-        Returns:
-            OperatorArrayType1: A modified self if inplace=True, else returns a new modified instance of
-            OperatorArrayType1.
-        """
-        if not inplace:
-            return self.copy().cz(control_qubits, target_qubits)
-
-        self.wpaulis.cz(control_qubits, target_qubits, inplace=True)
-        return self
 
     def clifford_conjugate(self, clifford: "Operator", inplace: bool = True) -> Self:
         """

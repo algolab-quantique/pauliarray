@@ -1,5 +1,5 @@
 from numbers import Number
-from typing import TYPE_CHECKING, Any, List, Optional, Tuple, Union
+from typing import TYPE_CHECKING, Any, Callable, List, Optional, Self, Tuple, Union
 
 import numpy as np
 from numpy.typing import NDArray
@@ -97,7 +97,7 @@ class PauliArray(object):
         return np.prod(self.shape)
 
     @property
-    def paulis(self) -> "PauliArray":
+    def paulis(self) -> Self:
         return self
 
     @property
@@ -160,6 +160,50 @@ class PauliArray(object):
         """
         return np.sum(np.logical_or(self._z_strings, self._x_strings), axis=-1)
 
+    def replace_paulis(self, new_paulis: "PauliArray", inplace=False) -> Self:
+        """
+        Replace the Paulis in the object by the new ones.
+
+        Args:
+            new_paulis (PauliArray): The new Paulis
+            inplace (bool, optional): If True replace inside the current instance. If False returns a new instance. Defaults to False.
+
+        Returns:
+            PauliArray: The object with replaced Paulis
+        """
+
+        assert new_paulis.shape == self.shape
+
+        if inplace:
+            self._z_strings = new_paulis.z_strings.copy()
+            self._x_strings = new_paulis.x_strings.copy()
+            return self
+
+        return PauliArray(new_paulis.z_strings.copy(), new_paulis.x_strings.copy())
+
+    def clifford_transform_paulis(
+        self, clifford_fct: Callable, *args, inplace=False
+    ) -> Tuple[Self, "np.ndarray[np.complex]"]:
+        """
+        Transform the Paulis using a Clifford transformation (from transformation.cliffords)
+
+        Args:
+            clifford_fct (Callable): A Clifford function (from transformation.cliffords)
+            *args: The arguments of the Clifford function, such as the qubits on which to apply.
+            inplace (bool, optional): If True replace the existing Paulis. Defaults to False.
+
+        Returns:
+            PauliArray: The transformed PauliArray
+            "np.ndarray[np.complex]": The factors resulting from the transformation
+        """
+
+        new_paulis, factors = clifford_fct(self, *args)
+        if inplace:
+            self.replace_paulis(new_paulis)
+            return self, factors
+
+        return new_paulis, factors
+
     def __getitem__(self, key):
         # TODO check number of dimensions in key
         new_z_strings = self._z_strings[key]
@@ -177,7 +221,7 @@ class PauliArray(object):
     def __str__(self):
         return f"PauliArray: num_qubits = {self.num_qubits}, shape = {self.shape}, ..."
 
-    def __eq__(self, other: "PauliArray") -> "np.ndarray[np.bool]":
+    def __eq__(self, other: Self) -> "np.ndarray[np.bool]":
         """
         Checks element-wise if the other PauliArray is equal.
 
@@ -190,7 +234,7 @@ class PauliArray(object):
 
         return np.all(np.logical_and((self.z_strings == other.z_strings), (self.x_strings == other.x_strings)), axis=-1)
 
-    def copy(self) -> "PauliArray":
+    def copy(self) -> Self:
         """
         Returns a copy of the PauliArray.
 
@@ -199,7 +243,7 @@ class PauliArray(object):
         """
         return PauliArray(self.z_strings.copy(), self.x_strings.copy())
 
-    def reshape(self, shape: Tuple[int, ...]) -> "PauliArray":
+    def reshape(self, shape: Tuple[int, ...]) -> Self:
         """
         Returns a PauliArray with a new shape.
 
@@ -218,7 +262,7 @@ class PauliArray(object):
 
         return PauliArray(new_z_strings, new_x_strings)
 
-    def flatten(self) -> "PauliArray":
+    def flatten(self) -> Self:
         """
         Returns a copy of the PauliArray flattened into one dimension.
 
@@ -229,7 +273,7 @@ class PauliArray(object):
 
         return self.reshape(shape)
 
-    def squeeze(self) -> "PauliArray":
+    def squeeze(self) -> Self:
         """
         Returns a PauliArray with axes of length one removed.
 
@@ -241,7 +285,7 @@ class PauliArray(object):
 
         return PauliArray(new_z_strings, new_x_strings)
 
-    def remove(self, index: int) -> "PauliArray":
+    def remove(self, index: int) -> Self:
         """
         Returns a PauliArray with removed item at given index.
 
@@ -256,7 +300,7 @@ class PauliArray(object):
 
         return PauliArray(new_z_strings, new_x_strings)
 
-    def extract(self, condition: Union[NDArray, list]) -> "PauliArray":
+    def extract(self, condition: Union[NDArray, list]) -> Self:
         """
         Return the Pauli strings from the PauliArray object that satisfy some condition.
 
@@ -283,7 +327,7 @@ class PauliArray(object):
 
         return PauliArray(new_z_strings, new_x_strings)
 
-    def take_qubits(self, indices: Union["np.ndarray[np.int]", range, int], inplace: bool = True) -> "PauliArray":
+    def take_qubits(self, indices: Union["np.ndarray[np.int]", range, int], inplace: bool = True) -> Self:
         """
         Return the Pauli strings for a subset of qubits, ignoring the other. Using indices.
 
@@ -306,7 +350,7 @@ class PauliArray(object):
 
         return PauliArray(new_z_strings, new_x_strings)
 
-    def compress_qubits(self, condition: "np.ndarray[np.bool]", inplace: bool = True) -> "PauliArray":
+    def compress_qubits(self, condition: "np.ndarray[np.bool]", inplace: bool = True) -> Self:
         """
         Return the Pauli strings for a subset of qubits, ignoring the other. Using a mask.
 
@@ -326,7 +370,7 @@ class PauliArray(object):
 
         return PauliArray(new_z_strings, new_x_strings)
 
-    def reorder_qubits(self, qubit_order: List[int], inplace: bool = True) -> "PauliArray":
+    def reorder_qubits(self, qubit_order: List[int], inplace: bool = True) -> Self:
         """
         Reorder the qubits.
 
@@ -355,7 +399,7 @@ class PauliArray(object):
 
         return NotImplemented
 
-    def compose_pauli_array(self, other: "PauliArray") -> Tuple["PauliArray", "np.ndarray[np.complex]"]:
+    def compose_pauli_array(self, other: Self) -> Tuple[Self, "np.ndarray[np.complex]"]:
         """
         Performs an element-wise composition with an other PauliArray.
 
@@ -372,35 +416,19 @@ class PauliArray(object):
         new_z_strings = bitops.add(self.z_strings, other.z_strings)
         new_x_strings = bitops.add(self.x_strings, other.x_strings)
 
-        self_phase_power = bitops.dot(self.z_strings, self.x_strings).astype(np.int8)
-        other_phase_power = bitops.dot(other.z_strings, other.x_strings).astype(np.int8)
-        new_phase_power = bitops.dot(new_z_strings, new_x_strings).astype(np.int8)
-        commutation_phase_power = 2 * bitops.dot(self.x_strings, other.z_strings).astype(np.int8)
+        self_phases = bitops.dot(self.z_strings, self.x_strings).astype(np.int8)
+        other_phases = bitops.dot(other.z_strings, other.x_strings).astype(np.int8)
+        new_phases = bitops.dot(new_z_strings, new_x_strings).astype(np.int8)
+        commutation_phases = 2 * bitops.dot(self.x_strings, other.z_strings).astype(np.int8)
 
         phases = np.mod(
-            commutation_phase_power + self_phase_power + other_phase_power - new_phase_power,
+            commutation_phases + self_phases + other_phases - new_phases,
             4,
         )
 
+        phases = np.choose(phase_power, [1, -1j, -1, 1j])
+
         return PauliArray(new_z_strings, new_x_strings), phases
-
-    def mul_weights(self, other: Union[Number, NDArray]) -> "WeightedPauliArray":
-        """
-        Apply a weight to each Pauli string to form a WeightedPauliArray
-
-        Args:
-            other (Union[Number, NDArray]): A number or an array of number. Must be broadcastable.
-
-        Returns:
-            WeightedPauliArray: The result of the weight application.
-        """
-
-        from pauliarray.pauli.weighted_pauli_array import WeightedPauliArray
-
-        new_weights = np.broadcast_to(other, self.shape).astype(np.complex128)
-        new_paulis = self.paulis.copy()
-
-        return WeightedPauliArray(new_paulis, new_weights)
 
     def tensor(self, other: Any) -> Any:
 
@@ -409,7 +437,7 @@ class PauliArray(object):
 
         return NotImplemented
 
-    def tensor_pauli_array(self, other: "PauliArray") -> "PauliArray":
+    def tensor_pauli_array(self, other: Self) -> Self:
         """
         Performs a tensor product, element-wise with an other PauliArray.
 
@@ -424,36 +452,7 @@ class PauliArray(object):
 
         return PauliArray(new_z_strings, new_x_strings)
 
-    def add_pauli_array(self, other: "PauliArray") -> "OperatorArrayType1":
-        """
-        Performs an element-wise addition with other Pauli Array to produce an array of operator.
-
-        Args:
-            other (PauliArray): The PauliArray to add. Must be broadcastable.
-
-        Returns:
-            OperatorArrayType1: The result of the addition as an array of operators.
-        """
-
-        from pauliarray.pauli.operator_array_type_1 import OperatorArrayType1
-
-        assert self.num_qubits == other.num_qubits
-        assert is_broadcastable(self.shape, other.shape)
-
-        new_z_strings = np.stack((self.z_strings, other.z_strings), axis=-2)
-        new_x_strings = np.stack((self.x_strings, other.x_strings), axis=-2)
-
-        new_paulis = PauliArray(new_z_strings, new_x_strings)
-
-        return OperatorArrayType1.from_pauli_array(new_paulis, -1)
-
-    def sum(self, axis: Union[Tuple[int, ...], None] = None) -> "OperatorArrayType1":
-
-        from pauliarray.pauli.operator_array_type_1 import OperatorArrayType1
-
-        OperatorArrayType1.from_pauli_array(self)
-
-    def flip_zx(self) -> "PauliArray":
+    def flip_zx(self) -> Self:
         """
         Returns a copy of the PauliArray with x strings as z strings, and vice versa.
 
@@ -462,7 +461,7 @@ class PauliArray(object):
         """
         return PauliArray(self.x_strings.copy(), self.z_strings.copy())
 
-    def commute_with(self, other: "PauliArray") -> "np.ndarray[np.bool]":
+    def commute_with(self, other: Self) -> "np.ndarray[np.bool]":
         """
         Returns True if the elements of PauliArray commutes with the elements of PauliArray passed as parameter,
         returns False otherwise.
@@ -476,7 +475,7 @@ class PauliArray(object):
 
         return ~np.mod(symplectic.dot(self.zx_strings, other.zx_strings), 2).astype(np.bool_)
 
-    def bitwise_commute_with(self, other: "PauliArray") -> "np.ndarray[np.bool]":
+    def bitwise_commute_with(self, other: Self) -> "np.ndarray[np.bool]":
         """
         Returns True if the elements of PauliArray commutes bitwise with the elements of
         PauliArray passed as parameter, returns False otherwise.
@@ -503,7 +502,7 @@ class PauliArray(object):
 
         return 2**self.num_qubits * (self.num_ids == self.num_qubits)
 
-    def generators(self) -> "PauliArray":
+    def generators(self) -> Self:
         """
         Finds a set of linearly independant PauliString which can be multiplied together to generate every PauliStirng
         in self.
@@ -711,7 +710,7 @@ class PauliArray(object):
         return matrix
 
     @classmethod
-    def from_labels(cls, labels: Union[list[str], "np.ndarray[np.str]"]) -> "PauliArray":
+    def from_labels(cls, labels: Union[list[str], "np.ndarray[np.str]"]) -> Self:
         """
         Creates a PauliArray from a labels using IXYZ.
 
@@ -728,7 +727,7 @@ class PauliArray(object):
         return PauliArray(z_strings, x_strings)
 
     @classmethod
-    def from_zx_strings(cls, zx_strings: "np.ndarray[np.bool]") -> "PauliArray":
+    def from_zx_strings(cls, zx_strings: "np.ndarray[np.bool]") -> Self:
         """
         Create a PauliArray from zx strings.
 
@@ -746,7 +745,7 @@ class PauliArray(object):
         return PauliArray(z_strings, x_strings)
 
     @classmethod
-    def identities(cls, shape: Tuple[int, ...], num_qubits: int) -> "PauliArray":
+    def identities(cls, shape: Tuple[int, ...], num_qubits: int) -> Self:
         """
         Creates a new PauliArray of a given shape and number of qubits filled with identities.
 
@@ -765,12 +764,12 @@ class PauliArray(object):
         return PauliArray(z_strings, x_strings)
 
     @classmethod
-    def new(cls, shape: Tuple[int, ...], num_qubits: int) -> "PauliArray":
+    def new(cls, shape: Tuple[int, ...], num_qubits: int) -> Self:
 
         return cls.identities(shape, num_qubits)
 
     @classmethod
-    def random(cls, shape: Tuple[int, ...], num_qubits: int) -> "PauliArray":
+    def random(cls, shape: Tuple[int, ...], num_qubits: int) -> Self:
         """
         Creates a PauliArray of a given shape and number of qubits filled with random Pauli strings.
 
@@ -872,7 +871,7 @@ def argsort(paulis: PauliArray, axis: int = -1) -> "np.ndarray[np.int]":
     return np.argsort(zx_ints, axis)
 
 
-def broadcast_to(paulis: PauliArray, shape: Tuple[int, ...]) -> "PauliArray":
+def broadcast_to(paulis: PauliArray, shape: Tuple[int, ...]) -> Self:
     """
     Returns the given PauliArray broadcasted to a given shape.
 
@@ -892,7 +891,7 @@ def broadcast_to(paulis: PauliArray, shape: Tuple[int, ...]) -> "PauliArray":
     return PauliArray(new_z_strings, new_x_strings)
 
 
-def expand_dims(paulis: PauliArray, axis: Union[int, Tuple[int, ...]]) -> "PauliArray":
+def expand_dims(paulis: PauliArray, axis: Union[int, Tuple[int, ...]]) -> Self:
     """
     Expands the shape of a PauliArray.
 
