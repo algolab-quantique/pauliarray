@@ -18,7 +18,7 @@ def h(paulis: PauliArray, qubits: Union[int, list[int]]) -> tuple[PauliArray, ND
 
     Returns:
         PauliArray: The transformed PauliArray
-        "np.ndarray[np.complex]": The factors resulting from the transformation
+        "np.ndarray[np.complex]": The phases resulting from the transformation
     """
 
     if isinstance(qubits, int):
@@ -29,16 +29,14 @@ def h(paulis: PauliArray, qubits: Union[int, list[int]]) -> tuple[PauliArray, ND
 
     new_z_strings = paulis.z_strings.copy()
     new_x_strings = paulis.x_strings.copy()
-    new_quad_phases = np.mod(add_phases, 4)
+    new_phases = np.mod(add_phases, 4)
 
     new_z_strings[..., qubits], new_x_strings[..., qubits] = (
         new_x_strings[..., qubits],
         new_z_strings[..., qubits],
     )
 
-    factors = np.choose(new_quad_phases, [1, 1j, -1, -1j])
-
-    return PauliArray(new_z_strings, new_x_strings), factors
+    return PauliArray(new_z_strings, new_x_strings), new_phases
 
 
 @transform_paulis_with_clifford
@@ -52,7 +50,7 @@ def s(paulis: PauliArray, qubits: Union[int, list[int]]) -> tuple[PauliArray, ND
 
     Returns:
         PauliArray: The transformed PauliArray
-        "np.ndarray[np.complex]": The factors resulting from the transformation
+        "np.ndarray[np.complex]": The phases resulting from the transformation
     """
 
     if isinstance(qubits, int):
@@ -63,13 +61,11 @@ def s(paulis: PauliArray, qubits: Union[int, list[int]]) -> tuple[PauliArray, ND
 
     new_z_strings = paulis.z_strings.copy()
     new_x_strings = paulis.x_strings.copy()
-    new_quad_phases = np.mod(add_phases, 4)
+    new_phases = np.mod(add_phases, 4)
 
     new_z_strings[..., qubits] = np.logical_xor(paulis.z_strings[..., qubits], paulis.x_strings[..., qubits])
 
-    factors = np.choose(new_quad_phases, [1, 1j, -1, -1j])
-
-    return PauliArray(new_z_strings, new_x_strings), factors
+    return PauliArray(new_z_strings, new_x_strings), new_phases
 
 
 @transform_paulis_with_clifford
@@ -86,7 +82,7 @@ def cx(
 
     Returns:
         PauliArray: The transformed PauliArray
-        "np.ndarray[np.complex]": The factors resulting from the transformation
+        "np.ndarray[np.complex]": The phases resulting from the transformation
     """
 
     if isinstance(control_qubits, int):
@@ -112,10 +108,9 @@ def cx(
         new_x_strings[..., tq] = np.logical_xor(tmp_tq_x_bit_array, new_x_strings[..., cq])
         new_z_strings[..., cq] = np.logical_xor(tmp_cq_z_bit_array, new_z_strings[..., tq])
 
-    new_quad_phases = np.mod(add_phases, 4)
-    factors = np.choose(new_quad_phases, [1, 1j, -1, -1j])
+    new_phases = np.mod(add_phases, 4)
 
-    return PauliArray(new_z_strings, new_x_strings), factors
+    return PauliArray(new_z_strings, new_x_strings), new_phases
 
 
 @transform_paulis_with_clifford
@@ -132,7 +127,7 @@ def cz(
 
     Returns:
         PauliArray: The transformed PauliArray
-        "np.ndarray[np.complex]": The factors resulting from the transformation
+        "np.ndarray[np.complex]": The phases resulting from the transformation
     """
 
     if isinstance(control_qubits, int):
@@ -156,7 +151,6 @@ def cz(
         new_z_strings[..., cq] = np.logical_xor(new_z_strings[..., cq], new_x_strings[..., tq])
         new_z_strings[..., tq] = np.logical_xor(new_x_strings[..., cq], new_z_strings[..., tq])
 
-    new_quad_phases = np.mod(add_phases, 4)
-    factors = np.choose(new_quad_phases, [1, 1j, -1, -1j])
+    new_phases = np.mod(add_phases, 4)
 
-    return PauliArray(new_z_strings, new_x_strings), factors
+    return PauliArray(new_z_strings, new_x_strings), new_phases

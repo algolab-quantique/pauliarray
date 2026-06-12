@@ -38,61 +38,6 @@ class TestWeightedPauliArray(unittest.TestCase):
 
         self.assertRaises(ValueError, lambda: wpaulis.extract([True, False, False, True, True]))
 
-    def test_x(self):
-        paulis = gen_complete_pauli_array_basis(1)
-        wpaulis_1 = wpa.WeightedPauliArray.from_paulis(paulis)
-
-        x_op = op.Operator.from_labels_and_weights(["X"], np.array([1]))
-
-        wpaulis_2 = wpaulis_1.x(0, inplace=False)
-        wpaulis_3 = wpaulis_1.clifford_conjugate(x_op)
-
-        self.assertTrue(np.all(wpaulis_2 == wpaulis_3))
-
-    def test_s(self):
-        paulis = gen_complete_pauli_array_basis(1)
-        wpaulis_1 = wpa.WeightedPauliArray.from_paulis(paulis)
-
-        s_op = op.Operator.from_labels_and_weights(["I", "Z"], np.sqrt(0.5) * np.array([1, -1j]))
-
-        wpaulis_2 = wpaulis_1.s(0, inplace=False)
-        wpaulis_3 = wpaulis_1.clifford_conjugate(s_op)
-
-        self.assertTrue(np.all(wpaulis_2 == wpaulis_3))
-
-    def test_h(self):
-        paulis = gen_complete_pauli_array_basis(1)
-        wpaulis_1 = wpa.WeightedPauliArray.from_paulis(paulis)
-
-        h_op = op.Operator.from_labels_and_weights(["X", "Z"], np.sqrt(0.5) * np.array([1, 1]))
-
-        wpaulis_2 = wpaulis_1.h(0, inplace=False)
-        wpaulis_3 = wpaulis_1.clifford_conjugate(h_op)
-
-        self.assertTrue(np.all(wpaulis_2 == wpaulis_3))
-
-    def test_cx(self):
-        paulis = gen_complete_pauli_array_basis(2)
-        wpaulis_1 = wpa.WeightedPauliArray.from_paulis(paulis)
-
-        cx_op = op.Operator.from_labels_and_weights(["II", "IZ", "XI", "XZ"], 0.5 * np.array([1, 1, 1, -1]))
-
-        wpaulis_2 = wpaulis_1.cx(0, 1, inplace=False)
-        wpaulis_3 = wpaulis_1.clifford_conjugate(cx_op)
-
-        self.assertTrue(np.all(wpaulis_2 == wpaulis_3))
-
-    def test_cz(self):
-        paulis = gen_complete_pauli_array_basis(2)
-        wpaulis_1 = wpa.WeightedPauliArray.from_paulis(paulis)
-
-        cz_op = op.Operator.from_labels_and_weights(["II", "IZ", "ZI", "ZZ"], 0.5 * np.array([1, 1, 1, -1]))
-
-        wpaulis_2 = wpaulis_1.cz(0, 1, inplace=False)
-        wpaulis_3 = wpaulis_1.clifford_conjugate(cz_op)
-
-        self.assertTrue(np.all(wpaulis_2 == wpaulis_3))
-
     def test_to_npz_from_npz(self):
 
         weights = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])

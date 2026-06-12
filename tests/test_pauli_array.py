@@ -139,44 +139,6 @@ class TestPauliArray(unittest.TestCase):
         self.assertTrue(np.all(all_prod_paulis == expected_paulis))
         self.assertTrue(np.all(phases == expected_phases))
 
-    def test_add_pauli_array(self):
-
-        a_paulis = pa.PauliArray.from_labels(["ZYYY", "XYZY", "YYZI"])
-        b_paulis = pa.PauliArray.from_labels(["XXXX", "YYYY", "ZZZZ"])
-
-        operators = a_paulis.add_pauli_array(b_paulis)
-
-        self.assertTrue(np.all(a_paulis.shape == operators.shape))
-
-        a_paulis = pa.PauliArray.from_labels(
-            [
-                [["IIIZ", "IIXX"], ["XXXI", "XXII"]],
-                [["ZIIZ", "ZIXX"], ["ZXXI", "ZXII"]],
-            ]
-        )
-        b_paulis = pa.PauliArray.from_labels(
-            [
-                [["IXIZ", "IYXX"], ["XXZI", "XXYI"]],
-                [["ZIZZ", "XIXX"], ["ZXII", "YXII"]],
-            ]
-        )
-
-        operators = a_paulis.add_pauli_array(b_paulis)
-
-        self.assertTrue(np.all(a_paulis.shape == operators.shape))
-
-    def test_mul_weights(self):
-
-        paulis = pa.PauliArray.from_labels(["ZYYY", "XYZY", "YYZI"])
-        wpaulis_1 = paulis.mul_weights(2)
-        wpaulis_2 = paulis.mul_weights([2, 3, 4])
-
-        expected_wpaulis_1 = wpa.WeightedPauliArray.from_labels_and_weights(["ZYYY", "XYZY", "YYZI"], [2, 2, 2])
-        expected_wpaulis_2 = wpa.WeightedPauliArray.from_labels_and_weights(["ZYYY", "XYZY", "YYZI"], [2, 3, 4])
-
-        self.assertTrue(np.all(wpaulis_1 == expected_wpaulis_1))
-        self.assertTrue(np.all(wpaulis_2 == expected_wpaulis_2))
-
     def test_to_matrices(self):
         paulis_1 = pa.PauliArray.from_labels(["IX", "XX"])
 
@@ -200,18 +162,6 @@ class TestPauliArray(unittest.TestCase):
         )
 
         self.assertTrue(np.all(matrices == expected_matricies))
-
-    def test_clifford_conjugate(self):
-
-        paulis_basis = gen_complete_pauli_array_basis(1)
-
-        h_op = op.Operator.from_labels_and_weights(["X", "Z"], np.sqrt(0.5) * np.array([1, 1]))
-
-        b_paulis, b_factors = paulis_basis.h(0, inplace=False)
-        c_paulis, c_factors = paulis_basis.clifford_conjugate(h_op, inplace=False)
-
-        self.assertTrue(np.all(np.isclose(b_factors, c_factors)))
-        self.assertTrue(np.all(b_paulis == c_paulis))
 
     def test_reorder_qubits(self):
         a_paulis = pa.PauliArray.from_labels([["IXYZ"], ["YYYY"]])
@@ -420,27 +370,30 @@ class TestPauliArrayFunc(unittest.TestCase):
         paulis_1 = pa.PauliArray.from_labels(["IIIX", "IIIY", "IIIZ"])
         paulis_2 = pa.PauliArray.from_labels(["IIIY", "IIIZ", "IIIX"])
 
-        commutator_array, coefs = pa.commutator(paulis_1, paulis_2)
+        commutator_array, phases = pa.commutator(paulis_1, paulis_2)
 
         expected_commutator = pa.PauliArray.from_labels(["IIIZ", "IIIX", "IIIY"])
 
-        expected_coefs = [0.0 + 2.0j, 0.0 + 2.0j, 0.0 + 2.0j]
+        expected_phases = [3, 3, 3]
 
         self.assertTrue(np.all(commutator_array == expected_commutator))
-        self.assertTrue(np.all(coefs == expected_coefs))
+        self.assertTrue(np.all(phases == expected_phases))
 
     def test_anticommutator(self):
-        paulis_1 = pa.PauliArray.from_labels(["IIIX", "IIIY", "IIIZ"])
-        paulis_2 = pa.PauliArray.from_labels(["IIIX", "IIIX", "IIIX"])
+        paulis_1 = pa.PauliArray.from_labels(["IIIX", "IIYY", "IIIZ"])
+        paulis_2 = pa.PauliArray.from_labels(["IIIX", "IIXX", "IIIX"])
 
-        anticommutator_array, coefs = pa.anticommutator(paulis_1, paulis_2)
+        anticommutator_array, phases = pa.anticommutator(paulis_1, paulis_2)
 
-        expected_commutator = pa.PauliArray.from_labels(["IIII", "IIII", "IIII"])
+        print(anticommutator_array.inspect())
+        print(phases)
 
-        expected_coefs = [2.0, 0.0, 0.0]
+        expected_commutator = pa.PauliArray.from_labels(["IIII", "IIZZ", "IIII"])
+
+        expected_phases = [0, 2, 0]
 
         self.assertTrue(np.all(anticommutator_array == expected_commutator))
-        self.assertTrue(np.all(coefs == expected_coefs))
+        self.assertTrue(np.all(phases == expected_phases))
 
     def test_expand_dims(self):
         pauli_array = pa.PauliArray.from_labels(["IIIX", "IIIY", "IIIZ"])

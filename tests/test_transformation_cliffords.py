@@ -6,12 +6,13 @@ import pauliarray.pauli.operator as op
 import pauliarray.pauli.operator_array_type_1 as opat1
 import pauliarray.pauli.operator_array_type_2 as opat2
 import pauliarray.pauli.pauli_array as pa
+import pauliarray.pauli.phased_pauli_array as ppa
 import pauliarray.pauli.weighted_pauli_array as wpa
 from pauliarray.transformation import cliffords
 from pauliarray.utils.pauli_array_library import gen_complete_pauli_array_basis
 
 
-class TestCliffords(unittest.TestCase):
+class TestCliffordsPauliArray(unittest.TestCase):
     def test_h(self):
 
         paulis = gen_complete_pauli_array_basis(2)
@@ -19,11 +20,12 @@ class TestCliffords(unittest.TestCase):
         ref_paulis = pa.PauliArray.from_labels(
             ["II", "IX", "ZI", "ZX", "IZ", "IY", "ZZ", "ZY", "XI", "XX", "YI", "YX", "XZ", "XY", "YZ", "YY"]
         )
-        ref_factors = np.array([1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, 1, 1, -1, 1, -1])
+        # ref_factors = np.array([1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, 1, 1, -1, 1, -1])
+        ref_phases = np.array([0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 2, 0, 2])
 
-        new_paulis, new_factors = cliffords.h(paulis, [0])
+        new_paulis, new_phases = cliffords.h(paulis, [0])
 
-        assert np.all(new_paulis == ref_paulis) and np.all(new_factors == ref_factors), print(paulis, new_paulis)
+        assert np.all(new_paulis == ref_paulis) and np.all(new_phases == ref_phases), print(paulis, new_paulis)
 
     def test_s(self):
 
@@ -32,11 +34,12 @@ class TestCliffords(unittest.TestCase):
         ref_paulis = pa.PauliArray.from_labels(
             ["II", "IZ", "ZI", "ZZ", "IY", "IX", "ZY", "ZX", "XI", "XZ", "YI", "YZ", "XY", "XX", "YY", "YX"]
         )
-        ref_factors = np.array([1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, 1, 1, -1, 1, -1])
+        # ref_factors = np.array([1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, 1, 1, -1, 1, -1])
+        ref_phases = np.array([0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 2, 0, 2])
 
-        new_paulis, new_factors = cliffords.s(paulis, [0])
+        new_paulis, new_phases = cliffords.s(paulis, [0])
 
-        assert np.all(new_paulis == ref_paulis) and np.all(new_factors == ref_factors), print(paulis, new_paulis)
+        assert np.all(new_paulis == ref_paulis) and np.all(new_phases == ref_phases), print(paulis, new_paulis)
 
     def test_cx(self):
 
@@ -45,26 +48,137 @@ class TestCliffords(unittest.TestCase):
         ref_paulis = pa.PauliArray.from_labels(
             ["II", "IZ", "ZZ", "ZI", "XX", "XY", "YY", "YX", "XI", "XZ", "YZ", "YI", "IX", "IY", "ZY", "ZX"]
         )
-        ref_factors = np.array([1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, -1])
+        # ref_factors = np.array([1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, -1])
+        ref_phases = np.array([0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2])
 
-        new_paulis, new_factors = cliffords.cx(paulis, [0], [1])
+        new_paulis, new_phases = cliffords.cx(paulis, [0], [1])
 
-        assert np.all(new_paulis == ref_paulis) and np.all(new_factors == ref_factors), print(paulis, new_paulis)
+        assert np.all(new_paulis == ref_paulis) and np.all(new_phases == ref_phases), print(paulis, new_paulis)
 
     def test_cz(self):
 
         paulis = gen_complete_pauli_array_basis(2)
 
+        print(paulis.inspect())
+
         ref_paulis = pa.PauliArray.from_labels(
-            ["II", "IZ", "ZZ", "ZI", "XX", "XY", "YY", "YX", "XI", "XZ", "YZ", "YI", "IX", "IY", "ZY", "ZX"]
+            ["II", "IZ", "ZI", "ZZ", "ZX", "ZY", "IX", "IY", "XZ", "XI", "YZ", "YI", "YY", "YX", "XY", "XX"]
         )
-        ref_factors = np.array([1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, -1])
+        ref_phases = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 0])
 
-        new_paulis, new_factors = cliffords.cx(paulis, [0], [1])
+        new_paulis, new_phases = cliffords.cz(paulis, [0], [1])
 
-        assert np.all(new_paulis == ref_paulis) and np.all(new_factors == ref_factors), print(paulis, new_paulis)
+        assert np.all(new_paulis == ref_paulis) and np.all(new_phases == ref_phases), print(paulis, new_paulis)
 
-    def test_h_wpaulis(self):
+
+class TestCliffordsPhasedPauliArray(unittest.TestCase):
+
+    def test_h(self):
+
+        ppaulis = ppa.PhasedPauliArray.from_paulis(gen_complete_pauli_array_basis(2))
+
+        ref_ppaulis = ppa.PhasedPauliArray.from_labels(
+            ["II", "IX", "ZI", "ZX", "IZ", "-IY", "ZZ", "-ZY", "XI", "XX", "YI", "YX", "XZ", "-XY", "YZ", "-YY"]
+        )
+
+        new_ppaulis = cliffords.h(ppaulis, [0])
+
+        assert np.all(new_ppaulis == ref_ppaulis), print(ppaulis, new_ppaulis)
+
+        ppaulis = ppaulis.add_i_phases(1)
+
+        ref_ppaulis = ppa.PhasedPauliArray.from_labels(
+            [
+                "iII",
+                "iIX",
+                "iZI",
+                "iZX",
+                "iIZ",
+                "-iIY",
+                "iZZ",
+                "-iZY",
+                "iXI",
+                "iXX",
+                "iYI",
+                "iYX",
+                "iXZ",
+                "-iXY",
+                "iYZ",
+                "-iYY",
+            ]
+        )
+
+        new_ppaulis = cliffords.h(ppaulis, [0])
+
+        assert np.all(new_ppaulis == ref_ppaulis), print(ppaulis, new_ppaulis)
+
+    def test_s(self):
+
+        ppaulis = ppa.PhasedPauliArray.from_paulis(gen_complete_pauli_array_basis(2))
+
+        ref_ppaulis = ppa.PhasedPauliArray.from_labels(
+            ["II", "IZ", "ZI", "ZZ", "IY", "-IX", "ZY", "-ZX", "XI", "XZ", "YI", "YZ", "XY", "-XX", "YY", "-YX"]
+        )
+
+        new_ppaulis = cliffords.s(ppaulis, [0])
+
+        assert np.all(new_ppaulis == ref_ppaulis), print(ppaulis, new_ppaulis)
+
+        ppaulis = ppaulis.add_i_phases(1)
+
+        ref_ppaulis = ppa.PhasedPauliArray.from_labels(
+            [
+                "iII",
+                "iIZ",
+                "iZI",
+                "iZZ",
+                "iIY",
+                "-iIX",
+                "iZY",
+                "-iZX",
+                "iXI",
+                "iXZ",
+                "iYI",
+                "iYZ",
+                "iXY",
+                "-iXX",
+                "iYY",
+                "-iYX",
+            ]
+        )
+
+        new_ppaulis = cliffords.s(ppaulis, [0])
+
+        assert np.all(new_ppaulis == ref_ppaulis), print(ppaulis, new_ppaulis)
+
+    def test_cx(self):
+
+        ppaulis = ppa.PhasedPauliArray.from_paulis(gen_complete_pauli_array_basis(2))
+
+        ref_ppaulis = ppa.PhasedPauliArray.from_labels(
+            ["II", "IZ", "ZZ", "ZI", "XX", "XY", "-YY", "YX", "XI", "XZ", "YZ", "YI", "IX", "IY", "ZY", "-ZX"]
+        )
+
+        new_ppaulis = cliffords.cx(ppaulis, [0], [1])
+
+        assert np.all(new_ppaulis == ref_ppaulis), print(ppaulis, new_ppaulis)
+
+    def test_cz(self):
+
+        ppaulis = ppa.PhasedPauliArray.from_paulis(gen_complete_pauli_array_basis(2))
+
+        ref_ppaulis = ppa.PhasedPauliArray.from_labels(
+            ["II", "IZ", "ZI", "ZZ", "ZX", "ZY", "IX", "IY", "XZ", "XI", "YZ", "YI", "YY", "-YX", "-XY", "XX"]
+        )
+
+        new_ppaulis = cliffords.cz(ppaulis, [0], [1])
+
+        assert np.all(new_ppaulis == ref_ppaulis), print(ppaulis, new_ppaulis)
+
+
+class TestCliffordsWeightedPauliArray(unittest.TestCase):
+
+    def test_h(self):
 
         paulis = gen_complete_pauli_array_basis(2)
         wpaulis = wpa.WeightedPauliArray.from_paulis(paulis)
@@ -80,7 +194,7 @@ class TestCliffords(unittest.TestCase):
 
         assert np.all(new_wpaulis == ref_wpaulis)
 
-    def test_cx_wpaulis(self):
+    def test_cx(self):
 
         paulis = gen_complete_pauli_array_basis(2)
         wpaulis = wpa.WeightedPauliArray.from_paulis(paulis)

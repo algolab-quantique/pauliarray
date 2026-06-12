@@ -1,14 +1,13 @@
 import re
 from numbers import Number
-from typing import TYPE_CHECKING, Any, List, Literal, Tuple, Union
+from typing import TYPE_CHECKING, Any, Callable, List, Literal, Self, Tuple, Union
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 import pauliarray.pauli.pauli_array as pa
-from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable, is_concatenatable
-
 from pauliarray.utils import labels_to_table
+from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable, is_concatenatable
 
 if TYPE_CHECKING:
     from pauliarray.pauli.operator import Operator
@@ -53,13 +52,54 @@ class PhasedPauliArray(object):
     def paulis(self) -> pa.PauliArray:
         return self._paulis
 
+    def replace_paulis_and_phases(self, new_paulis: pa.PauliArray, new_phases: NDArray, inplace: bool = False) -> Self:
+        """
+        Replace the Paulis and Phases in the object by the new ones.
+
+        Args:
+            new_paulis (PauliArray): The new Paulis
+            new_phases (NDArray): The new Phases
+            inplace (bool, optional): If True replace inside the current instance. If False returns a new instance. Defaults to False.
+
+        Returns:
+            PhasedPauliArray: The object with replaced Paulis and phases
+        """
+
+        assert new_paulis.shape == self.shape
+        assert new_phases.shape == self.shape
+        if inplace:
+            self._paulis = new_paulis.copy()
+            self._phases = new_phases.copy()
+            return self
+
+        return PhasedPauliArray(new_paulis.copy(), new_phases.copy())
+
+    def clifford_transform_paulis(self, clifford_fct: Callable, *args, inplace=False) -> Self:
+        """
+        Transform the Paulis using a Clifford transformation (from transformation.cliffords)
+
+        Args:
+            clifford_fct (Callable): A Clifford function (from transformation.cliffords)
+            *args: The arguments of the Clifford function, such as the qubits on which to apply.
+            inplace (bool, optional): If True replace the existing Paulis. Defaults to False.
+
+        Returns:
+            WeightedPauliArray: The transformed WeightedPauliArray
+            "np.ndarray[np.complex]": The factors resulting from the transformation
+        """
+
+        new_paulis, phases = clifford_fct(self.paulis, *args)
+        new_phases = np.mod(self._phases + phases, 4)
+
+        return self.replace_paulis_and_phases(new_paulis, new_phases, inplace)
+
     def __getitem__(self, key):
         new_paulis = self._paulis[key]
         new_phases = self._phases[key]
 
         return PhasedPauliArray(new_paulis, new_phases)
 
-    def __setitem__(self, key, value: "PhasedPauliArray"):
+    def __setitem__(self, key, value: Self):
         if isinstance(value, PhasedPauliArray):
             self._phases[key] = value._phases
             self._paulis[key] = value._paulis
@@ -69,7 +109,7 @@ class PhasedPauliArray(object):
     def __str__(self):
         return f"PhasedPauliArray: num_qubits = {self.num_qubits}, shape = {str(self.shape)}, ..."
 
-    def __eq__(self, other: "PhasedPauliArray") -> "np.ndarray[np.bool]":
+    def __eq__(self, other: Self) -> "np.ndarray[np.bool]":
         """
         Checks element-wise if the other PhasedPauliArray is equal.
 
@@ -84,7 +124,7 @@ class PhasedPauliArray(object):
 
         return np.logical_and(eq_paulis, eq_phases)
 
-    def _mul(self, other: "PhasedPauliArray") -> "PhasedPauliArray":
+    def _mul(self, other: Self) -> Self:
         if isinstance(other, Number):
             return self.mul_phases(other)
         elif isinstance(other, PhasedPauliArray):
@@ -94,7 +134,7 @@ class PhasedPauliArray(object):
 
     __mul__ = __rmul__ = _mul
 
-    def copy(self) -> "PhasedPauliArray":
+    def copy(self) -> Self:
         """
         Returns a copy of the PhasedPauliArray.
 
@@ -103,13 +143,13 @@ class PhasedPauliArray(object):
         """
         return PhasedPauliArray(self._paulis.copy(), self._phases.copy())
 
-    def adjoint(self) -> "PhasedPauliArray":
+    def adjoint(self) -> Self:
 
         new_phases = np.choose([0, 3, 2, 1], self.phases)
 
         return PhasedPauliArray(self.paulis, new_phases)
 
-    def reshape(self, shape: Tuple[int, ...]) -> "PhasedPauliArray":
+    def reshape(self, shape: Tuple[int, ...]) -> Self:
         """
         Reshape the PhasedPauliArray
 
@@ -127,7 +167,7 @@ class PhasedPauliArray(object):
 
         return PhasedPauliArray(new_paulis, new_phases)
 
-    def flatten(self) -> "PhasedPauliArray":
+    def flatten(self) -> Self:
         """
         Returns a copy of the PhasedPauliArray flattened into one dimension.
 
@@ -139,7 +179,7 @@ class PhasedPauliArray(object):
 
         return self.reshape(shape)
 
-    def squeeze(self) -> "PhasedPauliArray":
+    def squeeze(self) -> Self:
         """
         Returns a PhasedPauliArray with axes of length one removed.
 
@@ -151,7 +191,7 @@ class PhasedPauliArray(object):
 
         return PhasedPauliArray(new_paulis, new_phases)
 
-    def remove(self, index: int) -> "PhasedPauliArray":
+    def remove(self, index: int) -> Self:
         """
         Returns a PhasedPauliArray with removed item at given index.
 
@@ -166,7 +206,7 @@ class PhasedPauliArray(object):
 
         return PhasedPauliArray(new_paulis, new_phases)
 
-    def extract(self, condition: Union[NDArray, list]) -> "PhasedPauliArray":
+    def extract(self, condition: Union[NDArray, list]) -> Self:
         """
         Return the Pauli strings from the PhasedPauliArray object that satisfy some condition.
 
@@ -193,7 +233,7 @@ class PhasedPauliArray(object):
 
         return PhasedPauliArray(new_paulis, new_phases)
 
-    def take_qubits(self, indices: Union["np.ndarray[np.int]", range, int]) -> "PhasedPauliArray":
+    def take_qubits(self, indices: Union["np.ndarray[np.int]", range, int]) -> Self:
         if isinstance(indices, int):
             indices = np.array([indices], dtype=int)
 
@@ -202,7 +242,7 @@ class PhasedPauliArray(object):
 
         return PhasedPauliArray(new_paulis, new_phases)
 
-    def compress_qubits(self, condition: "np.ndarray[np.bool]") -> "PhasedPauliArray":
+    def compress_qubits(self, condition: "np.ndarray[np.bool]") -> Self:
         new_phases = self.phases.copy()
         new_paulis = self.paulis.compress_qubits(condition)
 
@@ -215,7 +255,13 @@ class PhasedPauliArray(object):
 
         return NotImplemented
 
-    def compose_phased_pauli_array(self, other: "PhasedPauliArray") -> "PhasedPauliArray":
+    def add_i_phases(self, other: Union[int, NDArray]) -> Self:
+        new_phases = np.mod(self.phases - other, 4)
+        new_paulis = pa.broadcast_to(self.paulis, new_phases.shape)
+
+        return PhasedPauliArray(new_paulis, new_phases)
+
+    def compose_phased_pauli_array(self, other: Self) -> Self:
         new_paulis, phases = self._paulis.compose_pauli_array(other.paulis)
         new_phases = np.mod(self._phases + other.phases + phases, 4)
 
@@ -228,16 +274,16 @@ class PhasedPauliArray(object):
 
         return NotImplemented
 
-    def tensor_phased_pauli_array(self, other: "PhasedPauliArray") -> "PhasedPauliArray":
+    def tensor_phased_pauli_array(self, other: Self) -> Self:
         new_paulis = self.paulis.tensor_pauli_array(other.paulis)
         new_phases = np.mod(self.phases + other.phases, 4)
 
         return PhasedPauliArray(new_paulis, new_phases)
 
-    def commute_with(self, other: "PhasedPauliArray") -> "np.ndarray[np.bool]":
+    def commute_with(self, other: Self) -> "np.ndarray[np.bool]":
         return self.paulis.commute_with(other.paulis)
 
-    def bitwise_commute_with(self, other: "PhasedPauliArray") -> "np.ndarray[np.bool]":
+    def bitwise_commute_with(self, other: Self) -> "np.ndarray[np.bool]":
         return self.paulis.bitwise_commute_with(other.paulis)
 
     def inspect(self) -> str:
@@ -259,10 +305,10 @@ class PhasedPauliArray(object):
             return f"PauliArray\n{label_table}"
 
         label_table = labels_to_table.label_table_nd(self.to_labels())
-        
+
         return f"PhasedPauliArray\n{label_table}"
 
-    def clifford_conjugate(self, clifford: "Operator", inplace: bool = True) -> "PhasedPauliArray":
+    def clifford_conjugate(self, clifford: "Operator", inplace: bool = True) -> Self:
         """
         Performs a Clifford transformation.
 
@@ -369,14 +415,14 @@ class PhasedPauliArray(object):
         return phase_factors[..., None, None] * self.paulis.to_matrices()
 
     @classmethod
-    def new(cls, shape: Tuple[int, ...], num_qubits: int) -> "PhasedPauliArray":
+    def new(cls, shape: Tuple[int, ...], num_qubits: int) -> Self:
         phases = np.zeros(shape, dtype=np.uint)
         paulis = pa.PauliArray.identities(shape, num_qubits)
 
         return PhasedPauliArray(paulis, phases)
 
     @classmethod
-    def empty(cls, num_qubits: int) -> "PhasedPauliArray":
+    def empty(cls, num_qubits: int) -> Self:
         """
         Returns an empty PhasedPauliArray with the number of qubits already set.
 
@@ -392,7 +438,7 @@ class PhasedPauliArray(object):
         return PhasedPauliArray(paulis, phases)
 
     @classmethod
-    def random(cls, shape: Tuple[int, ...], num_qubits: int) -> "PhasedPauliArray":
+    def random(cls, shape: Tuple[int, ...], num_qubits: int) -> Self:
         """
         Creates a PauliArray of a given shape and number of qubits filled with random Pauli strings.
 
@@ -409,7 +455,7 @@ class PhasedPauliArray(object):
         return PhasedPauliArray(random_paulis, random_phases)
 
     @classmethod
-    def from_labels(cls, labels) -> "PhasedPauliArray":
+    def from_labels(cls, labels) -> Self:
 
         phases, pauli_labels = cls.split_phases_pauli_labels(labels)
 
@@ -454,14 +500,14 @@ class PhasedPauliArray(object):
         z_strings: "np.ndarray[np.bool]",
         x_strings: "np.ndarray[np.bool]",
         phases: "np.ndarray[np.uint]",
-    ) -> "PhasedPauliArray":
+    ) -> Self:
 
         paulis = pa.PauliArray(z_strings, x_strings)
 
         return PhasedPauliArray(paulis, phases)
 
     @classmethod
-    def from_paulis(cls, paulis: pa.PauliArray) -> "PhasedPauliArray":
+    def from_paulis(cls, paulis: pa.PauliArray) -> Self:
         phases = np.zeros(paulis.shape, dtype=np.uint)
 
         return PhasedPauliArray(paulis.copy(), phases)
@@ -472,7 +518,7 @@ class PhasedPauliArray(object):
             np.save(f, self.phases)
 
     @classmethod
-    def from_npz(cls, filename) -> "PhasedPauliArray":
+    def from_npz(cls, filename) -> Self:
         with open(filename, "rb") as f:
             zx_strings = np.load(f)
             phases = np.load(f)
@@ -480,8 +526,7 @@ class PhasedPauliArray(object):
         return PhasedPauliArray(pa.PauliArray.from_zx_strings(zx_strings), phases)
 
 
-
-def broadcast_to(ppaulis: PhasedPauliArray, shape: Tuple[int, ...]) -> "PhasedPauliArray":
+def broadcast_to(ppaulis: PhasedPauliArray, shape: Tuple[int, ...]) -> Self:
     """
     Returns the given PhasedPauliArray broadcasted to a given shape.
 
@@ -499,7 +544,7 @@ def broadcast_to(ppaulis: PhasedPauliArray, shape: Tuple[int, ...]) -> "PhasedPa
     return PhasedPauliArray(new_paulis, new_phases)
 
 
-def expand_dims(ppaulis: PhasedPauliArray, axis=Union[int, Tuple[int, ...]]) -> "PhasedPauliArray":
+def expand_dims(ppaulis: PhasedPauliArray, axis=Union[int, Tuple[int, ...]]) -> Self:
     """
     Expands the shape of a PhasedPauliArray.
 

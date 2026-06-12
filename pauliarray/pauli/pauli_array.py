@@ -6,10 +6,10 @@ from numpy.typing import NDArray
 
 from pauliarray.binary import bit_operations as bitops
 from pauliarray.binary import symplectic
+from pauliarray.utils import labels_to_table
 
 #
 from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable, is_concatenatable
-from pauliarray.utils import labels_to_table
 
 if TYPE_CHECKING:
     from pauliarray.pauli.operator import Operator
@@ -197,12 +197,12 @@ class PauliArray(object):
             "np.ndarray[np.complex]": The factors resulting from the transformation
         """
 
-        new_paulis, factors = clifford_fct(self, *args)
+        new_paulis, phases = clifford_fct(self, *args)
         if inplace:
             self.replace_paulis(new_paulis)
-            return self, factors
+            return self, phases
 
-        return new_paulis, factors
+        return new_paulis, phases
 
     def __getitem__(self, key):
         # TODO check number of dimensions in key
@@ -421,12 +421,7 @@ class PauliArray(object):
         new_phases = bitops.dot(new_z_strings, new_x_strings).astype(np.int8)
         commutation_phases = 2 * bitops.dot(self.x_strings, other.z_strings).astype(np.int8)
 
-        phases = np.mod(
-            commutation_phases + self_phases + other_phases - new_phases,
-            4,
-        )
-
-        phases = np.choose(phase_power, [1, -1j, -1, 1j])
+        phases = np.mod(commutation_phases + self_phases + other_phases - new_phases, 4)
 
         return PauliArray(new_z_strings, new_x_strings), phases
 
@@ -554,7 +549,7 @@ class PauliArray(object):
             return f"PauliArray\n{label_table}"
 
         label_table = labels_to_table.label_table_nd(self.to_labels())
-        
+
         return f"PauliArray\n{label_table}"
 
     def clifford_conjugate(
@@ -856,8 +851,6 @@ class PauliArray(object):
 
         return label
 
-    
-
 
 def argsort(paulis: PauliArray, axis: int = -1) -> "np.ndarray[np.int]":
     """
@@ -939,10 +932,9 @@ def commutator(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArray, 
 
     commutators.z_strings[do_commute] = 0
     commutators.x_strings[do_commute] = 0
+    phases[do_commute] = 0
 
-    coefs = 2 * phases * ~do_commute
-
-    return commutators, coefs
+    return commutators, phases
 
 
 def commutator2(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArray, "np.ndarray[np.complex]"]:
@@ -972,15 +964,15 @@ def commutator2(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArray,
         [idx if paulis_2.shape[dim] > 1 else np.zeros(idx.shape, dtype=np.int_) for dim, idx in enumerate(idxs)]
     )
 
-    non_zero_commutators, non_zeros_coefs = paulis_1[*idx1].compose_pauli_array(paulis_2[*idx2])
+    non_zero_commutators, non_zeros_phases = paulis_1[*idx1].compose_pauli_array(paulis_2[*idx2])
 
     commutators = PauliArray.identities(shape, paulis_1.num_qubits)
-    coefs = np.zeros(shape, dtype=np.complex128)
+    phases = np.zeros(shape, dtype=np.complex128)
 
     commutators[*idxs] = non_zero_commutators
-    coefs[*idxs] = 2 * non_zeros_coefs
+    phases[*idxs] = non_zeros_phases
 
-    return commutators, coefs
+    return commutators, phases
 
 
 def anticommutator(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArray, "np.ndarray[np.complex]"]:
@@ -998,14 +990,13 @@ def anticommutator(paulis_1: PauliArray, paulis_2: PauliArray) -> Tuple[PauliArr
     assert is_broadcastable(paulis_1.shape, paulis_2.shape)
 
     anticommutators, phases = paulis_1.compose_pauli_array(paulis_2)
-    do_commute = paulis_1.commute_with(paulis_2)
+    do_anticommute = ~paulis_1.commute_with(paulis_2)
 
-    anticommutators.z_strings[~do_commute] = 0
-    anticommutators.x_strings[~do_commute] = 0
+    anticommutators.z_strings[do_anticommute] = 0
+    anticommutators.x_strings[do_anticommute] = 0
+    phases[do_anticommute] = 0
 
-    coefs = 2 * phases * do_commute
-
-    return anticommutators, coefs
+    return anticommutators, phases
 
 
 def concatenate(paulis: Tuple[PauliArray, ...], axis: int) -> PauliArray:

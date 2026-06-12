@@ -5,9 +5,8 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 import pauliarray.pauli.pauli_array as pa
-from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable, is_concatenatable
-
 from pauliarray.utils import labels_to_table
+from pauliarray.utils.array_operations import broadcast_shape, is_broadcastable, is_concatenatable
 
 if TYPE_CHECKING:
     from pauliarray.pauli.operator import Operator
@@ -130,8 +129,9 @@ class WeightedPauliArray(object):
             "np.ndarray[np.complex]": The factors resulting from the transformation
         """
 
-        new_paulis, factors = clifford_fct(self.paulis, *args)
-        new_weights = self.weights * factors
+        new_paulis, phases = clifford_fct(self.paulis, *args)
+        phase_factors = np.choose(phases, [1, -1j, -1, 1j])
+        new_weights = self.weights * phase_factors
 
         return self.replace_paulis_and_weights(new_paulis, new_weights, inplace)
 
@@ -341,7 +341,7 @@ class WeightedPauliArray(object):
 
     def bitwise_commute_with(self, other: Self) -> "np.ndarray[np.bool]":
         return self.paulis.bitwise_commute_with(other.paulis)
-    
+
     def to_labels(self) -> "np.ndarray[np.str]":
         """
         Returns the labels of all zx strings.
@@ -376,9 +376,8 @@ class WeightedPauliArray(object):
             return f"PauliArray\n{label_table}"
 
         label_table = labels_to_table.label_table_nd(self.to_labels())
-        
-        return f"WeightedPauliArray\n{label_table}"
 
+        return f"WeightedPauliArray\n{label_table}"
 
     def clifford_conjugate(self, clifford: "Operator", inplace: bool = True) -> "WeightedPauliArray":
         """
@@ -392,8 +391,8 @@ class WeightedPauliArray(object):
             WeightedPauliArray: The transformed WeightedPauliArray
         """
 
-        new_paulis, factors = clifford.clifford_conjugate_pauli_array_old(self.paulis)
-        new_weights = self.weights * factors
+        new_paulis, phases = clifford.clifford_conjugate_pauli_array_old(self.paulis)
+        new_weights = self.weights * phases
         if inplace:
             self._paulis = new_paulis
             self._weights = new_weights
