@@ -351,7 +351,11 @@ class WeightedPauliArray(object):
         """
 
         pauli_labels = self.paulis.to_labels()
-        weight_labels = [f"({weight.real:+7.4f} {weight.imag:+7.4f}j) " for weight in self.weights]
+
+        weight_labels = np.zeros(self.shape, dtype=f"U{2*7+5}")
+
+        for idx in np.ndindex(*self.shape):
+            weight_labels[idx] = f"({self.weights[idx].real:+7.4f} {self.weights[idx].imag:+7.4f}j) "
 
         labels = np.char.add(weight_labels, pauli_labels)
 

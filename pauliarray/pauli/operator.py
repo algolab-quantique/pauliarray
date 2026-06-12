@@ -513,9 +513,13 @@ class Operator(object):
             "np.ndarray[np.complex]": Residual coefficient
         """
 
-        return NotImplemented
-
         assert self.is_clifford()
+
+        self_amplitude = 1 / self.num_terms
+        self_phases = np.mod(np.round(-np.angle(self.weights) / (np.pi / 2)).astype(int), 4)
+
+        print("self_phase")
+        print(self_phases)
 
         # flatten, will be reshape at the end
         original_shape = other.shape
@@ -523,20 +527,29 @@ class Operator(object):
 
         # check the commutation between the paulis in other and in self
         anticommute_mask = ~(flat_other[:, None].commute_with(self.paulis[None, :]))
-        anticommute_sign = np.choose(anticommute_mask, [1, -1])
+        same_mask = np.all(anticommute_mask == anticommute_mask[:, 0], axis=1)
+        print(same_mask.astype(int))
+
+        print(anticommute_mask.astype(int))
+        anticommute_phases = np.choose(anticommute_mask, [0, 2])
 
         # computes all the product between the paulis in self into a square array
-        prod_wpaulis = self.wpaulis[:, None].compose_weighted_pauli_array(self.wpaulis[None, :].adjoint())
+        self_self_prod_wpaulis = self.wpaulis[:, None].compose_weighted_pauli_array(self.wpaulis[None, :].adjoint())
+        self_self_docommute_mask = self.wpaulis[:, None].commute_with(self.wpaulis[None, :])
+
+        print("prod pauli")
+        print(self_self_prod_wpaulis[self_self_docommute_mask].inspect())
+        print(self_self_prod_wpaulis[~self_self_docommute_mask].inspect())
 
         # identifies the unique paulis in the products
-        unique_prod_paulis, inverse = pa.fast_flat_unique(prod_wpaulis.paulis.flatten(), return_inverse=True)
-        # create a square matrix with the unique pauli index of its position in prod_wpaulis
+        unique_prod_paulis, inverse = pa.fast_flat_unique(self_self_prod_wpaulis.paulis.flatten(), return_inverse=True)
+        # create a square matrix with the unique pauli index of its position in self_self_prod_wpaulis
         inverse = inverse.reshape((self.num_terms, self.num_terms))
 
         # gathers the weights associated with the unique paulis
         unique_prod_paulis_weights = np.zeros((unique_prod_paulis.size, unique_prod_paulis.size), dtype=complex)
         for i in range(unique_prod_paulis.size):
-            unique_prod_paulis_weights[i, :] = prod_wpaulis.weights[inverse == i]
+            unique_prod_paulis_weights[i, :] = self_self_prod_wpaulis.weights[inverse == i]
 
         # identifies the active paulis
         all_coefs = anticommute_sign @ unique_prod_paulis_weights.T
@@ -673,6 +686,7 @@ class Operator(object):
         Returns:
             bool: True if the Operator is a Clifford operator.
         """
+
         sq_amp = np.abs(self.simplify().wpaulis.weights) ** 2
 
         return bool(np.all(np.isclose(sq_amp, 1 / self.num_terms))) and self.is_unitary()

@@ -155,15 +155,17 @@ class TestOperator(unittest.TestCase):
         )
         potot = po2.compose_operator(po1)
 
+        print(potot.inspect())
+
         reps = 100
         t0 = time.time()
         for i in range(reps):
-            new_paulis_1, coefs_1 = potot.clifford_conjugate_pauli_array(paulis)
+            new_paulis_1, phases_1 = potot.clifford_conjugate_pauli_array(paulis)
         print(time.time() - t0)
 
         t0 = time.time()
         for i in range(reps):
-            new_paulis_2, coefs_2 = potot.clifford_conjugate_pauli_array_old(paulis)
+            new_paulis_2, phases_2 = potot.clifford_conjugate_pauli_array_old(paulis)
         print(time.time() - t0)
 
         self.assertTrue(np.all(new_paulis_1 == new_paulis_2))
