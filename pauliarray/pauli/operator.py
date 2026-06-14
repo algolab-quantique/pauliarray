@@ -537,9 +537,13 @@ class Operator(object):
         self_self_prod_wpaulis = self.wpaulis[:, None].compose_weighted_pauli_array(self.wpaulis[None, :].adjoint())
         self_self_docommute_mask = self.wpaulis[:, None].commute_with(self.wpaulis[None, :])
 
+        self_self_mod_2_exp = np.mod(~self_self_docommute_mask + self_phases[:, None] + self_phases[None, :], 2)
+
         print("prod pauli")
         print(self_self_prod_wpaulis[self_self_docommute_mask].inspect())
         print(self_self_prod_wpaulis[~self_self_docommute_mask].inspect())
+
+        print(self_self_mod_2_exp)
 
         # identifies the unique paulis in the products
         unique_prod_paulis, inverse = pa.fast_flat_unique(self_self_prod_wpaulis.paulis.flatten(), return_inverse=True)
