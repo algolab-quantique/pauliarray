@@ -518,56 +518,72 @@ class Operator(object):
         self_amplitude = 1 / self.num_terms
         self_phases = np.mod(np.round(-np.angle(self.weights) / (np.pi / 2)).astype(int), 4)
 
-        print("self_phase")
-        print(self_phases)
+        # print("self_phase")
+        # print(self_phases)
 
         # flatten, will be reshape at the end
         original_shape = other.shape
         flat_other = other.flatten()
 
         # check the commutation between the paulis in other and in self
-        anticommute_mask = ~(flat_other[:, None].commute_with(self.paulis[None, :]))
-        same_mask = np.all(anticommute_mask == anticommute_mask[:, 0], axis=1)
-        print(same_mask.astype(int))
+        commute_mask = flat_other[:, None].commute_with(self.paulis[None, :])
 
-        print(anticommute_mask.astype(int))
-        anticommute_phases = np.choose(anticommute_mask, [0, 2])
+        idem_mask = np.all(commute_mask == commute_mask[:, 0], axis=1)
+        change_mask = ~idem_mask
+
+        print(idem_mask.astype(int))
 
         # computes all the product between the paulis in self into a square array
-        self_self_prod_wpaulis = self.wpaulis[:, None].compose_weighted_pauli_array(self.wpaulis[None, :].adjoint())
+        # self_self_prod_wpaulis = self.wpaulis[:, None].compose_weighted_pauli_array(self.wpaulis[None, :].adjoint())
+        prod_paulis, prod_phases = self.paulis[:, None].compose_pauli_array(self.paulis[None, :])
         self_self_docommute_mask = self.wpaulis[:, None].commute_with(self.wpaulis[None, :])
 
-        self_self_mod_2_exp = np.mod(~self_self_docommute_mask + self_phases[:, None] + self_phases[None, :], 2)
+        flat_prod_paulis = prod_paulis.flatten()
+        flat_prod_phases = prod_phases.flatten()
 
-        print("prod pauli")
-        print(self_self_prod_wpaulis[self_self_docommute_mask].inspect())
-        print(self_self_prod_wpaulis[~self_self_docommute_mask].inspect())
+        print(prod_paulis.inspect())
+
+        unique_prod_paulis, inverse = pa.fast_flat_unique(flat_prod_paulis, return_inverse=True)
+
+        print(unique_prod_paulis.inspect())
+        print(inverse)
+
+        # self_self_mod_2_exp = np.mod(~self_self_docommute_mask + self_phases[:, None] + self_phases[None, :], 2)
+
+        # print("prod pauli")
+        # print(self_self_prod_wpaulis[self_self_docommute_mask].inspect())
+        # print(self_self_prod_wpaulis[~self_self_docommute_mask].inspect())
 
         print(self_self_mod_2_exp)
+        print(~commute_mask.astype(int))
 
-        # identifies the unique paulis in the products
-        unique_prod_paulis, inverse = pa.fast_flat_unique(self_self_prod_wpaulis.paulis.flatten(), return_inverse=True)
-        # create a square matrix with the unique pauli index of its position in self_self_prod_wpaulis
-        inverse = inverse.reshape((self.num_terms, self.num_terms))
+        three_dee = np.mod(self_self_mod_2_exp[None, :, :] + ~commute_mask[:, :, None] + ~commute_mask[:, None, :], 2)
 
-        # gathers the weights associated with the unique paulis
-        unique_prod_paulis_weights = np.zeros((unique_prod_paulis.size, unique_prod_paulis.size), dtype=complex)
-        for i in range(unique_prod_paulis.size):
-            unique_prod_paulis_weights[i, :] = self_self_prod_wpaulis.weights[inverse == i]
+        print(three_dee)
 
-        # identifies the active paulis
-        all_coefs = anticommute_sign @ unique_prod_paulis_weights.T
-        applied_mask = ~np.isclose(all_coefs, 0)
-        active_coefs = np.conj(all_coefs[applied_mask])
-        applied_mask2 = np.mod(
-            np.arange(applied_mask.size).reshape(all_coefs.shape)[applied_mask],
-            unique_prod_paulis.size,
-        )
-        active_paulis = unique_prod_paulis[applied_mask2]
+        # # identifies the unique paulis in the products
+        # unique_prod_paulis, inverse = pa.fast_flat_unique(self_self_prod_wpaulis.paulis.flatten(), return_inverse=True)
+        # # create a square matrix with the unique pauli index of its position in self_self_prod_wpaulis
+        # inverse = inverse.reshape((self.num_terms, self.num_terms))
 
-        # performs multiplication between the active paulis and the paulis in other
-        new_paulis, new_phases = active_paulis.compose_pauli_array(flat_other)
-        factors = active_coefs * new_phases
+        # # gathers the weights associated with the unique paulis
+        # unique_prod_paulis_weights = np.zeros((unique_prod_paulis.size, unique_prod_paulis.size), dtype=complex)
+        # for i in range(unique_prod_paulis.size):
+        #     unique_prod_paulis_weights[i, :] = self_self_prod_wpaulis.weights[inverse == i]
+
+        # # identifies the active paulis
+        # all_coefs = anticommute_sign @ unique_prod_paulis_weights.T
+        # applied_mask = ~np.isclose(all_coefs, 0)
+        # active_coefs = np.conj(all_coefs[applied_mask])
+        # applied_mask2 = np.mod(
+        #     np.arange(applied_mask.size).reshape(all_coefs.shape)[applied_mask],
+        #     unique_prod_paulis.size,
+        # )
+        # active_paulis = unique_prod_paulis[applied_mask2]
+
+        # # performs multiplication between the active paulis and the paulis in other
+        # new_paulis, new_phases = active_paulis.compose_pauli_array(flat_other)
+        # factors = active_coefs * new_phases
 
         return new_paulis.reshape(original_shape), factors.reshape(original_shape)
 
@@ -693,7 +709,24 @@ class Operator(object):
 
         sq_amp = np.abs(self.simplify().wpaulis.weights) ** 2
 
-        return bool(np.all(np.isclose(sq_amp, 1 / self.num_terms))) and self.is_unitary()
+        assert np.all(np.isclose(sq_amp, 1 / self.num_terms))
+
+        self_amplitude = 1 / self.num_terms
+        self_phases = np.mod(np.round(-np.angle(self.weights) / (np.pi / 2)).astype(int), 4)
+
+        prod_paulis, prod_phases = self.paulis[:, None].compose_pauli_array(self.paulis[None, :])
+        self_self_docommute_mask = self.wpaulis[:, None].commute_with(self.wpaulis[None, :])
+
+        flat_prod_paulis = prod_paulis.flatten()
+        flat_prod_phases = prod_phases.flatten()
+
+        unique_prod_paulis, inverse = pa.fast_flat_unique(flat_prod_paulis, return_inverse=True)
+
+        print(flat_prod_paulis.inspect())
+        print(unique_prod_paulis.inspect())
+        print(inverse)
+
+        return False
 
     def trace(self) -> "np.complex":
         """

@@ -143,10 +143,21 @@ class TestOperator(unittest.TestCase):
 
         com_po = commutator(po1, po2)
 
+    def test_is_clifford(self):
+
+        po1 = op.Operator.from_labels_and_weights(["II", "XI", "IZ", "XZ"], 0.5 * np.array([1, 1, 1, -1]))
+        po2 = op.Operator.from_labels_and_weights(
+            ["IX", "IZ"],
+            np.sqrt(0.5) * np.array([1, 1]),
+        )
+        po2 = po2.compose_operator(po1).simplify()
+
+        self.assertTrue(po1.is_clifford())
+
     def test_clifford_conjugate_pauli_array(self):
         labels = ["IX", "IY", "IZ", "XI", "YI", "ZI", "II", "II"]
 
-        paulis = pa.PauliArray.from_labels(labels).reshape((4, 2))
+        paulis = pa.PauliArray.from_labels(labels)  # .reshape((4, 2))
 
         po1 = op.Operator.from_labels_and_weights(["II", "XI", "IZ", "XZ"], 0.5 * np.array([1, 1, 1, -1]))
         po2 = op.Operator.from_labels_and_weights(
@@ -154,6 +165,8 @@ class TestOperator(unittest.TestCase):
             np.sqrt(0.5) * np.array([1, 1]),
         )
         potot = po2.compose_operator(po1)
+
+        print(paulis.inspect())
 
         print(potot.inspect())
 
