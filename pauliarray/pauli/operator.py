@@ -102,6 +102,24 @@ class Operator(object):
 
         return NotImplemented
 
+    def __sub__(self, other: Union["Operator", Number]) -> "Operator":
+        """
+        Subtracts another Operator or a scalar from this Operator.
+
+        Args:
+            other (Union[Operator, Number]): Another Operator or a scalar.
+
+        Returns:
+            Operator: The resulting Operator.
+        """
+        if isinstance(other, Operator):
+            return self.add_operator(other.mul_scalar(-1))
+
+        if isinstance(other, Number):
+            return self.add_scalar(-other)
+
+        return NotImplemented
+
     def __mul__(self, other: any):
         """
         Multiplies this Operator with another Operator or a scalar.
