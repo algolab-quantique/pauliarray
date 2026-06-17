@@ -3,20 +3,9 @@
 from qiskit_nature.second_q.drivers import PySCFDriver
 
 import pauliarray.pauli.operator as op
-import pauliarray.pauli.pauli_array as pa
-import pauliarray.pauli.weighted_pauli_array as wpa
-from pauliarray.conversion.qiskit import extract_fermionic_op, weighted_pauli_array_from_pauli_list
-from pauliarray.diagonalisation.commutating_paulis.with_circuits import (
-    general_to_diagonal as general_to_diagonal_with_circuit,
-)
-from pauliarray.diagonalisation.commutating_paulis.with_operators import (
-    general_to_diagonal as general_to_diagonal_with_operators,
-)
-from pauliarray.diagonalisation.commutating_paulis.with_qiskit_circuits import (
-    general_to_diagonal as general_to_diagonal_with_qiskit_circuits,
-)
+from pauliarray.conversion.qiskit import extract_fermionic_op
 from pauliarray.factorisation import qubit_tapering as qutap
-from pauliarray.mapping.fermion import BravyiKitaev, JordanWigner, Parity
+from pauliarray.mapping.fermion import JordanWigner
 
 # %%
 
