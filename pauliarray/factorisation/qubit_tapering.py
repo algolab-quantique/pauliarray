@@ -5,8 +5,6 @@ import pauliarray.pauli.operator_array_type_1 as opua
 import pauliarray.pauli.pauli_array as pa
 from pauliarray.binary import symplectic
 
-# from pauliarray.state.basis_state_array import BasisStateArray
-
 
 def find_symmetry_paulis(paulis: pa.PauliArray) -> pa.PauliArray:
     """
