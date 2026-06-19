@@ -709,6 +709,19 @@ class Operator(object):
 
         sq_amp = np.abs(self.simplify().wpaulis.weights) ** 2
 
+        diff_zx_strings = bitops.row_space(
+            bitops.add(self.paulis.zx_strings[:, None, :], self.paulis.zx_strings[None, :, :]).reshape(
+                (self.num_terms**2, 2 * self.num_qubits)
+            )
+        )
+
+        kernel_zx_string = symplectic.orthogonal_complement(diff_zx_strings)
+
+        print("diffs")
+        print(diff_zx_strings.astype(int))
+        print("kernel")
+        print(kernel_zx_string.astype(int))
+
         assert np.all(np.isclose(sq_amp, 1 / self.num_terms))
 
         self_amplitude = 1 / self.num_terms

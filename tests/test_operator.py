@@ -150,9 +150,11 @@ class TestOperator(unittest.TestCase):
             ["IX", "IZ"],
             np.sqrt(0.5) * np.array([1, 1]),
         )
-        po2 = po2.compose_operator(po1).simplify()
+        po3 = po2.compose_operator(po1).simplify()
 
-        self.assertTrue(po1.is_clifford())
+        print(po3.inspect())
+
+        self.assertTrue(po3.is_clifford())
 
     def test_clifford_conjugate_pauli_array(self):
         labels = ["IX", "IY", "IZ", "XI", "YI", "ZI", "II", "II"]
