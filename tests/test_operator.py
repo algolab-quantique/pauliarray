@@ -8,6 +8,7 @@ from pauliarray.pauli import operator as op
 from pauliarray.pauli import pauli_array as pa
 from pauliarray.pauli import weighted_pauli_array as wpa
 from pauliarray.pauli.operator import commutator
+from pauliarray.utils.pauli_array_library import gen_complete_pauli_array_basis
 
 
 class TestOperator(unittest.TestCase):
@@ -215,6 +216,12 @@ class TestOperator(unittest.TestCase):
 
         # self.assertTrue(np.all(new_paulis_1 == new_paulis_2))
         # self.assertTrue(np.all(np.isclose(coefs_1, coefs_2)))
+
+        pauli_basis = pa.PauliArray.from_zx_strings(np.identity(2 * 2, dtype=bool))
+        transformed_pauli_basis, phases = potot.clifford_conjugate_pauli_array_old(pauli_basis)
+
+        print(pauli_basis.zx_strings.astype(int))
+        print(transformed_pauli_basis.zx_strings.astype(int))
 
     def test_combine_repeated_terms(self):
 

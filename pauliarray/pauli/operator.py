@@ -469,8 +469,6 @@ class Operator(object):
             "np.ndarray[np.complex]": Residual coefficient
         """
 
-        # return NotImplemented
-
         assert self.is_clifford()
 
         self_phases = np.mod(np.round(-np.angle(self.weights) / (np.pi / 2)).astype(int), 4)
