@@ -469,35 +469,49 @@ class Operator(object):
             "np.ndarray[np.complex]": Residual coefficient
         """
 
-        return NotImplemented
+        # return NotImplemented
 
         assert self.is_clifford()
 
+        self_phases = np.mod(np.round(-np.angle(self.weights) / (np.pi / 2)).astype(int), 4)
+
         original_shape = other.shape
-        flat_other = other.flatten()
+        flat_orig_paulis = other.flatten()
 
-        prod1, phases1 = self.wpaulis.paulis[None, :].compose_pauli_array(flat_other[:, None])
-        prod2, phases2 = prod1[:, :, None].compose_pauli_array(self.wpaulis.paulis[None, None, :])
+        # dim 0 = pauli
+        # dim 1 = left side
+        # dim 2 = right side
 
-        coefs = (self.wpaulis.weights * phases1)[:, :, None] * np.conj(self.wpaulis.weights[None, None, :]) * phases2
+        prod_paulis_1, phases1 = self.wpaulis.paulis[None, :].compose_pauli_array(flat_orig_paulis[:, None])
+        prod_paulis, phases2 = prod_paulis_1[:, :, None].compose_pauli_array(self.wpaulis.paulis[None, None, :])
 
-        all_paulis = prod2.reshape(flat_other.shape + (self.num_terms**2,))
-        all_coefs = coefs.reshape(flat_other.shape + (self.num_terms**2,))
+        phases = np.mod(phases1[:, :, None] + phases2 - self_phases[None, :, None] + self_phases[None, None, :], 4)
 
-        upaulis, inverse = pa.unique(all_paulis, return_inverse=True, axis=-1)
+        new_paulis = pa.PauliArray.identities(flat_orig_paulis.shape, flat_orig_paulis.num_qubits)
+        new_phases = np.zeros(flat_orig_paulis.shape, dtype=phases.dtype)
 
-        ucoefs = np.zeros(upaulis.shape, dtype=complex)
-        for i, newi in enumerate(inverse):
-            ucoefs[:, newi] += all_coefs[:, i]
+        for i in range(phases.shape[0]):
 
-        selection = ~np.isclose(ucoefs, 0)
+            flat_prod_paulis = prod_paulis[i, :, :].flatten()
+            flat_phases = phases[i, :, :].flatten()
 
-        new_coefs = ucoefs[selection]
-        new_paulis = upaulis[selection]
+            u_prods_phases = np.zeros_like(phases[i, :, :])
+
+            u_prod_paulis, inverse = pa.fast_flat_unique(flat_prod_paulis, return_inverse=True)
+
+            for j in range(phases.shape[1]):
+                u_prods_phases[j, :] = flat_phases[inverse == j]
+
+            prod_mask_result = np.all(u_prods_phases[:, [0]] == u_prods_phases, axis=1)
+
+            assert np.sum(prod_mask_result) == 1, "The Operator is probably not Clifford"
+
+            new_paulis[i] = u_prod_paulis[prod_mask_result]
+            new_phases[i] = u_prods_phases[prod_mask_result, 0]
 
         return (
             new_paulis.reshape(original_shape),
-            new_coefs.reshape(original_shape),
+            new_phases.reshape(original_shape),
         )
 
     def clifford_conjugate_pauli_array(self, other: pa.PauliArray) -> Tuple[pa.PauliArray, NDArray]:
@@ -717,10 +731,10 @@ class Operator(object):
 
         kernel_zx_string = symplectic.orthogonal_complement(diff_zx_strings)
 
-        print("diffs")
-        print(diff_zx_strings.astype(int))
-        print("kernel")
-        print(kernel_zx_string.astype(int))
+        # print("diffs")
+        # print(diff_zx_strings.astype(int))
+        # print("kernel")
+        # print(kernel_zx_string.astype(int))
 
         assert np.all(np.isclose(sq_amp, 1 / self.num_terms))
 
@@ -735,11 +749,11 @@ class Operator(object):
 
         unique_prod_paulis, inverse = pa.fast_flat_unique(flat_prod_paulis, return_inverse=True)
 
-        print(flat_prod_paulis.inspect())
-        print(unique_prod_paulis.inspect())
-        print(inverse)
+        # print(flat_prod_paulis.inspect())
+        # print(unique_prod_paulis.inspect())
+        # print(inverse)
 
-        return False
+        return True
 
     def trace(self) -> "np.complex":
         """
