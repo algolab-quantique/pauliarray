@@ -22,6 +22,22 @@ def gen_complete_pauli_array_basis(number_of_qubits: int) -> pa.PauliArray:
     return pa.PauliArray(z_bits, x_bits).flatten()
 
 
+def gen_complete_generator_basis(number_of_qubits: int) -> pa.PauliArray:
+    """
+    Generates a PauliArray containinf all the single qubit generators.
+
+    Args:
+        number_of_qubits (int): The number of qubits
+
+    Returns:
+        pa.PauliArray: The generator basis
+    """
+
+    zx_strings = np.identity(2 * number_of_qubits, dtype=bool)
+
+    return pa.PauliArray.from_zx_strings(zx_strings)
+
+
 def gen_random_pauli_array(shape, number_of_qubits: int) -> pa.PauliArray:
     """
     Generates random Pauli strings

@@ -6,6 +6,7 @@ import numpy as np
 
 from pauliarray.pauli import operator as op
 from pauliarray.pauli import pauli_array as pa
+from pauliarray.pauli import phased_pauli_array as ppa
 from pauliarray.pauli import weighted_pauli_array as wpa
 from pauliarray.pauli.operator import commutator
 from pauliarray.utils.pauli_array_library import gen_complete_pauli_array_basis
@@ -155,7 +156,7 @@ class TestOperator(unittest.TestCase):
 
         print(po3.inspect())
 
-        self.assertTrue(po3.is_clifford())
+        self.assertTrue(po2.is_clifford())
 
     def test_clifford_conjugate_pauli_array(self):
         labels = ["IX", "IY", "IZ", "XI", "YI", "ZI", "II", "II"]
@@ -187,41 +188,65 @@ class TestOperator(unittest.TestCase):
         self.assertTrue(np.all(new_paulis_1 == new_paulis_2))
         self.assertTrue(np.all(np.isclose(coefs_1, coefs_2)))
 
-    def test_clifford_conjugate_pauli_array_old(self):
-        labels = ["IX", "IY", "IZ", "XI", "YI", "ZI", "II"]
+    def test_clifford_conjugate_pauli_array_explicit(self):
 
-        paulis = pa.PauliArray.from_labels(labels)  # .reshape((4, 2))
-
-        po1 = op.Operator.from_labels_and_weights(["II", "XI", "IZ", "XZ"], 0.5 * np.array([1, 1, 1, -1]))
-        po2 = op.Operator.from_labels_and_weights(
-            ["IX", "IZ"],
-            np.sqrt(0.5) * np.array([1, 1]),
-        )
-        potot = po2.compose_operator(po1)
+        paulis = gen_complete_pauli_array_basis(2)
 
         print(paulis.inspect())
 
-        print(potot.inspect())
+        op_h0 = op.Operator.from_labels_and_weights(["IX", "IZ"], np.sqrt(0.5) * np.array([1, 1]))
 
-        reps = 100
-        t0 = time.time()
-        for i in range(reps):
-            new_paulis_1, phases_1 = potot.clifford_conjugate_pauli_array_old(paulis)
-        print(time.time() - t0)
+        ref_h0_ppaulis = ppa.PhasedPauliArray.from_labels(
+            [
+                "II",
+                "IX",
+                "ZI",
+                "ZX",
+                "IZ",
+                "-IY",
+                "ZZ",
+                "-ZY",
+                "XI",
+                "XX",
+                "YI",
+                "YX",
+                "XZ",
+                "-XY",
+                "YZ",
+                "-YY",
+            ]
+        )
 
-        # t0 = time.time()
-        # for i in range(reps):
-        #     new_paulis_2, phases_2 = potot.clifford_conjugate_pauli_array_old(paulis)
-        # print(time.time() - t0)
+        new_paulis, new_phases = op_h0.clifford_conjugate_pauli_array_explicit(paulis)
 
-        # self.assertTrue(np.all(new_paulis_1 == new_paulis_2))
-        # self.assertTrue(np.all(np.isclose(coefs_1, coefs_2)))
+        assert np.all(new_paulis == ref_h0_ppaulis.paulis)
+        assert np.all(new_phases == ref_h0_ppaulis.phases), print(new_phases, ref_h0_ppaulis.phases)
 
-        pauli_basis = pa.PauliArray.from_zx_strings(np.identity(2 * 2, dtype=bool))
-        transformed_pauli_basis, phases = potot.clifford_conjugate_pauli_array_old(pauli_basis)
+        op_cnot = op.Operator.from_labels_and_weights(["II", "XI", "IZ", "XZ"], 0.5 * np.array([1, 1, 1, -1]))
 
-        print(pauli_basis.zx_strings.astype(int))
-        print(transformed_pauli_basis.zx_strings.astype(int))
+        ref_cnot_ppaulis = ppa.PhasedPauliArray.from_labels(
+            ["II", "IZ", "ZZ", "ZI", "XX", "XY", "-YY", "YX", "XI", "XZ", "YZ", "YI", "IX", "IY", "ZY", "-ZX"]
+        )
+
+        new_paulis, new_phases = op_cnot.clifford_conjugate_pauli_array_explicit(paulis)
+
+        print(new_paulis.inspect())
+
+        assert np.all(new_paulis == ref_cnot_ppaulis.paulis), print(new_paulis == ref_cnot_ppaulis.paulis)
+        assert np.all(new_phases == ref_cnot_ppaulis.phases), print(new_phases, ref_cnot_ppaulis.phases)
+
+        # qiskit
+
+        # orig ["II", "IX", "IY", "IZ", "XI", "XX", "XY", "XZ", "YI", "YX", "YY", "YZ", "ZI", "ZX", "ZY", "ZZ"]
+        # h0   ["II", "IZ", "-IY", "IX", "XI", "XZ", "-XY", "XX", "YI", "YZ", "-YY", "YX", "ZI", "ZZ", "-ZY", "ZX"]
+        # cnot ["II", "XX", "XY", "IZ", "XI", "IX", "IY", "XZ", "YZ", "ZY", "-ZX", "YI", "ZZ", "-YY", "YX", "ZI"]
+
+        # pauli
+
+        # orig ["II", "IZ", "ZI", "ZZ", "IX", "IY", "ZX", "ZY", "XI", "XZ", "YI", "YZ", "XX", "XY", "YX", "YY"]
+        # h0   ["II", "IX", "ZI", "ZX", "IZ", "-IY", "ZZ", "-ZY", "XI", "XX", "YI", "YX", "XZ", "-XY", "YZ", "-YY"]
+        # cnot ["II", "IZ", "ZZ", "ZI", "XX", "XY", "-YY", "YX", "XI", "XZ", "YZ", "YI", "IX", "IY", "ZY", "-ZX"]
+        #
 
     def test_combine_repeated_terms(self):
 

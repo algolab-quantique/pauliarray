@@ -455,7 +455,7 @@ class Operator(object):
 
         return Operator.from_paulis_and_weights(new_paulis, new_weights)
 
-    def clifford_conjugate_pauli_array_old(
+    def clifford_conjugate_pauli_array_explicit(
         self, other: pa.PauliArray
     ) -> Tuple[pa.PauliArray, "np.ndarray[np.complex]"]:
         """
@@ -469,7 +469,7 @@ class Operator(object):
             "np.ndarray[np.complex]": Residual coefficient
         """
 
-        assert self.is_clifford()
+        # assert self.is_clifford()
 
         self_phases = np.mod(np.round(-np.angle(self.weights) / (np.pi / 2)).astype(int), 4)
 
@@ -721,37 +721,57 @@ class Operator(object):
 
         sq_amp = np.abs(self.simplify().wpaulis.weights) ** 2
 
-        diff_zx_strings = bitops.row_space(
-            bitops.add(self.paulis.zx_strings[:, None, :], self.paulis.zx_strings[None, :, :]).reshape(
-                (self.num_terms**2, 2 * self.num_qubits)
+        m_subspace_basis = bitops.row_space(bitops.add(self.paulis.zx_strings[[0], :], self.paulis.zx_strings))
+
+        #
+
+        k_subspace_basis = symplectic.orthogonal_complement(m_subspace_basis)
+
+        kernel_paulis = pa.PauliArray.from_zx_strings(k_subspace_basis)
+
+        kernel_paulis = pa.fast_flat_unique(
+            pa.concatenate(
+                (kernel_paulis, kernel_paulis[:, None].compose_pauli_array(kernel_paulis[None, :])[0].flatten()), axis=0
             )
         )
 
-        kernel_zx_string = symplectic.orthogonal_complement(diff_zx_strings)
+        print(kernel_paulis.inspect())
 
-        # print("diffs")
-        # print(diff_zx_strings.astype(int))
-        # print("kernel")
-        # print(kernel_zx_string.astype(int))
+        transformed_kernel_paulis, phases = self.clifford_conjugate_pauli_array_explicit(kernel_paulis)
 
-        assert np.all(np.isclose(sq_amp, 1 / self.num_terms))
+        print(transformed_kernel_paulis.inspect())
 
-        self_amplitude = 1 / self.num_terms
-        self_phases = np.mod(np.round(-np.angle(self.weights) / (np.pi / 2)).astype(int), 4)
+        g_subspace_basis = bitops.kernel(m_subspace_basis)
 
-        prod_paulis, prod_phases = self.paulis[:, None].compose_pauli_array(self.paulis[None, :])
-        self_self_docommute_mask = self.wpaulis[:, None].commute_with(self.wpaulis[None, :])
+        # print(m_subspace.astype(int))
 
-        flat_prod_paulis = prod_paulis.flatten()
-        flat_prod_phases = prod_phases.flatten()
+        print(m_subspace_basis.astype(int))
+        print(k_subspace_basis.astype(int))
+        print(g_subspace_basis.astype(int))
 
-        unique_prod_paulis, inverse = pa.fast_flat_unique(flat_prod_paulis, return_inverse=True)
+        # # print("diffs")
+        # # print(diff_zx_strings.astype(int))
+        # # print("kernel")
+        # # print(kernel_zx_string.astype(int))
 
-        # print(flat_prod_paulis.inspect())
-        # print(unique_prod_paulis.inspect())
-        # print(inverse)
+        # assert np.all(np.isclose(sq_amp, 1 / self.num_terms))
 
-        return True
+        # self_amplitude = 1 / self.num_terms
+        # self_phases = np.mod(np.round(-np.angle(self.weights) / (np.pi / 2)).astype(int), 4)
+
+        # prod_paulis, prod_phases = self.paulis[:, None].compose_pauli_array(self.paulis[None, :])
+        # self_self_docommute_mask = self.wpaulis[:, None].commute_with(self.wpaulis[None, :])
+
+        # flat_prod_paulis = prod_paulis.flatten()
+        # flat_prod_phases = prod_phases.flatten()
+
+        # unique_prod_paulis, inverse = pa.fast_flat_unique(flat_prod_paulis, return_inverse=True)
+
+        # # print(flat_prod_paulis.inspect())
+        # # print(unique_prod_paulis.inspect())
+        # # print(inverse)
+
+        return False
 
     def trace(self) -> "np.complex":
         """
