@@ -156,7 +156,7 @@ class TestOperator(unittest.TestCase):
 
         print(po3.inspect())
 
-        self.assertTrue(po2.is_clifford())
+        self.assertTrue(po3.is_clifford())
 
     def test_clifford_conjugate_pauli_array(self):
         labels = ["IX", "IY", "IZ", "XI", "YI", "ZI", "II", "II"]

@@ -745,8 +745,14 @@ class Operator(object):
 
         # print(m_subspace.astype(int))
 
+        print("A vectors")
+        print(self.paulis.zx_strings.astype(int))
+
+        print("M basis")
         print(m_subspace_basis.astype(int))
+        print("K basis")
         print(k_subspace_basis.astype(int))
+        print("G basis")
         print(g_subspace_basis.astype(int))
 
         # # print("diffs")
