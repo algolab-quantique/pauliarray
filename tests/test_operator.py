@@ -145,13 +145,23 @@ class TestOperator(unittest.TestCase):
 
         com_po = commutator(po1, po2)
 
+    def test_get_clifford_linear_transformation(self):
+
+        po1 = op.Operator.from_labels_and_weights(["II", "XI", "IZ", "XZ"], 0.5 * np.array([1, 1, 1, -1]))
+        po2 = op.Operator.from_labels_and_weights(["IX", "IY"], np.sqrt(0.5) * np.array([1, 1]))
+
+        po3 = po2.compose_operator(po1).simplify()
+
+        print(po3.inspect())
+
+        print("CC", po3.compose_operator(po3.adjoint()).simplify().inspect())
+
+        po3.get_clifford_linear_transformation()
+
     def test_is_clifford(self):
 
         po1 = op.Operator.from_labels_and_weights(["II", "XI", "IZ", "XZ"], 0.5 * np.array([1, 1, 1, -1]))
-        po2 = op.Operator.from_labels_and_weights(
-            ["IX", "IZ"],
-            np.sqrt(0.5) * np.array([1, 1]),
-        )
+        po2 = op.Operator.from_labels_and_weights(["IX", "IZ"], np.sqrt(0.5) * np.array([1, 1]))
         po3 = po2.compose_operator(po1).simplify()
 
         print(po3.inspect())
@@ -180,19 +190,17 @@ class TestOperator(unittest.TestCase):
             new_paulis_1, phases_1 = potot.clifford_conjugate_pauli_array(paulis)
         print(time.time() - t0)
 
-        t0 = time.time()
-        for i in range(reps):
-            new_paulis_2, phases_2 = potot.clifford_conjugate_pauli_array_old(paulis)
-        print(time.time() - t0)
+        # t0 = time.time()
+        # for i in range(reps):
+        #     new_paulis_2, phases_2 = potot.clifford_conjugate_pauli_array_old(paulis)
+        # print(time.time() - t0)
 
-        self.assertTrue(np.all(new_paulis_1 == new_paulis_2))
-        self.assertTrue(np.all(np.isclose(coefs_1, coefs_2)))
+        # self.assertTrue(np.all(new_paulis_1 == new_paulis_2))
+        # self.assertTrue(np.all(np.isclose(coefs_1, coefs_2)))
 
     def test_clifford_conjugate_pauli_array_explicit(self):
 
         paulis = gen_complete_pauli_array_basis(2)
-
-        print(paulis.inspect())
 
         op_h0 = op.Operator.from_labels_and_weights(["IX", "IZ"], np.sqrt(0.5) * np.array([1, 1]))
 

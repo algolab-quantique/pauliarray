@@ -8,7 +8,7 @@ import pauliarray.pauli.pauli_array as pa
 import pauliarray.pauli.weighted_pauli_array as wpa
 from pauliarray.binary import bit_operations as bitops
 from pauliarray.binary import symplectic
-from pauliarray.utils.pauli_array_library import gen_complete_pauli_array_basis
+from pauliarray.utils.pauli_array_library import gen_complete_generator_basis, gen_complete_pauli_array_basis
 
 
 class Operator(object):
@@ -469,48 +469,74 @@ class Operator(object):
             "np.ndarray[np.complex]": Residual coefficient
         """
 
-        # assert self.is_clifford()
-
         self_phases = np.mod(np.round(-np.angle(self.weights) / (np.pi / 2)).astype(int), 4)
 
         original_shape = other.shape
-        flat_orig_paulis = other.flatten()
+        old_paulis = other.flatten()
+
+        new_paulis = pa.PauliArray.identities(old_paulis.shape, old_paulis.num_qubits)
+        new_phases = np.zeros(old_paulis.shape, dtype=np.uint)
+
+        self_orig_comm = self.paulis[:, None].commute_with(old_paulis[None, :])
+        print(self_orig_comm.astype(int))
+        kernel_mask = np.all(self_orig_comm == self_orig_comm[[0], :], axis=0)
+        print(kernel_mask.astype(int))
+
+        new_paulis[kernel_mask] = old_paulis[kernel_mask]
+        new_phases[kernel_mask] = np.choose(self_orig_comm[0, kernel_mask], [2, 0])
+
+        print(new_paulis.inspect())
+        print(new_phases)
 
         # dim 0 = pauli
         # dim 1 = left side
         # dim 2 = right side
 
-        prod_paulis_1, phases1 = self.wpaulis.paulis[None, :].compose_pauli_array(flat_orig_paulis[:, None])
-        prod_paulis, phases2 = prod_paulis_1[:, :, None].compose_pauli_array(self.wpaulis.paulis[None, None, :])
+        # prod_paulis_1, phases1 = self.wpaulis.paulis[None, :].compose_pauli_array(flat_orig_paulis[:, None])
+        # prod_paulis, phases2 = prod_paulis_1[:, :, None].compose_pauli_array(self.wpaulis.paulis[None, None, :])
 
-        phases = np.mod(phases1[:, :, None] + phases2 - self_phases[None, :, None] + self_phases[None, None, :], 4)
+        # phases = np.mod(phases1[:, :, None] + phases2 + self_phases[None, :, None] - self_phases[None, None, :], 4)
 
-        new_paulis = pa.PauliArray.identities(flat_orig_paulis.shape, flat_orig_paulis.num_qubits)
-        new_phases = np.zeros(flat_orig_paulis.shape, dtype=phases.dtype)
+        # new_paulis = pa.PauliArray.identities(flat_orig_paulis.shape, flat_orig_paulis.num_qubits)
+        # new_phases = np.zeros(flat_orig_paulis.shape, dtype=phases.dtype)
 
-        for i in range(phases.shape[0]):
+        # for i in range(phases.shape[0]):
+        #     print("Transformation of", flat_orig_paulis.to_labels()[i])
+        #     flat_prod_paulis = prod_paulis[i, :, :].flatten()
+        #     flat_phases = phases[i, :, :].flatten()
 
-            flat_prod_paulis = prod_paulis[i, :, :].flatten()
-            flat_phases = phases[i, :, :].flatten()
+        #     u_prods_phases = np.zeros_like(phases[i, :, :])
 
-            u_prods_phases = np.zeros_like(phases[i, :, :])
+        #     u_prod_paulis, inverse = pa.fast_flat_unique(flat_prod_paulis, return_inverse=True)
 
-            u_prod_paulis, inverse = pa.fast_flat_unique(flat_prod_paulis, return_inverse=True)
+        #     for j in range(phases.shape[1]):
+        #         u_prods_phases[j, :] = flat_phases[inverse == j]
 
-            for j in range(phases.shape[1]):
-                u_prods_phases[j, :] = flat_phases[inverse == j]
+        #     all_phases_equals = np.all(u_prods_phases[:, [0]] == u_prods_phases, axis=1)
 
-            prod_mask_result = np.all(u_prods_phases[:, [0]] == u_prods_phases, axis=1)
+        #     print(all_phases_equals)
 
-            assert np.sum(prod_mask_result) == 1, "The Operator is probably not Clifford"
+        #     assert np.sum(all_phases_equals) == 1, "The Operator is probably not Clifford"
 
-            new_paulis[i] = u_prod_paulis[prod_mask_result]
-            new_phases[i] = u_prods_phases[prod_mask_result, 0]
+        #     new_paulis[i] = u_prod_paulis[all_phases_equals]
+        #     new_phases[i] = u_prods_phases[all_phases_equals, 0][0]
 
         return (
             new_paulis.reshape(original_shape),
             new_phases.reshape(original_shape),
         )
+
+    def get_clifford_linear_transformation(self) -> NDArray[np.bool_]:
+
+        gpaulis = gen_complete_generator_basis(self.num_qubits)
+
+        print(gpaulis.inspect())
+
+        new_gpaulis, new_gphases = self.clifford_conjugate_pauli_array_explicit(gpaulis)
+
+        print(new_gpaulis.inspect())
+
+        print(new_gphases)
 
     def clifford_conjugate_pauli_array(self, other: pa.PauliArray) -> Tuple[pa.PauliArray, NDArray]:
         """
