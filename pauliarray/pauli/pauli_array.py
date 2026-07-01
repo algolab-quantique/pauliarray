@@ -413,15 +413,7 @@ class PauliArray(object):
         assert self.num_qubits == other.num_qubits
         assert is_broadcastable(self.shape, other.shape)
 
-        new_z_strings = bitops.add(self.z_strings, other.z_strings)
-        new_x_strings = bitops.add(self.x_strings, other.x_strings)
-
-        self_phases = bitops.dot(self.z_strings, self.x_strings).astype(np.int8)
-        other_phases = bitops.dot(other.z_strings, other.x_strings).astype(np.int8)
-        new_phases = bitops.dot(new_z_strings, new_x_strings).astype(np.int8)
-        commutation_phases = 2 * bitops.dot(self.x_strings, other.z_strings).astype(np.int8)
-
-        phases = np.mod(commutation_phases + self_phases + other_phases - new_phases, 4)
+        new_z_strings, new_x_strings, phases = symplectic.zx_composition_with_phase(self.zx_strings, other.zx_strings)
 
         return PauliArray(new_z_strings, new_x_strings), phases
 

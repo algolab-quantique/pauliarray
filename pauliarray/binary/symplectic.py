@@ -81,6 +81,39 @@ def dot(
     return bitops.dot(zx_strings_1, flip_zx(zx_strings_2))
 
 
+def zx_composition_with_phase(
+    zx_strings_1: "np.ndarray[np.bool]",
+    zx_strings_2: "np.ndarray[np.bool]",
+) -> "np.ndarray[np.int]":
+    """
+    Computes the composition phase (-i)^phase resulting from the composition of two Pauli strings.
+
+    Args:
+        zx_strings_1 (np.ndarray[np.bool]): The zx strings for the first Pauli string.
+        zx_strings_2 (np.ndarray[np.bool]): The zx strings for the second Pauli string.
+
+    Returns:
+        np.ndarray[np.bool]: Result z strings
+        np.ndarray[np.bool]: Result x strings
+        np.ndarray[np.int]: The composition phase
+    """
+
+    z_strings_1, x_strings_1 = split_zx_strings(zx_strings_1)
+    z_strings_2, x_strings_2 = split_zx_strings(zx_strings_2)
+
+    z_strings_3 = bitops.add(z_strings_1, z_strings_2)
+    x_strings_3 = bitops.add(x_strings_1, x_strings_2)
+
+    phases_1 = bitops.dot(z_strings_1, x_strings_1).astype(np.int8)
+    phases_2 = bitops.dot(z_strings_2, x_strings_2).astype(np.int8)
+    phases_3 = bitops.dot(z_strings_3, x_strings_3).astype(np.int8)
+    commutation_phases = 2 * bitops.dot(x_strings_1, z_strings_2).astype(np.int8)
+
+    phases = np.mod(commutation_phases + phases_1 + phases_2 - phases_3, 4)
+
+    return z_strings_3, x_strings_3, phases
+
+
 # Subspaces (Isotropic, Coisotropic, Lagrandian)
 
 
