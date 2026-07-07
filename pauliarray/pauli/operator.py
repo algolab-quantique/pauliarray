@@ -751,6 +751,56 @@ class Operator(object):
 
         return matrix
 
+    def normalize(self, method: str = "frobenius") -> "Operator":
+        """
+        Normalizes the Operator using the specified method.
+
+        Args:
+            method (str): The normalization method. See `Notes` for available methods. Defaults to "frobenius".
+
+        Returns:
+            Operator: The normalized Operator.
+
+        Raises:
+            ValueError: If an invalid normalization method is provided.
+
+        Notes:
+            Available normalization methods:
+            - "frobenius": Normalizes the Operator such that the Frobenius norm is 1.
+            The methods bellow require diagonalization of the Operator, which can be expensive for large Operators.
+            - "range": Normalizes the eigenvalues of the Operator to the range [0,1].
+            - "radius": Normalizes the Operator such that the biggest eigenvalue has a magnitude of 1.
+            - "spectral": Normalizes the Operator according to the spectral norm.
+        """
+
+        if method == "frobenius":
+            frobenius_norm = self.power(2).trace()**0.5
+            normalized_operator = self.mul_scalar(1 / frobenius_norm)
+            return normalized_operator
+
+        elif method == "radius":
+            eigenvalues = np.linalg.eigvalsh(self.to_matrix())
+            max_eigenvalue_magnitude = np.max(np.abs(eigenvalues))
+            normalized_operator = self.mul_scalar(1 / max_eigenvalue_magnitude)
+            return normalized_operator
+
+        elif method == "range":
+            eigenvalues = np.linalg.eigvalsh(self.to_matrix())
+            min_eigenvalue = np.min(eigenvalues)
+            max_eigenvalue = np.max(eigenvalues)
+            identity_matrix = Operator.identity(self.num_qubits)
+            normalized_operator = (self.add_operator(identity_matrix.mul_scalar(-min_eigenvalue))).mul_scalar(1 / (max_eigenvalue - min_eigenvalue))
+            return normalized_operator
+
+        elif method == "spectral":
+            eigenvalues = np.linalg.eigvalsh(self.to_matrix())
+            max_eigenvalue = np.max(eigenvalues)
+            normalized_operator = self.mul_scalar(1 / (max_eigenvalue))
+            return normalized_operator
+
+        else:
+            raise ValueError(f"Invalid normalization method: {method}. Choose from 'range', 'radius', or 'frobenius'.")
+
     @classmethod
     def from_labels_and_weights(cls, labels, weights) -> "Operator":
         """
