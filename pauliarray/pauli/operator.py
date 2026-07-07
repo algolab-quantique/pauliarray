@@ -779,13 +779,13 @@ class Operator(object):
             return normalized_operator
 
         elif method == "radius":
-            eigenvalues = np.linalg.eigvals(self.to_matrix())
+            eigenvalues = np.linalg.eigvalsh(self.to_matrix())
             max_eigenvalue_magnitude = np.max(np.abs(eigenvalues))
             normalized_operator = self.mul_scalar(1 / max_eigenvalue_magnitude)
             return normalized_operator
 
         elif method == "range":
-            eigenvalues = np.linalg.eigvals(self.to_matrix())
+            eigenvalues = np.linalg.eigvalsh(self.to_matrix())
             min_eigenvalue = np.min(eigenvalues)
             max_eigenvalue = np.max(eigenvalues)
             identity_matrix = Operator.identity(self.num_qubits)
@@ -793,7 +793,7 @@ class Operator(object):
             return normalized_operator
 
         elif method == "spectral":
-            eigenvalues = np.linalg.eigvals(self.to_matrix())
+            eigenvalues = np.linalg.eigvalsh(self.to_matrix())
             max_eigenvalue = np.max(eigenvalues)
             normalized_operator = self.mul_scalar(1 / (max_eigenvalue))
             return normalized_operator
