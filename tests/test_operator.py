@@ -194,6 +194,30 @@ class TestOperator(unittest.TestCase):
 
         os.remove("operator.npz")
 
+    def test_normalize(self):
+        po = op.Operator.from_labels_and_weights(["XY", "IZ"], np.array([1, 2]))
+        po_matrix = po.to_matrix()
+
+        po_normalized_range = po.normalize(method="range")
+        eigenvalues = np.linalg.eigvals(po_normalized_range.to_matrix())
+
+        min_eigenvalue = np.min(eigenvalues)
+        max_eigenvalue = np.max(eigenvalues)
+        self.assertAlmostEqual(min_eigenvalue, 0)
+        self.assertAlmostEqual(max_eigenvalue, 1)
+
+        po_normalized_fro = po.normalize(method="frobenius")
+        self.assertAlmostEqual(np.linalg.norm(po_normalized_fro.to_matrix(), "fro"), 1)
+
+        po_normalized_radius = po.normalize(method="radius")
+        eigenvalues = np.linalg.eigvals(po_normalized_radius.to_matrix())
+        largest_eigenvalue = np.max(np.abs(eigenvalues))
+        self.assertAlmostEqual(largest_eigenvalue, 1)
+
+        po_normalized_spectral = po.normalize(method="spectral")
+        expected_operator_matrix = po_matrix / np.linalg.norm(po_matrix, 2)
+        self.assertTrue(np.allclose(po_normalized_spectral.to_matrix(), expected_operator_matrix))
+
 
 if __name__ == "__main__":
     unittest.main()
